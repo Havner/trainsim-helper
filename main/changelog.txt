@@ -1,0 +1,40 @@
+0.3
+ - WARNING: the script has been split into 3 files, you need all
+ - Overlay configuration is in the trainsim-helper-overlay.lua
+ - Joystick configuration is in the trainsim-helper-joystick.lua
+ - Detections for locos are in the trainsim-helper.lua
+
+ - Moved the clock to align better with long scenario names and F5 UI
+ - Overlay GradientUK format option (1:XXX)
+ - Fixed gigantic speed limits for SpeedLimitType == 3 (now it's '??')
+ - Add units to acceleration, recalculate from m/s^2
+ - Moved most of the calculations to C++ for performance and greater control
+ - Internal code changes
+ - Readme updated (TOC and section on how to receive help)
+ - Detections and notches configurations for more locos
+
+0.2a
+ - Added M8Brake to the list of controllable TrainBrakes
+ - Fix for the patcher to handle very old locos that don't provide Initialise()
+ - Fix for the patcher in case there are already 2 scripts named the same but one .lua, one .out
+ - Detections and notches configurations for more locos
+
+0.2
+ - Next speed limit + distance
+ - Keyboard shortcuts for turning off the whole overlay or just parts of it
+ - Command line switches to disable joystick support completely
+ - Command line switches to turn off the overlay or just parts of it
+ - Notched levers support (needs to be configured manually per loco)
+ - An option to redefine warning strings
+ - Patcher template updated to pass frame interval for future use
+ - More examples in the code for the new functions
+ - Internal code changes
+ - Docs updated, changelog and todo added
+
+0.1a
+ - Changed the BRs in the readme to be readable in notepad
+ - Fixed BAR/PSI display for some locos
+ - Added Reverser control
+
+0.1
+ - initial release

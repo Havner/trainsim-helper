@@ -1,0 +1,423 @@
+﻿using System;
+using System.Windows.Forms;
+using System.IO;
+using System.Text.RegularExpressions;
+
+namespace Lua_Out_Editor
+{
+    public partial class Form1 : Form
+    {
+        private string fileName = "";
+        private string fileNameWithoutExtension = "";
+        private string appPath = Application.StartupPath;
+        private string filePath = "";
+        private string fileDirectory = "";
+        private string railworksPath = "";
+        private string asmFile = "";
+        private int functionNumber = -1;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Get path to railworks
+            railworksPath = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\railsimulator.com\railworks\", "Install_Path", "Not present");
+            railworksPath += "\\Assets";
+            if (!Directory.Exists(appPath + "\\Scripts"))
+            {
+                Directory.CreateDirectory(appPath + "\\Scripts");
+            }
+        }
+
+        private void btnSelectFile_Click(object sender, EventArgs e)
+        {
+            //Reset Progressbar
+            progressBar1.Value = 0;
+            //Open an openfile dialogbox to get the file to edit from user
+            OpenFileDialog ofd = new OpenFileDialog();
+            //Check to see if we have navigated to a directory yet. If we haven't then use railworks
+            //directory. If we have then use the last directory used.
+            if (fileDirectory == "")
+            {
+                ofd.InitialDirectory = railworksPath;
+            }
+            else
+            {
+                ofd.InitialDirectory = fileDirectory;
+            }
+            ofd.Filter = "Train Sim files (*.lua; *.out)|*.lua; *.out";
+            ofd.RestoreDirectory = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                filePath = ofd.FileName;
+                fileName = Path.GetFileName(filePath);
+                fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);          
+                fileDirectory = Path.GetDirectoryName(filePath) + "\\";
+                //Check to see if the file has already been edited
+                StreamReader sr = new StreamReader(filePath);
+                bool found = false;
+                while (!sr.EndOfStream)
+                {
+                    string tmp = sr.ReadLine();
+                    if (tmp.Contains("Railworks_GetData_Script"))
+                    {
+                        found = true;
+                    }
+                }
+                sr.Close();
+                if (found)
+                {
+                    DialogResult dr = new DialogResult();
+                    if (File.Exists(filePath + ".bak"))
+                    {
+                        dr = (MessageBox.Show("The file  " + fileName + " has already been edited" + Environment.NewLine
+                        + "Do you wish to restore from the backup and then re-edit the file.",
+                        "File already edited", MessageBoxButtons.YesNo, MessageBoxIcon.Hand));
+                        if (dr == DialogResult.Yes)
+                        {
+                            //Delete the loaded file
+                            File.Delete(filePath);
+
+                            //Rename backup file to original file name and delete backup
+                            File.Move(filePath + ".bak", filePath);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The file  " + fileName + " has already been edited" + Environment.NewLine
+                        + "As the backup file is not present in the current folder" + Environment.NewLine 
+                        + "you cannot restore from the backup and then re-edit the file.",
+                        "File already edited - Backup missing", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+                }
+                
+                //Check file is not read only if it is change it
+                checkSetReadOnly(filePath); 
+                if (fileName.ToLower().Contains(".lua"))
+                {
+                    //Call function to edit the lua script
+                    editLua();
+                }
+                else if (fileName.ToLower().Contains(".out"))
+                {
+                    //Extract the file name, remove the .out extension and replace it with .asm
+                    asmFile = appPath + "\\Scripts\\" + fileNameWithoutExtension + ".asm";
+                    //Stage 1 completed, update progress bar
+                    progressBar1.Value = 1;
+                    //Now extract the data from the out file using the enclosed free file called ChunkSpy from
+                    // http://chunkspy.luaforge.net/
+                    bool b = extractAsm();
+                    if (b == false) return;
+                    //Stage 2 completed, update progress bar
+                    progressBar1.Value = 2;
+                    //Now comes the complicated part, we have to add and delete parts of the extracted out file
+                    //See the functions ReplaceText(), InsertText() and ReplaceNumbers(). We group these into
+                    //one function call to editAsm()
+                    editAsm();
+                    //Stage 3 completed, update progress bar
+                    progressBar1.Value = 3;
+                    //Now we need to recompile the edited asm file, backup the original file by adding .bak to the end
+                    //of the file and then save the compiled file with the original file name and in the original location.
+                    //I have used the enclosed free program called ChunkBake from
+                    // http://files.luaforge.net/releases/chunkbake/chunkbake-win32-bin/ChunkBake-win32-bin-0.7.0
+                    compileAsm();
+                }
+                else
+                {
+                    //If wrong file type selected, let the user know
+                    MessageBox.Show("The file you selected is not an lua or out file", "Wrong file type", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public bool extractAsm()
+        {
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo.CreateNoWindow = false;
+            p.StartInfo.ErrorDialog = true;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.FileName = appPath +  "\\Chunk\\ChunkSpy.exe";
+            p.StartInfo.Arguments = " --source " + "\"" + filePath + "\"" + " -o " + "\"" + asmFile + "\"" + " --brief";
+            try
+            {
+                p.Start();
+                string stdout = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+                if (stdout.Length > 0)
+                {
+                    MessageBox.Show(stdout);
+                    progressBar1.Value = 0;
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Extraction failed" + Environment.NewLine + ex.ToString());
+                progressBar1.Value = 0; 
+                return false;
+            }
+            return true;
+        }
+
+        private void editAsm()
+        {
+            if (System.IO.File.Exists(asmFile))
+            {
+                //Now edit the asm file
+                //First find the function number for Update()
+                StreamReader sr = new StreamReader(asmFile);
+                string currentLine = "", previousLine = "", tmp = "";
+                while (!sr.EndOfStream)
+                {
+                    currentLine = sr.ReadLine();
+                    //Check to see if current line contains "; Update" we use the semicolon
+                    //because there is the .const "Update" defined at the beginning of the file.
+                    if (currentLine.Contains("; Update"))
+                    {
+                        //Find the location in the previous line of the semicolon so
+                        //we can remove everything after it
+                        int j = previousLine.IndexOf(';');
+                        tmp = previousLine.Remove(j);
+                        //Next we need to remove all spaces at the end of the line
+                        tmp = tmp.TrimEnd(' ');
+                        //Now we look for the number at the end of the line which gives
+                        //us our function number for the Update function
+                        Regex r = new Regex(@"\d+" + "$");
+                        Match m = r.Match(tmp);
+                        functionNumber = Convert.ToInt16(m.Value);
+                    }
+                    else
+                    {
+                        previousLine = currentLine;
+                    }
+                }
+                sr.Close();
+                //Check we have a function number before continuing
+                if (functionNumber == -1)
+                {
+                    MessageBox.Show("Cannot find the function \"Update\"" + Environment.NewLine + "In file \"" + asmFile + "\"" + Environment.NewLine
+                        + "Please check you have the correct simulation script file", " Error in file ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                //Add a # before the number in jmp
+                ReplaceText(asmFile, "jmp        ", "$&#");
+                //Add a # before the last number of forloop
+                ReplaceText(asmFile, "forloop    [0-9]   ","$&#");
+                //Remove last number from tailcall
+                ReplaceText(asmFile, "tailcall   ([0-9])   ([0-9])   ([0-9])", "tailcall   $1   $2");
+                //Add a semicolon after .functio and 2 spaces
+                ReplaceText(asmFile, ".function  ", "$&;"); //".function  ", ".function ;");// 
+                //Insert .end at the end of each function
+                ReplaceText(asmFile, "; end of function", ".end\n$&"); //; end of function");
+
+                /* Insert the following after the .const declarations in Update function after
+                 * ; function [functionNumber] definition (level 2)
+
+                 *   .const  REQU "require" 
+                 *   .const  PLUG "plugins/Railworks_GetData_Script"
+                 *   .const  GETD "getdata" 
+                 */
+                string s = ".const  REQU  " + "\"" + "require" + "\"" + Environment.NewLine;
+                s += ".const  PLUG  " + "\"" + "plugins/Railworks_GetData_Script" + "\"" + Environment.NewLine;
+                s += ".const  GETD  " + "\"" + "getdata" + "\"" + Environment.NewLine;
+
+                /* insert the following at the end of the Update function
+                 * 
+                 *     getglobal  3   REQU      ; require
+                 *     loadk      4   PLUG      ; "plugins/Railworks_GetData_Script"
+                 *     call       3   2   1  
+                 *     getglobal  3   GETD      ; getdata
+                 *     call       3   1   1 
+                 */
+                string t = "getglobal  3   REQU      ; require" + Environment.NewLine;
+                t += "loadk      4   PLUG      ; " + "\"" + "plugins/Railworks_GetData_Script" + "\"" + Environment.NewLine;
+                t += "call       3   2   1  " + Environment.NewLine;
+                t += "getglobal  3   GETD      ; getdata" + Environment.NewLine;
+                t += "call       3   1   1 " + Environment.NewLine;
+
+                InsertText(asmFile, s, t);
+
+                //Now remove numbers at beginning of each line
+                ReplaceNumbers(asmFile, @"^\[(\d+)\] ", string.Empty);
+            }
+            else
+            {
+                MessageBox.Show(asmFile + " Not Found");
+            }
+        }
+
+        private void compileAsm()
+        {
+            //Call chunkbake, backup original file, replace out file in original location
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo.CreateNoWindow = false;
+            p.StartInfo.ErrorDialog = true;
+            p.StartInfo.RedirectStandardOutput = true;
+
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.FileName = appPath + "\\Chunk\\ChunkBake.exe";
+            p.StartInfo.Arguments = "\"" + asmFile + "\"" + " -o " + "\"" + filePath + "\"";
+            try
+            {
+                //First make backup of original file by renaming it with bak extension
+                System.IO.File.Move(filePath, filePath + ".bak");
+                p.Start();
+                string stdout = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+                if (stdout.Length > 0)
+                {
+                    //Undo backup
+                    System.IO.File.Move(filePath + ".bak", filePath);
+                    MessageBox.Show(stdout);
+                }
+                else
+                {
+                    //Stage 4 completed, update progress bar
+                    progressBar1.Value = 4; 
+                    MessageBox.Show(fileName + " Converted successfully");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Extraction failed" + Environment.NewLine + ex.ToString());
+            }
+        } 
+
+        public void ReplaceText(string fName, string findText, string replaceText)
+        {
+            StreamReader sr = new StreamReader(fName);
+            string content = sr.ReadToEnd();
+            sr.Close();
+
+            content = Regex.Replace(content, findText, replaceText);
+            StreamWriter sw = new StreamWriter(fName);
+            sw.Write(content);
+            sw.Close();
+        }
+
+        public void InsertText(string fName, string insertText1, string insertText2)
+        {
+            int c = 1;
+            string content = "", tmp = "";
+            bool foundFunction = false, insertedFirst = false, insertedSecond = false;
+            StreamReader sr = new StreamReader(fName);
+            while(!sr.EndOfStream)
+            {
+                tmp = sr.ReadLine();
+                if(tmp.Contains("; function [" + functionNumber + "] definition (level 2)"))
+                {
+                    foundFunction = true;
+                    //Skip next 2 lines
+                    content += tmp + Environment.NewLine;
+                    tmp = sr.ReadLine();
+                    content += tmp + Environment.NewLine;
+                    tmp = sr.ReadLine();
+                    content += tmp + Environment.NewLine;                    
+                }
+                else if(tmp.Contains(".const") && foundFunction == true)
+                {
+                    content += tmp + Environment.NewLine;
+                }
+                else if(foundFunction == true && insertedFirst == false)
+                {
+                    if (tmp.Contains("return"))
+                    {
+                        tmp = insertText1 + insertText2 + tmp;
+                        insertedFirst = true;
+                        insertedSecond = true;
+                        content += tmp + Environment.NewLine;
+                    }
+                    else
+                    {
+                        tmp = insertText1 + tmp;
+                        insertedFirst = true;
+                        content += tmp + Environment.NewLine;
+                    }
+                }
+                else if (tmp.Contains("return") && insertedFirst == true && insertedSecond == false && foundFunction == true)
+                {
+                    tmp = insertText2 + tmp;
+                    insertedSecond = true;
+                    content += tmp + Environment.NewLine;
+                }
+                else
+                {
+                    content += tmp + Environment.NewLine;
+                }
+            }
+            sr.Close();
+
+            StreamWriter sw = new StreamWriter(fName);
+            sw.Write(content);
+            sw.Close();
+        }
+
+        public void ReplaceNumbers(string fName, string findText, string replaceText)
+        {
+            StreamReader sr = new StreamReader(fName);
+            string content = sr.ReadToEnd();
+            sr.Close();
+ 
+            content = Regex.Replace(content, findText, replaceText, RegexOptions.Multiline);
+            StreamWriter sw = new StreamWriter(fName);
+            sw.Write(content);
+            sw.Close();
+        }
+
+        private void editLua()
+        {
+            string content = "", tmp = "";
+            bool foundFunction = false, inserted = false; ;
+            StreamReader sr = new StreamReader(filePath);
+            while (!sr.EndOfStream)
+            {
+                tmp = sr.ReadLine();
+                if (tmp.Contains("function Update ("))
+                {
+                    foundFunction = true;
+                    content += tmp + Environment.NewLine;
+                    continue;
+                }
+                
+                if (foundFunction == true && inserted == false)
+                {
+                    tmp = "    require (\"plugins/Railworks_GetData_Script\")" + Environment.NewLine;
+                    tmp += "    getdata()" + Environment.NewLine;
+                    content += tmp;
+                    inserted = true;
+                    continue;
+                }
+                else
+                {
+                    content += tmp + Environment.NewLine;
+                }
+            }
+            sr.Close();
+            File.Copy(filePath, filePath + ".bak");
+            StreamWriter sw = new StreamWriter(filePath);
+            sw.Write(content);
+            sw.Close();
+            MessageBox.Show("File " + fileName + " Converted successfully");
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void checkSetReadOnly(string fname)
+        {
+            FileInfo fi = new FileInfo(fname);
+            fi.IsReadOnly = false;
+        }
+    }
+}
