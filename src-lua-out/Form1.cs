@@ -11,6 +11,7 @@ namespace Lua_Out_Editor
         private string railworksPath = "";
         private string lastDirectory = "";
         private string templateFileName = "trainsim-helper-engine-template.lua";
+        private string luacExecPath = "";
 
         public Form1()
         {
@@ -21,19 +22,31 @@ namespace Lua_Out_Editor
         {
             // Get path to railworks
             railworksPath = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\railsimulator.com\railworks\", "Install_Path", "Not present");
-            if (railworksPath == null || !Directory.Exists(railworksPath))
-            {
-                MessageBox.Show("Can't find Train Simulator registry entry or the directory itself." + Environment.NewLine +
-                    "I need it to locate a LUA compiler.",
-                    "Train Simulator not found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                this.Close();
-            }
 
-            if (!File.Exists(railworksPath + "\\luac.exe"))
+            // Find luac.exe somewhere
+            if (File.Exists(appPath + "\\luac.exe"))
             {
-                MessageBox.Show("Can't find the LUA compiler in the Train Simulator directory.",
-                    "LUA compiler not found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                this.Close();
+                luacExecPath = appPath + "\\luac.exe";
+            }
+            else
+            {
+                if (railworksPath == null || !Directory.Exists(railworksPath))
+                {
+                    MessageBox.Show("Can't find Train Simulator registry entry or the directory itself." + Environment.NewLine +
+                        "I need it to locate a LUA compiler." + Environment.NewLine +
+                        "You can also put luac.exe (5.0) in the lua-out folder.",
+                        "Train Simulator not found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    this.Close();
+                }
+
+                if (!File.Exists(railworksPath + "\\luac.exe"))
+                {
+                    MessageBox.Show("Can't find the LUA compiler in the Train Simulator directory." + Environment.NewLine +
+                        "You can also put luac.exe (5.0) in the lua-out folder.",
+                        "LUA compiler not found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    this.Close();
+                }
+                luacExecPath = railworksPath + "\\luac.exe";
             }
 
             if (!File.Exists(appPath + "\\trainsim-helper-engine-template.lua"))
@@ -199,7 +212,7 @@ namespace Lua_Out_Editor
             p.StartInfo.ErrorDialog = true;
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.FileName = railworksPath + "\\luac.exe";
+            p.StartInfo.FileName = luacExecPath;
             p.StartInfo.Arguments = " -o \"" + dst + "\" \"" + src + "\"";
 
             try
