@@ -86,7 +86,7 @@
             this.Controls.Add(this.btnSelectFile);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TrainSim Helper LUA/OUT editor, Version 0.3";
+            this.Text = "TrainSim Helper LUA/OUT editor, Version 0.3a";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

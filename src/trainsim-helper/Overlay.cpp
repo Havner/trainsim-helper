@@ -329,22 +329,13 @@ void RenderOverlay()
 	if (!data.fSimulationTime)
 		return;
 
-	char *sUnitsSpeed =           INVALID_STRING;
-	char *sUnitsDistance =        INVALID_STRING;
-	char *sUnitsAcceleration =    INVALID_STRING;
-	float fModifierSpeed =        INVALID;
-	float fModifierDistance =     INVALID;
-	float fModifierAcceleration = INVALID;
-	if (data.sUnits()[0] == 'M')
-	{
-		sUnitsSpeed = "Mph";
-		sUnitsDistance = "Mi";
-		sUnitsAcceleration = "Mph/m";
-		fModifierSpeed = MPS_TO_MPH;
-		fModifierDistance = METRES_TO_MILES;
-		fModifierAcceleration = MPS_TO_MPH * 60;
-	}
-	else if (data.sUnits()[0] == 'K')
+	char *sUnitsSpeed;
+	char *sUnitsDistance;
+	char *sUnitsAcceleration;
+	float fModifierSpeed;
+	float fModifierDistance;
+	float fModifierAcceleration;
+	if (data.sUnits()[0] == 'K')
 	{
 		sUnitsSpeed = "Kph";
 		sUnitsDistance = "Km";
@@ -352,6 +343,15 @@ void RenderOverlay()
 		fModifierSpeed = MPS_TO_KPH;
 		fModifierDistance = METRES_TO_KILOMETRES;
 		fModifierAcceleration = MPS_TO_KPH * 60;
+	}
+	else /*if (data.sUnits()[0] == 'M')*/ /* also handle no speedometer case */
+	{
+		sUnitsSpeed = "Mph";
+		sUnitsDistance = "Mi";
+		sUnitsAcceleration = "Mph/m";
+		fModifierSpeed = MPS_TO_MPH;
+		fModifierDistance = METRES_TO_MILES;
+		fModifierAcceleration = MPS_TO_MPH * 60;
 	}
 
 	float fSpeed = data.fSpeed() * fModifierSpeed;

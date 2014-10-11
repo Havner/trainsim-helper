@@ -51,9 +51,6 @@ function GetOverlayData()
       Units = "M"
    elseif Call("*:ControlExists", "SpeedometerKPH", 0) == 1 then
       Units = "K"
-   else
-      -- Well, howewer impossible that sounds, I found locos without Speedometer, pressume M
-      Units = "M"
    end
    if Units then data = data.."Units: "..Units.."\n" end
 

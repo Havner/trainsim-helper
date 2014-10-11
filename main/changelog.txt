@@ -1,3 +1,8 @@
+0.3a
+ - Make it possible to use the Patcher without TS registry entries
+ - Handle the windowed mode case, move together with TS window
+ - Minor code changes
+
 0.3
  - WARNING: the script has been split into 3 files, you need all
   - Overlay configuration is in the trainsim-helper-overlay.lua
