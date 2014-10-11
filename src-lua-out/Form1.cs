@@ -105,7 +105,7 @@ namespace Lua_Out_Editor
                     if (File.Exists(origFilePath))
                     {
                         DialogResult dr = MessageBox.Show("The file " + fileName + " has already been processed." + Environment.NewLine +
-                            "Do you wish to restore from the _orig and then re-create the file?",
+                            "Do you wish to restore from the _orig and then re-process the file?",
                             "File already processed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dr == DialogResult.Yes)
                         {
@@ -121,7 +121,7 @@ namespace Lua_Out_Editor
                     {
                         MessageBox.Show("The file " + fileName + " has already been processed." + Environment.NewLine +
                             "As the original file is not present in the current folder" + Environment.NewLine +
-                            "you cannot restore from the original and then re-created the file.",
+                            "you cannot restore from the original and then re-process the file.",
                             "File already processed - original missing", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         return;
                     }
@@ -143,7 +143,7 @@ namespace Lua_Out_Editor
                     DialogResult dr = MessageBox.Show("The file " + fileName + " doesn't seem to be processed," + Environment.NewLine +
                         "but the _orig file is there." + Environment.NewLine +
                         "This might happen after the Steam update/validation." + Environment.NewLine +
-                        "Do you want to overwrite the _orig file and re-create the script?",
+                        "Do you want to overwrite the _orig file and re-process the file?",
                         "Destination file exists", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dr == DialogResult.Yes)
                     {
@@ -188,7 +188,7 @@ namespace Lua_Out_Editor
                     File.Move(tempFileScript, newFileScript);
                 }
 
-                MessageBox.Show(fileName + " created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show(fileName + " processed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 

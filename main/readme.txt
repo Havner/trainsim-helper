@@ -64,14 +64,17 @@ B. Licence
 
 2. Initial setup
 
-  In the package you have 3 files (.EXE, .LUA and this .TXT) and a
-  directory (with another .EXE and .LUA). Put the main .EXE and .LUA
-  files directly into the RailWorks\plugin directory. Usually in:
+  In the package you have several files (.EXE, .LUA and .TXT) and a
+  directory (with another .EXE and .LUA). Put the main .EXE and all
+  .LUA files from the main directory directly into the RailWorks\plugin
+  directory. Usually in:
   C:\Program Files (x86)\Steam\steamapps\common\railworks\plugins
   You should have something like:
 
   \plugins\transim-helper.exe
   \plugins\transim-helper.lua
+  \plugins\transim-helper-overlay.lua
+  \plugins\transim-helper-joystick.lua
 
   The trainsim-helper-lua-out directory you can put wherever you want.
 
@@ -158,8 +161,8 @@ B. Licence
   it. This is a line number in the file. Remember the numbers of all
   the lines/axes you want to use.
 
-  Now open the trainsim-helper.lua. This has to be done in a good text
-  editor. At the top of the file, below the
+  Now open the trainsim-helper-joystick.lua. This has to be done in a
+  good text editor. At the top of the file, below the
   function ConfigureJoystick()
   line you have few variables (CombinedThrottleLine = 3, etc). Assign
   line numbers of the axes you want to use to the controls you want to
@@ -205,17 +208,17 @@ B. Licence
   -----------------|-------------------|--------------------------------
          -4        |   CTRL+SHIFT+F4   |   toggles the target speed
   -----------------|-------------------|--------------------------------
-         -5        |   CTRL+SHIFT+F5   |    toggles the gear lever
+         -5        |   CTRL+SHIFT+F5   |     toggles the controls
   -----------------|-------------------|--------------------------------
-         -6        |   CTRL+SHIFT+F6   |     toggles the controls
+         -6        |   CTRL+SHIFT+F6   |  toggles the ammeter and RPM
   -----------------|-------------------|--------------------------------
-         -7        |   CTRL+SHIFT+F7   |  toggles the ammeter and RPM
+         -7        |   CTRL+SHIFT+F7   |   toggles brakes' pressures
   -----------------|-------------------|--------------------------------
-         -8        |   CTRL+SHIFT+F8   |   toggles brakes' pressures
+         -8        |   CTRL+SHIFT+F8   |     toggles the gradient
   -----------------|-------------------|--------------------------------
-         -9        |   CTRL+SHIFT+F9   |     toggles the gradient
+         -9        |   CTRL+SHIFT+F9   | toggles warnings (AWS, DSD...)
   -----------------|-------------------|--------------------------------
-         -10       |   CTRL+SHIFT+F10  | toggles warnings (AWS, DSD...)
+         -10       |   CTRL+SHIFT+F10  |           unused
   -----------------|-------------------|--------------------------------
          -11       |   CTRL+SHIFT+F11  |      toggles the clock
   -----------------|-------------------|--------------------------------
@@ -333,11 +336,11 @@ B. Licence
   know about it. Secondly you can try to fix/add/customize this
   yourself.
 
-  In the script there are functions to detect ControlValues names for
-  a specific control:
+  In the trainsim-helper-joystick.lua there are functions to find
+  correct ControlValues names for a specific control:
 
-  function DetectCombinedThrottle()
-  function DetectTrainBrake()
+  function FindCombinedThrottle()
+  function FindTrainBrake()
   ...
 
   If your loco is using a ControlValue not mentioned there add it to a
@@ -354,7 +357,8 @@ B. Licence
 
   It is possible to customize controls per loco. There is no simple
   way to detect a loco you are driving though. I use a unique set of
-  ControlValues a loco has to recognize it. See the example functions:
+  ControlValues a loco has to recognize it. See the example functions
+  in the trainsim-helper.lua script:
 
   function DetectClass365()
   function DetectClass395()
@@ -369,13 +373,13 @@ B. Licence
 
   Worth noting is that for a control to work it has to have those
   values set:
-  *Line        (to know where to take the joystick data from)
-  *Control     (to know which variable in the sim to control)
+  *Line         (to know where to take the joystick data from)
+  *Control      (to know which variable in the sim to control)
+  *Range        (will be autodetected, you can override it)
 
   Those are optional:
   *Invert       (self explanatory)
-  *Range        (should be autodetected, unless you want to override it)
-  *Notches      (creates a nothed lever)
+  *Notches      (sets a nothed lever)
   *CenterDetent (works only for Reverser and CombinedThrottle)
 
   *Notches has to be a table with values between
@@ -403,13 +407,20 @@ B. Licence
   GenerateEqualNotches(5,r) for r = {-1,1} will give:
   {-1, -0.5, 0, 0.5, 1}
 
-  You can also redefine warning text values globally or per loco.
-  You can also configure UK Gradient format (1:XXX) globally or per
-  loco.
+  You can also configure the overlay a little in the
+  trainsim-helper-overlay.lua script.
+  You can redefine warning texts and set UK Gradient format
+  (1:XXX). Those things can be set globally or per loco using the same
+  loco detection functions as described above.
+
+  In summary:
+  - trainsim-helper.lua: loco detections and main frame update function.
+  - trainsim-helper-overlay.lua: Overlay configuration an implementation.
+  - trainsim-helper-joystick.lua: Joystick configuration an implementation.
 
 11. HELP! It doesn't work
 
-  Forums thread:
+  Forum thread:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139304
 
   If you can't get it to work at all re-read the readme, try
@@ -438,7 +449,7 @@ B. Licence
      in the forums. Also see below for sending me some files.
 
   Sending some files to me when help is requested:
-  If you have a problem with a specific loco (not all of them, but
+  If you have a problem with a specific loco (not all of them, when
   generally things work for you, but not for a specific loco) write on
   the forums and send be the files listed below so I can investigate:
 

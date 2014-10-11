@@ -11,10 +11,11 @@
 
 #define INVALID					(-99999)
 #define ISVALID(n)				((n) > INVALID)
+#define INVALID_STRING			"STRING_MISSING"
 #define GETHOURS(nClock)		((nClock) / 3600)
 #define GETMINUTES(nClock)		(((nClock) % 3600) / 60)
 #define GETSECONDS(nClock)		((nClock) % 60)
-#define ACCEL_TABLE_SIZE		60
+#define ACCEL_TABLE_SIZE		30
 #define SECTIONS_TABLE_SIZE		12
 #define STRING_SIZE				512
 
@@ -85,13 +86,13 @@ template<>
 struct Value<std::string>
 {
 	std::string v;
-	Value() : v("STRING_MISSING") {}
+	Value() : v(INVALID_STRING) {}
 	Value& operator=(const char *o) {
 		v = std::string(o);
 		return *this;
 	}
 	operator bool() const {
-		return v.compare("STRING_MISSING") != 0;
+		return v.compare(INVALID_STRING) != 0;
 	}
 	const char *operator()() {
 		return v.c_str();
@@ -110,24 +111,25 @@ struct SimData {
 	Value<float>		fGradient;
 
 	Value<float>		fTargetSpeed;
-	Value<int>			nGearLever;
+	Value<float>		fReverser;
+	Value<float>		fGearLever;
 	Value<float>		fThrottle;
 	Value<float>		fTrainBrake;
 	Value<float>		fLocoBrake;
 	Value<float>		fDynamicBrake;
-	Value<float>		fReverser;
 	Value<float>		fAmmeter;
 	Value<int>			nRPM;
+	Value<float>		fVacuumBrakePipePressure;
 	Value<std::string>	sBrakeUnits;
 	Value<float>		fTrainBrakeCylinderPressure;
 	Value<float>		fAirBrakePipePressure;
 	Value<float>		fMainReservoirPressure;
 	Value<float>		fEqReservoirPressure;
-	Value<int>			nStartup;
-	Value<int>			nEmergencyBrake;
 	Value<int>			nSunflower;
 	Value<int>			nAWS;
 	Value<int>			nVigilAlarm;
+	Value<int>			nEmergencyBrake;
+	Value<int>			nStartup;
 
 	Value<std::string>  sTextAWS;
 	Value<std::string>  sTextVigilAlarm;
@@ -247,14 +249,15 @@ int FillData(SimData* data)
 
 		// Loco's values
 		else if (!strcmp("TargetSpeed:", param))				data->fTargetSpeed = value;
-		else if (!strcmp("GearLever:", param))					data->nGearLever = value;
+		else if (!strcmp("Reverser:", param))					data->fReverser = value;
+		else if (!strcmp("GearLever:", param))					data->fGearLever = value;
 		else if (!strcmp("Throttle:", param))					data->fThrottle = value;
 		else if (!strcmp("TrainBrake:", param))					data->fTrainBrake = value;
 		else if (!strcmp("LocoBrake:", param))					data->fLocoBrake = value;
 		else if (!strcmp("DynamicBrake:", param))				data->fDynamicBrake = value;
-		else if (!strcmp("Reverser:", param))					data->fReverser = value;
 		else if (!strcmp("Ammeter:", param))					data->fAmmeter = value;
 		else if (!strcmp("RPM:", param))						data->nRPM = value;
+		else if (!strcmp("VacuumBrakePipePressure:", param))	data->fVacuumBrakePipePressure = value;
 		else if (!strcmp("BrakeUnits:", param))					data->sBrakeUnits = value;
 		else if (!strcmp("TrainBrakeCylinderPressure:", param))	data->fTrainBrakeCylinderPressure = value;
 		else if (!strcmp("AirBrakePipePressure:", param))		data->fAirBrakePipePressure = value;
@@ -326,12 +329,12 @@ void RenderOverlay()
 	if (!data.fSimulationTime)
 		return;
 
-	char *sUnitsSpeed;
-	char *sUnitsDistance;
-	char *sUnitsAcceleration;
-	float fModifierSpeed;
-	float fModifierDistance;
-	float fModifierAcceleration;
+	char *sUnitsSpeed =           INVALID_STRING;
+	char *sUnitsDistance =        INVALID_STRING;
+	char *sUnitsAcceleration =    INVALID_STRING;
+	float fModifierSpeed =        INVALID;
+	float fModifierDistance =     INVALID;
+	float fModifierAcceleration = INVALID;
 	if (data.sUnits()[0] == 'M')
 	{
 		sUnitsSpeed = "Mph";
@@ -422,19 +425,20 @@ void RenderOverlay()
 	int y = g_nHeight - yD;
 	int yP = y;
 
-	if (!g_bHideSection[9])
+	if (!g_bHideSection[8])
 		y = DrawString(data.fGradient,						x+40,	y, whitegreen, pSmallFont, "Gradient: %s", gradient);
 
 	y = NextSection(y, &yP, yD);
 
-	if (!g_bHideSection[8])
+	if (!g_bHideSection[7])
 	{
 		y = DrawString(data.fEqReservoirPressure,			x+16,	y, whitered, pSmallFont, "Eq Reservoir: %.1f %s", data.fEqReservoirPressure(), data.sBrakeUnits());
 		y = DrawString(data.fMainReservoirPressure,			x+4,	y, whitered, pSmallFont, "Main Reservoir: %.1f %s", data.fMainReservoirPressure(), data.sBrakeUnits());
 		y = DrawString(data.fAirBrakePipePressure,			x+25,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sBrakeUnits());
 		y = DrawString(data.fTrainBrakeCylinderPressure,	x+4,	y, whitered, pSmallFont, "Brake Cylinder: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sBrakeUnits());
+		y = DrawString(data.fVacuumBrakePipePressure,		x+12,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f Inches Hg", data.fVacuumBrakePipePressure());
 	}
-	if (!g_bHideSection[7])
+	if (!g_bHideSection[6])
 	{
 		y = DrawString(data.fAmmeter,						x+36,	y, whitered, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
 		y = DrawString(data.nRPM,							x+60,	y, whitered, pSmallFont, "RPM: %d RPM", (int)data.nRPM());
@@ -442,23 +446,22 @@ void RenderOverlay()
 
 	y = NextSection(y, &yP, yD);
 
-	if (!g_bHideSection[6])
+	if (!g_bHideSection[5])
 	{
 		y = DrawString(data.fDynamicBrake,					x+0,	y, whiteblue, pSmallFont, "Dynamic Brake: %d %%", (int)(data.fDynamicBrake()*100));
 		y = DrawString(data.fLocoBrake,						x+23,	y, whiteblue, pSmallFont, "Loco Brake: %d %%", (int)(data.fLocoBrake()*100));
 		y = DrawString(data.fTrainBrake,					x+23,	y, whiteblue, pSmallFont, "Train Brake: %d %%", (int)(data.fTrainBrake()*100));
 		y = DrawString(data.fThrottle,						x+46,	y, whiteblue, pSmallFont, "Throttle: %d %%", (int)(data.fThrottle()*100));
+		y = DrawString(data.fGearLever,						x+61,	y, whiteblue, pSmallFont, "Gear: %d", (int)data.fGearLever());
 		y = DrawString(data.fReverser,						x+39,	y, whiteblue, pSmallFont, "Reverser: %d %%", (int)(data.fReverser()*100));
 	}
 
 	y = NextSection(y, &yP, yD);
 
-	if (!g_bHideSection[5])
-		y = DrawString(data.nGearLever,						x+28,	y, white, pSmallFont, "Gear Lever: %d", data.nGearLever());
 	if (!g_bHideSection[4])
 		y = DrawString(data.fTargetSpeed,					x+14,	y, white, pSmallFont, "Target Speed: %.1f %s", data.fTargetSpeed(), sUnitsSpeed);
 	if (!g_bHideSection[3])
-		y = DrawString(data.fAcceleration,					x+18,	y, white, pSmallFont, "Acceleration: %.1f %s", getAvgAccel(fAcceleration), sUnitsAcceleration);
+		y = DrawString(data.fAcceleration,					x+18,	y, white, pSmallFont, "Acceleration: %d %s", (int)getAvgAccel(fAcceleration), sUnitsAcceleration);
 	if (!g_bHideSection[2])
 		y = DrawString(data.nNextSpeedLimitType,			x+31,	y, white, pSmallFont, "Next Limit: %s", nextlimit);
 
@@ -469,7 +472,7 @@ void RenderOverlay()
 
 	y = NextSection(y, &yP, yD);
 
-	if (!g_bHideSection[10])
+	if (!g_bHideSection[9])
 	{
 		y = DrawString(data.sTextStartup,					x,		y, startupcolor, pBigFont, data.sTextStartup());
 		y = DrawString(data.sTextEmergency,					x,		y, emergencycolor, pBigFont, data.sTextEmergency());

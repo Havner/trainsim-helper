@@ -9,9 +9,10 @@
 function ConfigureJoystick()
    -- Lines count from 1, not 0 to make easier for non programmers. CombinedThrottleLine and
    -- ThrottleLine can have the same value, they are mutually exclusive and never used together.
-   -- Per loco axes are further down in the function.
+   -- Per loco configurations are further down in the function.
+   -- To disable a control or an invert set it to 0 or comment out.
 
-   -- To disable a control set it to 0 or comment out
+   --Gear = 7
    --ReverserLine = 7
    CombinedThrottleLine = 3
    ThrottleLine = 3
@@ -20,7 +21,7 @@ function ConfigureJoystick()
    DynamicBrakeLine = 7
    --AFBLine = 7
 
-   -- To disable an invert set it to 0 or comment out
+   GearInvert = 1
    ReverserInvert = 1
    CombinedThrottleInvert = 1
    ThrottleInvert = 1
@@ -30,11 +31,12 @@ function ConfigureJoystick()
    AFBInvert = 1
 
    -----------------------------------------------------------
-   --- No need to go below for a very basic configuration  ---
+   -----  No need to go below for a basic configuration  -----
    -----------------------------------------------------------
 
-   -- Find ControlValues this loco has and detect what to use.
+   -- Find ControlValues a loco has and detect what to use.
    -- If combined doesn't exist configure separate throttle and train brake.
+   GearControl =              FindGear()
    ReverserControl =          FindReverser()
    CombinedThrottleControl =  FindCombinedThrottle()
    if not CombinedThrottleControl then
@@ -45,126 +47,148 @@ function ConfigureJoystick()
    DynamicBrakeControl =      FindDynamicBrake()
    AFBControl =               FindAFB()
 
+   -- Get ranges for ALL controls, even unused ones, we might need them later
+   GearRange =             GetControlRange(FindGear())
+   ReverserRange =         GetControlRange(FindReverser())
+   CombinedThrottleRange = GetControlRange(FindCombinedThrottle())
+   ThrottleRange =         GetControlRange(FindThrottle())
+   TrainBrakeRange =       GetControlRange(FindTrainBrake())
+   LocoBrakeRange =        GetControlRange(FindLocoBrake())
+   DynamicBrakeRange =     GetControlRange(FindDynamicBrake())
+   AFBRange =              GetControlRange(FindAFB())
+
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- In my case (3 throttle axes) I often make use of the DynamicLine in
-   -- case where a loco doesn't have DynamicBrakes or some other control is
+   -- case where a loco doesn't have DynamicBrake or some other control is
    -- more important. If you have more then 3 throttle axes you could assign
    -- all of them without having to make compromises.
 
    if DetectClass365() then
       -- Ignore emergency values (0, 0.1)
       CombinedThrottleRange = {0.1, 1}
-      -- Create notches for the CombinedThrottle
+      -- Set custom notches for the CombinedThrottle
       CombinedThrottleNotches = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
 
    elseif DetectHST() then
-      ThrottleNotches = GenerateEqualNotches(6)
-      TrainBrakeNotches = GenerateEqualNotches(8)
+      ThrottleNotches = GenerateEqualNotches(6) -- (0,1)
+      TrainBrakeNotches = GenerateEqualNotches(8) -- (0,1)
 
-   elseif DetectClass377() then
-      -- Create notches for the CombinedThrottle
+   elseif DetectClass375Class377() then
+      -- Set custom notches for the CombinedThrottle
       CombinedThrottleNotches = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
 
    elseif DetectClass450() then
-      -- Create notches for the CombinedThrottle, lower half based on sounds, not .bin
+      -- Set custom notches for the CombinedThrottle, lower half based on sounds, not .bin
       CombinedThrottleNotches = {-1, -0.81, -0.68, -0.56, -0.44, -0.31, -0.18, 0, 0.2, 0.4, 0.6, 0.8, 1}
 
    elseif DetectClass395() then
-      -- Ignore emergency values (-1.5, -1)
+      -- Ignore emergency values on CombinedThrottle (-1.5, -1)
       CombinedThrottleRange = {-1, 1}
-      -- Set notches for the throttle, it's continuous below min brake
+      -- Set custom notches for the CombinedThrottle, it's continuous below min brake
       CombinedThrottleNotches = {-0.25, 0, 0.25, 0.5, 0.75, 1}
-      -- No dynamic here, add reverser, for this loco it's 4 state Virtual
+      -- No Dynamic here, add Reverser, for this loco it's 4 state Virtual
       ReverserLine = DynamicBrakeLine
-      ReverserRange = GetControlRange(ReverserControl)
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange)
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Invert the invert, as this Virtual is inverted compared to the simple one
       ReverserInvert = InvertBool(ReverserInvert)
       -- Disable dynamic
       DynamicBrakeControl = nil
-      DynamicBrakeLine = nil
 
    elseif DetectClass360() then
-      -- Ignore emergency values (-1.5, -1)
+      -- Ignore emergency values on CombinedThrottle (-1.5, -1)
       CombinedThrottleRange = {-1, 1}
-      -- Set notches for the throttle, it's continuous below min brake
+      -- Set custom notches for the CombinedThrottle, it's continuous below min brake
       CombinedThrottleNotches = {-0.25, 0, 0.2, 0.4, 0.6, 0.8, 1}
-      -- No dynamic here, add reverser, for this loco it's 4 state Virtual
+      -- No Dynamic here, add Reverser, for this loco it's 4 state Virtual
       ReverserLine = DynamicBrakeLine
-      ReverserRange = GetControlRange(ReverserControl)
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange)
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Invert the invert, as this Virtual is inverted compared to the simple one
       ReverserInvert = InvertBool(ReverserInvert)
       -- Disable dynamic
       DynamicBrakeControl = nil
-      DynamicBrakeLine = nil
+
+   elseif DetectClass90_ADV_AP() then
+      -- Ignore emergency and useless release border values
+      TrainBrakeRange = {0.125, 0.875}
+      TrainBrakeNotches = GenerateEqualNotches(7, TrainBrakeRange) -- not defined as equal in .bin but they are
+      -- Add Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
+      ReverserLine = DynamicBrakeLine
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Disable dynamic
+      DynamicBrakeControl = nil
+
+   elseif DetectMK3DVT_ADV_AP() then
+      -- Ignore emergency values
+      TrainBrakeRange = {0, 0.852}
+      TrainBrakeNotches = {0, 0.142, 0.284, 0.426, 0.568, 0.71, 0.852}
+      -- Add Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
+      ReverserLine = DynamicBrakeLine
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Disable dynamic
+      DynamicBrakeControl = nil
+
+   elseif DetectClass321_AP() then
+      ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
+      TrainBrakeNotches = GenerateEqualNotches(5) -- (0,1)
+      -- Add Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
+      ReverserLine = DynamicBrakeLine
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Disable dynamic
+      DynamicBrakeControl = nil      
 
    elseif DetectClass156_Oovee() then
-      ThrottleRange = GetControlRange(ThrottleControl)
-      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange)
-      TrainBrakeRange = GetControlRange(TrainBrakeControl)
-      TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange)
-      ReverserRange = GetControlRange(ReverserControl)
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange)
+      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,7)
+      TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange) -- (0,4)
+      -- No Dynamic here, add Reverser, for this loco it's 4 state Virtual
+      ReverserLine = DynamicBrakeLine
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Disable dynamic
+      DynamicBrakeControl = nil
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectES44DC() then
-      -- Notches for the regulator, it's (0, 1)
-      ThrottleNotches = GenerateEqualNotches(9)
-      -- Notches for the dynamic, it's not (0, 1) so automate
-      DynamicBrakeRange = GetControlRange(DynamicBrakeControl)
-      DynamicBrakeNotches = GenerateEqualNotches(10, DynamicBrakeRange)
+      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+      DynamicBrakeNotches = GenerateEqualNotches(10, DynamicBrakeRange) -- (-0.125, 1)
 
    elseif DetectGP38_2() then
-      ThrottleNotches = GenerateEqualNotches(9)
+      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
 
    elseif DetectES44AC() then
-      ThrottleNotches = GenerateEqualNotches(9)
+      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
 
    elseif DetectSD70M() then
-      -- Notches for the combined, it's (0, 1)
-      CombinedThrottleNotches = GenerateEqualNotches(19)
-      -- This loco has CombinedThrottle combined with dynamic brake
-      -- Make use of train brake then, the control has not been found previously
+      CombinedThrottleNotches = GenerateEqualNotches(19) -- (0,1)
+      -- This loco has CombinedThrottle combined with DynamicBrake
+      -- Make use of TrainBrake then, the control has not been found previously
       TrainBrakeControl = FindTrainBrake()
-      -- Use a spare axis left from dynamic to control loco brake
+      -- Use a spare axis left from DynamicBrake to control LocoBrake
       LocoBrakeLine = DynamicBrakeLine
-      -- And don't use separate dynamic axis
+      -- And don't use separate dynamic control
       DynamicBrakeControl = nil
-      DynamicBrakeLine = nil
 
    -- Some very general German locos detection for AFB/Sifa
 
-   elseif DetectGermanAFBEngine() then
-      -- Setup AFB line, the control has already been detected
+   elseif DetectGermanAFB() then
+      -- Setup AFB instead of Dynamic, the control has already been detected
       AFBLine = DynamicBrakeLine
-      -- Disable dynamic
+      -- Disable dynamic control
       DynamicBrakeControl = nil
-      DynamicBrakeLine = nil
 
    end
 
    -- Past this point the following global values should be set if they exist and are set to be used
-   -- *Line, *Control
+   -- *Line, *Control, *Range
    -- and optionally:
-   -- *Invert, *Range, *Notches, *CenterDetent
+   -- *Invert, *Notches, *CenterDetent
 
    -----------------------------------------------------------
-   ----- No need to go below for a basic configuration  ------
+   ---------------  End of user configuration  ---------------
    -----------------------------------------------------------
-
-   -- Configure axes ranges if applicable and not previously set
-   ReverserRange =         GetControlRange(ReverserControl, ReverserRange)
-   CombinedThrottleRange = GetControlRange(CombinedThrottleControl, CombinedThrottleRange)
-   ThrottleRange =         GetControlRange(ThrottleControl, ThrottleRange)
-   TrainBrakeRange =       GetControlRange(TrainBrakeControl, TrainBrakeRange)
-   LocoBrakeRange =        GetControlRange(LocoBrakeControl, LocoBrakeRange)
-   DynamicBrakeRange =     GetControlRange(DynamicBrakeControl, DynamicBrakeRange)
-   AFBRange =              GetControlRange(AFBControl, AFBRange)
 
    -- Set real values at the start to avoid uncontrolled changing the state after game loads
    local lines = ReadFile("trainsim-helper-joystick.txt")
+   PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
    PreviousReverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
    PreviousCombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
    PreviousThrottle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
@@ -180,6 +204,12 @@ end
 -----------------------------------------------------------
 ------------  Control values finder functions  ------------
 -----------------------------------------------------------
+
+function FindGear()
+   if Call("*:ControlExists", "GearLever", 0) == 1 then
+      return "GearLever"
+   end
+end
 
 function FindReverser()
    if Call("*:ControlExists", "VirtualReverser", 0) == 1 then
@@ -244,6 +274,7 @@ end
 function SetJoystickData()
    local lines = ReadFile("trainsim-helper-joystick.txt")
 
+   local Gear =             GetLineValue(lines, GearLine, GearInvert)
    local Reverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
    local CombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
    local Throttle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
@@ -253,6 +284,7 @@ function SetJoystickData()
    local AFB =              GetLineValue(lines, AFBLine, AFBInvert)
 
    -- Feed with data
+   PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
    PreviousReverser =         SetControl(ReverserControl,         PreviousReverser,         Reverser,         ReverserRange,         ReverserNotches,         ReverserCenterDetent)
    PreviousCombinedThrottle = SetControl(CombinedThrottleControl, PreviousCombinedThrottle, CombinedThrottle, CombinedThrottleRange, CombinedThrottleNotches, CombinedThrottleCenterDetent)
    PreviousThrottle =         SetControl(ThrottleControl,         PreviousThrottle,         Throttle,         ThrottleRange,         ThrottleNotches)
@@ -287,13 +319,6 @@ function ReadFile(name)
    return lines
 end
 
-function WriteFile(name, data)
-   local file = io.open("plugins/"..name, "w")
-   file:write(data)
-   file:flush()
-   file:close()
-end
-
 function GetLineValue(lines, line, invert)
    if line and line > 0 then
       local value = lines[line]
@@ -316,22 +341,22 @@ function InvertBool(b)
    end
 end
 
-function GetControlRange(control, range)
-   if control and not range then
+function GetControlRange(control)
+   if control then
       --if Call("*:ControlExists", control, 0) == 1 then
-         range = {}
+         local range = {}
 	 range[1] = Call("*:GetControlMinimum", control, 0)
 	 range[2] = Call("*:GetControlMaximum", control, 0)
+	 if range[1] ~= 0 or range[2] ~= 1 then
+	    return range
+	 end
       --end
-   end
-   if range and (range[1] ~= 0 or range[2] ~= 1) then
-      return range
    end
 end
 
 function GenerateEqualNotches(count, range)
    if count and count >= 2 then
-      notches = {0}
+      local notches = {0}
       for x = 2, count do
 	 notches[x] = (x-1) / (count-1)
       end

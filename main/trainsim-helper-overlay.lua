@@ -51,6 +51,9 @@ function GetOverlayData()
       Units = "M"
    elseif Call("*:ControlExists", "SpeedometerKPH", 0) == 1 then
       Units = "K"
+   else
+      -- Well, howewer impossible that sounds, I found locos without Speedometer, pressume M
+      Units = "M"
    end
    if Units then data = data.."Units: "..Units.."\n" end
 
@@ -97,6 +100,12 @@ function GetOverlayData()
    end
    if TargetSpeed then data = data.."TargetSpeed: "..string.format(FloatFormat,TargetSpeed).."\n" end
    
+   local Reverser
+   if Call("*:ControlExists", "Reverser", 0) == 1 then
+      Reverser = Call("*:GetControlValue", "Reverser", 0)
+   end
+   if Reverser then data = data .."Reverser: "..string.format(FloatFormat,Reverser).."\n" end
+
    local GearLever
    if Call("*:ControlExists", "GearLever",0) == 1 then
       GearLever = Call("*:GetControlValue", "GearLever",0)
@@ -127,12 +136,6 @@ function GetOverlayData()
    end
    if DynamicBrake then data = data .."DynamicBrake: "..string.format(FloatFormat,DynamicBrake).."\n" end
 
-   local Reverser
-   if Call("*:ControlExists", "Reverser", 0) == 1 then
-      Reverser = Call("*:GetControlValue", "Reverser", 0)
-   end
-   if Reverser then data = data .."Reverser: "..string.format(FloatFormat,Reverser).."\n" end
-
    local Ammeter   
    if Call("*:ControlExists", "Ammeter", 0) == 1 then
       Ammeter = Call("*:GetControlValue", "Ammeter", 0)
@@ -144,6 +147,12 @@ function GetOverlayData()
       RPM = Call("*:GetControlValue", "RPM", 0)
    end
    if RPM then data = data.."RPM: "..string.format(FloatFormat,RPM).."\n" end
+
+   local VacuumBrakePipePressure
+   if Call("*:ControlExists", "VacuumBrakePipePressureINCHES",0) == 1 then
+      VacuumBrakePipePressure = Call("*:GetControlValue", "VacuumBrakePipePressureINCHES",0)
+   end
+   if VacuumBrakePipePressure then data = data.."VacuumBrakePipePressure: "..string.format(FloatFormat,VacuumBrakePipePressure).."\n" end
 
    local BrakeUnits
 
@@ -250,7 +259,9 @@ function GetOverlayData()
    if AWS then data = data.."AWS: "..string.format(FloatFormat,AWS).."\n" end
 
    local VigilAlarm
-   if Call("*:ControlExists", "VigilAlarm", 0) == 1 then
+   if Call("*:ControlExists", "DSDAlarm", 0) == 1 then
+      VigilAlarm = Call("*:GetControlValue", "DSDAlarm", 0)
+   elseif Call("*:ControlExists", "VigilAlarm", 0) == 1 then
       VigilAlarm = Call("*:GetControlValue", "VigilAlarm", 0)
    end
    if VigilAlarm then data = data.."VigilAlarm: "..string.format(FloatFormat,VigilAlarm).."\n" end
@@ -296,4 +307,11 @@ function TryGetControlValue(control)
    if Call("*:ControlExists", control, 0) == 1 then
       return Call("*:GetControlValue", control, 0)
    end
+end
+
+function WriteFile(name, data)
+   local file = io.open("plugins/"..name, "w")
+   file:write(data)
+   file:flush()
+   file:close()
 end

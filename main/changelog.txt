@@ -1,15 +1,19 @@
 0.3
  - WARNING: the script has been split into 3 files, you need all
- - Overlay configuration is in the trainsim-helper-overlay.lua
- - Joystick configuration is in the trainsim-helper-joystick.lua
- - Detections for locos are in the trainsim-helper.lua
-
+  - Overlay configuration is in the trainsim-helper-overlay.lua
+  - Joystick configuration is in the trainsim-helper-joystick.lua
+  - Detections for locos are in the trainsim-helper.lua
+ - WARNING: ALL ControlRanges are detected before Locos detections
+  - This allows for less code in the detection routines
+ - GearControl axis added (Gear Lever)
+ - Gear in the Overlay moved to the controls group (blue)
+  - WARNING: Because of this shortcuts got shifted by 1 (F1-F9, F11-F12)
+ - Vacuum Pipe added to the Overlay (red), Vacuum Chamber ignored (seems irrelevant)
  - Moved the clock to align better with long scenario names and F5 UI
- - Overlay GradientUK format option (1:XXX)
+ - Overlay GradientUK format option (1:XXX) (mostly autodetected for UK)
  - Fixed gigantic speed limits for SpeedLimitType == 3 (now it's '??')
- - Add units to acceleration, recalculate from m/s^2
+ - Add units to acceleration, recalculate from m/s^2 (Kph/m, Mph/m)
  - Moved most of the calculations to C++ for performance and greater control
- - Internal code changes
  - Readme updated (TOC and section on how to receive help)
  - Detections and notches configurations for more locos
 

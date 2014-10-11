@@ -32,7 +32,7 @@ function DetectHST() -- London - Peterborough
    end
 end
 
-function DetectClass377() -- and 375, London - Brighton, London - Faversham
+function DetectClass375Class377() -- London - Faversham, London - Brighton
    if Call("*:ControlExists", "Buzzer", 0) == 1 and
       Call("*:ControlExists", "BrakeHold", 0) == 1 and
       Call("*:ControlExists", "CarSlider", 0) == 1 and
@@ -83,6 +83,60 @@ function DetectClass360() -- London - Ipswich
       Call("*:ControlExists", "SideL", 0) == 1 and
       Call("*:ControlExists", "Instruments", 0) == 1 and
       Call("*:ControlExists", "Fuerza", 0) == 1
+   then
+      return 1
+   end
+end
+
+function DetectClass90_ADV_AP()
+   if Call("*:ControlExists", "VisualAids", 0) == 1 and
+      Call("*:ControlExists", "CabAmbience", 0) == 1 and
+      Call("*:ControlExists", "AirCon", 0) == 1 and
+      Call("*:ControlExists", "IntFanTimer", 0) == 1 and
+      Call("*:ControlExists", "ExtFanTimer", 0) == 1 and
+      Call("*:ControlExists", "BIS", 0) == 1 and
+      Call("*:ControlExists", "swGuardWiper", 0) == 1 and
+      Call("*:ControlExists", "GuardWiper", 0) == 1 and
+      Call("*:ControlExists", "TPWS", 0) == 1 and
+      Call("*:ControlExists", "DSDPedal", 0) == 1 and
+      Call("*:ControlExists", "VirtualEngineBrakeControl", 0) == 1
+   then
+      return 1
+   end
+end
+
+function DetectMK3DVT_ADV_AP()
+   if Call("*:ControlExists", "VisualAids", 0) == 1 and
+      Call("*:ControlExists", "CabAmbience", 0) == 1 and
+      Call("*:ControlExists", "AirCon", 0) == 1 and
+      Call("*:ControlExists", "IntFanTimer", 0) == 1 and
+      Call("*:ControlExists", "ExtFanTimer", 0) == 1 and
+      Call("*:ControlExists", "BIS", 0) == 1 and
+      Call("*:ControlExists", "swGuardWiper", 0) == 1 and
+      Call("*:ControlExists", "GuardWiper", 0) == 1 and
+      Call("*:ControlExists", "TPWS", 0) == 1 and
+      Call("*:ControlExists", "DSDPedal", 0) == 1 and
+      Call("*:ControlExists", "DVTTraction", 0) == 1
+   then
+      return 1
+   end
+end
+
+function DetectClass321_AP()
+   if Call("*:ControlExists", "desind", 0) == 1 and
+      Call("*:ControlExists", "Destination", 0) == 1 and
+      Call("*:ControlExists", "Bogie1Flat", 0) == 1 and
+      Call("*:ControlExists", "RoofCabLight", 0) == 1 and
+      Call("*:ControlExists", "Linelightdimmer", 0) == 1 and
+      Call("*:ControlExists", "Linelightglow", 0) == 1 and
+      Call("*:ControlExists", "Linelight", 0) == 1 and
+      Call("*:ControlExists", "DSHeater", 0) == 1 and
+      Call("*:ControlExists", "NDSHeater", 0) == 1 and
+      Call("*:ControlExists", "WheelLock", 0) == 1 and
+      Call("*:ControlExists", "VirtualResPressureNeedle", 0) == 1 and
+      Call("*:ControlExists", "DialLightSwitch", 0) == 1 and
+      Call("*:ControlExists", "VCB", 0) == 1 and
+      Call("*:ControlExists", "TPWS", 0) == 1
    then
       return 1
    end

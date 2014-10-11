@@ -1,9 +1,5 @@
-Next version:
-- Optimize overlay (don't check for existance on each iteration)
-- VacuumBrakes (INCHES, Class 86)
-- Check one loco with PSI/BAR settings (class 86)
-
 For the future:
+- Optimize overlay (don't check for controlvalues on each frame)
 - Steamers support
 - Make the overlay display values in the data file it doesn't know about
 - More generalization in the C++ code and cleaning it a bit
