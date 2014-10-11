@@ -111,9 +111,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	int nWidth;
 	int nHeight;
 
-	HWND newhwnd = FindTSWindow();
-	if(newhwnd!=NULL) {
-		GetWindowRect(newhwnd,&rc);
+	HWND hWndTS = FindTSWindow();
+	if(hWndTS != NULL) {
+		GetWindowRect(hWndTS, &rc);
 		nWidth = rc.right - rc.left;
 		nHeight = rc.bottom - rc.top;
 	} else {
@@ -175,7 +175,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	InitD3D(hWnd, nWidth, nHeight);
 	MSG msg;
-	::SetWindowPos(FindTSWindow(), HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+	::SetWindowPos(hWndTS, HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
 	for (int i = 1; i <= 12; ++i)
 		RegisterHotKey(hWnd, i % 12, MOD_SHIFT | MOD_CONTROL, VK_F1+i-1);
@@ -188,14 +188,23 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	while(!fDone)
 	{
-		::SetWindowPos(hWnd, HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
-		Sleep(10);
-
-		if(!FindTSWindow())
+		hWndTS = FindTSWindow();
+		if (!hWndTS)
 		{
 			msg.wParam = 0;
 			break;
 		}
+
+		RECT rcNew;
+		GetWindowRect(hWndTS, &rcNew);
+		if (rcNew.left != rc.left || rcNew.top != rc.top)
+		{
+			rc = rcNew;
+			MoveWindow(hWnd, rc.left, rc.top, nWidth, nHeight, FALSE);
+		}
+
+		::SetWindowPos(hWnd, HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+		Sleep(10);
 
 		RenderOverlay();
 		if (bUseJoystick)
