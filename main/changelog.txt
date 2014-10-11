@@ -16,6 +16,8 @@
  - Moved most of the calculations to C++ for performance and greater control
  - Readme updated (TOC and section on how to receive help)
  - Detections and notches configurations for more locos
+ - Source code from now is on github:
+  - https://github.com/Havner/trainsim-helper
 
 0.2a
  - Added M8Brake to the list of controllable TrainBrakes

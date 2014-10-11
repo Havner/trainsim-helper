@@ -471,6 +471,9 @@ B. Licence
   VisualStudio installed (Express is fine, I use 2010). Also a DirectX
   SDK will be required. Windows 8 might that builtin, not sure
   though. For Windows 7 you need DXSDK_Jun10.exe.
+
+  Source code available here:
+  https://github.com/Havner/trainsim-helper
 -----------------------------------------------------------------------
 
 12. Modifications of the C++ code
