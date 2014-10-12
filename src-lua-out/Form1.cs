@@ -173,8 +173,8 @@ namespace Lua_Out_Editor
 
                 string strippedOrigFile = origFilePath;
                 strippedOrigFile = Regex.Replace(strippedOrigFile, @"\\", @"/");
-                string cutTo = "/railworks/";
-                int cut = strippedOrigFile.IndexOf(cutTo, StringComparison.OrdinalIgnoreCase) + cutTo.Length;
+                string cutTo = "/assets/";
+                int cut = strippedOrigFile.IndexOf(cutTo, StringComparison.OrdinalIgnoreCase) + 1;
                 strippedOrigFile = strippedOrigFile.Substring(cut);
 
                 File.Move(filePath, origFilePath);
