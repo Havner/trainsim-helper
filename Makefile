@@ -8,5 +8,6 @@ release:
 	cp -r main $(DIR)
 	cp src/Release/trainsim-helper.exe $(DIR)
 	cp src-lua-out/bin/Release/Lua_Out_Editor.exe $(DIR)/trainsim-helper-lua-out/trainsim-helper-lua-out.exe
+	rm -f $(DIR).zip
 	zip -r $(DIR).zip $(DIR)
 	rm -rf $(DIR)
