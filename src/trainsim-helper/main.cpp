@@ -178,7 +178,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	::SetWindowPos(hWndTS, HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
 	for (int i = 1; i <= 12; ++i)
-		RegisterHotKey(hWnd, i % 12, MOD_SHIFT | MOD_CONTROL, VK_F1+i-1);
+		RegisterHotKey(hWnd, i % 12, MOD_SHIFT | MOD_ALT, VK_F1+i-1);
+
+	RegisterHotKey(hWnd, 12, MOD_SHIFT | MOD_ALT, 0x52 /* R key */);
+
+	for (int i = 20; i <= 29; ++i)
+		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, i-20+0x30);
 
 	if (bUseJoystick)
 		if (FAILED(InitDirectInput()))
@@ -242,7 +247,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	case WM_HOTKEY:
-		ToggleDisplaySection(wParam);
+		if (wParam >= 0 && wParam <= 11)
+			ToggleDisplaySection(wParam);
+		else if (wParam == 12)
+			ResetDistance();
+		else if (wParam >= 20 && wParam <= 29)
+			SetCountdown(wParam - 20);
 		break;
 	}
 

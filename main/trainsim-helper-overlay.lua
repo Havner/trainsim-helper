@@ -55,7 +55,7 @@ function GetOverlayData()
    if Units then data = data.."Units: "..Units.."\n" end
 
    local Speed = Call("*:GetSpeed")
-   if Speed then data = data.."Speed: "..string.format(FloatFormat,Speed).."\n" end
+   if Speed then data = data.."Speed: "..Speed.."\n" end
 
    local SpeedLimit = Call("*:GetCurrentSpeedLimit")
    if SpeedLimit then data = data.."SpeedLimit: "..string.format(FloatFormat,SpeedLimit).."\n" end
@@ -286,7 +286,7 @@ function GetOverlayData()
    
    -- SimulationTime is used to show script is running as clock updates in real time
    local SimulationTime = Call("*:GetSimulationTime", 0)
-   if SimulationTime then data = data.."SimulationTime: "..string.format(FloatFormat,SimulationTime).."\n" end
+   if SimulationTime then data = data.."SimulationTime: "..SimulationTime.."\n" end
 
    data = data.."\n"
 

@@ -1,7 +1,14 @@
-0.3a
- - Make it possible to use the Patcher without TS registry entries
+0.4
+ - WARNING: the keyboard shortcuts (F1-F9) got changed again due
+   to the addition of Distance and a change with TargetSpeed
+ - WARNING: the modifier for ALL the shortcuts got changed to
+   SHIFT-ALT due to collisions with TS shortcuts (adv. brakes)
+ - Distance/Countdown implementation, see the readme
+ - Moved the TargetSpeed to the controls (blue) section
+ - Made it possible to use the Patcher without TS registry entries
    and custom named RailWorks folder
  - Handle the windowed mode case, move together with TS window
+ - Removed numbers formatting in lua, pass the full float/double
  - Minor code changes
 
 0.3

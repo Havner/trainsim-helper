@@ -29,6 +29,12 @@ int g_nHeight;
 bool g_bHideSection[SECTIONS_TABLE_SIZE];
 int g_nAccelIndex;
 float g_fAccelTable[ACCEL_TABLE_SIZE];
+double g_fDistance;
+double g_fPrevSimulationTime;
+double g_fPrevSimulationTime2;
+bool g_bCountdown;
+char g_nCountdownDigits[4];
+int g_nSetCountdownProgress;
 
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;
@@ -36,6 +42,7 @@ LPDIRECT3DDEVICE9 d3ddev;
 LPD3DXFONT pSmallFont;
 LPD3DXFONT pMediumFont;
 LPD3DXFONT pBigFont;
+LPD3DXFONT pBigFixedFont;
 
 DWORD transparent = D3DCOLOR_ARGB(0,0,0,0);
 DWORD white = D3DCOLOR_ARGB(255,255,255,255);
@@ -54,6 +61,11 @@ template<>
 float aton(const char* s)
 {
 	return (float)atof(s);
+}
+template<>
+double aton(const char* s)
+{
+	return atof(s);
 }
 template<>
 int aton(const char* s)
@@ -102,7 +114,7 @@ struct Value<std::string>
 struct SimData {
 	Value<int>			nClock;
 	Value<std::string>	sUnits;
-	Value<float>		fSpeed;
+	Value<double>		fSpeed;
 	Value<float>		fSpeedLimit;
 	Value<int>			nNextSpeedLimitType;
 	Value<float>		fNextSpeedLimit;
@@ -137,13 +149,30 @@ struct SimData {
 	Value<std::string>  sTextStartup;
 	Value<int>			nGradientUK;
 
-	Value<float>		fSimulationTime;
+	Value<double>		fSimulationTime;
 };
 
 void ToggleDisplaySection(int s)
 {
 	if (s >= 0 && s < SECTIONS_TABLE_SIZE)
 		g_bHideSection[s] = !g_bHideSection[s];
+}
+
+void ResetDistance()
+{
+	g_fDistance = 0.0;
+	g_bCountdown = false;
+	g_nSetCountdownProgress = 0;
+}
+
+void SetCountdown(char n)
+{
+	if (n >= 0 && n <= 9 && g_nSetCountdownProgress < 4)
+	{
+		g_nCountdownDigits[g_nSetCountdownProgress] = n;
+		g_nSetCountdownProgress++;
+		g_fPrevSimulationTime2 = g_fPrevSimulationTime;
+	}
 }
 
 void InitD3D(HWND hWnd, int nWidth, int nHeight)
@@ -174,6 +203,7 @@ void InitD3D(HWND hWnd, int nWidth, int nHeight)
 	D3DXCreateFont(d3ddev, 16, 0, FW_NORMAL, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &pSmallFont);
 	D3DXCreateFont(d3ddev, 20, 0, FW_NORMAL, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &pMediumFont);
 	D3DXCreateFont(d3ddev, 40, 0, FW_NORMAL, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &pBigFont);
+	D3DXCreateFont(d3ddev, 80, 0, FW_BOLD, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Courier New", &pBigFixedFont);
 
 	g_nWidth = nWidth;
 	g_nHeight = nHeight;
@@ -190,8 +220,7 @@ int NextSection(int y, int *yPrev, const int yDist)
 	return y;
 }
 
-template<typename T>
-int DrawString(T valid, int x, int y, DWORD color, LPD3DXFONT pFont, const char *fmt, ...)
+int DrawString(bool valid, int x, int y, DWORD color, LPD3DXFONT pFont, const char *fmt, ...)
 {
 	if (!valid)
 		return y;
@@ -318,16 +347,29 @@ void RenderOverlay()
 		return;
 	}
 
-	if (g_bHideSection[0]) // -0, -12, CTRL+SHIFT+F12
-	{
-		d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0,0, 0, 0), 1.0f, 0);
-		d3ddev->Present(NULL, NULL, NULL, NULL);
-		return;
-	}
-
 	// Check whether all the values got filled properly
 	if (!data.fSimulationTime)
 		return;
+
+	// Distance calculations, all in seconds, meters and meters per second
+	if (g_fPrevSimulationTime == 0.0)
+		g_fPrevSimulationTime = data.fSimulationTime();
+
+	if (data.fSimulationTime() < g_fPrevSimulationTime)
+	{
+		g_fPrevSimulationTime = 0.0;
+		g_fDistance = 0.0;
+		g_bCountdown = false;
+	}
+	else
+	{
+		double fDeltaTime = data.fSimulationTime() - g_fPrevSimulationTime;
+		g_fPrevSimulationTime = data.fSimulationTime();
+		double fDeltaDistance = data.fSpeed() * fDeltaTime;
+		if (g_bCountdown)
+			fDeltaDistance *= -1.0;
+		g_fDistance += fDeltaDistance;
+	}
 
 	char *sUnitsSpeed;
 	char *sUnitsDistance;
@@ -354,11 +396,37 @@ void RenderOverlay()
 		fModifierAcceleration = MPS_TO_MPH * 60;
 	}
 
-	float fSpeed = data.fSpeed() * fModifierSpeed;
+	// If all the digits has been entered set countdown
+	if (g_nSetCountdownProgress == 4)
+	{
+		double fDistance = g_nCountdownDigits[0] * 10.0 + g_nCountdownDigits[1] * 1.0 + g_nCountdownDigits[2] * 0.1 + g_nCountdownDigits[3] * 0.01;
+		g_fDistance = fDistance / fModifierDistance;
+		g_bCountdown = true;
+	}
+	// Block the setting and display the text for one more second
+	if (g_nSetCountdownProgress == 4 && data.fSimulationTime() - g_fPrevSimulationTime2 > 1.0)
+	{
+		g_nSetCountdownProgress = 0;
+	}
+	// If we did not put anything for 5 seconds since last digit, cancel
+	if (g_nSetCountdownProgress && data.fSimulationTime() - g_fPrevSimulationTime2 > 5.0)
+	{
+		g_nSetCountdownProgress = 0;
+	}
+
+	if (g_bHideSection[0]) // -0, -12, CTRL+SHIFT+F12
+	{
+		d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0,0, 0, 0), 1.0f, 0);
+		d3ddev->Present(NULL, NULL, NULL, NULL);
+		return;
+	}
+
+	float fSpeed = (float)data.fSpeed() * fModifierSpeed;
 	float fAcceleration = data.fAcceleration() * fModifierAcceleration;
 	int nSpeedLimit = (int)(data.fSpeedLimit() * fModifierSpeed);
 	int nNextSpeedLimit = (int)(data.fNextSpeedLimit() * fModifierSpeed);
 	float fNextSpeedLimitDistance = data.fNextSpeedLimitDistance() * fModifierDistance;
+	float fDistance = (float)g_fDistance * fModifierDistance;
 
 	// AWS color (yellow - sunflower, red - push)
 	DWORD awscolor = transparent;
@@ -389,6 +457,13 @@ void RenderOverlay()
 	if (abs(fSpeed) - nSpeedLimit > 0.9f)
 		speedcolor = red;
 
+	// countdown color
+	DWORD countdowncolor = white;
+	if (g_fDistance * fModifierDistance <= 1.0)
+		countdowncolor = yellow;
+	if (g_fDistance * fModifierDistance < 0.0)
+		countdowncolor = red;
+
 	// next limit string
 	char nextlimit[STRING_SIZE] = {'\0'};
 	if (data.nNextSpeedLimitType() < 0)
@@ -415,6 +490,17 @@ void RenderOverlay()
 	// clear the window alpha
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0,0, 0, 0), 1.0f, 0);
 	d3ddev->BeginScene();	// begins the 3D scene
+
+	// Display the Countdown setting if in progress
+	if (g_nSetCountdownProgress)
+	{
+		char cDigits[4] = { '_', '_', '_', '_' };
+		for (int i = 0; i < g_nSetCountdownProgress; ++i)
+			cDigits[i] = g_nCountdownDigits[i] + 0x30;
+		char sCountdown[STRING_SIZE];
+		_snprintf(sCountdown, STRING_SIZE, "%c%c.%c%c", cDigits[0], cDigits[1], cDigits[2], cDigits[3]);
+		DrawString(true, g_nWidth / 2 - 100, g_nHeight / 2, whitegreen, pBigFixedFont, sCountdown);
+	}
 
 	if (!g_bHideSection[11])
 		DrawString(data.nClock, 350, 57, white, pBigFont, "%d:%02d:%02d",
@@ -454,19 +540,26 @@ void RenderOverlay()
 		y = DrawString(data.fThrottle,						x+46,	y, whiteblue, pSmallFont, "Throttle: %d %%", (int)(data.fThrottle()*100));
 		y = DrawString(data.fGearLever,						x+61,	y, whiteblue, pSmallFont, "Gear: %d", (int)data.fGearLever());
 		y = DrawString(data.fReverser,						x+39,	y, whiteblue, pSmallFont, "Reverser: %d %%", (int)(data.fReverser()*100));
+		y = DrawString(data.fTargetSpeed,					x+14,	y, whiteblue, pSmallFont, "Target Speed: %.1f %s", data.fTargetSpeed(), sUnitsSpeed);
 	}
 
 	y = NextSection(y, &yP, yD);
 
 	if (!g_bHideSection[4])
-		y = DrawString(data.fTargetSpeed,					x+14,	y, white, pSmallFont, "Target Speed: %.1f %s", data.fTargetSpeed(), sUnitsSpeed);
-	if (!g_bHideSection[3])
 		y = DrawString(data.fAcceleration,					x+18,	y, white, pSmallFont, "Acceleration: %d %s", (int)getAvgAccel(fAcceleration), sUnitsAcceleration);
-	if (!g_bHideSection[2])
+	if (!g_bHideSection[3])
 		y = DrawString(data.nNextSpeedLimitType,			x+31,	y, white, pSmallFont, "Next Limit: %s", nextlimit);
 
 	y = NextSection(y, &yP, yD);
-	
+
+	if (!g_bHideSection[2])
+	{
+		if (g_bCountdown)
+			y = DrawString(ISVALID(fDistance),				x+9,	y, countdowncolor, pMediumFont, "Countdown: %.2f %s", fDistance, sUnitsDistance);
+		else
+			y = DrawString(ISVALID(fDistance),				x+26,	y, white, pMediumFont, "Distance: %.2f %s", fDistance, sUnitsDistance);
+	}
+
 	if (!g_bHideSection[1])
 		y = DrawString(true,								x+43,	y, speedcolor, pMediumFont, "Speed: %.1f / %d %s", normalizeSign(fSpeed), nSpeedLimit, sUnitsSpeed);
 
