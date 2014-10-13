@@ -9,6 +9,7 @@
    and custom named RailWorks folder
  - Handle the windowed mode case, move together with TS window
  - Removed numbers formatting in lua, pass the full float/double
+ - Detections and notches configurations for more locos
  - Minor code changes
 
 0.3

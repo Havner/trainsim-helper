@@ -167,6 +167,17 @@ function ConfigureJoystick()
       -- And don't use separate dynamic control
       DynamicBrakeControl = nil
 
+   elseif DetectF59PH() or DetectCabCar() then
+      -- Not a simple case as the implementation merges two controls with different notches
+      CombinedThrottleNotches = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
+      -- This loco has CombinedThrottle combined with DynamicBrake
+      -- Make use of TrainBrake then, the control has not been found previously
+      TrainBrakeControl = FindTrainBrake()
+      -- Use a spare axis left from DynamicBrake to control LocoBrake
+      LocoBrakeLine = DynamicBrakeLine
+      -- And don't use separate dynamic control
+      DynamicBrakeControl = nil
+
    -- Some very general German locos detection for AFB/Sifa
 
    elseif DetectGermanAFB() then
