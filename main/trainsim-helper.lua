@@ -226,7 +226,6 @@ function DetectCabCar() -- Pacific Surfliner and its addons
       Call("*:ControlExists", "AWSReset", 0) == 1 and
       Call("*:ControlExists", "HornHB", 0) == 1 and
       Call("*:ControlExists", "Flash", 0) == 1 and
-      Call("*:ControlExists", "AirConFan", 0) == 1 and
       Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
       Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 1 and
       Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1
@@ -236,6 +235,21 @@ function DetectCabCar() -- Pacific Surfliner and its addons
 end
 
 function DetectF59PHI() -- Pacific Surfliner and its addon
+   if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("*:ControlExists", "RPMDelta", 0) == 1 and
+      Call("*:ControlExists", "CompressorState", 0) == 1 and
+      Call("*:ControlExists", "AWS", 0) == 1 and
+      Call("*:ControlExists", "AWSReset", 0) == 1 and
+      Call("*:ControlExists", "HornHB", 0) == 1 and
+      Call("*:ControlExists", "Flash", 0) == 1 and
+      Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
+      Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 0 and
+      Call("*:ControlExists", "VisorLeft", 0) == 0 and
+      Call("*:ControlExists", "VisorMiddle", 0) == 0 and
+      Call("*:ControlExists", "VisorRight", 0) == 0
+   then
+      return 1
+   end
 end
 
 function DetectF59PH() -- Pacific Surfliner addon
