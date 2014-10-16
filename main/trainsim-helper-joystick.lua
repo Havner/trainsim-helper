@@ -78,11 +78,6 @@ function ConfigureJoystick()
       CombinedThrottleRange = {-1, 1}
       -- Set custom notches for the CombinedThrottle, it's continuous below min brake
       CombinedThrottleNotches = {-0.25, 0, 0.25, 0.5, 0.75, 1}
-      -- No Dynamic here, add Reverser
-      ReverserLine = DynamicBrakeLine
-      ReverserNotches = GenerateEqualNotches(3, ReverserRange) -- (-1,1)
-      -- Disable dynamic
-      DynamicBrakeControl = nil
 
    elseif DetectClass375Class377() then
       -- Set custom notches for the CombinedThrottle
