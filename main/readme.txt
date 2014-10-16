@@ -1,4 +1,4 @@
-This documentation is still WIP, mostly the advanced part from 7.
+This documentation is still WIP, mostly the advanced part from 8.
 
 Table of contents:
 1. Quick introduction
@@ -7,13 +7,14 @@ Table of contents:
 4. Joystick setup
 5. Patching further locos
 6. Keyboard shortcuts and command line switches
-7. Full description
-8. Additional notes for the overlay
-9. New control values
-10. Advanced configuration / custom locos
-11. HELP! It doesn't work
-12. Modifications of the C++ code
-13. The Lua_Out editor
+7. Distance/Countdown/Odometer usage
+8. Full description
+9. Additional notes for the overlay
+10. New control values
+11. Advanced configuration / custom locos
+12. HELP! It doesn't work
+13. Modifications of the C++ code
+14. The Lua_Out editor
 A. Acknowledgements
 B. Licence
 
@@ -50,7 +51,7 @@ B. Licence
   drive them, but in principle it could be added.
 
   The full description on how it works and what can you possibly do
-  with that starts at section 7. Also mind you, this is not all GUI
+  with that starts at section 8. Also mind you, this is not all GUI
   software. Also because of the way it works (injecting itself into LUA
   scripts) it requires to get your hands dirty a little. Read
   carefully and tread lightly. Make backups and prepare some good text
@@ -198,29 +199,34 @@ B. Licence
           -j       |       n/a         |       disables joystick
 	           |                   |      support and warning
   -----------------|-------------------|--------------------------------
-      -0 or -12    |   CTRL+SHIFT+F12  |   toggles the overlay display
+      -0 or -12    |   SHIFT+ALT+F12   |   toggles the overlay display
   -----------------|-------------------|--------------------------------
-         -1        |   CTRL+SHIFT+F1   |      toggles the speed
+         -1        |   SHIFT+ALT+F1    |      toggles the speed
   -----------------|-------------------|--------------------------------
-         -2        |   CTRL+SHIFT+F2   |    toggles the next limit
+         -2        |   SHIFT+ALT+F2    | toggles the distance/countdown
   -----------------|-------------------|--------------------------------
-         -3        |   CTRL+SHIFT+F3   |   toggles the acceleration
+         -3        |   SHIFT+ALT+F3    |    toggles the next limit
   -----------------|-------------------|--------------------------------
-         -4        |   CTRL+SHIFT+F4   |   toggles the target speed
+         -4        |   SHIFT+ALT+F4    |   toggles the acceleration
   -----------------|-------------------|--------------------------------
-         -5        |   CTRL+SHIFT+F5   |     toggles the controls
+         -5        |   SHIFT+ALT+F5    |     toggles the controls
   -----------------|-------------------|--------------------------------
-         -6        |   CTRL+SHIFT+F6   |  toggles the ammeter and RPM
+         -6        |   SHIFT+ALT+F6    |  toggles the ammeter and RPM
   -----------------|-------------------|--------------------------------
-         -7        |   CTRL+SHIFT+F7   |   toggles brakes' pressures
+         -7        |   SHIFT+ALT+F7    |   toggles brakes' pressures
   -----------------|-------------------|--------------------------------
-         -8        |   CTRL+SHIFT+F8   |     toggles the gradient
+         -8        |   SHIFT+ALT+F8    |     toggles the gradient
   -----------------|-------------------|--------------------------------
-         -9        |   CTRL+SHIFT+F9   | toggles warnings (AWS, DSD...)
+         -9        |   SHIFT+ALT+F9    | toggles warnings (AWS, DSD...)
   -----------------|-------------------|--------------------------------
-         -10       |   CTRL+SHIFT+F10  |           unused
+         -10       |   SHIFT+ALT+F10   |           unused
   -----------------|-------------------|--------------------------------
-         -11       |   CTRL+SHIFT+F11  |      toggles the clock
+         -11       |   SHIFT+ALT+F11   |      toggles the clock
+  -----------------|-------------------|--------------------------------
+    runtime only   |    SHIFT+ALT+r    |      reset the distance
+                   |                   |      turn off countdown
+  -----------------|-------------------|--------------------------------
+    runtime only   |  SHIFT+ALT+(0-9)  |      setup the countdown
   -----------------|-------------------|--------------------------------
 
   By default everything is turned on. If you want to permanently
@@ -231,7 +237,40 @@ B. Licence
   pass a single "-1" you will disable current speed. But if you pass
   it twice "-1 -1" you will end up with it being enabled again.
 
-7. Full description
+7. Distance/Countdown/Odometer usage
+
+  There is no way to get the distance to the next task from the game
+  itself, but based on what I do have (time and speed) I've
+  implemented an internal odometer. It calculates the distance within
+  the helper itself from delta time and momentary speed. Because of
+  that it's not 100% accurate, but it's very accurate nontheless. It
+  shouldn't deviate more then 0.01 mile per 10 miles.
+
+  When you launch the overlay you'll notice distance below the
+  speed. It will be 0 at the start and count up by default. You can
+  reset it with SHIFT+ALT+R. You can use it however you like.
+
+  Its second mode is Countdown. It can count down from a set value to
+  e.g. tell you how far you have to the next stop. When you're on the
+  station have a look at time table. See next distance. Enter it and
+  it will count down. Below 1 (mile/km) it will turn yellow. Below 0
+  it will turn red.
+
+  To set it up hold SHIFT+ALT and type 4 digits that will compose the
+  set distance in miles/km. So to enter 12.34 hit SHIFT+ALT and while
+  holding them 1, 2, 3, 4. To set up 3.76 hit SHIFT+ALT and while
+  holding them 0, 3, 7, 6. You will see what you enter in the middle
+  of the screen. After you enter the countdown will initiate
+  immediately with the press of the last digit and your selection will
+  be visible on the screen for one more second. If you change your
+  mind while entering just stop. Incomplete selection will disappear
+  and be ignored after 5 seconds. If you want to return to the Distance
+  mode hit SHIFT+ALT+R.
+
+  To see this in action look here:
+  http://forums.uktrainsim.com/viewtopic.php?p=1723307#p1723307
+
+8. Full description
 
   First of all why have I wrote it?
   - I hate F3/F4 views, they kill immersion for me, obscure the
@@ -287,7 +326,7 @@ B. Licence
   comments to the output joystick txt file so it's easier to see what
   is what.
 
-8. Additional notes for the overlay
+9. Additional notes for the overlay
 
   Next Limit:
     It happens sometimes that the Next Limit speed has undefined
@@ -329,7 +368,7 @@ B. Licence
   all.
 -----------------------------------------------------------------------
 
-9. New control values
+10. New control values
 
   If the script is working fine for you for the most locos but others
   are problematic first of all post in the release thread. I want to
@@ -353,7 +392,7 @@ B. Licence
   add code for reading and setting proper joystick values exported in
   the joystick.txt file. You don't have to modify the C++ part.
 
-10. Advanced configuration / custom locos
+11. Advanced configuration / custom locos
 
   It is possible to customize controls per loco. There is no simple
   way to detect a loco you are driving though. I use a unique set of
@@ -418,7 +457,7 @@ B. Licence
   - trainsim-helper-overlay.lua: Overlay configuration an implementation.
   - trainsim-helper-joystick.lua: Joystick configuration an implementation.
 
-11. HELP! It doesn't work
+12. HELP! It doesn't work
 
   Forum thread:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139304
@@ -476,7 +515,7 @@ B. Licence
   https://github.com/Havner/trainsim-helper
 -----------------------------------------------------------------------
 
-12. Modifications of the C++ code
+13. Modifications of the C++ code
 
   I'll just note for now that the C++ code is not very nicely written
   yet (conrary to the LUA) as I just patched all of this together to
@@ -493,7 +532,7 @@ B. Licence
   NOTE: Have a look at Config.h as the DEBUG and RELEASE versions look
   for the plugins directory in different ways.
 
-13. The Lua_Out editor
+14. The Lua_Out editor
 
   This is C# which I know very little about. It's based on CobraOne
   patcher available here:
