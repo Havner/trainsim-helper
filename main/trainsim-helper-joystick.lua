@@ -73,6 +73,17 @@ function ConfigureJoystick()
       ThrottleNotches = GenerateEqualNotches(6) -- (0,1)
       TrainBrakeNotches = GenerateEqualNotches(8) -- (0,1)
 
+   elseif DetectClass801() then
+      -- Ignore emergency values on CombinedThrottle (-1.5, -1)
+      CombinedThrottleRange = {-1, 1}
+      -- Set custom notches for the CombinedThrottle, it's continuous below min brake
+      CombinedThrottleNotches = {-0.25, 0, 0.25, 0.5, 0.75, 1}
+      -- No Dynamic here, add Reverser
+      ReverserLine = DynamicBrakeLine
+      ReverserNotches = GenerateEqualNotches(3, ReverserRange) -- (-1,1)
+      -- Disable dynamic
+      DynamicBrakeControl = nil
+
    elseif DetectClass375Class377() then
       -- Set custom notches for the CombinedThrottle
       CombinedThrottleNotches = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
@@ -167,7 +178,7 @@ function ConfigureJoystick()
       -- And don't use separate dynamic control
       DynamicBrakeControl = nil
 
-   elseif DetectF59PH() or DetectCabCar() then
+   elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       -- Not a simple case as the implementation merges two controls with different notches
       CombinedThrottleNotches = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
       -- This loco has CombinedThrottle combined with DynamicBrake

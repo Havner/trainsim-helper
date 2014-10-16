@@ -32,6 +32,26 @@ function DetectHST() -- London - Peterborough
    end
 end
 
+function DetectClass801() -- London - Peterborough
+   if Call("*:ControlExists", "SpeedoUnits", 0) == 1 and
+      Call("*:ControlExists", "SpeedoTens", 0) == 1 and
+      Call("*:ControlExists", "SpeedoHundreds", 0) == 1 and
+      Call("*:ControlExists", "MotorLowPitch", 0) == 1 and
+      Call("*:ControlExists", "MotorHighPitch", 0) == 1 and
+      Call("*:ControlExists", "MotorVolume", 0) == 1 and
+      Call("*:ControlExists", "CamInCab", 0) == 1 and
+      Call("*:ControlExists", "Table", 0) == 1 and
+      Call("*:ControlExists", "ATPBox", 0) == 1 and
+      Call("*:ControlExists", "Coat1", 0) == 1 and
+      Call("*:ControlExists", "ForwardPreparation", 0) == 1 and
+      Call("*:ControlExists", "RearPreparation", 0) == 1 and
+      Call("*:ControlExists", "ReadingLight", 0) == 1 and
+      Call("*:ControlExists", "DeskIllumination", 0) == 1
+   then
+      return 1
+   end
+end   
+
 function DetectClass375Class377() -- London - Faversham, London - Brighton
    if Call("*:ControlExists", "Buzzer", 0) == 1 and
       Call("*:ControlExists", "BrakeHold", 0) == 1 and
