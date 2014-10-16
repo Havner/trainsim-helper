@@ -1,6 +1,5 @@
 Next version:
 - Clean up the C++ code, split into classes
-- Update readme for the Distance/Countdown
 - Remove string formatting from all the LUA variables
 
 For the future:
