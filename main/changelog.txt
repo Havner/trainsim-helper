@@ -1,3 +1,11 @@
+0.5
+ - WARNING: keyboard shortcuts got changed again due to steamers addition
+ - Support for steamers, see the readme
+ - Detection script will notify what loco has been detected
+ - Detections and notches configurations for MANY more locos (ALL I own)
+ - Handbrake indicator, better CruiseControl/AFB) indicator
+ - Separate Loco and Train brakes indicators (some locos use both)
+
 0.4
  - WARNING: the keyboard shortcuts (F1-F9) got changed again due
    to the addition of Distance and a change with TargetSpeed

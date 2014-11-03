@@ -19,7 +19,7 @@ function ConfigureJoystick()
    TrainBrakeLine = 6
    --LocoBrakeLine = 7
    DynamicBrakeLine = 7
-   --AFBLine = 7
+   --CruiseControlLine = 7
 
    GearInvert = 1
    ReverserInvert = 1
@@ -28,7 +28,7 @@ function ConfigureJoystick()
    --TrainBrakeInvert = 1
    --LocoBrakeInvert = 1
    --DynamicBrakeInvert = 1
-   AFBInvert = 1
+   CruiseControlInvert = 1
 
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
@@ -45,7 +45,7 @@ function ConfigureJoystick()
    end
    LocoBrakeControl =         FindLocoBrake()
    DynamicBrakeControl =      FindDynamicBrake()
-   AFBControl =               FindAFB()
+   CruiseControlControl =     FindCruiseControl()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later
    GearRange =             GetControlRange(FindGear())
@@ -55,7 +55,7 @@ function ConfigureJoystick()
    TrainBrakeRange =       GetControlRange(FindTrainBrake())
    LocoBrakeRange =        GetControlRange(FindLocoBrake())
    DynamicBrakeRange =     GetControlRange(FindDynamicBrake())
-   AFBRange =              GetControlRange(FindAFB())
+   CruiseControlRange =    GetControlRange(FindCruiseControl())
 
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- In my case (3 throttle axes) I often make use of the DynamicLine in
@@ -197,30 +197,30 @@ function ConfigureJoystick()
       CombinedThrottleCenterDetent = 0.05
 
    elseif DetectBR101() then
-      -- Setup notched AFB instead of DynamicBrake
-      AFBLine = DynamicBrakeLine
+      -- Setup notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
-      AFBNotches = GenerateEqualNotches(26) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(26) -- (0,1)
 
    elseif DetectBR426() then
       -- Makes it easier to center, it's not notched
       CombinedThrottleCenterDetent = 0.05
-      -- Setup notched AFB instead of DynamicBrake
-      AFBLine = DynamicBrakeLine
+      -- Setup notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
-      AFBNotches = GenerateEqualNotches(31) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(31) -- (0,1)
 
    elseif DetectICE2() or DetectICE2Cab() or DetectICE3() or DetectICET() then
-      -- Setup notched AFB instead of DynamicBrake
-      AFBLine = DynamicBrakeLine
+      -- Setup notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
-      AFBNotches = GenerateEqualNotches(31) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(31) -- (0,1)
 
    elseif DetectBR189() then
-      -- Setup notched AFB instead of DynamicBrake
-      AFBLine = DynamicBrakeLine
+      -- Setup notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
-      AFBNotches = GenerateEqualNotches(29, AFBRange) -- (0,0.466666)
+      CruiseControlNotches = GenerateEqualNotches(29, CruiseControlRange) -- (0,0.466666)
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 
@@ -252,7 +252,7 @@ function ConfigureJoystick()
       TrainBrakeRange = {0, 0.99}
       TrainBrakeNotches = {0, 0.2, 0.4, 0.6, 0.8, 0.99}
       -- No separate DynamicBrake, use CruiseControl
-      AFBLine = DynamicBrakeLine
+      CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
 
    elseif DetectM8() then
@@ -310,8 +310,8 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    elseif DetectGermanAFB() then
-      -- Setup AFB instead of DynamicBrake
-      AFBLine = DynamicBrakeLine
+      -- Setup CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
 
    elseif DetectGenericUS() then
@@ -337,7 +337,7 @@ function ConfigureJoystick()
    PreviousTrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
    PreviousLocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
    PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-   PreviousAFB =              GetLineValue(lines, AFBLine, AFBInvert)
+   PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
 
    -- set at the very end to be a mark whether the configuration has been successful
    JoystickConfigured = 1
@@ -403,7 +403,7 @@ function FindDynamicBrake()
    end
 end
 
-function FindAFB()
+function FindCruiseControl()
    if Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then
       return "CruiseControlSpeed"
    elseif Call("*:ControlExists", "AFB", 0) == 1 then
@@ -425,7 +425,7 @@ function SetJoystickData()
    local TrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
    local LocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
    local DynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-   local AFB =              GetLineValue(lines, AFBLine, AFBInvert)
+   local CruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
 
    -- Feed with data
    PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
@@ -435,7 +435,7 @@ function SetJoystickData()
    PreviousTrainBrake =       SetControl(TrainBrakeControl,       PreviousTrainBrake,       TrainBrake,       TrainBrakeRange,       TrainBrakeNotches)
    PreviousLocoBrake =        SetControl(LocoBrakeControl,        PreviousLocoBrake,        LocoBrake,        LocoBrakeRange,        LocoBrakeNotches)
    PreviousDynamicBrake =     SetControl(DynamicBrakeControl,     PreviousDynamicBrake,     DynamicBrake,     DynamicBrakeRange,     DynamicBrakeNotches)
-   PreviousAFB =              SetControl(AFBControl,              PreviousAFB,              AFB,              AFBRange,              AFBNotches)
+   PreviousCruiseControl =    SetControl(CruiseControlControl,    PreviousCruiseControl,    CruiseControl,    CruiseControlRange,    CruiseControlNotches)
 end
 
 -----------------------------------------------------------

@@ -73,12 +73,12 @@ function GetOverlayData()
    -- Loco's controls
 
    local TargetSpeed
-   if Call("*:ControlExists", "TargetSpeed", 0) == 1 then
-      TargetSpeed = Call("*:GetControlValue", "TargetSpeed", 0)
+   if Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then
+      TargetSpeed = Call("*:GetControlValue", "CruiseControlSpeed", 0)
    elseif Call("*:ControlExists", "VSoll", 0) == 1 then
       TargetSpeed = Call("*:GetControlValue", "VSoll", 0)
-   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then
-      TargetSpeed = Call("*:GetControlValue", "CruiseControlSpeed", 0)
+   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then
+      TargetSpeed = Call("*:GetControlValue", "TargetSpeed", 0)
    end
    if TargetSpeed then data = data.."TargetSpeed: "..TargetSpeed.."\n" end
    
