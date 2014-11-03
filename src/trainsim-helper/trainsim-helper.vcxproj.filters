@@ -13,6 +13,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h">
@@ -32,6 +35,12 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Value.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

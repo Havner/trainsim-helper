@@ -1,104 +1,12 @@
-// Overlay.cpp : Defines the entry point for the application.
-//
+// main.cpp : Defines the entry point for the application.
 
 #include "stdafx.h"
+#include "System.h"
 #include "Joystick.h"
 #include "Overlay.h"
 
-
 HWND hWnd;
 MARGINS margin = {0, 800, 0, 600};
-
-HWND FindTSWindow()
-{
-	HWND ret;
-
-	ret = FindWindow(NULL, "Train Simulator 2015");
-	if (!ret)
-		ret = FindWindow(NULL, "Train Simulator 2014");
-
-	return ret;
-}
-
-PCHAR* CommandLineToArgvA(PCHAR CmdLine, int* _argc)
-{
-	PCHAR* argv;
-	PCHAR  _argv;
-	ULONG   len;
-	ULONG   argc;
-	CHAR   a;
-	ULONG   i, j;
-
-	BOOLEAN  in_QM;
-	BOOLEAN  in_TEXT;
-	BOOLEAN  in_SPACE;
-
-	len = strlen(CmdLine);
-	i = ((len+2)/2)*sizeof(PVOID) + sizeof(PVOID);
-
-	argv = (PCHAR*)GlobalAlloc(GMEM_FIXED,
-		i + (len+2)*sizeof(CHAR));
-
-	_argv = (PCHAR)(((PUCHAR)argv)+i);
-
-	argc = 0;
-	argv[argc] = _argv;
-	in_QM = FALSE;
-	in_TEXT = FALSE;
-	in_SPACE = TRUE;
-	i = 0;
-	j = 0;
-
-	while( a = CmdLine[i] ) {
-		if(in_QM) {
-			if(a == '\"') {
-				in_QM = FALSE;
-			} else {
-				_argv[j] = a;
-				j++;
-			}
-		} else {
-			switch(a) {
-			case '\"':
-				in_QM = TRUE;
-				in_TEXT = TRUE;
-				if(in_SPACE) {
-					argv[argc] = _argv+j;
-					argc++;
-				}
-				in_SPACE = FALSE;
-				break;
-			case ' ':
-			case '\t':
-			case '\n':
-			case '\r':
-				if(in_TEXT) {
-					_argv[j] = '\0';
-					j++;
-				}
-				in_TEXT = FALSE;
-				in_SPACE = TRUE;
-				break;
-			default:
-				in_TEXT = TRUE;
-				if(in_SPACE) {
-					argv[argc] = _argv+j;
-					argc++;
-				}
-				_argv[j] = a;
-				j++;
-				in_SPACE = FALSE;
-				break;
-			}
-		}
-		i++;
-	}
-	_argv[j] = '\0';
-	argv[argc] = NULL;
-
-	(*_argc) = argc;
-	return argv;
-}
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -133,11 +41,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		if (strcmp(pArgList[i]+1, "j") == 0)
 			bUseJoystick = !bUseJoystick;
 
+		if (strcmp(pArgList[i]+1, "v") == 0)
+			ToggleDisplaySection(0);
+
 		if (isdigit(pArgList[i][1]))
 		{
 			int nSection = atoi(pArgList[i]+1);
-			if (nSection >= 0 && nSection <= 12)
-				ToggleDisplaySection(nSection % 12);
+			if (nSection >= 1 && nSection <= 12)
+				ToggleDisplaySection(nSection);
 		}
 	}
 
@@ -177,13 +88,25 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	MSG msg;
 	::SetWindowPos(hWndTS, HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
-	for (int i = 1; i <= 12; ++i)
-		RegisterHotKey(hWnd, i % 12, MOD_SHIFT | MOD_ALT, VK_F1+i-1);
+	// 0-9 digits for the countdown
+	for (int i = 0; i <= 9; ++i)
+		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, 0x30 + i);
 
-	RegisterHotKey(hWnd, 12, MOD_SHIFT | MOD_ALT, 0x52 /* R key */);
+	// additional 0, 7, 8, 9 for the countdown
+	RegisterHotKey(hWnd, 0, MOD_SHIFT | MOD_ALT, 0x4F); // O
+	RegisterHotKey(hWnd, 7, MOD_SHIFT | MOD_ALT, 0x51); // Q
+	RegisterHotKey(hWnd, 8, MOD_SHIFT | MOD_ALT, 0x57); // W
+	RegisterHotKey(hWnd, 9, MOD_SHIFT | MOD_ALT, 0x45); // E
 
-	for (int i = 20; i <= 29; ++i)
-		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, i-20+0x30);
+	// R for the countdown reset
+	RegisterHotKey(hWnd, 10, MOD_SHIFT | MOD_ALT, 0x52 /* R key */);
+
+	// F1-F12 for the overlay
+	for (int i = 11; i <= 22; ++i)
+		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, VK_F1-11 + i);
+
+	// V for the whole overlay
+	RegisterHotKey(hWnd, 23, MOD_SHIFT | MOD_ALT, 0x56 /* V key */);
 
 	if (bUseJoystick)
 		if (FAILED(InitDirectInput()))
@@ -247,12 +170,14 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	case WM_HOTKEY:
-		if (wParam >= 0 && wParam <= 11)
-			ToggleDisplaySection(wParam);
-		else if (wParam == 12)
+		if (wParam >= 0 && wParam <= 9)
+			SetCountdown(wParam);
+		else if (wParam == 10)
 			ResetDistance();
-		else if (wParam >= 20 && wParam <= 29)
-			SetCountdown(wParam - 20);
+		else if (wParam >= 11 && wParam <= 22)
+			ToggleDisplaySection(wParam - 10);
+		else if (wParam == 23)
+			ToggleDisplaySection(0);
 		break;
 	}
 
