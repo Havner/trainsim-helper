@@ -36,6 +36,7 @@ function ConfigureJoystick()
 
    -- Find ControlValues a loco has and detect what to use.
    -- If combined doesn't exist configure separate throttle and train brake.
+   -- If combined is with dynamic brake we'll deal with that per loco below.
    GearControl =              FindGear()
    ReverserControl =          FindReverser()
    CombinedThrottleControl =  FindCombinedThrottle()
@@ -47,7 +48,7 @@ function ConfigureJoystick()
    DynamicBrakeControl =      FindDynamicBrake()
    CruiseControlControl =     FindCruiseControl()
 
-   -- Get ranges for ALL controls, even unused ones, we might need them later
+   -- Get ranges for ALL controls, even unused ones, we might need them later.
    GearRange =             GetControlRange(FindGear())
    ReverserRange =         GetControlRange(FindReverser())
    CombinedThrottleRange = GetControlRange(FindCombinedThrottle())
@@ -67,6 +68,10 @@ function ConfigureJoystick()
       -- Ignore emergency values (0, 0.1)
       CombinedThrottleRange = {0.1, 1}
       CombinedThrottleNotches = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
+      -- Add notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
+      CruiseControlNotches = GenerateEqualNotches(25) -- (0,1)
+      DynamicBrakeLine = nil
 
    elseif DetectHST() then
       ThrottleNotches = GenerateEqualNotches(6) -- (0,1)
@@ -80,6 +85,10 @@ function ConfigureJoystick()
 
    elseif DetectClass375Class377() then
       CombinedThrottleNotches = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
+      -- Set notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
+      CruiseControlNotches = GenerateEqualNotches(21, CruiseControlRange) -- (0,100)
+      DynamicBrakeLine = nil
 
    elseif DetectClass450() then
       -- Set custom notches for the CombinedThrottle, lower half based on sounds, not .bin
@@ -90,42 +99,48 @@ function ConfigureJoystick()
       CombinedThrottleRange = {-1, 1}
       -- Set custom notches for the CombinedThrottle, it's continuous below min brake
       CombinedThrottleNotches = {-0.25, 0, 0.25, 0.5, 0.75, 1}
-      -- No Dynamic here, add Reverser, for this loco it's 4 state Virtual
+      -- No DynamicBrake here, set Reverser, for this loco it's 4 state Virtual
       ReverserLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Invert the invert, as this Virtual is inverted compared to the simple one
       ReverserInvert = InvertBool(ReverserInvert)
+      DynamicBrakeLine = nil
 
    elseif DetectClass360() then
       -- Ignore emergency values on CombinedThrottle (-1.5, -1)
       CombinedThrottleRange = {-1, 1}
       -- Set custom notches for the CombinedThrottle, it's continuous below min brake
       CombinedThrottleNotches = {-0.25, 0, 0.2, 0.4, 0.6, 0.8, 1}
-      -- No Dynamic here, add Reverser, for this loco it's 4 state Virtual
+      -- No DynamicBrake here, set Reverser, for this loco it's 4 state Virtual
       ReverserLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Invert the invert, as this Virtual is inverted compared to the simple one
       ReverserInvert = InvertBool(ReverserInvert)
+      DynamicBrakeLine = nil
 
    elseif DetectClass90_ADV_AP() then
       -- Ignore emergency and useless release border values
       TrainBrakeRange = {0.125, 0.875}
       TrainBrakeNotches = GenerateEqualNotches(7, TrainBrakeRange) -- not defined as equal in .bin but they are
-      -- Add Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
-      ReverserLine = DynamicBrakeLine
+      -- Set Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
+      --ReverserLine = DynamicBrakeLine
+      --ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Set notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
+      CruiseControlNotches = GenerateEqualNotches(23, CruiseControlRange) -- (0,110)
       DynamicBrakeLine = nil
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
 
    elseif DetectMK3DVT_ADV_AP() then
       -- Ignore emergency values (0.852, 1)
       TrainBrakeRange = {0, 0.852}
       TrainBrakeNotches = {0, 0.142, 0.284, 0.426, 0.568, 0.71, 0.852}
-      -- Add Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
-      ReverserLine = DynamicBrakeLine
+      -- Set Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
+      --ReverserLine = DynamicBrakeLine
+      --ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Set notched CruiseControl instead of DynamicBrake
+      CruiseControlLine = DynamicBrakeLine
+      CruiseControlNotches = GenerateEqualNotches(23, CruiseControlRange) -- (0,110)
       DynamicBrakeLine = nil
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
 
    elseif DetectClass158() then
       ThrottleNotches = GenerateEqualNotches(8) -- (0,1)
@@ -137,8 +152,8 @@ function ConfigureJoystick()
       -- Notched Gear instead of DynamicBrake
       GearNotches = GenerateEqualNotches(5, GearRange) -- (0,4)
       GearLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
+      DynamicBrakeLine = nil
 
    elseif DetectClass143() then
       ThrottleNotches = GenerateEqualNotches(8) -- (0,1)
@@ -164,18 +179,18 @@ function ConfigureJoystick()
    elseif DetectClass321_AP() then
       ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
       TrainBrakeNotches = GenerateEqualNotches(5) -- (0,1)
-      -- Add Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
+      -- Set Reverser instead of DynamicBrake, for this loco it's 4 state Virtual
       ReverserLine = DynamicBrakeLine
-      DynamicBrakeLine = nil      
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      DynamicBrakeLine = nil      
 
    elseif DetectClass156_Oovee() then
       ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,7)
       TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange) -- (0,4)
       -- No Dynamic here, add Reverser, for this loco it's 4 state Virtual
       ReverserLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      DynamicBrakeLine = nil
 
    elseif DetectClass170() then
       -- Set custom notches for the CombinedThrottle, it's continuous below center
@@ -186,8 +201,9 @@ function ConfigureJoystick()
    elseif DetectCastle() then
       -- This loco has VirtualReverser but it doesn't work, override
       ReverserControl = "Reverser"
-      -- Setup Reverser instead of DynamicBrake, it's important here
+      -- Set Reverser instead of DynamicBrake, it's important here
       ReverserLine = DynamicBrakeLine
+      --ReverserCenterDetent = 0.05
       DynamicBrakeLine = nil
 
    -- German locos here, detection might be flaky as they are very similar to eachother
@@ -195,32 +211,38 @@ function ConfigureJoystick()
    elseif DetectBR294() then
       -- Makes it easier to center, it's not notched
       CombinedThrottleCenterDetent = 0.05
+      -- No DynamicBrake here, setup LocoBrake
+      LocoBrakeLine = DynamicBrakeLine
+      DynamicBrakeLine = nil
 
    elseif DetectBR101() then
+      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       -- Setup notched CruiseControl instead of DynamicBrake
       CruiseControlLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       CruiseControlNotches = GenerateEqualNotches(26) -- (0,1)
+      DynamicBrakeLine = nil
 
    elseif DetectBR426() then
       -- Makes it easier to center, it's not notched
       CombinedThrottleCenterDetent = 0.05
-      -- Setup notched CruiseControl instead of DynamicBrake
+      -- Set notched CruiseControl instead of DynamicBrake
       CruiseControlLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       CruiseControlNotches = GenerateEqualNotches(31) -- (0,1)
+      DynamicBrakeLine = nil
 
    elseif DetectICE2() or DetectICE2Cab() or DetectICE3() or DetectICET() then
-      -- Setup notched CruiseControl instead of DynamicBrake
+      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      -- Set notched CruiseControl instead of DynamicBrake
       CruiseControlLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       CruiseControlNotches = GenerateEqualNotches(31) -- (0,1)
+      DynamicBrakeLine = nil
 
    elseif DetectBR189() then
-      -- Setup notched CruiseControl instead of DynamicBrake
+      TrainBrakeNotches = GenerateEqualNotches(11) -- (0,1)
+      -- Set notched CruiseControl instead of DynamicBrake
       CruiseControlLine = DynamicBrakeLine
-      DynamicBrakeLine = nil
       CruiseControlNotches = GenerateEqualNotches(29, CruiseControlRange) -- (0,0.466666)
+      DynamicBrakeLine = nil
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 
@@ -251,7 +273,7 @@ function ConfigureJoystick()
       -- Following the .bin file
       TrainBrakeRange = {0, 0.99}
       TrainBrakeNotches = {0, 0.2, 0.4, 0.6, 0.8, 0.99}
-      -- No separate DynamicBrake, use CruiseControl
+      -- Set CruiseControl instead of DynamicBrake
       CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
 
@@ -302,15 +324,16 @@ function ConfigureJoystick()
       ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
       DynamicBrakeNotches = GenerateEqualNotches(9) -- (0,1)
 
-   -- Generic detections, don't put any specific locos below
+   -- Generic detections, don't put any specific locos below, they might get caught by those
 
    elseif DetectSteam() then
       -- Setup Reverser instead of DynamicBrake, it's important here
       ReverserLine = DynamicBrakeLine
+      --ReverserCenterDetent = 0.05
       DynamicBrakeLine = nil
 
    elseif DetectGermanAFB() then
-      -- Setup CruiseControl instead of DynamicBrake
+      -- Set CruiseControl instead of DynamicBrake
       CruiseControlLine = DynamicBrakeLine
       DynamicBrakeLine = nil
 
@@ -339,7 +362,7 @@ function ConfigureJoystick()
    PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
    PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
 
-   -- set at the very end to be a mark whether the configuration has been successful
+   -- Set at the very end to be a mark whether the configuration has been successful.
    JoystickConfigured = 1
 end
 
@@ -404,10 +427,16 @@ function FindDynamicBrake()
 end
 
 function FindCruiseControl()
-   if Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then
+   if Call("*:ControlExists", "SpeedSet", 0) == 1 then               -- Class 90 AP
+      return "SpeedSet"
+   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela
       return "CruiseControlSpeed"
-   elseif Call("*:ControlExists", "AFB", 0) == 1 then
+   elseif Call("*:ControlExists", "AFB", 0) == 1 then                -- German
       return "AFB"
+   elseif Call("*:ControlExists", "SpeedTarget", 0) == 1 then        -- Class 365
+      return "SpeedTarget"
+   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then        -- Class 375/377
+      return "TargetSpeed"
    end
 end
 

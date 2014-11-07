@@ -4,6 +4,7 @@
  - Detection script will notify what loco has been detected
  - Detections and notches configurations for MANY more locos (ALL I own)
  - Handbrake indicator, better CruiseControl/AFB) indicator
+ - CruiseControl axis for locos other then German AFB
  - Separate Loco and Train brakes indicators (some locos use both)
 
 0.4

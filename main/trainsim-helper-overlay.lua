@@ -29,7 +29,7 @@ function ConfigureOverlay()
 
    end
 
-   -- set at the very end to be a mark whether the configuration has been successful
+   -- Set at the very end to be a mark whether the configuration has been successful.
    OverlayConfigured = 1
 end
 
@@ -73,11 +73,13 @@ function GetOverlayData()
    -- Loco's controls
 
    local TargetSpeed
-   if Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then
+   if Call("*:ControlExists", "SpeedSet", 0) == 1 then                 -- Class 90 AP
+      TargetSpeed = Call("*:GetControlValue", "SpeedSet", 0)
+   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then   -- Acela
       TargetSpeed = Call("*:GetControlValue", "CruiseControlSpeed", 0)
-   elseif Call("*:ControlExists", "VSoll", 0) == 1 then
+   elseif Call("*:ControlExists", "VSoll", 0) == 1 then                -- German
       TargetSpeed = Call("*:GetControlValue", "VSoll", 0)
-   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then
+   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then          -- Class 375/377
       TargetSpeed = Call("*:GetControlValue", "TargetSpeed", 0)
    end
    if TargetSpeed then data = data.."TargetSpeed: "..TargetSpeed.."\n" end
@@ -121,6 +123,8 @@ function GetOverlayData()
    local HandBrake
    if Call("*:ControlExists", "HandBrake", 0) == 1 then
       HandBrake = Call("*:GetControlValue", "HandBrake", 0)
+   elseif Call("*:ControlExists", "Handbrake", 0) == 1 then
+      HandBrake = Call("*:GetControlValue", "Handbrake", 0)
    end
    if HandBrake then data = data .."HandBrake: "..HandBrake.."\n" end
 
