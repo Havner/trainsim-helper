@@ -1,5 +1,3 @@
-This documentation is still WIP, mostly the advanced part from 8.
-
 Table of contents:
 1. Quick introduction
 2. Initial setup
@@ -8,13 +6,14 @@ Table of contents:
 5. Patching further locos
 6. Keyboard shortcuts and command line switches
 7. Distance/Countdown/Odometer usage
-8. Full description
-9. Additional notes for the overlay
-10. New control values
-11. Advanced configuration / custom locos
-12. HELP! It doesn't work
-13. Modifications of the C++ code
-14. The Lua_Out editor
+8. Additional steamers support
+9. Full description
+10. Additional notes for the overlay
+11. New control values
+12. Advanced configuration / custom locos
+13. HELP! It doesn't work
+14. Modifications of the C++ code
+15. The Lua_Out editor
 A. Acknowledgements
 B. Licence
 
@@ -51,7 +50,7 @@ B. Licence
   drive them, but in principle it could be added.
 
   The full description on how it works and what can you possibly do
-  with that starts at section 8. Also mind you, this is not all GUI
+  with that starts at section 9. Also mind you, this is not all GUI
   software. Also because of the way it works (injecting itself into LUA
   scripts) it requires to get your hands dirty a little. Read
   carefully and tread lightly. Make backups and prepare some good text
@@ -196,32 +195,34 @@ B. Licence
 
    cmd line switch | keyboard shortcut |           function
   -----------------|-------------------|--------------------------------
-          -j       |       n/a         |       disables joystick
+         -j        |       n/a         |       disables joystick
 	           |                   |      support and warning
   -----------------|-------------------|--------------------------------
-      -0 or -12    |   SHIFT+ALT+F12   |   toggles the overlay display
+         -v        |    SHIFT+ALT+v    |   toggles the overlay display
   -----------------|-------------------|--------------------------------
          -1        |   SHIFT+ALT+F1    |      toggles the speed
   -----------------|-------------------|--------------------------------
-         -2        |   SHIFT+ALT+F2    | toggles the distance/countdown
+         -2        |   SHIFT+ALT+F2    |  toggles the boiler pressure
   -----------------|-------------------|--------------------------------
-         -3        |   SHIFT+ALT+F3    |    toggles the next limit
+         -3        |   SHIFT+ALT+F2    | toggles the distance/countdown
   -----------------|-------------------|--------------------------------
-         -4        |   SHIFT+ALT+F4    |   toggles the acceleration
+         -4        |   SHIFT+ALT+F3    |    toggles the next limit
   -----------------|-------------------|--------------------------------
-         -5        |   SHIFT+ALT+F5    |     toggles the controls
+         -5        |   SHIFT+ALT+F4    |   toggles the acceleration
   -----------------|-------------------|--------------------------------
-         -6        |   SHIFT+ALT+F6    |  toggles the ammeter and RPM
+         -6        |   SHIFT+ALT+F5    |     toggles the controls
   -----------------|-------------------|--------------------------------
-         -7        |   SHIFT+ALT+F7    |   toggles brakes' pressures
+         -7        |   SHIFT+ALT+F6    |     toggles the indicators
   -----------------|-------------------|--------------------------------
          -8        |   SHIFT+ALT+F8    |     toggles the gradient
   -----------------|-------------------|--------------------------------
-         -9        |   SHIFT+ALT+F9    | toggles warnings (AWS, DSD...)
+         -9        |   SHIFT+ALT+F9    | toggles the driver's indicators
   -----------------|-------------------|--------------------------------
-         -10       |   SHIFT+ALT+F10   |           unused
+         -10       |   SHIFT+ALT+F10   |toggles the fireman's indicators
   -----------------|-------------------|--------------------------------
          -11       |   SHIFT+ALT+F11   |      toggles the clock
+  -----------------|-------------------|--------------------------------
+         -12       |   SHIFT+ALT+F12   | toggles warnings (AWS, DSD...)
   -----------------|-------------------|--------------------------------
     runtime only   |    SHIFT+ALT+r    |      reset the distance
                    |                   |      turn off countdown
@@ -270,7 +271,48 @@ B. Licence
   To see this in action look here:
   http://forums.uktrainsim.com/viewtopic.php?p=1723307#p1723307
 
-8. Full description
+8. Additional steamers support
+
+  From version 0.5 the steamers received additional support. For the
+  controlling nothing's changed. You still have Regulator(Throttle),
+  Reverser and Brakes. The change is with the Overlay.
+
+  - Boiler pressure got added with color indicators depending on
+    whether the pressure is increasing (green), constant (grey) and
+    decreasing (red).
+  - Steam chest pressure in the indicators section. Some steamers have
+    this.
+  - Additional section for the driver's controls. This is something I
+    have not done for non-steamers as there is no need. You can usualy
+    see in what state your headlights, wipers or other non essential
+    stuff is. This is not necessarily true for steamers as the valves
+    can be hard to read and sometimes are in difficult to see
+    locations. This is not a complete list, but I've added them based
+    on the locos I own (list below) and they are shared throughout
+    most steamers. If a control is not there you can still drive
+    without problems. Let me know if there is a control from a steamer
+    I don't own and you'd like it to be there. Those controls have
+    been added to the new section on the left hand side of the screen,
+    right of the main overlay.
+  - Additional section for the fireman's controls and indicators. Those
+    are the things that are disabled with auto fireman plus water and
+    firebox levels. You can use it with manual fireman or just see how
+    the auto fireman is working. Also there are safety valves that are
+    always automatic.
+
+  Steamers I have for which I've added all the indicators:
+  - Black 5 4-6-0            (EU pack)
+  - BR52 2-10-0              (EU pack)
+  - 7F 2-8-0                 (EU pack)
+  - Fowler 4F                (Academy)
+  - GWR Modified Hall        (West Somerset Railway)
+  - SDJR 7F                  (West Somerset Railway)
+  - Castle Class             (DLC)
+  - Class A4 Pacifics        (DLC)
+  - Duches of Sutherland     (DLC)
+  - The Spirit of Halloween  (Halloween Route 2014)
+
+9. Full description
 
   First of all why have I wrote it?
   - I hate F3/F4 views, they kill immersion for me, obscure the
@@ -326,7 +368,7 @@ B. Licence
   comments to the output joystick txt file so it's easier to see what
   is what.
 
-9. Additional notes for the overlay
+10. Additional notes for the overlay
 
   Next Limit:
     It happens sometimes that the Next Limit speed has undefined
@@ -368,7 +410,7 @@ B. Licence
   all.
 -----------------------------------------------------------------------
 
-10. New control values
+11. New control values
 
   If the script is working fine for you for the most locos but others
   are problematic first of all post in the release thread. I want to
@@ -392,7 +434,7 @@ B. Licence
   add code for reading and setting proper joystick values exported in
   the joystick.txt file. You don't have to modify the C++ part.
 
-11. Advanced configuration / custom locos
+12. Advanced configuration / custom locos
 
   It is possible to customize controls per loco. There is no simple
   way to detect a loco you are driving though. I use a unique set of
@@ -457,7 +499,7 @@ B. Licence
   - trainsim-helper-overlay.lua: Overlay configuration an implementation.
   - trainsim-helper-joystick.lua: Joystick configuration an implementation.
 
-12. HELP! It doesn't work
+13. HELP! It doesn't work
 
   Forum thread:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139304
@@ -515,7 +557,7 @@ B. Licence
   https://github.com/Havner/trainsim-helper
 -----------------------------------------------------------------------
 
-13. Modifications of the C++ code
+14. Modifications of the C++ code
 
   I'll just note for now that the C++ code is not very nicely written
   yet (conrary to the LUA) as I just patched all of this together to
@@ -532,7 +574,7 @@ B. Licence
   NOTE: Have a look at Config.h as the DEBUG and RELEASE versions look
   for the plugins directory in different ways.
 
-14. The Lua_Out editor
+15. The Lua_Out editor
 
   This is C# which I know very little about. It's based on CobraOne
   patcher available here:
