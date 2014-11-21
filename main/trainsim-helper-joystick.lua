@@ -371,7 +371,9 @@ end
 -----------------------------------------------------------
 
 function FindGear()
-   if Call("*:ControlExists", "GearLever", 0) == 1 then
+   if Call("*:ControlExists", "VirtualGearLever", 0) == 1 then
+      return "VirtualGearLever"
+   elseif Call("*:ControlExists", "GearLever", 0) == 1 then
       return "GearLever"
    end
 end
