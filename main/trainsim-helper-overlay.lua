@@ -488,6 +488,8 @@ function GetOverlayData()
       VigilAlarm = Call("*:GetControlValue", "DSDAlarm", 0)
    elseif Call("*:ControlExists", "VigilAlarm", 0) == 1 then
       VigilAlarm = Call("*:GetControlValue", "VigilAlarm", 0)
+   elseif Call("*:ControlExists", "DSD", 0) == 1 then
+      VigilAlarm = Call("*:GetControlValue", "DSD", 0)
    end
    if VigilAlarm then data = data.."VigilAlarm: "..VigilAlarm.."\n" end
 

@@ -167,6 +167,9 @@ function ConfigureJoystick()
       TrainBrakeRange = {0, 0.9}
       TrainBrakeNotches = {0, 0.1, 0.2, 0.235, 0.27, 0.305, 0.34, 0.375, 0.41, 0.445, 0.48, 0.515, 0.55, 0.585, 0.62, 0.655, 0.69, 0.725, 0.76, 0.795, 0.83, 0.865, 0.9}
 
+   elseif DetectClass33() then
+      -- Nothing to configure here
+
    elseif DetectClass03() then
       -- Notched Gear instead of DynamicBrake
       GearNotches = GenerateEqualNotches(6, GearRange) -- (0,5)
@@ -191,6 +194,10 @@ function ConfigureJoystick()
       ReverserLine = DynamicBrakeLine
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       DynamicBrakeLine = nil
+
+   elseif DetectClass37_Thomson() then
+      ThrottleNotches = {0, 0.2, 0.25, 0.27, 0.3, 0.32, 0.35, 0.37, 0.4, 0.42, 0.45, 0.47, 0.5, 0.52, 0.55, 0.57, 0.6, 0.62, 0.65, 0.67, 0.7, 0.72, 0.75, 0.77, 0.8, 0.82, 0.85, 0.87, 0.9, 0.92, 0.95, 1}
+      TrainBrakeNotches = {0, 0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7, 0.73, 0.7857, 1}
 
    elseif DetectClass170() then
       -- Set custom notches for the CombinedThrottle, it's continuous below center
@@ -245,6 +252,11 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
+
+   elseif DetectGP20_ADV_Reppo() then
+      -- Ignore stop value (-2, 0)
+      ThrottleRange = {0, 8}
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange)
 
    elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       -- Not a simple case as the implementation merges two controls with different notches

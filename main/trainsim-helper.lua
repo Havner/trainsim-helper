@@ -226,7 +226,26 @@ function DetectClass35() -- Riviera Line
    end
 end
 
-function DetectClass03() -- West Somerset Railway
+function DetectClass33() -- West Somerset Railway
+   if Call("*:ControlExists", "EQReservoirPressure", 0) == 1 and
+      Call("*:ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
+      Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 and
+      Call("*:ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 and
+      Call("*:ControlExists", "Startup", 0) == 1 and
+      Call("*:ControlExists", "EngineStart", 0) == 1 and
+      Call("*:ControlExists", "EngineStop", 0) == 1 and
+      Call("*:ControlExists", "CompressorState", 0) == 1 and
+      Call("*:ControlExists", "AWS", 0) == 1 and
+      Call("*:ControlExists", "Panel", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 33 detected", 3, 0)
+      return 1
+   end
+end
+
+function DetectClass03() -- West Somerset Railway addon
    if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
       Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
       Call("*:ControlExists", "OilPressure", 0) == 1 and
@@ -242,8 +261,7 @@ function DetectClass03() -- West Somerset Railway
    end
 end
 
-
-function DetectClass47() -- West Somerset Railway
+function DetectClass47() -- West Somerset Railway addon
    if Call("*:ControlExists", "TractiveEffort", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -296,6 +314,23 @@ function DetectClass156_Oovee()
       Call("*:ControlExists", "SunblindLeft", 0) == 1
    then
       SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 156 (Oovee) detected", 3, 0)
+      return 1
+   end
+end
+
+function DetectClass37_Thomson()
+   if Call("*:ControlExists", "ScenarioRunning", 0) == 1 and
+      Call("*:ControlExists", "VirtualRPM", 0) == 1 and
+      Call("*:ControlExists", "S1", 0) == 1 and
+      Call("*:ControlExists", "CoolingFan01", 0) == 1 and
+      Call("*:ControlExists", "VirtualAmmeter", 0) == 1 and
+      Call("*:ControlExists", "Primer", 0) == 1 and
+      Call("*:ControlExists", "BrakeDemandLamp", 0) == 1 and
+      Call("*:ControlExists", "radiomodecurrent", 0) == 1 and
+      Call("*:ControlExists", "retbkey", 0) == 1 and
+      Call("*:ControlExists", "nextsectionclear", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 37/4 (Thomson) detected", 3, 0)
       return 1
    end
 end
@@ -543,7 +578,24 @@ function DetectBR189() -- Academy
 end
 
 -- US
-   
+
+function DetectGP20_ADV_Reppo() -- Donner Pass addon
+   if Call("*:ControlExists", "Pitch", 0) == 1 and
+      Call("*:ControlExists", "Falla", 0) == 1 and
+      Call("*:ControlExists", "PositionIndicatorSW", 0) == 1 and
+      Call("*:ControlExists", "Alerta", 0) == 1 and
+      Call("*:ControlExists", "Fogged", 0) == 1 and
+      Call("*:ControlExists", "LightsBreaker", 0) == 1 and
+      Call("*:ControlExists", "BatteryKnife", 0) == 1 and
+      Call("*:ControlExists", "FuelPumpSW", 0) == 1 and
+      Call("*:ControlExists", "AutoSanderDelay", 0) == 1 and
+      Call("*:ControlExists", "PcOpen", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "GP20 (ADV, Reppo) detected", 3, 0)
+      return 1
+   end
+end
+
 function DetectCabCar() -- Pacific Surfliner and its addons
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
@@ -811,6 +863,8 @@ function DetectGenericUS(DisableNote)
 	 Call("*:ControlExists", "aEqReservoirPressurePSI", 0) == 1
       ) and
       Call("*:ControlExists", "Sander", 0) == 1 and
+      Call("*:ControlExists", "EngineStart", 0) == 0 and
+      Call("*:ControlExists", "EngineStop", 0) == 0 and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
       if not DisableNote then
