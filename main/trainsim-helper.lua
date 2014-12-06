@@ -280,6 +280,26 @@ function DetectClass47() -- West Somerset Railway addon
    end
 end
 
+function DetectClass117() -- West Somerset Railway addon
+   if Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("*:ControlExists", "GearLever", 0) == 1 and
+      Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
+      Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
+      Call("*:ControlExists", "Current", 0) == 1 and
+      Call("*:ControlExists", "AbsoluteSpeedMPH", 0) == 1 and
+      Call("*:ControlExists", "Sander", 0) == 1 and
+      Call("*:ControlExists", "MainReservoirPressurePSI", 0) == 1 and
+      Call("*:ControlExists", "GlarePanels", 0) == 1 and
+      Call("*:ControlExists", "EngineStop", 0) == 1 and
+      Call("*:ControlExists", "Startup", 0) == 1 and
+      Call("*:ControlExists", "AWSWarnCount", 0) == 1 and
+      Call("*:ControlExists", "CabLight", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 117 detected", 3, 0)
+      return 1
+   end
+end
+
 function DetectClass321_AP()
    if Call("*:ControlExists", "desind", 0) == 1 and
       Call("*:ControlExists", "Destination", 0) == 1 and
@@ -581,7 +601,6 @@ end
 
 function DetectGP20_ADV_Reppo() -- Donner Pass addon
    if Call("*:ControlExists", "Pitch", 0) == 1 and
-      Call("*:ControlExists", "Falla", 0) == 1 and
       Call("*:ControlExists", "PositionIndicatorSW", 0) == 1 and
       Call("*:ControlExists", "Alerta", 0) == 1 and
       Call("*:ControlExists", "Fogged", 0) == 1 and
@@ -592,6 +611,42 @@ function DetectGP20_ADV_Reppo() -- Donner Pass addon
       Call("*:ControlExists", "PcOpen", 0) == 1
    then
       SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "GP20 (ADV, Reppo) detected", 3, 0)
+      return 1
+   end
+end
+
+function DetectSD45_DTM() -- Donner Pass addon
+   if Call("*:ControlExists", "Driven", 0) == 1 and
+      Call("*:ControlExists", "FrontLights", 0) == 1 and
+      Call("*:ControlExists", "RearLights", 0) == 1 and
+      Call("*:ControlExists", "Mirrors_Front", 0) == 1 and
+      Call("*:ControlExists", "Window04_Control", 0) == 1 and
+      Call("*:ControlExists", "Door02_Control", 0) == 1 and
+      Call("*:ControlExists", "Numberboards", 0) == 1 and
+      Call("*:ControlExists", "Start", 0) == 1 and
+      Call("*:ControlExists", "ThrottleInNeutral", 0) == 1 and
+      Call("*:ControlExists", "ClassLights", 0) == 1 and
+      Call("*:ControlExists", "Gyralight", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "SD45 (DTM) detected", 3, 0)
+      return 1
+   end
+end
+
+function DetectGE44_DTM() -- Donner Pass addon
+   if Call("*:ControlExists", "EngineStart", 0) == 1 and
+			Call("*:ControlExists", "EngineStop", 0) == 0 and
+      Call("*:ControlExists", "Mirrors_Front", 0) == 1 and
+      Call("*:ControlExists", "Door02_Control", 0) == 1 and
+      Call("*:ControlExists", "Window04_Control", 0) == 1 and
+      Call("*:ControlExists", "RearHeadLightBright", 0) == 1 and
+      Call("*:ControlExists", "FrontHeadLightBright", 0) == 1 and
+      Call("*:ControlExists", "RearHeadLight", 0) == 1 and
+      Call("*:ControlExists", "FrontHeadLight", 0) == 1 and
+      Call("*:ControlExists", "GageLights", 0) == 1 and
+      Call("*:ControlExists", "CabHeater", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "GE44 (DTM) detected", 3, 0)
       return 1
    end
 end

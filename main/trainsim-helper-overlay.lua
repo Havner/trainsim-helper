@@ -64,6 +64,11 @@ function GetOverlayData()
    if NextSpeedLimit then data = data.."NextSpeedLimit: "..NextSpeedLimit.."\n" end
    if NextSpeedLimitDistance then data = data.."NextSpeedLimitDistance: "..NextSpeedLimitDistance.."\n" end
 
+   local NextSpeedLimitBackType, NextSpeedLimitBack, NextSpeedLimitBackDistance = Call("*:GetNextSpeedLimit", 1)
+   if NextSpeedLimitBackType then data = data.."NextSpeedLimitBackType: "..NextSpeedLimitBackType.."\n" end
+   if NextSpeedLimitBack then data = data.."NextSpeedLimitBack: "..NextSpeedLimitBack.."\n" end
+   if NextSpeedLimitBackDistance then data = data.."NextSpeedLimitBackDistance: "..NextSpeedLimitBackDistance.."\n" end
+
    local Acceleration = Call("*:GetAcceleration")
    if Acceleration then data = data.."Acceleration: "..string.format("%.6f", Acceleration).."\n" end
 
@@ -150,6 +155,15 @@ function GetOverlayData()
    end
    if SteamChestPressure then data = data.."SteamChestPressure: "..SteamChestPressure.."\n" end
 
+	 local SteamHeatingPressure
+   if Call("*:ControlExists", "SteamHeatingPressureGaugePSI",0) == 1 then
+      SteamHeatingPressure = Call("*:GetControlValue", "SteamHeatingPressureGaugePSI",0)
+   elseif Call("*:ControlExists", "SteamHeatGauge",0) == 1 then
+      SteamHeatingPressure = Call("*:GetControlValue", "SteamHeatGauge",0)
+   end
+   if SteamHeatingPressure then data = data.."SteamHeatingPressure: "..SteamHeatingPressure.."\n" end
+
+
    local Ammeter   
    if Call("*:ControlExists", "Ammeter", 0) == 1 then
       Ammeter = Call("*:GetControlValue", "Ammeter", 0)
@@ -199,7 +213,10 @@ function GetOverlayData()
    if TrainBrakeCylinderPressure then data = data.."TrainBrakeCylinderPressure: "..TrainBrakeCylinderPressure.."\n" end
 
    local LocoBrakeCylinderPressure
-   if Call("*:ControlExists", "LocoBrakeCylinderPressureBAR",0) == 1 then
+   if Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
+      LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeNeedle",0)
+      BrakeUnits = "PSI"
+   elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressureBAR",0)
       BrakeUnits = "BAR"
    elseif Call("*:ControlExists", "aLocoBrakeCylinderPressureBAR",0) == 1 then
@@ -330,7 +347,9 @@ function GetOverlayData()
    if LargeEjector then data = data.."LargeEjector: "..LargeEjector.."\n" end   
 
    local SteamHeating
-   if Call("*:ControlExists", "SteamHeat",0) == 1 then
+   if Call("*:ControlExists", "SteamHeatingValve",0) == 1 then
+      SteamHeating = Call("*:GetControlValue", "SteamHeatingValve",0)
+   elseif Call("*:ControlExists", "SteamHeat",0) == 1 then
       SteamHeating = Call("*:GetControlValue", "SteamHeat",0)
    elseif Call("*:ControlExists", "SteamHeatingPressureGauge",0) == 1 then
       SteamHeating = Call("*:GetControlValue", "SteamHeatingPressureGauge",0) / 100

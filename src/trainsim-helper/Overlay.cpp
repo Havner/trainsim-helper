@@ -38,6 +38,7 @@ double g_fPrevSimulationTime2;
 bool g_bCountdown;
 char g_nCountdownDigits[4];
 int g_nSetCountdownProgress;
+bool g_bInvert;
 
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;
@@ -66,6 +67,9 @@ struct SimData {
 	Value<int>			nNextSpeedLimitType;
 	Value<float>		fNextSpeedLimit;
 	Value<float>		fNextSpeedLimitDistance;
+	Value<int>			nNextSpeedLimitBackType;
+	Value<float>		fNextSpeedLimitBack;
+	Value<float>		fNextSpeedLimitBackDistance;
 	Value<float>		fAcceleration;
 	Value<float>		fGradient;
 
@@ -82,6 +86,7 @@ struct SimData {
 	// Loco's indicators
 	Value<float>		fBoilerPressure;
 	Value<float>		fSteamChestPressure;
+	Value<float>		fSteamHeatingPressure;
 	Value<float>		fAmmeter;
 	Value<int>			nRPM;
 	Value<float>		fVacuumBrakePipePressure;
@@ -145,6 +150,11 @@ void ToggleDisplaySection(int s)
 {
 	if (s >= 0 && s < SECTIONS_TABLE_SIZE)
 		g_bHideSection[s] = !g_bHideSection[s];
+}
+
+void ToggleInvert()
+{
+	g_bInvert = !g_bInvert;
 }
 
 void ResetDistance()
@@ -262,6 +272,9 @@ int FillData(SimData* data)
 		else if (!strcmp("NextSpeedLimitType:", param))			data->nNextSpeedLimitType = value;
 		else if (!strcmp("NextSpeedLimit:", param))				data->fNextSpeedLimit = value;
 		else if (!strcmp("NextSpeedLimitDistance:", param))		data->fNextSpeedLimitDistance = value;
+		else if (!strcmp("NextSpeedLimitBackType:", param))		data->nNextSpeedLimitBackType = value;
+		else if (!strcmp("NextSpeedLimitBack:", param))			data->fNextSpeedLimitBack = value;
+		else if (!strcmp("NextSpeedLimitBackDistance:", param))	data->fNextSpeedLimitBackDistance = value;
 		else if (!strcmp("Acceleration:", param))				data->fAcceleration = value;
 		else if (!strcmp("Gradient:", param))					data->fGradient = value;
 
@@ -278,6 +291,7 @@ int FillData(SimData* data)
 		// Loco's indicators
 		else if (!strcmp("BoilerPressure:", param))				data->fBoilerPressure = value;
 		else if (!strcmp("SteamChestPressure:", param))			data->fSteamChestPressure = value;
+		else if (!strcmp("SteamHeatingPressure:", param))		data->fSteamHeatingPressure = value;
 		else if (!strcmp("Ammeter:", param))					data->fAmmeter = value;
 		else if (!strcmp("RPM:", param))						data->nRPM = value;
 		else if (!strcmp("VacuumBrakePipePressure:", param))	data->fVacuumBrakePipePressure = value;
@@ -396,6 +410,8 @@ void RenderOverlay()
 		double fDeltaDistance = data.fSpeed() * fDeltaTime;
 		if (g_bCountdown)
 			fDeltaDistance *= -1.0;
+		if (g_bInvert)
+			fDeltaDistance *= -1.0;
 		g_fDistance += fDeltaDistance;
 	}
 
@@ -451,10 +467,26 @@ void RenderOverlay()
 
 	float fSpeed = (float)data.fSpeed() * fModifierSpeed;
 	float fAcceleration = data.fAcceleration() * fModifierAcceleration;
-	int nSpeedLimit = (int)(data.fSpeedLimit() * fModifierSpeed);
-	int nNextSpeedLimit = (int)(data.fNextSpeedLimit() * fModifierSpeed);
-	float fNextSpeedLimitDistance = data.fNextSpeedLimitDistance() * fModifierDistance;
 	float fDistance = (float)g_fDistance * fModifierDistance;
+	int nSpeedLimit = (int)(data.fSpeedLimit() * fModifierSpeed);
+	int nNextSpeedLimit;
+	int nNextSpeedLimitType;
+	float fNextSpeedLimitDistance;
+
+	if (g_bInvert)
+	{
+		fSpeed *= -1.0;
+		fAcceleration *= -1.0;
+		nNextSpeedLimit = (int)(data.fNextSpeedLimitBack() * fModifierSpeed);
+		nNextSpeedLimitType = (int)(data.nNextSpeedLimitBackType);
+		fNextSpeedLimitDistance = data.fNextSpeedLimitBackDistance() * fModifierDistance;
+	}
+	else
+	{
+		nNextSpeedLimit = (int)(data.fNextSpeedLimit() * fModifierSpeed);
+		nNextSpeedLimitType = (int)(data.nNextSpeedLimitType);
+		fNextSpeedLimitDistance = data.fNextSpeedLimitDistance() * fModifierDistance;
+	}
 
 	// AWS color (yellow - sunflower, red - push)
 	DWORD awscolor = transparent;
@@ -563,6 +595,7 @@ void RenderOverlay()
 		y = DrawString(data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f Inches Hg", data.fVacuumBrakePipePressure());
 		y = DrawString(data.fAmmeter,						x+56,	y, whitered, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
 		y = DrawString(data.nRPM,							x+80,	y, whitered, pSmallFont, "RPM: %d RPM", (int)data.nRPM());
+		y = DrawString(data.fSteamHeatingPressure,			x+23,	y, whitered, pSmallFont, "Steam Heating: %.1f PSI", data.fSteamHeatingPressure());
 		y = DrawString(data.fSteamChestPressure,			x+33,	y, whitered, pSmallFont, "Steam Chest: %.1f PSI", data.fSteamChestPressure());
 	}
 

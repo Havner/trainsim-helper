@@ -108,6 +108,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// V for the whole overlay
 	RegisterHotKey(hWnd, 23, MOD_SHIFT | MOD_ALT, 0x56 /* V key */);
 
+	// S for invert
+	RegisterHotKey(hWnd, 24, MOD_SHIFT | MOD_ALT, 0x53 /* S key */);
+
 	if (bUseJoystick)
 		if (FAILED(InitDirectInput()))
 			ExitProcess(0);
@@ -178,6 +181,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			ToggleDisplaySection(wParam - 10);
 		else if (wParam == 23)
 			ToggleDisplaySection(0);
+		else if (wParam == 24)
+			ToggleInvert();
 		break;
 	}
 

@@ -20,6 +20,7 @@ function ConfigureJoystick()
    --LocoBrakeLine = 7
    DynamicBrakeLine = 7
    --CruiseControlLine = 7
+	 --SmallEjectorLine = 7
 
    GearInvert = 1
    ReverserInvert = 1
@@ -29,6 +30,7 @@ function ConfigureJoystick()
    --LocoBrakeInvert = 1
    --DynamicBrakeInvert = 1
    CruiseControlInvert = 1
+	 --SmallEjectorInvert = 1
 
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
@@ -47,6 +49,7 @@ function ConfigureJoystick()
    LocoBrakeControl =         FindLocoBrake()
    DynamicBrakeControl =      FindDynamicBrake()
    CruiseControlControl =     FindCruiseControl()
+	 SmallEjectorControl =      FindSmallEjector()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later.
    GearRange =             GetControlRange(FindGear())
@@ -57,6 +60,7 @@ function ConfigureJoystick()
    LocoBrakeRange =        GetControlRange(FindLocoBrake())
    DynamicBrakeRange =     GetControlRange(FindDynamicBrake())
    CruiseControlRange =    GetControlRange(FindCruiseControl())
+	 SmallEjectorRange =     GetControlRange(FindSmallEjector())
 
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- In my case (3 throttle axes) I often make use of the DynamicLine in
@@ -179,6 +183,13 @@ function ConfigureJoystick()
    elseif DetectClass47() then
       ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
 
+   elseif DetectClass117() then
+      -- Notched Gear instead of DynamicBrake
+      GearNotches = GenerateEqualNotches(5, GearRange) -- (0,4)
+      GearLine = DynamicBrakeLine
+      ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
+      DynamicBrakeLine = nil
+
    elseif DetectClass321_AP() then
       ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
       TrainBrakeNotches = GenerateEqualNotches(5) -- (0,1)
@@ -257,6 +268,18 @@ function ConfigureJoystick()
       -- Ignore stop value (-2, 0)
       ThrottleRange = {0, 8}
       ThrottleNotches = GenerateEqualNotches(9, ThrottleRange)
+			-- Setup LocoBrake instead of DynamicBrake
+			LocoBrakeLine = DynamicBrakeLine
+			-- DynamicBrake should be used with Throttle and Selector, not directly
+			DynamicBrakeLine = nil
+
+   elseif DetectSD45_DTM() then
+			ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+			-- DynamicBrake should be used with Throttle and Selector, not directly
+			DynamicBrakeLine = nil
+
+   elseif DetectGE44_DTM() then
+			ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
 
    elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       -- Not a simple case as the implementation merges two controls with different notches
@@ -373,6 +396,7 @@ function ConfigureJoystick()
    PreviousLocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
    PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
    PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
+	 PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
 
    -- Set at the very end to be a mark whether the configuration has been successful.
    JoystickConfigured = 1
@@ -454,6 +478,12 @@ function FindCruiseControl()
    end
 end
 
+function FindSmallEjector()
+   if Call("*:ControlExists", "SmallCompressorOnOff", 0) == 1 then
+      return "SmallCompressorOnOff"
+   end
+end
+
 -----------------------------------------------------------
 ----------------  Main joystick function  -----------------
 -----------------------------------------------------------
@@ -469,6 +499,7 @@ function SetJoystickData()
    local LocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
    local DynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
    local CruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
+	 local SmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
 
    -- Feed with data
    PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
@@ -479,6 +510,7 @@ function SetJoystickData()
    PreviousLocoBrake =        SetControl(LocoBrakeControl,        PreviousLocoBrake,        LocoBrake,        LocoBrakeRange,        LocoBrakeNotches)
    PreviousDynamicBrake =     SetControl(DynamicBrakeControl,     PreviousDynamicBrake,     DynamicBrake,     DynamicBrakeRange,     DynamicBrakeNotches)
    PreviousCruiseControl =    SetControl(CruiseControlControl,    PreviousCruiseControl,    CruiseControl,    CruiseControlRange,    CruiseControlNotches)
+	 PreviousSmallEjector =     SetControl(SmallEjectorControl,     PreviousSmallEjector,     SmallEjector,     SmallEjectorRange,     SmallEjectorNotches)
 end
 
 -----------------------------------------------------------
