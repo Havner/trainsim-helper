@@ -3,22 +3,23 @@ Next version:
 - Train Length
 + Side Change (Invert direction)
 + More configurations
-- Axes:
++ Axes:
   + small ejector
-	- handbrake
-	- blower
-	- damper
-	- stoking
+  + handbrake
+  + blower
+  + damper
 + steam heating (gwr railmotor, 56xx, j94, castle, EU?)
 + 56xx keys and internals, missing control values
-- J94 (loco/air brake) and FEF-3 (all) for later
+- J94 (loco/air brake)
+- FEF-3 (all) for later
 - data extractor:
   - source
 	- new version
 	- format output
 	- integrate with TSH
 	- fix bugs
-- SwitchControlFromTo() (only if not defined)
++ SwitchControlFromTo() (only if not defined)
+- separate units for brakes
 
 For the future:
 - Optimize overlay (don't check for controlvalues on each frame)

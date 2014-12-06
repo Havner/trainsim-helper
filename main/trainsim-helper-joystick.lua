@@ -228,6 +228,11 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
+   elseif DetectJ94_ADV_Meshtools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      LocoBrakeLine, SmallEjectorLine = ReplaceLines(LocoBrakeLine, SmallEjectorLine)
+
    -- German locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectBR294() then
@@ -454,7 +459,9 @@ function FindTrainBrake()
 end
 
 function FindLocoBrake()
-   if Call("*:ControlExists", "VirtualEngineBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then -- J94
+      return "VirtualLocoBrake"
+   elseif Call("*:ControlExists", "VirtualEngineBrakeControl", 0) == 1 then
       return "VirtualEngineBrakeControl"
    elseif Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
       return "EngineBrakeControl"

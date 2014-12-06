@@ -401,6 +401,24 @@ function DetectCastle() -- Riviera Line
    end
 end
 
+function DetectJ94_ADV_Meshtools() -- Memories of Maerdy
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "Headcode4", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "CabVent", 0) == 1 and
+      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "DamperLeft", 0) == 1 and
+      Call("*:ControlExists", "DamperRight", 0) == 1 and
+      Call("*:ControlExists", "WhistleToot", 0) == 1 and
+      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
+      Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
+      Call("*:ControlExists", "CabLamp", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "J94 (ADV, Meshtools) detected", 3, 0)
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR294() -- Munich - Augsburg, Hamburg - Hanover

@@ -114,7 +114,9 @@ function GetOverlayData()
    if TrainBrake then data = data .."TrainBrake: "..TrainBrake.."\n" end
 
    local LocoBrake
-   if Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then
+      LocoBrake = Call("*:GetControlValue", "VirtualLocoBrake", 0)
+   elseif Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
       LocoBrake = Call("*:GetControlValue", "EngineBrakeControl", 0)
    end
    if LocoBrake then data = data .."LocoBrake: "..LocoBrake.."\n" end
@@ -213,7 +215,10 @@ function GetOverlayData()
    if TrainBrakeCylinderPressure then data = data.."TrainBrakeCylinderPressure: "..TrainBrakeCylinderPressure.."\n" end
 
    local LocoBrakeCylinderPressure
-   if Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
+   if Call("*:ControlExists", "VirtualLocoBrake",0) == 1 and Call("*:ControlExists", "EngineBrakeControl",0) == 1 then  -- J94
+      LocoBrakeCylinderPressure = Call("*:GetControlValue", "EngineBrakeControl",0) * 100
+      BrakeUnits = "PSI"
+   elseif Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeNeedle",0)
       BrakeUnits = "PSI"
    elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR",0) == 1 then
