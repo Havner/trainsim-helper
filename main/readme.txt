@@ -196,7 +196,7 @@ B. Licence
    cmd line switch | keyboard shortcut |           function
   -----------------|-------------------|--------------------------------
          -j        |       n/a         |       disables joystick
-	           |                   |      support and warning
+                   |                   |      support and warning
   -----------------|-------------------|--------------------------------
          -v        |    SHIFT+ALT+v    |   toggles the overlay display
   -----------------|-------------------|--------------------------------
@@ -228,6 +228,8 @@ B. Licence
                    |                   |      turn off countdown
   -----------------|-------------------|--------------------------------
     runtime only   |  SHIFT+ALT+(0-9)  |      setup the countdown
+  -----------------|-------------------|--------------------------------
+    runtime only   |    SHIFT+ALT+s    |         invert side
   -----------------|-------------------|--------------------------------
 
   By default everything is turned on. If you want to permanently
