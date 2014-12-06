@@ -157,7 +157,7 @@ function GetOverlayData()
    end
    if SteamChestPressure then data = data.."SteamChestPressure: "..SteamChestPressure.."\n" end
 
-	 local SteamHeatingPressure
+   local SteamHeatingPressure
    if Call("*:ControlExists", "SteamHeatingPressureGaugePSI",0) == 1 then
       SteamHeatingPressure = Call("*:GetControlValue", "SteamHeatingPressureGaugePSI",0)
    elseif Call("*:ControlExists", "SteamHeatGauge",0) == 1 then
@@ -190,144 +190,149 @@ function GetOverlayData()
    end
    if VacuumBrakeChamberPressure then data = data.."VacuumBrakeChamberPressure: "..VacuumBrakeChamberPressure.."\n" end
 
-   local BrakeUnits
-
    local TrainBrakeCylinderPressure
+   local TrainBrakeCylinderUnits
    if Call("*:ControlExists", "TrainBrakeCylinderPressureBAR",0) == 1 then
       TrainBrakeCylinderPressure = Call("*:GetControlValue", "TrainBrakeCylinderPressureBAR",0)
-      BrakeUnits = "BAR"
+      TrainBrakeCylinderUnits = "BAR"
    elseif Call("*:ControlExists", "aTrainBrakeCylinderPressureBAR",0) == 1 then
       TrainBrakeCylinderPressure = Call("*:GetControlValue", "aTrainBrakeCylinderPressureBAR",0)
-      BrakeUnits = "BAR"
+      TrainBrakeCylinderUnits = "BAR"
    elseif Call("*:ControlExists", "TrainBrakeCylinderPressurePSI",0) == 1 then
       TrainBrakeCylinderPressure = Call("*:GetControlValue", "TrainBrakeCylinderPressurePSI",0)
-      BrakeUnits = "PSI"
+      TrainBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "aTrainBrakeCylinderPressurePSI",0) == 1 then
       TrainBrakeCylinderPressure = Call("*:GetControlValue", "aTrainBrakeCylinderPressurePSI",0)
-      BrakeUnits = "PSI"
+      TrainBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "TrainBrakeCylinderPressure",0) == 1 then
       TrainBrakeCylinderPressure = Call("*:GetControlValue", "TrainBrakeCylinderPressure",0)
-      BrakeUnits = "PSI"
+      TrainBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "aTrainBrakeCylinderPressure",0) == 1 then
       TrainBrakeCylinderPressure = Call("*:GetControlValue", "aTrainBrakeCylinderPressure",0)
-      BrakeUnits = "PSI"
+      TrainBrakeCylinderUnits = "PSI"
    end
    if TrainBrakeCylinderPressure then data = data.."TrainBrakeCylinderPressure: "..TrainBrakeCylinderPressure.."\n" end
+   if TrainBrakeCylinderUnits then data = data.."TrainBrakeCylinderUnits: "..TrainBrakeCylinderUnits.."\n" end
 
    local LocoBrakeCylinderPressure
+   local LocoBrakeCylinderUnits
    if Call("*:ControlExists", "VirtualLocoBrake",0) == 1 and Call("*:ControlExists", "EngineBrakeControl",0) == 1 then  -- J94
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "EngineBrakeControl",0) * 100
-      BrakeUnits = "PSI"
+      LocoBrakeCylinderUnits = "%"
    elseif Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeNeedle",0)
-      BrakeUnits = "PSI"
+      LocoBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressureBAR",0)
-      BrakeUnits = "BAR"
+      LocoBrakeCylinderUnits = "BAR"
    elseif Call("*:ControlExists", "aLocoBrakeCylinderPressureBAR",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "aLocoBrakeCylinderPressureBAR",0)
-      BrakeUnits = "BAR"
+      LocoBrakeCylinderUnits = "BAR"
    elseif Call("*:ControlExists", "LocoBrakeCylinderPressurePSI",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressurePSI",0)
-      BrakeUnits = "PSI"
+      LocoBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "aLocoBrakeCylinderPressurePSI",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "aLocoBrakeCylinderPressurePSI",0)
-      BrakeUnits = "PSI"
+      LocoBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "LocoBrakeCylinderPressure",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressure",0)
-      BrakeUnits = "PSI"
+      LocoBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "aLocoBrakeCylinderPressure",0) == 1 then
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "aLocoBrakeCylinderPressure",0)
-      BrakeUnits = "PSI"
+      LocoBrakeCylinderUnits = "PSI"
    end
    if LocoBrakeCylinderPressure then data = data.."LocoBrakeCylinderPressure: "..LocoBrakeCylinderPressure.."\n" end
-
+   if LocoBrakeCylinderUnits then data = data.."LocoBrakeCylinderUnits: "..LocoBrakeCylinderUnits.."\n" end
 
    local AirBrakePipePressure
+   local AirBrakePipeUnits
    if Call("*:ControlExists", "AirBrakePipePressureBAR",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "AirBrakePipePressureBAR",0)
-      BrakeUnits = "BAR"
+      AirBrakePipeUnits = "BAR"
    elseif Call("*:ControlExists", "aAirBrakePipePressureBAR",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "aAirBrakePipePressureBAR",0)
-      BrakeUnits = "BAR"
+      AirBrakePipeUnits = "BAR"
    elseif Call("*:ControlExists", "BrakePipePressureBAR",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "BrakePipePressureBAR",0)
-      BrakeUnits = "BAR"
+      AirBrakePipeUnits = "BAR"
    elseif Call("*:ControlExists", "aBrakePipePressureBAR",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "aBrakePipePressureBAR",0)
-      BrakeUnits = "BAR"
+      AirBrakePipeUnits = "BAR"
    elseif Call("*:ControlExists", "AirBrakePipePressurePSI",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "AirBrakePipePressurePSI",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "aAirBrakePipePressurePSI",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "aAirBrakePipePressurePSI",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "BrakePipePressurePSI",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "BrakePipePressurePSI",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "aBrakePipePressurePSI",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "aBrakePipePressurePSI",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "AirBrakePipePressure",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "AirBrakePipePressure",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "aAirBrakePipePressure",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "aAirBrakePipePressure",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "BrakePipePressure",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "BrakePipePressure",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    elseif Call("*:ControlExists", "aBrakePipePressure",0) == 1 then
       AirBrakePipePressure = Call("*:GetControlValue", "aBrakePipePressure",0)
-      BrakeUnits = "PSI"
+      AirBrakePipeUnits = "PSI"
    end
    if AirBrakePipePressure then data = data.."AirBrakePipePressure: "..AirBrakePipePressure.."\n" end
+   if AirBrakePipeUnits then data = data.."AirBrakePipeUnits: "..AirBrakePipeUnits.."\n" end
 
    local MainReservoirPressure
+   local MainReservoirUnits
    if Call("*:ControlExists", "MainReservoirPressureBAR",0) == 1 then
       MainReservoirPressure = Call("*:GetControlValue", "MainReservoirPressureBAR",0)
-      BrakeUnits = "BAR"
+      MainReservoirUnits = "BAR"
    elseif Call("*:ControlExists", "aMainReservoirPressureBAR",0) == 1 then
       MainReservoirPressure = Call("*:GetControlValue", "aMainReservoirPressureBAR",0)
-      BrakeUnits = "BAR"
+      MainReservoirUnits = "BAR"
    elseif Call("*:ControlExists", "MainReservoirPressurePSI",0) == 1 then
       MainReservoirPressure = Call("*:GetControlValue", "MainReservoirPressurePSI",0)
-      BrakeUnits = "PSI"
+      MainReservoirUnits = "PSI"
    elseif Call("*:ControlExists", "aMainReservoirPressurePSI",0) == 1 then
       MainReservoirPressure = Call("*:GetControlValue", "aMainReservoirPressurePSI",0)
-      BrakeUnits = "PSI"
+      MainReservoirUnits = "PSI"
    elseif Call("*:ControlExists", "MainReservoirPressure",0) == 1 then
       MainReservoirPressure = Call("*:GetControlValue", "MainReservoirPressure",0)
-      BrakeUnits = "PSI"
+      MainReservoirUnits = "PSI"
    elseif Call("*:ControlExists", "aMainReservoirPressure",0) == 1 then
       MainReservoirPressure = Call("*:GetControlValue", "aMainReservoirPressure",0)
-      BrakeUnits = "PSI"
+      MainReservoirUnits = "PSI"
    end
    if MainReservoirPressure then data = data.."MainReservoirPressure: "..MainReservoirPressure.."\n" end
+   if MainReservoirUnits then data = data.."MainReservoirUnits: "..MainReservoirUnits.."\n" end
 
    local EqReservoirPressure
+   local EqReservoirUnits
    if Call("*:ControlExists", "EqReservoirPressureBAR",0) == 1 then
       EqReservoirPressure = Call("*:GetControlValue", "EqReservoirPressureBAR",0)
-      BrakeUnits = "BAR"
+      EqReservoirUnits = "BAR"
    elseif Call("*:ControlExists", "aEqReservoirPressureBAR",0) == 1 then
       EqReservoirPressure = Call("*:GetControlValue", "aEqReservoirPressureBAR",0)
-      BrakeUnits = "BAR"
+      EqReservoirUnits = "BAR"
    elseif Call("*:ControlExists", "EqReservoirPressurePSI",0) == 1 then
       EqReservoirPressure = Call("*:GetControlValue", "EqReservoirPressurePSI",0)
-      BrakeUnits = "PSI"
+      EqReservoirUnits = "PSI"
    elseif Call("*:ControlExists", "aEqReservoirPressurePSI",0) == 1 then
       EqReservoirPressure = Call("*:GetControlValue", "aEqReservoirPressurePSI",0)
-      BrakeUnits = "PSI"
+      EqReservoirUnits = "PSI"
    elseif Call("*:ControlExists", "EqReservoirPressure",0) == 1 then
       EqReservoirPressure = Call("*:GetControlValue", "EqReservoirPressure",0)
-      BrakeUnits = "PSI"
+      EqReservoirUnits = "PSI"
    elseif Call("*:ControlExists", "aEqReservoirPressure",0) == 1 then
       EqReservoirPressure = Call("*:GetControlValue", "aEqReservoirPressure",0)
-      BrakeUnits = "PSI"
+      EqReservoirUnits = "PSI"
    end
    if EqReservoirPressure then data = data.."EqReservoirPressure: "..EqReservoirPressure.."\n" end
-
-   if BrakeUnits then data = data.."BrakeUnits: "..BrakeUnits.."\n" end
+   if EqReservoirUnits then data = data.."EqReservoirUnits: "..EqReservoirUnits.."\n" end
 
    -- Steamers (driver)
    

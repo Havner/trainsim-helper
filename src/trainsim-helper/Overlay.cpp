@@ -91,12 +91,16 @@ struct SimData {
 	Value<int>			nRPM;
 	Value<float>		fVacuumBrakePipePressure;
 	Value<float>		fVacuumBrakeChamberPressure;
-	Value<std::string>	sBrakeUnits;
 	Value<float>		fTrainBrakeCylinderPressure;
+	Value<std::string>	sTrainBrakeCylinderUnits;
 	Value<float>		fLocoBrakeCylinderPressure;
+	Value<std::string>	sLocoBrakeCylinderUnits;
 	Value<float>		fAirBrakePipePressure;
+	Value<std::string>	sAirBrakePipeUnits;
 	Value<float>		fMainReservoirPressure;
+	Value<std::string>	sMainReservoirUnits;
 	Value<float>		fEqReservoirPressure;
+	Value<std::string>	sEqReservoirUnits;
 
 	// Steamers (driver, displayed in separate section)
 	Value<float>		fAirPump;
@@ -296,12 +300,16 @@ int FillData(SimData* data)
 		else if (!strcmp("RPM:", param))						data->nRPM = value;
 		else if (!strcmp("VacuumBrakePipePressure:", param))	data->fVacuumBrakePipePressure = value;
 		else if (!strcmp("VacuumBrakeChamberPressure:", param))	data->fVacuumBrakeChamberPressure = value;
-		else if (!strcmp("BrakeUnits:", param))					data->sBrakeUnits = value;
 		else if (!strcmp("TrainBrakeCylinderPressure:", param))	data->fTrainBrakeCylinderPressure = value;
+		else if (!strcmp("TrainBrakeCylinderUnits:", param))	data->sTrainBrakeCylinderUnits = value;
 		else if (!strcmp("LocoBrakeCylinderPressure:", param))	data->fLocoBrakeCylinderPressure = value;
+		else if (!strcmp("LocoBrakeCylinderUnits:", param))		data->sLocoBrakeCylinderUnits = value;
 		else if (!strcmp("AirBrakePipePressure:", param))		data->fAirBrakePipePressure = value;
+		else if (!strcmp("AirBrakePipeUnits:", param))			data->sAirBrakePipeUnits = value;
 		else if (!strcmp("MainReservoirPressure:", param))		data->fMainReservoirPressure = value;
+		else if (!strcmp("MainReservoirUnits:", param))			data->sMainReservoirUnits = value;
 		else if (!strcmp("EqReservoirPressure:", param))		data->fEqReservoirPressure = value;
+		else if (!strcmp("EqReservoirUnits:", param))			data->sEqReservoirUnits = value;
 
 		// Steamers (driver, displayed with the above 3 groups)
 		else if (!strcmp("AirPump:", param))					data->fAirPump = value;
@@ -586,11 +594,11 @@ void RenderOverlay()
 
 	if (!g_bHideSection[7])
 	{
-		y = DrawString(data.fEqReservoirPressure,			x+36,	y, whitered, pSmallFont, "Eq Reservoir: %.1f %s", data.fEqReservoirPressure(), data.sBrakeUnits());
-		y = DrawString(data.fMainReservoirPressure,			x+24,	y, whitered, pSmallFont, "Main Reservoir: %.1f %s", data.fMainReservoirPressure(), data.sBrakeUnits());
-		y = DrawString(data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sBrakeUnits());
-		y = DrawString(data.fLocoBrakeCylinderPressure,		x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sBrakeUnits());
-		y = DrawString(data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sBrakeUnits());
+		y = DrawString(data.fEqReservoirPressure,			x+36,	y, whitered, pSmallFont, "Eq Reservoir: %.1f %s", data.fEqReservoirPressure(), data.sEqReservoirUnits());
+		y = DrawString(data.fMainReservoirPressure,			x+24,	y, whitered, pSmallFont, "Main Reservoir: %.1f %s", data.fMainReservoirPressure(), data.sMainReservoirUnits());
+		y = DrawString(data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sAirBrakePipeUnits());
+		y = DrawString(data.fLocoBrakeCylinderPressure,		x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sLocoBrakeCylinderUnits());
+		y = DrawString(data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sTrainBrakeCylinderUnits());
 		//y = DrawString(data.fVacuumBrakeChamberPressure,	x+6,	y, whitered, pSmallFont, "Vacuum Chamber: %.1f Inches Hg", data.fVacuumBrakeChamberPressure());
 		y = DrawString(data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f Inches Hg", data.fVacuumBrakePipePressure());
 		y = DrawString(data.fAmmeter,						x+56,	y, whitered, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
