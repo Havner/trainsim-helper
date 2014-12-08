@@ -1,5 +1,6 @@
 Next version:
 - Clean up the C++ code, split into classes
+- More generalization in the C++ code and cleaning it a bit
 - Train Length
 + Side Change (Invert direction)
 + More configurations
@@ -14,19 +15,17 @@ Next version:
 - FEF-3 (all) for later
 - data extractor:
   - source
-	- new version
-	- format output
-	- integrate with TSH
-	- fix bugs
+  - new version
+  - format output
+  - integrate with TSH
+  - fix bugs
 + SwitchControlFromTo() (only if not defined)
-- separate units for brakes
-
-For the future:
++ separate units for brakes
 - Optimize overlay (don't check for controlvalues on each frame)
-- Make the overlay display values in the data file it doesn't know about
-- More generalization in the C++ code and cleaning it a bit
+- LocoBrake axis? class37 reverser? change steams ejector?
 
 Things to consider for the very distant future:
+- Make the overlay display values in the data file it doesn't know about
 - Launch together with the game
 - Second monitor window
 - Configurator for the overlay (what to display, positions, colors)

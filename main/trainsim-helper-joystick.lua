@@ -214,6 +214,8 @@ function ConfigureJoystick()
    elseif DetectClass37_Thomson() then
       ThrottleNotches = {0, 0.2, 0.25, 0.27, 0.3, 0.32, 0.35, 0.37, 0.4, 0.42, 0.45, 0.47, 0.5, 0.52, 0.55, 0.57, 0.6, 0.62, 0.65, 0.67, 0.7, 0.72, 0.75, 0.77, 0.8, 0.82, 0.85, 0.87, 0.9, 0.92, 0.95, 1}
       TrainBrakeNotches = {0, 0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7, 0.73, 0.7857, 1}
+      -- Havner's config
+      LocoBrakeLine, DynamicBrakeLine = ReplaceLines(LocoBrakeLine, DynamicBrakeLine)
 
    elseif DetectClass170() then
       -- Set custom notches for the CombinedThrottle, it's continuous below center

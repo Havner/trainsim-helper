@@ -114,9 +114,7 @@ function GetOverlayData()
    if TrainBrake then data = data .."TrainBrake: "..TrainBrake.."\n" end
 
    local LocoBrake
-   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then
-      LocoBrake = Call("*:GetControlValue", "VirtualLocoBrake", 0)
-   elseif Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
       LocoBrake = Call("*:GetControlValue", "EngineBrakeControl", 0)
    end
    if LocoBrake then data = data .."LocoBrake: "..LocoBrake.."\n" end
@@ -216,10 +214,7 @@ function GetOverlayData()
 
    local LocoBrakeCylinderPressure
    local LocoBrakeCylinderUnits
-   if Call("*:ControlExists", "VirtualLocoBrake",0) == 1 and Call("*:ControlExists", "EngineBrakeControl",0) == 1 then  -- J94
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "EngineBrakeControl",0) * 100
-      LocoBrakeCylinderUnits = "%"
-   elseif Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
+   if Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
       LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeNeedle",0)
       LocoBrakeCylinderUnits = "PSI"
    elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR",0) == 1 then
@@ -341,6 +336,12 @@ function GetOverlayData()
       AirPump = Call("*:GetControlValue", "AirPumpOnOff",0)
    end
    if AirPump then data = data.."AirPump: "..AirPump.."\n" end
+
+   local SteamBrake  -- J94
+   if Call("*:ControlExists", "VirtualLocoBrake",0) == 1 then
+      SteamBrake = Call("*:GetControlValue", "VirtualLocoBrake",0)
+   end
+   if SteamBrake then data = data.."SteamBrake: "..SteamBrake.."\n" end
    
    local SmallEjector
    if Call("*:ControlExists", "SmallCompressorOnOff",0) == 1 then
@@ -523,7 +524,9 @@ function GetOverlayData()
    if VigilAlarm then data = data.."VigilAlarm: "..VigilAlarm.."\n" end
 
    local EmergencyBrake
-   if Call("*:ControlExists", "EmergencyAlarm", 0) == 1 then
+   if Call("*:ControlExists", "BrakeDemandLamp", 0) == 1 then
+      EmergencyBrake = Call("*:GetControlValue", "BrakeDemandLamp", 0)
+   elseif Call("*:ControlExists", "EmergencyAlarm", 0) == 1 then
       EmergencyBrake = Call("*:GetControlValue", "EmergencyAlarm", 0)
    elseif Call("*:ControlExists", "EmergencyBrake", 0) == 1 then
       EmergencyBrake = Call( "*:GetControlValue", "EmergencyBrake", 0)
