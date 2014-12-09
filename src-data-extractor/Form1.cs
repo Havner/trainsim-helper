@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
 
-namespace TS2015_Data_Extractor
+namespace Data_Extractor
 {
     public partial class Form1 : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace TS2015_Data_Extractor
+﻿namespace Data_Extractor
 {
     partial class Form1
     {
@@ -181,7 +181,7 @@
             this.MinimumSize = new System.Drawing.Size(333, 297);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TS2015 Data Extractor V1.03";
+            this.Text = "TrainSim Helper Data Extractor, Version 0.6";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);

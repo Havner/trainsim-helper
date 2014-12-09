@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace TS2015_Data_Extractor
+namespace Data_Extractor
 {
     static class Program
     {

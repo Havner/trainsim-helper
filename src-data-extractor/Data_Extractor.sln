@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TS2015 Data Extractor", "TS2015 Data Extractor.csproj", "{866E48B8-1421-49B1-BD41-E361927DAB88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data_Extractor", "Data_Extractor.csproj", "{866E48B8-1421-49B1-BD41-E361927DAB88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
