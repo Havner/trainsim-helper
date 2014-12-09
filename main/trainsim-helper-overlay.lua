@@ -163,7 +163,6 @@ function GetOverlayData()
    end
    if SteamHeatingPressure then data = data.."SteamHeatingPressure: "..SteamHeatingPressure.."\n" end
 
-
    local Ammeter   
    if Call("*:ControlExists", "Ammeter", 0) == 1 then
       Ammeter = Call("*:GetControlValue", "Ammeter", 0)
@@ -344,10 +343,10 @@ function GetOverlayData()
    if SteamBrake then data = data.."SteamBrake: "..SteamBrake.."\n" end
    
    local SmallEjector
-   if Call("*:ControlExists", "SmallCompressorOnOff",0) == 1 then
-      SmallEjector = Call("*:GetControlValue", "SmallCompressorOnOff",0)
-   elseif Call("*:ControlExists", "SmallEjectorOnOff",0) == 1 then
+   if Call("*:ControlExists", "SmallEjectorOnOff",0) == 1 then
       SmallEjector = Call("*:GetControlValue", "SmallEjectorOnOff",0)
+   elseif Call("*:ControlExists", "SmallCompressorOnOff",0) == 1 then
+      SmallEjector = Call("*:GetControlValue", "SmallCompressorOnOff",0)
    end
    if SmallEjector then data = data.."SmallEjector: "..SmallEjector.."\n" end
 
