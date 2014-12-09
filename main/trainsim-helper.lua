@@ -419,6 +419,25 @@ function DetectJ94_ADV_Meshtools() -- Memories of Maerdy
    end
 end
 
+function Detect56xx_VictoryWorks() -- Memories of Maerdy addon
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "Stoking", 0) == 1 and
+      Call("*:ControlExists", "PantographControl", 0) == 1 and
+      Call("*:ControlExists", "gCocksWaterLevel", 0) == 1 and
+      Call("*:ControlExists", "gStationaryTime", 0) == 1 and
+      Call("*:ControlExists", "CylinderCocksClear", 0) == 1 and
+      Call("*:ControlExists", "CylinderCocksFilled", 0) == 1 and
+      Call("*:ControlExists", "gExtraCoal", 0) == 1 and
+      Call("*:ControlExists", "gSmokeColour", 0) == 1 and
+      Call("*:ControlExists", "LampBracket", 0) == 1 and
+      Call("*:ControlExists", "ToolBoxLid", 0) == 1 and
+      Call("*:ControlExists", "SafetyFeather", 0) == 1
+   then
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "56xx (VictoryWorks) detected", 3, 0)
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR294() -- Munich - Augsburg, Hamburg - Hanover

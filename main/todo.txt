@@ -11,18 +11,22 @@ Next version:
   + damper
 + steam heating (gwr railmotor, 56xx, j94, castle, EU?)
 + 56xx keys and internals, missing control values
-- J94 (loco/air brake)
++ J94 (loco/air brake)
 - FEF-3 (all) for later
 - data extractor:
-  - source
-  - new version
-  - format output
-  - integrate with TSH
-  - fix bugs
-+ SwitchControlFromTo() (only if not defined)
+  + source
+  + new version
+  + integrate with TSH
+  + fix bugs
++ ReplaceControls() (only if not defined)
 + separate units for brakes
 - Optimize overlay (don't check for controlvalues on each frame)
-- LocoBrake axis? class37 reverser? change steams ejector?
++ LocoBrake axis? class37 reverser? change steams ejector?
+- docs for data extractor
+- docs for invert side
+- docs for axes
+- docs for train length
+- docs for new axes
 
 Things to consider for the very distant future:
 - Make the overlay display values in the data file it doesn't know about
