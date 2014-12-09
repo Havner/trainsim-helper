@@ -30,6 +30,17 @@ namespace Data_Extractor
             }
         }
 
+        private string SanitizeFileName(string p)
+        {
+            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+
+            p = p.Replace("/", " "); 
+            foreach (char c in invalid)
+                p = p.Replace(c.ToString(), "");
+
+            return p;
+        }
+
         private void btnEngineDataFile_Click(object sender, EventArgs e)
         {
             string sName = "";
@@ -88,6 +99,7 @@ namespace Data_Extractor
                 var EngineDataName = doc.Descendants("cEngineBlueprint");
                 var EngineData = doc.Descendants("cControlContainerBlueprint-cControlValue");
                 var EngineScript = doc.Descendants("cScriptComponentBlueprint");
+                File.Delete(fileDirectory + filenameWithoutExtension + ".xml");
                 try
                 {
                     
@@ -95,14 +107,12 @@ namespace Data_Extractor
                     
                     {
                         fname = j.Element("Name").Value;
-                        string tmp = fname.Replace("/", " ");
-                        fname = tmp;
+                        fname = SanitizeFileName(fname);
+
                         foreach (var i in EngineData)
                         {
                             sName = i.Element("ControlName").Value.ToString();
 
-                            
-                            
                             if (sName == "VirtualThrottle" || sName == "ThrottleAndBrake" || sName == "Regulator" || sName == "CabThrottle" || sName == "VirtualBrake" || sName == "VirtualTrainBrakeControl" || sName == "TrainBrakeControl" || sName == "EngineBrakeControl"
                                 || sName == "VirtualEngineBrakeControl" || sName == "M8Brake" || sName == "DynamicBrake" || sName == "VirtualBynamicBrake" || sName == "Reverser" || sName == "VirtualReverser" || sName == "CabReverser" || sName == "Wipers"
                                 || sName == "WiperSpeed" || sName == "swDriverWiper" || sName == "DriverWiper" || sName == "Headlights" || sName == "HeadlightSwitch" || sName == "VirtualHeadlights" || sName == "TaillightSwitch" || sName == "MarkerLightSwitch")
@@ -110,7 +120,6 @@ namespace Data_Extractor
                                 var NotchData = i.Descendants("InterfaceElements").Descendants("Notch").Descendants("cControlContainerBlueprint-cInteriorIrregularNotchedLever-cNotchData");
                                 var ExtendedNotchData = i.Descendants("InterfaceElements").Descendants("Notch").Descendants("cControlContainerBlueprint-cInteriorIrregularNotchedLever-cExtendedNotchData");
                                 var NumberOfNotchesData = i.Descendants("InterfaceElements").Descendants("cControlContainerBlueprint-cInteriorNotchedLever");
-
 
                                 //**Reading EngineData
                                 s += sName + " {";
@@ -146,8 +155,8 @@ namespace Data_Extractor
                     foreach (var j in EngineDataName)
                     {
                         fname = j.Element("Name").Value;
-                        string tmp = fname.Replace("/", " ");
-                        fname = tmp;
+                        fname = SanitizeFileName(fname);
+
                         foreach (var i in EngineData)
                         {
                             sName = i.Element("ControlName").Value.ToString();
@@ -162,30 +171,28 @@ namespace Data_Extractor
                             s += "DEFAULT VALUE \"(" + i.Element("DefaultValue").Value + ")\"" + Environment.NewLine;
                             foreach (var k in NotchData)
                             {
-                                s += ("Notch Name \"(" + k.Element("Identifier").Value + ")\",").PadRight(55, ' ');
+                                s += ("  Notch Name \"(" + k.Element("Identifier").Value + ")\",").PadRight(55, ' ');
                                 s += "Notch Value \"(" + k.Element("Value").Value + ")\"" + Environment.NewLine;
                             }
                             foreach (var l in ExtendedNotchData)
                             {
-                                s += ("Notch Name \"(" + l.Element("Identifier").Value + ")\",").PadRight(55, ' ');
+                                s += ("  Notch Name \"(" + l.Element("Identifier").Value + ")\",").PadRight(55, ' ');
                                 s += "Notch Value \"(" + l.Element("Value").Value + ")\"" + Environment.NewLine;
                             }
                             foreach (var h in NumberOfNotchesData)
                             {
-                                s += ("Notch Name \"(Number of Notches)\",").PadRight(55, ' ');
+                                s += ("  Notch Name \"(Number of Notches)\",").PadRight(55, ' ');
                                 s += "Notch Value \"(" + h.Element("NumberOfNotches").Value + ")\"" + Environment.NewLine;
                             }
                         }
                         foreach (var scriptName in EngineScript)
                         {
-                            tmp = "Engine Script to edit = " + scriptName.Element("Name").Value.ToString() + Environment.NewLine + Environment.NewLine;
+                            var tmp = "Engine Script to edit = " + scriptName.Element("Name").Value.ToString() + Environment.NewLine + Environment.NewLine;
                             s = tmp + s;
                         }
                         saveEngineData(fname, s, true);
                         s = "";
                     }
-                    //saveEngineData(fname, s, true);
-                    //s = "";
                 }
 
                 catch (Exception ex)
@@ -350,6 +357,7 @@ namespace Data_Extractor
                 doc = XDocument.Load(fileDirectory + filenameWithoutExtension + ".xml");
                 var InputMapperName = doc.Descendants("cInputMapperBlueprint");
                 var inputMapper = doc.Descendants("iInputMapper-cInputMapEntry");
+                File.Delete(fileDirectory + filenameWithoutExtension + ".xml");
                 try
                 {
                     foreach (var j in InputMapperName)
@@ -373,7 +381,7 @@ namespace Data_Extractor
                 catch (Exception)
                 {
                     MessageBox.Show("Error:- Are you sure you are opening a 'Inputmapper' file");
-
+                    
                 }
                 if (chkShowExtractedData.Checked)
                 {
@@ -460,7 +468,7 @@ namespace Data_Extractor
                 //**Create the folder
                 Directory.CreateDirectory(myFolder);
             }
-            
+
             StreamWriter sr = new StreamWriter(myFolder + @"\" + f + ".txt");
             sr.Write(s);
             sr.Close();
@@ -476,6 +484,7 @@ namespace Data_Extractor
                 //**Create the folder
                 Directory.CreateDirectory(myfolder);
             }
+
             StreamWriter sr = new StreamWriter(myfolder + @"\" + f + ".txt");
             sr.Write(s);
             sr.Close();
