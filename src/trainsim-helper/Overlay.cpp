@@ -61,7 +61,6 @@ DWORD grey = D3DCOLOR_ARGB(255,200,200,200);
 struct SimData {
 	// SIM values
 	Value<int>			nClock;
-	Value<std::string>	sUnits;
 	Value<double>		fSpeed;
 	Value<float>		fSpeedLimit;
 	Value<int>			nNextSpeedLimitType;
@@ -73,6 +72,14 @@ struct SimData {
 	Value<float>		fAcceleration;
 	Value<float>		fGradient;
 
+	// Units
+	Value<std::string>	sUnits;
+	Value<std::string>	sTrainBrakeCylinderUnits;
+	Value<std::string>	sLocoBrakeCylinderUnits;
+	Value<std::string>	sAirBrakePipeUnits;
+	Value<std::string>	sMainReservoirUnits;
+	Value<std::string>	sEqReservoirUnits;
+	
 	// Loco's controls
 	Value<float>		fTargetSpeed;
 	Value<float>		fReverser;
@@ -92,15 +99,10 @@ struct SimData {
 	Value<float>		fVacuumBrakePipePressure;
 	Value<float>		fVacuumBrakeChamberPressure;
 	Value<float>		fTrainBrakeCylinderPressure;
-	Value<std::string>	sTrainBrakeCylinderUnits;
 	Value<float>		fLocoBrakeCylinderPressure;
-	Value<std::string>	sLocoBrakeCylinderUnits;
 	Value<float>		fAirBrakePipePressure;
-	Value<std::string>	sAirBrakePipeUnits;
 	Value<float>		fMainReservoirPressure;
-	Value<std::string>	sMainReservoirUnits;
 	Value<float>		fEqReservoirPressure;
-	Value<std::string>	sEqReservoirUnits;
 
 	// Steamers (driver, displayed in separate section)
 	Value<float>		fAirPump;
@@ -271,7 +273,6 @@ int FillData(SimData* data)
 
 		// SIM values
 		if      (!strcmp("Clock:", param))						data->nClock = value;
-		else if (!strcmp("Units:", param))						data->sUnits = value;
 		else if (!strcmp("Speed:", param))						data->fSpeed = value;
 		else if (!strcmp("SpeedLimit:", param))					data->fSpeedLimit = value;
 		else if (!strcmp("NextSpeedLimitType:", param))			data->nNextSpeedLimitType = value;
@@ -282,6 +283,14 @@ int FillData(SimData* data)
 		else if (!strcmp("NextSpeedLimitBackDistance:", param))	data->fNextSpeedLimitBackDistance = value;
 		else if (!strcmp("Acceleration:", param))				data->fAcceleration = value;
 		else if (!strcmp("Gradient:", param))					data->fGradient = value;
+
+		// Units
+		else if (!strcmp("Units:", param))						data->sUnits = value;
+		else if (!strcmp("TrainBrakeCylinderUnits:", param))	data->sTrainBrakeCylinderUnits = value;
+		else if (!strcmp("LocoBrakeCylinderUnits:", param))		data->sLocoBrakeCylinderUnits = value;
+		else if (!strcmp("AirBrakePipeUnits:", param))			data->sAirBrakePipeUnits = value;
+		else if (!strcmp("MainReservoirUnits:", param))			data->sMainReservoirUnits = value;
+		else if (!strcmp("EqReservoirUnits:", param))			data->sEqReservoirUnits = value;
 
 		// Loco's controls
 		else if (!strcmp("TargetSpeed:", param))				data->fTargetSpeed = value;
@@ -302,15 +311,10 @@ int FillData(SimData* data)
 		else if (!strcmp("VacuumBrakePipePressure:", param))	data->fVacuumBrakePipePressure = value;
 		else if (!strcmp("VacuumBrakeChamberPressure:", param))	data->fVacuumBrakeChamberPressure = value;
 		else if (!strcmp("TrainBrakeCylinderPressure:", param))	data->fTrainBrakeCylinderPressure = value;
-		else if (!strcmp("TrainBrakeCylinderUnits:", param))	data->sTrainBrakeCylinderUnits = value;
 		else if (!strcmp("LocoBrakeCylinderPressure:", param))	data->fLocoBrakeCylinderPressure = value;
-		else if (!strcmp("LocoBrakeCylinderUnits:", param))		data->sLocoBrakeCylinderUnits = value;
 		else if (!strcmp("AirBrakePipePressure:", param))		data->fAirBrakePipePressure = value;
-		else if (!strcmp("AirBrakePipeUnits:", param))			data->sAirBrakePipeUnits = value;
 		else if (!strcmp("MainReservoirPressure:", param))		data->fMainReservoirPressure = value;
-		else if (!strcmp("MainReservoirUnits:", param))			data->sMainReservoirUnits = value;
 		else if (!strcmp("EqReservoirPressure:", param))		data->fEqReservoirPressure = value;
-		else if (!strcmp("EqReservoirUnits:", param))			data->sEqReservoirUnits = value;
 
 		// Steamers (driver, displayed with the above 3 groups)
 		else if (!strcmp("AirPump:", param))					data->fAirPump = value;

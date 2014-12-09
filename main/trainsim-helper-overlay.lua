@@ -45,14 +45,6 @@ function GetOverlayData()
    local Clock = SysCall("ScenarioManager:GetTimeOfDay")
    if Clock then data = data.."Clock: "..Clock.."\n" end
 
-   local Units
-   if Call("*:ControlExists", "SpeedometerMPH", 0) == 1 then
-      Units = "M"
-   elseif Call("*:ControlExists", "SpeedometerKPH", 0) == 1 then
-      Units = "K"
-   end
-   if Units then data = data.."Units: "..Units.."\n" end
-
    local Speed = Call("*:GetSpeed")
    if Speed then data = data.."Speed: "..Speed.."\n" end
 
@@ -74,6 +66,16 @@ function GetOverlayData()
 
    local Gradient = Call("*:GetGradient")
    if Gradient then data = data.."Gradient: "..Gradient.."\n" end
+
+   -- Units
+
+   local Units
+   if Call("*:ControlExists", "SpeedometerMPH", 0) == 1 then
+      Units = "M"
+   elseif Call("*:ControlExists", "SpeedometerKPH", 0) == 1 then
+      Units = "K"
+   end
+   if Units then data = data.."Units: "..Units.."\n" end
 
    -- Loco's controls
 
