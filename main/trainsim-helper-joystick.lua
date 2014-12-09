@@ -216,8 +216,6 @@ function ConfigureJoystick()
       TrainBrakeNotches = {0, 0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7, 0.73, 0.7857, 1}
       -- Reverser is 4 state Virtual
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
-      -- Invert the invert, as this Virtual is inverted compared to the simple one
-      --ReverserInvert = InvertBool(ReverserInvert)
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
