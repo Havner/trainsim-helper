@@ -19,7 +19,7 @@ function ConfigureJoystick()
    CombinedThrottleLine = 3
    ThrottleLine = 3
    TrainBrakeLine = 6
-   LocoBrakeLine = 10      -- might also be used for SmallEjector if not explicitly set
+   LocoBrakeLine = 10      -- might also be used for SmallEjector if it's not explicitly set
    DynamicBrakeLine = 7    -- might also be used for Gear, Reverser or CruiseControl if they're not explicitly set
    --CruiseControlLine = 7
    --SmallEjectorLine = 10
