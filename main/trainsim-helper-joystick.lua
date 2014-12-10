@@ -10,25 +10,25 @@ function ConfigureJoystick()
    -- Lines count from 1, not 0 to make easier for non programmers. CombinedThrottleLine and
    -- ThrottleLine can have the same value, they are mutually exclusive and never used together.
    -- Per loco configurations are further down in the function.
-   -- DynamicBrakeLine might be used to control other things (based on a loco), but only
+   -- Some controls might be used to control other things (based on a loco), but only
    --   if you have not setup those controls explicitly. See "Havner's config" sections.
    -- To disable a control or an invert set it to 0 or comment out.
 
-   --GearLine = 7
    --ReverserLine = 7
+   --GearLine = 7
    CombinedThrottleLine = 3
    ThrottleLine = 3
    TrainBrakeLine = 6
-   LocoBrakeLine = 10
-   DynamicBrakeLine = 7
+   LocoBrakeLine = 10      -- might also be used for SmallEjector if not explicitly set
+   DynamicBrakeLine = 7    -- might also be used for Gear, Reverser or CruiseControl if they're not explicitly set
    --CruiseControlLine = 7
    --SmallEjectorLine = 10
    HandBrakeLine = 14
    BlowerLine = 11
    DamperLine = 12
 
-   GearInvert = 1
    ReverserInvert = 1
+   GearInvert = 1
    CombinedThrottleInvert = 1
    ThrottleInvert = 1
    --TrainBrakeInvert = 1
@@ -47,8 +47,8 @@ function ConfigureJoystick()
    -- Find ControlValues a loco has and detect what to use.
    -- If combined doesn't exist configure separate throttle and train brake.
    -- If combined is with dynamic brake we'll deal with that per loco below.
-   GearControl =              FindGear()
    ReverserControl =          FindReverser()
+   GearControl =              FindGear()
    CombinedThrottleControl =  FindCombinedThrottle()
    if not CombinedThrottleControl then
       ThrottleControl =       FindThrottle()
@@ -63,8 +63,8 @@ function ConfigureJoystick()
    DamperControl =            FindDamper()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later.
-   GearRange =             GetControlRange(FindGear())
    ReverserRange =         GetControlRange(FindReverser())
+   GearRange =             GetControlRange(FindGear())
    CombinedThrottleRange = GetControlRange(FindCombinedThrottle())
    ThrottleRange =         GetControlRange(FindThrottle())
    TrainBrakeRange =       GetControlRange(FindTrainBrake())
@@ -396,8 +396,8 @@ function ConfigureJoystick()
 
    -- Set real values at the start to avoid uncontrolled changing the state after game loads
    local lines = ReadFile("trainsim-helper-joystick.txt")
-   PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
    PreviousReverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
+   PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
    PreviousCombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
    PreviousThrottle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
    PreviousTrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
@@ -524,8 +524,8 @@ end
 function SetJoystickData()
    local lines = ReadFile("trainsim-helper-joystick.txt")
 
-   local Gear =             GetLineValue(lines, GearLine, GearInvert)
    local Reverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
+   local Gear =             GetLineValue(lines, GearLine, GearInvert)
    local CombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
    local Throttle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
    local TrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
@@ -538,8 +538,8 @@ function SetJoystickData()
    local Damper =           GetLineValue(lines, DamperLine, DamperInvert)
 
    -- Feed with data
-   PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
    PreviousReverser =         SetControl(ReverserControl,         PreviousReverser,         Reverser,         ReverserRange,         ReverserNotches,         ReverserCenterDetent)
+   PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
    PreviousCombinedThrottle = SetControl(CombinedThrottleControl, PreviousCombinedThrottle, CombinedThrottle, CombinedThrottleRange, CombinedThrottleNotches, CombinedThrottleCenterDetent)
    PreviousThrottle =         SetControl(ThrottleControl,         PreviousThrottle,         Throttle,         ThrottleRange,         ThrottleNotches)
    PreviousTrainBrake =       SetControl(TrainBrakeControl,       PreviousTrainBrake,       TrainBrake,       TrainBrakeRange,       TrainBrakeNotches)
