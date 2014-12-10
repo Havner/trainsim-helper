@@ -938,6 +938,8 @@ function DetectGenericUS(DisableNote)
    if Call("*:ControlExists", "RPM", 0) == 1 and
       Call("*:ControlExists", "Ammeter", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
+      Call("*:ControlExists", "DynamicBrake", 0) == 1 and
+      Call("*:ControlExists", "Sander", 0) == 1 and
       (
          Call("*:ControlExists", "MainReservoirPressurePSI", 0) == 1 or
          Call("*:ControlExists", "aMainReservoirPressurePSI", 0) == 1
@@ -954,9 +956,6 @@ function DetectGenericUS(DisableNote)
          Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1 or
          Call("*:ControlExists", "aEqReservoirPressurePSI", 0) == 1
       ) and
-      Call("*:ControlExists", "Sander", 0) == 1 and
-      Call("*:ControlExists", "EngineStart", 0) == 0 and
-      Call("*:ControlExists", "EngineStop", 0) == 0 and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
       if not DisableNote then
