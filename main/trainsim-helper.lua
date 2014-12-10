@@ -672,7 +672,7 @@ end
 
 function DetectGE44_DTM() -- Donner Pass addon
    if Call("*:ControlExists", "EngineStart", 0) == 1 and
-			Call("*:ControlExists", "EngineStop", 0) == 0 and
+      Call("*:ControlExists", "EngineStop", 0) == 0 and
       Call("*:ControlExists", "Mirrors_Front", 0) == 1 and
       Call("*:ControlExists", "Door02_Control", 0) == 1 and
       Call("*:ControlExists", "Window04_Control", 0) == 1 and
@@ -917,7 +917,7 @@ function DetectGermanAFB(DisableNote)
    if Call("*:ControlExists", "AFB", 0) == 1
    then
       if not DisableNote then
-	 SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "German AFB detected", 3, 0)
+         SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "German AFB detected", 3, 0)
       end
       return 1
    end
@@ -928,7 +928,7 @@ function DetectSteam(DisableNote)
       Call("*:ControlExists", "Stoking", 0) == 1
    then
       if not DisableNote then
-	 SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Steam detected", 3, 0)
+         SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Steam detected", 3, 0)
       end
       return 1
    end
@@ -939,20 +939,20 @@ function DetectGenericUS(DisableNote)
       Call("*:ControlExists", "Ammeter", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
       (
-	 Call("*:ControlExists", "MainReservoirPressurePSI", 0) == 1 or
+         Call("*:ControlExists", "MainReservoirPressurePSI", 0) == 1 or
          Call("*:ControlExists", "aMainReservoirPressurePSI", 0) == 1
       ) and
       (
-	 Call("*:ControlExists", "AirBrakePipePressurePSI", 0) == 1 or
-	 Call("*:ControlExists", "aAirBrakePipePressurePSI", 0) == 1
+         Call("*:ControlExists", "AirBrakePipePressurePSI", 0) == 1 or
+         Call("*:ControlExists", "aAirBrakePipePressurePSI", 0) == 1
       ) and
       (
-	 Call("*:ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 or
+         Call("*:ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 or
          Call("*:ControlExists", "aTrainBrakeCylinderPressurePSI", 0) == 1 or
-	 Call("*:ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 or
-	 Call("*:ControlExists", "aLocoBrakeCylinderPressurePSI", 0) == 1 or
-	 Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1 or
-	 Call("*:ControlExists", "aEqReservoirPressurePSI", 0) == 1
+         Call("*:ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 or
+         Call("*:ControlExists", "aLocoBrakeCylinderPressurePSI", 0) == 1 or
+         Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1 or
+         Call("*:ControlExists", "aEqReservoirPressurePSI", 0) == 1
       ) and
       Call("*:ControlExists", "Sander", 0) == 1 and
       Call("*:ControlExists", "EngineStart", 0) == 0 and
@@ -960,7 +960,7 @@ function DetectGenericUS(DisableNote)
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
       if not DisableNote then
-	 SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Generic US detected", 3, 0)
+         SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Generic US detected", 3, 0)
       end
       return 1
    end
@@ -968,14 +968,16 @@ end
 
 function DetectUK() -- MPH and BAR, should be UK, hopefully, used for Gradient
    if Call("*:ControlExists", "SpeedometerMPH", 0) == 1 and
-      (Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "AirBrakePipePressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "aAirBrakePipePressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "BrakePipePressureBAR", 0) == 1 or
-	  Call("*:ControlExists", "aBrakePipePressureBAR", 0) == 1)
+      (
+         Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 or
+         Call("*:ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 or
+         Call("*:ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 or
+         Call("*:ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 or
+         Call("*:ControlExists", "AirBrakePipePressureBAR", 0) == 1 or
+         Call("*:ControlExists", "aAirBrakePipePressureBAR", 0) == 1 or
+         Call("*:ControlExists", "BrakePipePressureBAR", 0) == 1 or
+         Call("*:ControlExists", "aBrakePipePressureBAR", 0) == 1
+      )
    then
       return 1
    end

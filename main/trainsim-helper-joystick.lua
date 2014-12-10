@@ -380,6 +380,9 @@ function ConfigureJoystick()
    elseif DetectGenericUS() then
       ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
 
+   else
+      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "No custom configuration for this loco", 3, 0)
+
    end
 
    -- Past this point the following global values should be set if they exist and are set to be used
