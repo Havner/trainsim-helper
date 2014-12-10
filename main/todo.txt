@@ -20,7 +20,7 @@ Next version:
   + fix bugs
 + ReplaceControls() (only if not defined)
 + separate units for brakes
-- Optimize overlay (don't check for controlvalues on each frame)
++ Optimize overlay (don't check for controlvalues on each frame)
 + LocoBrake axis? class37 reverser? change steams ejector?
 - docs for data extractor
 - docs for invert side

@@ -29,6 +29,370 @@ function ConfigureOverlay()
 
    end
 
+   -----------------------------------------------------------
+   -----  No need to go below for a basic configuration  -----
+   -----------------------------------------------------------
+
+   StaticValues = {}
+   ControlValues = {}
+   ControlValuesModifiers = {}
+
+   -- Units
+
+   if Call("*:ControlExists", "SpeedometerMPH", 0) == 1 then
+      StaticValues["Units"] = "M"
+   elseif Call("*:ControlExists", "SpeedometerKPH", 0) == 1 then
+      StaticValues["Units"] = "K"
+   end
+
+   -- Loco's controls
+
+   if Call("*:ControlExists", "SpeedSet", 0) == 1 then                 -- Class 90 AP
+      ControlValues["TargetSpeed"] = "SpeedSet"
+   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then   -- Acela
+      ControlValues["TargetSpeed"] = "CruiseControlSpeed"
+   elseif Call("*:ControlExists", "VSoll", 0) == 1 then                -- German
+      ControlValues["TargetSpeed"] = "VSoll"
+   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then          -- Class 375/377
+      ControlValues["TargetSpeed"] = "TargetSpeed"
+   end
+
+   if Call("*:ControlExists", "Reverser", 0) == 1 then
+      ControlValues["Reverser"] = "Reverser"
+   end
+
+   if Call("*:ControlExists", "GearLever",0) == 1 then
+      ControlValues["GearLever"] = "GearLever"
+   end
+   
+   if Call("*:ControlExists", "Regulator", 0) == 1 then
+      ControlValues["Throttle"] = "Regulator"
+   end
+   
+   if Call("*:ControlExists", "TrainBrakeControl", 0) == 1 then
+      ControlValues["TrainBrake"] = "TrainBrakeControl"
+   end
+
+   if Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
+      ControlValues["LocoBrake"] = "EngineBrakeControl"
+   end
+   
+   if Call("*:ControlExists", "DynamicBrake", 0) == 1 then
+      ControlValues["DynamicBrake"] = "DynamicBrake"
+   end
+
+   if Call("*:ControlExists", "HandBrake", 0) == 1 then
+      ControlValues["HandBrake"] = "HandBrake"
+   elseif Call("*:ControlExists", "Handbrake", 0) == 1 then
+      ControlValues["HandBrake"] = "Handbrake"
+   end
+
+   -- Loco's indicators
+   
+   if Call("*:ControlExists", "BoilerPressureGaugePSI",0) == 1 then
+      ControlValues["BoilerPressure"] = "BoilerPressureGaugePSI"
+   elseif Call("*:ControlExists", "BoilerPressureGauge", 0) == 1 then
+      ControlValues["BoilerPressure"] = "BoilerPressureGauge"
+   end
+
+   if Call("*:ControlExists", "SteamChestPressureGaugePSI", 0) == 1 then
+      ControlValues["SteamChestPressure"] = "SteamChestPressureGaugePSI"
+   elseif Call("*:ControlExists", "SteamChestGaugePSI", 0) == 1 then
+      ControlValues["SteamChestPressure"] = "SteamChestGaugePSI"
+   elseif Call("*:ControlExists", "SteamChestPressureGauge", 0) == 1 then
+      ControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
+   elseif Call("*:ControlExists", "SteamChestGauge", 0) == 1 then
+      ControlValues["SteamChestPressure"] = "SteamChestGauge"
+   end
+
+   if Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 then
+      ControlValues["SteamHeatingPressure"] = "SteamHeatingPressureGaugePSI"
+   elseif Call("*:ControlExists", "SteamHeatGauge", 0) == 1 then
+      ControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
+   end
+
+   if Call("*:ControlExists", "Ammeter", 0) == 1 then
+      ControlValues["Ammeter"] = "Ammeter"
+   end
+
+   if Call("*:ControlExists", "RPM", 0) == 1 then
+      ControlValues["RPM"] = "RPM"
+   end
+
+   if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 then
+      ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureINCHES"
+   end
+
+   if Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 then
+      ControlValues["VacuumBrakeChamberPressure"] = "VacuumBrakeChamberPressureINCHES"
+   end
+
+   if Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then
+      ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressureBAR"
+      StaticValues["TrainBrakeCylinderUnits"] = "BAR"
+   elseif Call("*:ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 then
+      ControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressureBAR"
+      StaticValues["TrainBrakeCylinderUnits"] = "BAR"
+   elseif Call("*:ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 then
+      ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressurePSI"
+      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aTrainBrakeCylinderPressurePSI", 0) == 1 then
+      ControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressurePSI"
+      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "TrainBrakeCylinderPressure", 0) == 1 then
+      ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressure"
+      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aTrainBrakeCylinderPressure", 0) == 1 then
+      ControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressure"
+      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+   end
+
+   if Call("*:ControlExists", "LocoBrakeNeedle", 0) == 1 then  -- Duchess of Sutherland community patch
+      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeNeedle"
+      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 then
+      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressureBAR"
+      StaticValues["LocoBrakeCylinderUnits"] = "BAR"
+   elseif Call("*:ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 then
+      ControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressureBAR"
+      StaticValues["LocoBrakeCylinderUnits"] = "BAR"
+   elseif Call("*:ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 then
+      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressurePSI"
+      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aLocoBrakeCylinderPressurePSI", 0) == 1 then
+      ControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressurePSI"
+      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "LocoBrakeCylinderPressure", 0) == 1 then
+      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressure"
+      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aLocoBrakeCylinderPressure", 0) == 1 then
+      ControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressure"
+      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   end
+
+   if Call("*:ControlExists", "AirBrakePipePressureBAR", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "AirBrakePipePressureBAR"
+      StaticValues["AirBrakePipeUnits"] = "BAR"
+   elseif Call("*:ControlExists", "aAirBrakePipePressureBAR", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "aAirBrakePipePressureBAR"
+      StaticValues["AirBrakePipeUnits"] = "BAR"
+   elseif Call("*:ControlExists", "BrakePipePressureBAR", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "BrakePipePressureBAR"
+      StaticValues["AirBrakePipeUnits"] = "BAR"
+   elseif Call("*:ControlExists", "aBrakePipePressureBAR", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "aBrakePipePressureBAR"
+      StaticValues["AirBrakePipeUnits"] = "BAR"
+   elseif Call("*:ControlExists", "AirBrakePipePressurePSI", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSI"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aAirBrakePipePressurePSI", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "aAirBrakePipePressurePSI"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "BrakePipePressurePSI", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "BrakePipePressurePSI"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aBrakePipePressurePSI", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "aBrakePipePressurePSI"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "AirBrakePipePressure", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "AirBrakePipePressure"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aAirBrakePipePressure", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "aAirBrakePipePressure"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "BrakePipePressure", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "BrakePipePressure"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aBrakePipePressure", 0) == 1 then
+      ControlValues["AirBrakePipePressure"] = "aBrakePipePressure"
+      StaticValues["AirBrakePipeUnits"] = "PSI"
+   end
+
+   if Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 then
+      ControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
+      StaticValues["MainReservoirUnits"] = "BAR"
+   elseif Call("*:ControlExists", "aMainReservoirPressureBAR", 0) == 1 then
+      ControlValues["MainReservoirPressure"] = "aMainReservoirPressureBAR"
+      StaticValues["MainReservoirUnits"] = "BAR"
+   elseif Call("*:ControlExists", "MainReservoirPressurePSI", 0) == 1 then
+      ControlValues["MainReservoirPressure"] = "MainReservoirPressurePSI"
+      StaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aMainReservoirPressurePSI", 0) == 1 then
+      ControlValues["MainReservoirPressure"] = "aMainReservoirPressurePSI"
+      StaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "MainReservoirPressure", 0) == 1 then
+      ControlValues["MainReservoirPressure"] = "MainReservoirPressure"
+      StaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aMainReservoirPressure", 0) == 1 then
+      ControlValues["MainReservoirPressure"] = "aMainReservoirPressure"
+      StaticValues["MainReservoirUnits"] = "PSI"
+   end
+
+   if Call("*:ControlExists", "EqReservoirPressureBAR", 0) == 1 then
+      ControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
+      StaticValues["EqReservoirUnits"] = "BAR"
+   elseif Call("*:ControlExists", "aEqReservoirPressureBAR", 0) == 1 then
+      ControlValues["EqReservoirPressure"] = "aEqReservoirPressureBAR"
+      StaticValues["EqReservoirUnits"] = "BAR"
+   elseif Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1 then
+      ControlValues["EqReservoirPressure"] = "EqReservoirPressurePSI"
+      StaticValues["EqReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aEqReservoirPressurePSI", 0) == 1 then
+      ControlValues["EqReservoirPressure"] = "aEqReservoirPressurePSI"
+      StaticValues["EqReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "EqReservoirPressure", 0) == 1 then
+      ControlValues["EqReservoirPressure"] = "EqReservoirPressure"
+      StaticValues["EqReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "aEqReservoirPressure", 0) == 1 then
+      ControlValues["EqReservoirPressure"] = "aEqReservoirPressure"
+      StaticValues["EqReservoirUnits"] = "PSI"
+   end
+
+   -- Steamers (driver)
+   
+   if Call("*:ControlExists", "AirPumpOnOff", 0) == 1 then
+      ControlValues["AirPump"] = "AirPumpOnOff"
+   end
+
+   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then
+      ControlValues["SteamBrake"] = "VirtualLocoBrake"
+   end
+   
+   if Call("*:ControlExists", "SmallEjectorOnOff", 0) == 1 then
+      ControlValues["SmallEjector"] = "SmallEjectorOnOff"
+   elseif Call("*:ControlExists", "SmallCompressorOnOff", 0) == 1 then
+      ControlValues["SmallEjector"] = "SmallCompressorOnOff"
+   end
+
+   if Call("*:ControlExists", "LargeEjectorOnOff", 0) == 1 then
+      ControlValues["LargeEjector"] = "LargeEjectorOnOff"
+   end
+
+   if Call("*:ControlExists", "SteamHeatingValve", 0) == 1 then
+      ControlValues["SteamHeating"] = "SteamHeatingValve"
+   elseif Call("*:ControlExists", "SteamHeat", 0) == 1 then
+      ControlValues["SteamHeating"] = "SteamHeat"
+   elseif Call("*:ControlExists", "SteamHeatingPressureGauge", 0) == 1 then
+      ControlValues["SteamHeating"] = "SteamHeatingPressureGauge"
+      ControlValuesModifiers["SteamHeating"] = 0.01
+   end
+
+   if Call("*:ControlExists", "MasonsValve", 0) == 1 then
+      ControlValues["MasonsValve"] = "MasonsValve"
+   end
+
+   if Call("*:ControlExists", "Lichtmaschine", 0) == 1 then
+      ControlValues["Generator"] = "Lichtmaschine"
+   end
+
+   if Call("*:ControlExists", "Lubricator", 0) == 1 then
+      ControlValues["Lubricator"] = "Lubricator"
+   end
+
+   if Call("*:ControlExists", "LubricatorWarming", 0) == 1 then
+      ControlValues["LubricatorWarming"] = "LubricatorWarming"
+   end
+
+   if Call("*:ControlExists", "TestCock1", 0) == 1 then
+      ControlValues["WaterGaugeTest1"] = "TestCock1"
+   end
+
+   if Call("*:ControlExists", "TestCock2", 0) == 1 then
+      ControlValues["WaterGaugeTest2"] = "TestCock2"
+   end
+
+   if Call("*:ControlExists", "AshpanSprinkler", 0) == 1 then
+      ControlValues["AshpanSprinkler"] = "AshpanSprinkler"
+   end
+
+   if Call("*:ControlExists", "Flap", 0) == 1 then
+      ControlValues["FireholeFlap"] = "Flap"
+   end
+
+   if Call("*:ControlExists", "CylinderCock", 0) == 1 then
+      ControlValues["CylinderCock"] = "CylinderCock"
+   end
+
+   if Call("*:ControlExists", "Damper", 0) == 1 then
+      ControlValues["Damper"] = "Damper"
+   end
+
+   if Call("*:ControlExists", "WaterScoopRaiseLower", 0) == 1 then
+      ControlValues["WaterScoopRaiseLower"] = "WaterScoopRaiseLower"
+   end
+
+   -- Steamers (fire-man)
+
+   if Call("*:ControlExists", "WaterGauge", 0) == 1 then
+      ControlValues["WaterGauge"] = "WaterGauge"
+   end
+
+   if Call("*:ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
+      ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
+   end
+
+   if Call("*:ControlExists", "ExhaustInjectorWater", 0) == 1 then
+      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
+   end
+
+   if Call("*:ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
+      ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
+   end
+
+   if Call("*:ControlExists", "LiveInjectorWater", 0) == 1 then
+      ControlValues["LiveInjectorWater"] = "LiveInjectorWater"
+   end
+
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 then
+      ControlValues["FireboxDoor"] = "FireboxDoor"
+   end
+
+   if Call("*:ControlExists", "Stoking", 0) == 1 then
+      ControlValues["Stoking"] = "Stoking"
+   end
+
+   if Call("*:ControlExists", "Blower", 0) == 1 then
+      ControlValues["Blower"] = "Blower"
+   end
+
+   if Call("*:ControlExists", "SafetyValve1", 0) == 1 then
+      ControlValues["SafetyValve1"] = "SafetyValve1"
+   end
+   
+   if Call("*:ControlExists", "SafetyValve2", 0) == 1 then
+      ControlValues["SafetyValve2"] = "SafetyValve2"
+   end
+
+   -- Warning values
+   
+   if Call("*:ControlExists", "AWS", 0) == 1 then
+      ControlValues["Sunflower"] = "AWS"
+   end
+
+   if Call("*:ControlExists", "AWSWarnCount", 0) == 1 then
+      ControlValues["AWS"] = "AWSWarnCount"
+   end
+
+   if Call("*:ControlExists", "DSDAlarm", 0) == 1 then
+      ControlValues["VigilAlarm"] = "DSDAlarm"
+   elseif Call("*:ControlExists", "VigilAlarm", 0) == 1 then
+      ControlValues["VigilAlarm"] = "VigilAlarm"
+   elseif Call("*:ControlExists", "DSD", 0) == 1 then
+      ControlValues["VigilAlarm"] = "DSD"
+   end
+
+   if Call("*:ControlExists", "BrakeDemandLamp", 0) == 1 then
+      ControlValues["EmergencyBrake"] = "BrakeDemandLamp"
+   elseif Call("*:ControlExists", "EmergencyAlarm", 0) == 1 then
+      ControlValues["EmergencyBrake"] = "EmergencyAlarm"
+   elseif Call("*:ControlExists", "EmergencyBrake", 0) == 1 then
+      ControlValues["EmergencyBrake"] = "EmergencyBrake"
+   end
+
+   if Call("*:ControlExists", "Startup", 0) == 1 then
+      ControlValues["Startup"] = "Startup"
+   end
+
    -- Set at the very end to be a mark whether the configuration has been successful.
    OverlayConfigured = 1
 end
@@ -67,478 +431,22 @@ function GetOverlayData()
    local Gradient = Call("*:GetGradient")
    if Gradient then data = data.."Gradient: "..Gradient.."\n" end
 
-   -- Units
-
-   local Units
-   if Call("*:ControlExists", "SpeedometerMPH", 0) == 1 then
-      Units = "M"
-   elseif Call("*:ControlExists", "SpeedometerKPH", 0) == 1 then
-      Units = "K"
-   end
-   if Units then data = data.."Units: "..Units.."\n" end
-
-   -- Loco's controls
-
-   local TargetSpeed
-   if Call("*:ControlExists", "SpeedSet", 0) == 1 then                 -- Class 90 AP
-      TargetSpeed = Call("*:GetControlValue", "SpeedSet", 0)
-   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then   -- Acela
-      TargetSpeed = Call("*:GetControlValue", "CruiseControlSpeed", 0)
-   elseif Call("*:ControlExists", "VSoll", 0) == 1 then                -- German
-      TargetSpeed = Call("*:GetControlValue", "VSoll", 0)
-   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then          -- Class 375/377
-      TargetSpeed = Call("*:GetControlValue", "TargetSpeed", 0)
-   end
-   if TargetSpeed then data = data.."TargetSpeed: "..TargetSpeed.."\n" end
-   
-   local Reverser
-   if Call("*:ControlExists", "Reverser", 0) == 1 then
-      Reverser = Call("*:GetControlValue", "Reverser", 0)
-   end
-   if Reverser then data = data .."Reverser: "..Reverser.."\n" end
-
-   local GearLever
-   if Call("*:ControlExists", "GearLever",0) == 1 then
-      GearLever = Call("*:GetControlValue", "GearLever",0)
-   end
-   if GearLever then data = data.."GearLever: "..GearLever.."\n" end
-   
-   local Throttle
-   if Call("*:ControlExists", "Regulator", 0) == 1 then
-      Throttle = Call("*:GetControlValue", "Regulator", 0)
-   end
-   if Throttle then data = data .."Throttle: "..Throttle.."\n" end
-   
-   local TrainBrake
-   if Call("*:ControlExists", "TrainBrakeControl", 0) == 1 then
-      TrainBrake = Call("*:GetControlValue", "TrainBrakeControl", 0)
-   end
-   if TrainBrake then data = data .."TrainBrake: "..TrainBrake.."\n" end
-
-   local LocoBrake
-   if Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
-      LocoBrake = Call("*:GetControlValue", "EngineBrakeControl", 0)
-   end
-   if LocoBrake then data = data .."LocoBrake: "..LocoBrake.."\n" end
-   
-   local DynamicBrake
-   if Call("*:ControlExists", "DynamicBrake", 0) == 1 then
-      DynamicBrake = Call("*:GetControlValue", "DynamicBrake", 0)
-   end
-   if DynamicBrake then data = data .."DynamicBrake: "..DynamicBrake.."\n" end
-
-   local HandBrake
-   if Call("*:ControlExists", "HandBrake", 0) == 1 then
-      HandBrake = Call("*:GetControlValue", "HandBrake", 0)
-   elseif Call("*:ControlExists", "Handbrake", 0) == 1 then
-      HandBrake = Call("*:GetControlValue", "Handbrake", 0)
-   end
-   if HandBrake then data = data .."HandBrake: "..HandBrake.."\n" end
-
-   -- Loco's indicators
-   
-   local BoilerPressure
-   if Call("*:ControlExists", "BoilerPressureGaugePSI",0) == 1 then
-      BoilerPressure = Call("*:GetControlValue", "BoilerPressureGaugePSI",0)
-   elseif Call("*:ControlExists", "BoilerPressureGauge",0) == 1 then
-      BoilerPressure = Call("*:GetControlValue", "BoilerPressureGauge",0)
-   end
-   if BoilerPressure then data = data.."BoilerPressure: "..BoilerPressure.."\n" end
-
-   local SteamChestPressure
-   if Call("*:ControlExists", "SteamChestPressureGaugePSI",0) == 1 then
-      SteamChestPressure = Call("*:GetControlValue", "SteamChestPressureGaugePSI",0)
-   elseif Call("*:ControlExists", "SteamChestGaugePSI",0) == 1 then
-      SteamChestPressure = Call("*:GetControlValue", "SteamChestGaugePSI",0)
-   elseif Call("*:ControlExists", "SteamChestPressureGauge",0) == 1 then
-      SteamChestPressure = Call("*:GetControlValue", "SteamChestPressureGauge",0)
-   elseif Call("*:ControlExists", "SteamChestGauge",0) == 1 then
-      SteamChestPressure = Call("*:GetControlValue", "SteamChestGauge",0)
-   end
-   if SteamChestPressure then data = data.."SteamChestPressure: "..SteamChestPressure.."\n" end
-
-   local SteamHeatingPressure
-   if Call("*:ControlExists", "SteamHeatingPressureGaugePSI",0) == 1 then
-      SteamHeatingPressure = Call("*:GetControlValue", "SteamHeatingPressureGaugePSI",0)
-   elseif Call("*:ControlExists", "SteamHeatGauge",0) == 1 then
-      SteamHeatingPressure = Call("*:GetControlValue", "SteamHeatGauge",0)
-   end
-   if SteamHeatingPressure then data = data.."SteamHeatingPressure: "..SteamHeatingPressure.."\n" end
-
-   local Ammeter   
-   if Call("*:ControlExists", "Ammeter", 0) == 1 then
-      Ammeter = Call("*:GetControlValue", "Ammeter", 0)
-   end
-   if Ammeter then data = data.."Ammeter: "..Ammeter.."\n" end
-
-   local RPM
-   if Call("*:ControlExists", "RPM", 0) == 1 then
-      RPM = Call("*:GetControlValue", "RPM", 0)
-   end
-   if RPM then data = data.."RPM: "..RPM.."\n" end
-
-   local VacuumBrakePipePressure
-   if Call("*:ControlExists", "VacuumBrakePipePressureINCHES",0) == 1 then
-      VacuumBrakePipePressure = Call("*:GetControlValue", "VacuumBrakePipePressureINCHES",0)
-   end
-   if VacuumBrakePipePressure then data = data.."VacuumBrakePipePressure: "..VacuumBrakePipePressure.."\n" end
-
-   local VacuumBrakeChamberPressure
-   if Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES",0) == 1 then
-      VacuumBrakeChamberPressure = Call("*:GetControlValue", "VacuumBrakeChamberPressureINCHES",0)
-   end
-   if VacuumBrakeChamberPressure then data = data.."VacuumBrakeChamberPressure: "..VacuumBrakeChamberPressure.."\n" end
-
-   local TrainBrakeCylinderPressure
-   local TrainBrakeCylinderUnits
-   if Call("*:ControlExists", "TrainBrakeCylinderPressureBAR",0) == 1 then
-      TrainBrakeCylinderPressure = Call("*:GetControlValue", "TrainBrakeCylinderPressureBAR",0)
-      TrainBrakeCylinderUnits = "BAR"
-   elseif Call("*:ControlExists", "aTrainBrakeCylinderPressureBAR",0) == 1 then
-      TrainBrakeCylinderPressure = Call("*:GetControlValue", "aTrainBrakeCylinderPressureBAR",0)
-      TrainBrakeCylinderUnits = "BAR"
-   elseif Call("*:ControlExists", "TrainBrakeCylinderPressurePSI",0) == 1 then
-      TrainBrakeCylinderPressure = Call("*:GetControlValue", "TrainBrakeCylinderPressurePSI",0)
-      TrainBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "aTrainBrakeCylinderPressurePSI",0) == 1 then
-      TrainBrakeCylinderPressure = Call("*:GetControlValue", "aTrainBrakeCylinderPressurePSI",0)
-      TrainBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "TrainBrakeCylinderPressure",0) == 1 then
-      TrainBrakeCylinderPressure = Call("*:GetControlValue", "TrainBrakeCylinderPressure",0)
-      TrainBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "aTrainBrakeCylinderPressure",0) == 1 then
-      TrainBrakeCylinderPressure = Call("*:GetControlValue", "aTrainBrakeCylinderPressure",0)
-      TrainBrakeCylinderUnits = "PSI"
-   end
-   if TrainBrakeCylinderPressure then data = data.."TrainBrakeCylinderPressure: "..TrainBrakeCylinderPressure.."\n" end
-   if TrainBrakeCylinderUnits then data = data.."TrainBrakeCylinderUnits: "..TrainBrakeCylinderUnits.."\n" end
-
-   local LocoBrakeCylinderPressure
-   local LocoBrakeCylinderUnits
-   if Call("*:ControlExists", "LocoBrakeNeedle",0) == 1 then  -- Duchess of Sutherland community patch
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeNeedle",0)
-      LocoBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR",0) == 1 then
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressureBAR",0)
-      LocoBrakeCylinderUnits = "BAR"
-   elseif Call("*:ControlExists", "aLocoBrakeCylinderPressureBAR",0) == 1 then
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "aLocoBrakeCylinderPressureBAR",0)
-      LocoBrakeCylinderUnits = "BAR"
-   elseif Call("*:ControlExists", "LocoBrakeCylinderPressurePSI",0) == 1 then
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressurePSI",0)
-      LocoBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "aLocoBrakeCylinderPressurePSI",0) == 1 then
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "aLocoBrakeCylinderPressurePSI",0)
-      LocoBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "LocoBrakeCylinderPressure",0) == 1 then
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "LocoBrakeCylinderPressure",0)
-      LocoBrakeCylinderUnits = "PSI"
-   elseif Call("*:ControlExists", "aLocoBrakeCylinderPressure",0) == 1 then
-      LocoBrakeCylinderPressure = Call("*:GetControlValue", "aLocoBrakeCylinderPressure",0)
-      LocoBrakeCylinderUnits = "PSI"
-   end
-   if LocoBrakeCylinderPressure then data = data.."LocoBrakeCylinderPressure: "..LocoBrakeCylinderPressure.."\n" end
-   if LocoBrakeCylinderUnits then data = data.."LocoBrakeCylinderUnits: "..LocoBrakeCylinderUnits.."\n" end
-
-   local AirBrakePipePressure
-   local AirBrakePipeUnits
-   if Call("*:ControlExists", "AirBrakePipePressureBAR",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "AirBrakePipePressureBAR",0)
-      AirBrakePipeUnits = "BAR"
-   elseif Call("*:ControlExists", "aAirBrakePipePressureBAR",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "aAirBrakePipePressureBAR",0)
-      AirBrakePipeUnits = "BAR"
-   elseif Call("*:ControlExists", "BrakePipePressureBAR",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "BrakePipePressureBAR",0)
-      AirBrakePipeUnits = "BAR"
-   elseif Call("*:ControlExists", "aBrakePipePressureBAR",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "aBrakePipePressureBAR",0)
-      AirBrakePipeUnits = "BAR"
-   elseif Call("*:ControlExists", "AirBrakePipePressurePSI",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "AirBrakePipePressurePSI",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "aAirBrakePipePressurePSI",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "aAirBrakePipePressurePSI",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "BrakePipePressurePSI",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "BrakePipePressurePSI",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "aBrakePipePressurePSI",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "aBrakePipePressurePSI",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "AirBrakePipePressure",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "AirBrakePipePressure",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "aAirBrakePipePressure",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "aAirBrakePipePressure",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "BrakePipePressure",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "BrakePipePressure",0)
-      AirBrakePipeUnits = "PSI"
-   elseif Call("*:ControlExists", "aBrakePipePressure",0) == 1 then
-      AirBrakePipePressure = Call("*:GetControlValue", "aBrakePipePressure",0)
-      AirBrakePipeUnits = "PSI"
-   end
-   if AirBrakePipePressure then data = data.."AirBrakePipePressure: "..AirBrakePipePressure.."\n" end
-   if AirBrakePipeUnits then data = data.."AirBrakePipeUnits: "..AirBrakePipeUnits.."\n" end
-
-   local MainReservoirPressure
-   local MainReservoirUnits
-   if Call("*:ControlExists", "MainReservoirPressureBAR",0) == 1 then
-      MainReservoirPressure = Call("*:GetControlValue", "MainReservoirPressureBAR",0)
-      MainReservoirUnits = "BAR"
-   elseif Call("*:ControlExists", "aMainReservoirPressureBAR",0) == 1 then
-      MainReservoirPressure = Call("*:GetControlValue", "aMainReservoirPressureBAR",0)
-      MainReservoirUnits = "BAR"
-   elseif Call("*:ControlExists", "MainReservoirPressurePSI",0) == 1 then
-      MainReservoirPressure = Call("*:GetControlValue", "MainReservoirPressurePSI",0)
-      MainReservoirUnits = "PSI"
-   elseif Call("*:ControlExists", "aMainReservoirPressurePSI",0) == 1 then
-      MainReservoirPressure = Call("*:GetControlValue", "aMainReservoirPressurePSI",0)
-      MainReservoirUnits = "PSI"
-   elseif Call("*:ControlExists", "MainReservoirPressure",0) == 1 then
-      MainReservoirPressure = Call("*:GetControlValue", "MainReservoirPressure",0)
-      MainReservoirUnits = "PSI"
-   elseif Call("*:ControlExists", "aMainReservoirPressure",0) == 1 then
-      MainReservoirPressure = Call("*:GetControlValue", "aMainReservoirPressure",0)
-      MainReservoirUnits = "PSI"
-   end
-   if MainReservoirPressure then data = data.."MainReservoirPressure: "..MainReservoirPressure.."\n" end
-   if MainReservoirUnits then data = data.."MainReservoirUnits: "..MainReservoirUnits.."\n" end
-
-   local EqReservoirPressure
-   local EqReservoirUnits
-   if Call("*:ControlExists", "EqReservoirPressureBAR",0) == 1 then
-      EqReservoirPressure = Call("*:GetControlValue", "EqReservoirPressureBAR",0)
-      EqReservoirUnits = "BAR"
-   elseif Call("*:ControlExists", "aEqReservoirPressureBAR",0) == 1 then
-      EqReservoirPressure = Call("*:GetControlValue", "aEqReservoirPressureBAR",0)
-      EqReservoirUnits = "BAR"
-   elseif Call("*:ControlExists", "EqReservoirPressurePSI",0) == 1 then
-      EqReservoirPressure = Call("*:GetControlValue", "EqReservoirPressurePSI",0)
-      EqReservoirUnits = "PSI"
-   elseif Call("*:ControlExists", "aEqReservoirPressurePSI",0) == 1 then
-      EqReservoirPressure = Call("*:GetControlValue", "aEqReservoirPressurePSI",0)
-      EqReservoirUnits = "PSI"
-   elseif Call("*:ControlExists", "EqReservoirPressure",0) == 1 then
-      EqReservoirPressure = Call("*:GetControlValue", "EqReservoirPressure",0)
-      EqReservoirUnits = "PSI"
-   elseif Call("*:ControlExists", "aEqReservoirPressure",0) == 1 then
-      EqReservoirPressure = Call("*:GetControlValue", "aEqReservoirPressure",0)
-      EqReservoirUnits = "PSI"
-   end
-   if EqReservoirPressure then data = data.."EqReservoirPressure: "..EqReservoirPressure.."\n" end
-   if EqReservoirUnits then data = data.."EqReservoirUnits: "..EqReservoirUnits.."\n" end
-
-   -- Steamers (driver)
-   
-   local AirPump
-   if Call("*:ControlExists", "AirPumpOnOff",0) == 1 then
-      AirPump = Call("*:GetControlValue", "AirPumpOnOff",0)
-   end
-   if AirPump then data = data.."AirPump: "..AirPump.."\n" end
-
-   local SteamBrake  -- J94
-   if Call("*:ControlExists", "VirtualLocoBrake",0) == 1 then
-      SteamBrake = Call("*:GetControlValue", "VirtualLocoBrake",0)
-   end
-   if SteamBrake then data = data.."SteamBrake: "..SteamBrake.."\n" end
-   
-   local SmallEjector
-   if Call("*:ControlExists", "SmallEjectorOnOff",0) == 1 then
-      SmallEjector = Call("*:GetControlValue", "SmallEjectorOnOff",0)
-   elseif Call("*:ControlExists", "SmallCompressorOnOff",0) == 1 then
-      SmallEjector = Call("*:GetControlValue", "SmallCompressorOnOff",0)
-   end
-   if SmallEjector then data = data.."SmallEjector: "..SmallEjector.."\n" end
-
-   local LargeEjector
-   if Call("*:ControlExists", "LargeEjectorOnOff",0) == 1 then
-      LargeEjector = Call("*:GetControlValue", "LargeEjectorOnOff",0)
-   end
-   if LargeEjector then data = data.."LargeEjector: "..LargeEjector.."\n" end   
-
-   local SteamHeating
-   if Call("*:ControlExists", "SteamHeatingValve",0) == 1 then
-      SteamHeating = Call("*:GetControlValue", "SteamHeatingValve",0)
-   elseif Call("*:ControlExists", "SteamHeat",0) == 1 then
-      SteamHeating = Call("*:GetControlValue", "SteamHeat",0)
-   elseif Call("*:ControlExists", "SteamHeatingPressureGauge",0) == 1 then
-      SteamHeating = Call("*:GetControlValue", "SteamHeatingPressureGauge",0) / 100
-   end
-   if SteamHeating then data = data.."SteamHeating: "..SteamHeating.."\n" end
-
-   local MasonsValve
-   if Call("*:ControlExists", "MasonsValve",0) == 1 then
-      MasonsValve = Call("*:GetControlValue", "MasonsValve",0)
-   end
-   if MasonsValve then data = data.."MasonsValve: "..MasonsValve.."\n" end
-
-   local Generator
-   if Call("*:ControlExists", "Lichtmaschine",0) == 1 then
-      Generator = Call("*:GetControlValue", "Lichtmaschine",0)
-   end
-   if Generator then data = data.."Generator: "..Generator.."\n" end
-
-   local Lubricator
-   if Call("*:ControlExists", "Lubricator",0) == 1 then
-      Lubricator = Call("*:GetControlValue", "Lubricator",0)
-   end
-   if Lubricator then data = data.."Lubricator: "..Lubricator.."\n" end
-
-   local LubricatorWarming
-   if Call("*:ControlExists", "LubricatorWarming",0) == 1 then
-      LubricatorWarming = Call("*:GetControlValue", "LubricatorWarming",0)
-   end
-   if LubricatorWarming then data = data.."LubricatorWarming: "..LubricatorWarming.."\n" end
-
-   local WaterGaugeTest1
-   if Call("*:ControlExists", "TestCock1",0) == 1 then
-      WaterGaugeTest1 = Call("*:GetControlValue", "TestCock1",0)
-   end
-   if WaterGaugeTest1 then data = data.."WaterGaugeTest1: "..WaterGaugeTest1.."\n" end
-
-   local WaterGaugeTest2
-   if Call("*:ControlExists", "TestCock2",0) == 1 then
-      WaterGaugeTest2 = Call("*:GetControlValue", "TestCock2",0)
-   end
-   if WaterGaugeTest2 then data = data.."WaterGaugeTest2: "..WaterGaugeTest2.."\n" end
-
-   local AshpanSprinkler
-   if Call("*:ControlExists", "AshpanSprinkler",0) == 1 then
-      AshpanSprinkler = Call("*:GetControlValue", "AshpanSprinkler",0)
-   end
-   if AshpanSprinkler then data = data.."AshpanSprinkler: "..AshpanSprinkler.."\n" end
-
-   local FireholeFlap
-   if Call("*:ControlExists", "Flap",0) == 1 then
-      FireholeFlap = Call("*:GetControlValue", "Flap",0)
-   end
-   if FireholeFlap then data = data.."FireholeFlap: "..FireholeFlap.."\n" end
-
-   local CylinderCock
-   if Call("*:ControlExists", "CylinderCock",0) == 1 then
-      CylinderCock = Call("*:GetControlValue", "CylinderCock",0)
-   end
-   if CylinderCock then data = data.."CylinderCock: "..CylinderCock.."\n" end
-
-   local Damper
-   if Call("*:ControlExists", "Damper",0) == 1 then
-      Damper = Call("*:GetControlValue", "Damper",0)
-   end
-   if Damper then data = data.."Damper: "..Damper.."\n" end
-
-   local WaterScoopRaiseLower
-   if Call("*:ControlExists", "WaterScoopRaiseLower",0) == 1 then
-      WaterScoopRaiseLower = Call("*:GetControlValue", "WaterScoopRaiseLower",0)
-   end
-   if WaterScoopRaiseLower then data = data.."WaterScoopRaiseLower: "..WaterScoopRaiseLower.."\n" end
-
-   -- Steamers (fire-man)
-
-   local WaterGauge
-   if Call("*:ControlExists", "WaterGauge",0) == 1 then
-      WaterGauge = Call("*:GetControlValue", "WaterGauge",0)
-   end
-   if WaterGauge then data = data.."WaterGauge: "..WaterGauge.."\n" end
-
-   local ExhaustInjectorSteam
-   if Call("*:ControlExists", "ExhaustInjectorSteamOnOff",0) == 1 then
-      ExhaustInjectorSteam = Call("*:GetControlValue", "ExhaustInjectorSteamOnOff",0)
-   end
-   if ExhaustInjectorSteam then data = data.."ExhaustInjectorSteam: "..ExhaustInjectorSteam.."\n" end
-
-   local ExhaustInjectorWater
-   if Call("*:ControlExists", "ExhaustInjectorWater",0) == 1 then
-      ExhaustInjectorWater = Call("*:GetControlValue", "ExhaustInjectorWater",0)
-   end
-   if ExhaustInjectorWater then data = data.."ExhaustInjectorWater: "..ExhaustInjectorWater.."\n" end
-
-   local LiveInjectorSteam
-   if Call("*:ControlExists", "LiveInjectorSteamOnOff",0) == 1 then
-      LiveInjectorSteam = Call("*:GetControlValue", "LiveInjectorSteamOnOff",0)
-   end
-   if LiveInjectorSteam then data = data.."LiveInjectorSteam: "..LiveInjectorSteam.."\n" end
-
-   local LiveInjectorWater
-   if Call("*:ControlExists", "LiveInjectorWater",0) == 1 then
-      LiveInjectorWater = Call("*:GetControlValue", "LiveInjectorWater",0)
-   end
-   if LiveInjectorWater then data = data.."LiveInjectorWater: "..LiveInjectorWater.."\n" end
-
-   local FireboxMass
-   FireboxMass = Call("*:GetFireboxMass")
+   local FireboxMass = Call("*:GetFireboxMass")
    if FireboxMass then data = data.."FireboxMass: "..FireboxMass.."\n" end
 
-   local FireboxDoor
-   if Call("*:ControlExists", "FireboxDoor",0) == 1 then
-      FireboxDoor = Call("*:GetControlValue", "FireboxDoor",0)
+   -- Static Values loop
+   for key, value in pairs(StaticValues) do
+      data = data..key..": "..value.."\n"
    end
-   if FireboxDoor then data = data.."FireboxDoor: "..FireboxDoor.."\n" end
 
-   local Stoking
-   if Call("*:ControlExists", "Stoking",0) == 1 then
-      Stoking = Call("*:GetControlValue", "Stoking",0)
+   -- Control Values loop
+   for key, name in pairs(ControlValues) do
+      local value = Call("*:GetControlValue", name, 0)
+      if ControlValuesModifiers[key] then
+         value = value * ControlValuesModifiers[key]
+      end
+      data = data..key..": "..value.."\n"
    end
-   if Stoking then data = data.."Stoking: "..Stoking.."\n" end
-
-   local Blower
-   if Call("*:ControlExists", "Blower",0) == 1 then
-      Blower = Call("*:GetControlValue", "Blower",0)
-   end
-   if Blower then data = data.."Blower: "..Blower.."\n" end
-
-   local SafetyValve1
-   if Call("*:ControlExists", "SafetyValve1",0) == 1 then
-      SafetyValve1 = Call("*:GetControlValue", "SafetyValve1",0)
-   end
-   if SafetyValve1 then data = data.."SafetyValve1: "..SafetyValve1.."\n" end
-   
-   local SafetyValve2
-   if Call("*:ControlExists", "SafetyValve2",0) == 1 then
-      SafetyValve2 = Call("*:GetControlValue", "SafetyValve2",0)
-   end
-   if SafetyValve2 then data = data.."SafetyValve2: "..SafetyValve2.."\n" end
-
-   -- Warning values
-   
-   local Sunflower
-   if Call("*:ControlExists", "AWS", 0) == 1 then
-      Sunflower = Call( "*:GetControlValue", "AWS", 0 )
-   end
-   if Sunflower then data = data.."Sunflower: "..Sunflower.."\n" end
-
-   local AWS
-   if Call("*:ControlExists", "AWSWarnCount", 0) == 1 then
-      AWS = Call("*:GetControlValue", "AWSWarnCount", 0)
-   end
-   if AWS then data = data.."AWS: "..AWS.."\n" end
-
-   local VigilAlarm
-   if Call("*:ControlExists", "DSDAlarm", 0) == 1 then
-      VigilAlarm = Call("*:GetControlValue", "DSDAlarm", 0)
-   elseif Call("*:ControlExists", "VigilAlarm", 0) == 1 then
-      VigilAlarm = Call("*:GetControlValue", "VigilAlarm", 0)
-   elseif Call("*:ControlExists", "DSD", 0) == 1 then
-      VigilAlarm = Call("*:GetControlValue", "DSD", 0)
-   end
-   if VigilAlarm then data = data.."VigilAlarm: "..VigilAlarm.."\n" end
-
-   local EmergencyBrake
-   if Call("*:ControlExists", "BrakeDemandLamp", 0) == 1 then
-      EmergencyBrake = Call("*:GetControlValue", "BrakeDemandLamp", 0)
-   elseif Call("*:ControlExists", "EmergencyAlarm", 0) == 1 then
-      EmergencyBrake = Call("*:GetControlValue", "EmergencyAlarm", 0)
-   elseif Call("*:ControlExists", "EmergencyBrake", 0) == 1 then
-      EmergencyBrake = Call( "*:GetControlValue", "EmergencyBrake", 0)
-   end
-   if EmergencyBrake then data = data.."EmergencyBrake: "..EmergencyBrake.."\n" end
-
-   local Startup
-   if Call("*:ControlExists", "Startup", 0) == 1 then
-      Startup = Call( "*:GetControlValue", "Startup", 0 )
-   end
-   if Startup then data = data.."Startup: "..Startup.."\n" end
 
    -- Config values
 
