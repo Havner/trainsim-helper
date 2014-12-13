@@ -1,3 +1,24 @@
+0.6
+ - WARNING: some of my internal configurations have changed a little.
+   If you rely on them have a look in the locoss sections.
+ - Made an optiom for the program to treat driving backwards as forwards
+   (Shift-Alt-S). Very usefull for some locos/scenarios where you have to
+   drive backwards for longer periods of time.
+ - New axes for the joystick: Small Ejector, HandBrake, Blower, Damper.
+   Very usefull for 3rd party realistic locos (e.g. VictoryWorks).
+ - Big optimization in the LUA overlay code. Don't check for existance
+   of ControlValues per iteration. Check this info only once on loco
+   initialization.
+ - Inclusion of DataExtractor. New version, integrated in the main
+   package. Thanks CobraOne.
+ - Separate units detection for brakes. Now a loco displays properly
+   BAR/PSI if it has brakes that use both.
+ - SteamHeating indicator.
+ - Detections and notches configurations for more locos I bought recently.
+ - Cleanups in my own configs, they wont take precedence over axes set
+   explicitly. ReplaceControls() function for this. They are grouped
+   under "Havner's config" comments.
+
 0.5
  - WARNING: keyboard shortcuts got changed again due to steamers addition
  - Support for steamers, see the readme

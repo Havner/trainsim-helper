@@ -305,7 +305,9 @@ function ConfigureOverlay()
       ControlValues["AshpanSprinkler"] = "AshpanSprinkler"
    end
 
-   if Call("*:ControlExists", "Flap", 0) == 1 then
+   if Call("*:ControlExists", "GlareShieldDrivers", 0) == 1 then
+      ControlValues["FireholeFlap"] = "GlareShieldDrivers"
+   elseif Call("*:ControlExists", "Flap", 0) == 1 then
       ControlValues["FireholeFlap"] = "Flap"
    end
 

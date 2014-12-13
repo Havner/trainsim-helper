@@ -5,15 +5,16 @@ Table of contents:
 4. Joystick setup
 5. Patching further locos
 6. Keyboard shortcuts and command line switches
-7. Distance/Countdown/Odometer usage
+7. Additional funcionality
 8. Additional steamers support
-9. Full description
-10. Additional notes for the overlay
-11. New control values
-12. Advanced configuration / custom locos
-13. HELP! It doesn't work
-14. Modifications of the C++ code
-15. The Lua_Out editor
+9. Additional tools
+10. Full technical description
+11. Additional notes for the overlay
+12. New control values
+13. Advanced configuration / custom locos
+14. HELP! It doesn't work
+15. Modifications of the C++ code
+16. C# tools
 A. Acknowledgements
 B. Licence
 
@@ -35,8 +36,9 @@ B. Licence
   NOTE 2: This software does not handle switches and shortcuts for the
   joystick. For this use your joystick's software (Thrustmaster,
   Logitech, Saitek) to assign keyboard shortcuts. This software handles
-  axes only: Reverser, CombinedThrottle, Throttle, TrainBrake,
-  LocoBrake, DynamicBrake, AFB.
+  axes only. Supported are: Reverser, Gear, CombinedThrottle,
+  Throttle, TrainBrake, LocoBrake, DynamicBrake, CruiseControl,
+  SmallEjector, HandBrake, Blower, Damper.
 
   I wrote a guide on how to customize loco controls:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139086
@@ -46,11 +48,8 @@ B. Licence
   http://www.emulation-evolved.net/
   http://www.deinmeister.de/jct_e.htm
 
-  NOTE 3: There is no Steam Locos support in this software as I don't
-  drive them, but in principle it could be added.
-
   The full description on how it works and what can you possibly do
-  with that starts at section 9. Also mind you, this is not all GUI
+  with that starts at section 10. Also mind you, this is not all GUI
   software. Also because of the way it works (injecting itself into LUA
   scripts) it requires to get your hands dirty a little. Read
   carefully and tread lightly. Make backups and prepare some good text
@@ -65,7 +64,7 @@ B. Licence
 2. Initial setup
 
   In the package you have several files (.EXE, .LUA and .TXT) and a
-  directory (with another .EXE and .LUA). Put the main .EXE and all
+  directory (with another 2x .EXE and .LUA). Put the main .EXE and all
   .LUA files from the main directory directly into the RailWorks\plugin
   directory. Usually in:
   C:\Program Files (x86)\Steam\steamapps\common\railworks\plugins
@@ -76,14 +75,15 @@ B. Licence
   \plugins\transim-helper-overlay.lua
   \plugins\transim-helper-joystick.lua
 
-  The trainsim-helper-lua-out directory you can put wherever you want.
+  The trainsim-helper-tools directory you can put wherever you want.
+  I put it in the plugins dir as well.
 
   Run the game and set it to run in the Borderless Window under
-  graphics settings. This is required for the overlay to be
-  shown. The only drawback is that VSync won't work in this mode. On
-  the plus side Alt-Tabbing is much faster and safer now. Even if
-  you're not interested in the Overlay please do it now as we'll need
-  it to confirm whether the script is working properly.
+  graphics settings. This is required for the overlay to be shown.
+  The only drawback is that VSync won't work in this mode. On the plus
+  side Alt-Tabbing is much faster and safer now. Even if you're not
+  interested in the Overlay please do it now as we'll need it to confirm
+  whether the script is working properly.
 
 3. Script/Overlay setup
 
@@ -154,16 +154,16 @@ B. Licence
   that your joystick(s) is/are attached and working properly).
 
   Open the trainsim-helper-joystick.txt (this can be in notepad,
-  doesn't matter). You should see all axes of your joystick listed
-  there with a value and axis name. Pick what you want to use. Either
-  by name or by moving the axis, closing the .txt file, reopen it and
-  noticing what has changed. There is a # sign and a number following
-  it. This is a line number in the file. Remember the numbers of all
-  the lines/axes you want to use.
+  doesn't matter). You should see all axes of all your joysticks
+  listed there with a value and axis name. Pick what you want to
+  use. Either by name or by moving the axis, closing the .txt file,
+  reopen it and noticing what has changed. There is a # sign and a
+  number following it. This is a line number in the file. Remember the
+  numbers of all the lines/axes you want to use.
 
   Now open the trainsim-helper-joystick.lua. This has to be done in a
   good text editor. At the top of the file, below the
-  function ConfigureJoystick()
+  "function ConfigureJoystick()"
   line you have few variables (CombinedThrottleLine = 3, etc). Assign
   line numbers of the axes you want to use to the controls you want to
   use. Comment out rest of them. Further below you have variables for
@@ -171,8 +171,8 @@ B. Licence
   whether you need an invert after first run, so don't change anything
   now). Save the file.
 
-  Run the game again using your patched loco and see whether the axes
-  do anything. Remember that for some scripted locos the axes might
+  Run the scenario again using your patched loco and see whether the
+  axes do anything. Remember that for some scripted locos the axes might
   move only with the Reverser set, or some other condition.
 
   If you got it working that is basically it. If it doesn't, post a
@@ -229,7 +229,7 @@ B. Licence
   -----------------|-------------------|--------------------------------
     runtime only   |  SHIFT+ALT+(0-9)  |      setup the countdown
   -----------------|-------------------|--------------------------------
-    runtime only   |    SHIFT+ALT+s    |         invert side
+    runtime only   |    SHIFT+ALT+s    |    invert driving direction
   -----------------|-------------------|--------------------------------
 
   By default everything is turned on. If you want to permanently
@@ -240,7 +240,9 @@ B. Licence
   pass a single "-1" you will disable current speed. But if you pass
   it twice "-1 -1" you will end up with it being enabled again.
 
-7. Distance/Countdown/Odometer usage
+7. Additional funcionality
+
+  a) Distance/Countdown/Odometer usage
 
   There is no way to get the distance to the next task from the game
   itself, but based on what I do have (time and speed) I've
@@ -255,9 +257,9 @@ B. Licence
 
   Its second mode is Countdown. It can count down from a set value to
   e.g. tell you how far you have to the next stop. When you're on the
-  station have a look at time table. See next distance. Enter it and
-  it will count down. Below 1 (mile/km) it will turn yellow. Below 0
-  it will turn red.
+  station have a look at the time table. See next distance. Enter it
+  and it will count down. Below 1 (mile/km) it will turn yellow. Below 0
+  (if you're past the set distance) it will turn red.
 
   To set it up hold SHIFT+ALT and type 4 digits that will compose the
   set distance in miles/km. So to enter 12.34 hit SHIFT+ALT and while
@@ -273,48 +275,75 @@ B. Licence
   To see this in action look here:
   http://forums.uktrainsim.com/viewtopic.php?p=1723307#p1723307
 
+  b) Change the direction of the loco
+
+  Sometimes when you change sides of the loco the game does not treat
+  it as such and return values as if you were driving
+  backwards. Sometimes you just need to drive backwards as the
+  scenario/loco requires that. For such cases I made a keyboard
+  shortcuts that "inverts" the overlay display. It treats driving
+  backwards as forwards. Hit SHIFT+ALT+S and you're set. The speed
+  will be positive again, the odometer and countdown will work
+  properly.
+
 8. Additional steamers support
 
   From version 0.5 the steamers received additional support. For the
-  controlling nothing's changed. You still have Regulator(Throttle),
-  Reverser and Brakes. The change is with the Overlay.
+  controlling not much has changed changed. You have Regulator
+  (Throttle), Reverser and Brakes as usual. The Small Ejector, Blower,
+  Damper are steamer specific axes you can asign.
 
   - Boiler pressure got added with color indicators depending on
     whether the pressure is increasing (green), constant (grey) and
     decreasing (red).
-  - Steam chest pressure in the indicators section. Some steamers have
-    this.
+  - Steam chest pressure and s team heating in the indicators
+    section. Some steamers have those.
   - Additional section for the driver's controls. This is something I
     have not done for non-steamers as there is no need. You can usualy
     see in what state your headlights, wipers or other non essential
     stuff is. This is not necessarily true for steamers as the valves
     can be hard to read and sometimes are in difficult to see
     locations. This is not a complete list, but I've added them based
-    on the locos I own (list below) and they are shared throughout
-    most steamers. If a control is not there you can still drive
-    without problems. Let me know if there is a control from a steamer
-    I don't own and you'd like it to be there. Those controls have
-    been added to the new section on the left hand side of the screen,
-    right of the main overlay.
+    on the locos I own and they are shared throughout most
+    steamers. If a control is not there you can still drive without
+    problems. Let me know if there is a control from a steamer I don't own
+    and you'd like it to be there. Those controls have been added to the
+    new section on the left hand side of the screen, right of the main
+    overlay.
   - Additional section for the fireman's controls and indicators. Those
     are the things that are disabled with auto fireman plus water and
     firebox levels. You can use it with manual fireman or just see how
     the auto fireman is working. Also there are safety valves that are
     always automatic.
 
-  Steamers I have for which I've added all the indicators:
-  - Black 5 4-6-0            (EU pack)
-  - BR52 2-10-0              (EU pack)
-  - 7F 2-8-0                 (EU pack)
-  - Fowler 4F                (Academy)
-  - GWR Modified Hall        (West Somerset Railway)
-  - SDJR 7F                  (West Somerset Railway)
-  - Castle Class             (DLC)
-  - Class A4 Pacifics        (DLC)
-  - Duches of Sutherland     (DLC)
-  - The Spirit of Halloween  (Halloween Route 2014)
+  The standard RSC/DTG steamers should display all their
+  indicators. They all are fairly generic and similar to each other so
+  they should be fully supported. I try to add indicators for
+  realistic 3rd party steamers but I don't own many of those yet.
 
-9. Full description
+  Right now those have been checked:
+  - 56xx (VictoryWorks)
+  - GWR Steam Motor (VictoryWorks)
+  - J94 Memories of Maerdy (MeshTools)
+
+  I hope to have FEF-3 in the next version.
+
+  Final note: if the steamer is not on this list it doesn't mean it
+  won't work. It will. You just probably won't see all the essential
+  valves in the overlay. But you can still use it.
+
+9. Additional tools
+
+  a) Data Extractor
+
+  In the tools directory you'll also find a small utility called Data
+  Extractor. It's a tool that parses information from engine and input
+  mappers bin files for you to read. It can be used to see what
+  notched values a loco has (although there are complicated cases
+  where it won't work properly). It also can show you loco's default
+  keyboard shortcuts.
+
+10. Full technical description
 
   First of all why have I wrote it?
   - I hate F3/F4 views, they kill immersion for me, obscure the
@@ -370,7 +399,7 @@ B. Licence
   comments to the output joystick txt file so it's easier to see what
   is what.
 
-10. Additional notes for the overlay
+11. Additional notes for the overlay
 
   Next Limit:
     It happens sometimes that the Next Limit speed has undefined
@@ -412,7 +441,7 @@ B. Licence
   all.
 -----------------------------------------------------------------------
 
-11. New control values
+12. New control values
 
   If the script is working fine for you for the most locos but others
   are problematic first of all post in the release thread. I want to
@@ -436,7 +465,7 @@ B. Licence
   add code for reading and setting proper joystick values exported in
   the joystick.txt file. You don't have to modify the C++ part.
 
-12. Advanced configuration / custom locos
+13. Advanced configuration / custom locos
 
   It is possible to customize controls per loco. There is no simple
   way to detect a loco you are driving though. I use a unique set of
@@ -449,7 +478,9 @@ B. Licence
 
   You have to open an engine.bin in RW_Tools and look for control
   values and prepare a set that will identify this loco and hopefully
-  only this one. Make a new function for it.
+  only this one. Make a new function for it. You can also use an
+  included Data Extractor instead of RW_Tools. It's output should be
+  easier to read.
 
   Then in the ConfigureJoystick() you can customize settings for this
   specific loco. I've added few examples.
@@ -501,7 +532,7 @@ B. Licence
   - trainsim-helper-overlay.lua: Overlay configuration an implementation.
   - trainsim-helper-joystick.lua: Joystick configuration an implementation.
 
-13. HELP! It doesn't work
+14. HELP! It doesn't work
 
   Forum thread:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139304
@@ -515,20 +546,22 @@ B. Licence
 
   Q: The overlay doesn't work for one loco, all you can see is
      "TrainSim Helper Active"
-  A: Let me know ASAP on the forums and see below about sending me
-     some files.
+  A: Make sure you have patched a correct script for this loco. If
+     you're unsure or you did and it doesn't work let me know ASAP on
+     the forums and see below about sending me some files.
   Q: I can see the overlay but the joystick only seem to apply the
      very minimum and very maximum values, nothing in between.
   A: There are some locos with notched levers scripted in a way that
      they require you to set very specific values for the
      ControlValue. It means you NEED notches definitions for this
-     loco. See the examples above and try to do it. If you fail write
-     on the forums and see below about sending me some files.
+     loco. They are not optional here. See the examples above and try
+     to do it. If you fail, write on the forums and see below about
+     sending me some files.
   Q: The joystick only works for some levers. Or it works for all but
-     the levers in the cab don't move or any other 'kinda works, but not
-     exactly as it should'.
+     the levers in the cab don't move or any other 'kinda works, but
+     not exactly as it should.
   A: It most probably means that this loco has some control values I
-     don't know about. See section 9 of this readme and tell me about
+     don't know about. See section 12 of this readme and tell me about
      in the forums. Also see below for sending me some files.
 
   Sending some files to me when help is requested:
@@ -552,14 +585,14 @@ B. Licence
 -----------------------------------------------------------------------
   From this point onwards you need to code in C++/C# and have a
   VisualStudio installed (Express is fine, I use 2010). Also a DirectX
-  SDK will be required. Windows 8 might that builtin, not sure
+  SDK will be required. Windows 8 might have that builtin, not sure
   though. For Windows 7 you need DXSDK_Jun10.exe.
 
   Source code available here:
   https://github.com/Havner/trainsim-helper
 -----------------------------------------------------------------------
 
-14. Modifications of the C++ code
+15. Modifications of the C++ code
 
   I'll just note for now that the C++ code is not very nicely written
   yet (conrary to the LUA) as I just patched all of this together to
@@ -576,13 +609,23 @@ B. Licence
   NOTE: Have a look at Config.h as the DEBUG and RELEASE versions look
   for the plugins directory in different ways.
 
-15. The Lua_Out editor
+16. C# tools
 
-  This is C# which I know very little about. It's based on CobraOne
-  patcher available here:
+  Those are tools written by CobraOne which I adapted for my own
+  needs. I know very little about C#.
+
+  a) The Lua_Out editor
+
+  Original version available here:
   https://www.dropbox.com/sh/paxigk37gqd9vll/AAA8pjmAzYVCAuwHrrgYmxENa
   But the new method used is by nschichan so I don't have to recompile
   the LUA code at all.
+
+  b) Data Extractor
+
+  Original version available here:
+  https://www.dropbox.com/sh/cbwyvjrt3x6gxat/AAB5WALzXgIqxADDO1ST-rBqa
+  I just made slight modifications and few bug fixes.
 
 A. Acknowledgements
 
