@@ -21,10 +21,10 @@ function ConfigureOverlay()
 
    -- Override defaults for custom locos. Detect functions are in the main script.
 
-   if DetectGermanAFB(1) then
+   if DetectGermanAFB(true) then
       TextVigilAlarm = "Sifa"
 
-   elseif DetectUK(1) then
+   elseif DetectGenericUK(true) then
       GradientUK = 1
 
    end
@@ -33,6 +33,8 @@ function ConfigureOverlay()
    -----  No need to go below for a basic configuration  -----
    -----------------------------------------------------------
 
+   -- Find ControlValues to display
+   
    StaticValues = {}
    ControlValues = {}
    ControlValuesModifiers = {}
@@ -57,7 +59,9 @@ function ConfigureOverlay()
       ControlValues["TargetSpeed"] = "TargetSpeed"
    end
 
-   if Call("*:ControlExists", "Reverser", 0) == 1 then
+   if Call("*:ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
+      ControlValues["Reverser"] = "MyReverser"
+   elseif Call("*:ControlExists", "Reverser", 0) == 1 then
       ControlValues["Reverser"] = "Reverser"
    end
 
@@ -65,15 +69,21 @@ function ConfigureOverlay()
       ControlValues["GearLever"] = "GearLever"
    end
    
-   if Call("*:ControlExists", "Regulator", 0) == 1 then
+   if Call("*:ControlExists", "RegulatorLever", 0) == 1 then  -- FEF-3
+      ControlValues["Throttle"] = "RegulatorLever"
+   elseif Call("*:ControlExists", "Regulator", 0) == 1 then
       ControlValues["Throttle"] = "Regulator"
    end
    
-   if Call("*:ControlExists", "TrainBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "TrainBrakeHandle", 0) == 1 then  -- FEF-3
+      ControlValues["TrainBrake"] = "TrainBrakeHandle"
+   elseif Call("*:ControlExists", "TrainBrakeControl", 0) == 1 then
       ControlValues["TrainBrake"] = "TrainBrakeControl"
    end
 
-   if Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "MyEngineBrakeControl", 0) == 1 then  -- FEF-3
+      ControlValues["LocoBrake"] = "MyEngineBrakeControl"
+   elseif Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
       ControlValues["LocoBrake"] = "EngineBrakeControl"
    end
    
@@ -95,6 +105,10 @@ function ConfigureOverlay()
       ControlValues["BoilerPressure"] = "BoilerPressureGauge"
    end
 
+   if Call("*:ControlExists", "BackPressure") == 1 then  -- FEF-3
+      ControlValues["BackPressure"] = "BackPressure"
+   end
+
    if Call("*:ControlExists", "SteamChestPressureGaugePSI", 0) == 1 then
       ControlValues["SteamChestPressure"] = "SteamChestPressureGaugePSI"
    elseif Call("*:ControlExists", "SteamChestGaugePSI", 0) == 1 then
@@ -109,6 +123,10 @@ function ConfigureOverlay()
       ControlValues["SteamHeatingPressure"] = "SteamHeatingPressureGaugePSI"
    elseif Call("*:ControlExists", "SteamHeatGauge", 0) == 1 then
       ControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
+   end
+
+   if Call("*:ControlExists", "Voltage", 0) == 1 then
+      ControlValues["Voltage"] = "Voltage"
    end
 
    if Call("*:ControlExists", "Ammeter", 0) == 1 then
@@ -147,7 +165,10 @@ function ConfigureOverlay()
       StaticValues["TrainBrakeCylinderUnits"] = "PSI"
    end
 
-   if Call("*:ControlExists", "LocoBrakeNeedle", 0) == 1 then  -- Duchess of Sutherland community patch
+   if Call("*:ControlExists", "MyLocoBrakeCylinderPressurePSI", 0) == 1 then  -- FEF-3
+      ControlValues["LocoBrakeCylinderPressure"] = "MyLocoBrakeCylinderPressurePSI"
+      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("*:ControlExists", "LocoBrakeNeedle", 0) == 1 then  -- Duchess of Sutherland community patch
       ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeNeedle"
       StaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("*:ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 then
@@ -208,7 +229,10 @@ function ConfigureOverlay()
       StaticValues["AirBrakePipeUnits"] = "PSI"
    end
 
-   if Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 then
+   if Call("*:ControlExists", "MRPSI", 0) == 1 then  -- FEF-3
+      ControlValues["MainReservoirPressure"] = "MRPSI"
+      StaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 then
       ControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
       StaticValues["MainReservoirUnits"] = "BAR"
    elseif Call("*:ControlExists", "aMainReservoirPressureBAR", 0) == 1 then
@@ -228,7 +252,10 @@ function ConfigureOverlay()
       StaticValues["MainReservoirUnits"] = "PSI"
    end
 
-   if Call("*:ControlExists", "EqReservoirPressureBAR", 0) == 1 then
+   if Call("*:ControlExists", "MyEqReservoirPressurePSI", 0) == 1 then  -- FEF-3
+      ControlValues["EqReservoirPressure"] = "MyEqReservoirPressurePSI"
+      StaticValues["EqReservoirUnits"] = "PSI"
+   elseif Call("*:ControlExists", "EqReservoirPressureBAR", 0) == 1 then
       ControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
       StaticValues["EqReservoirUnits"] = "BAR"
    elseif Call("*:ControlExists", "aEqReservoirPressureBAR", 0) == 1 then
@@ -250,22 +277,18 @@ function ConfigureOverlay()
 
    -- Steamers (driver)
    
-   if Call("*:ControlExists", "AirPumpOnOff", 0) == 1 then
-      ControlValues["AirPump"] = "AirPumpOnOff"
+   if Call("*:ControlExists", "BlowOffCockShutOffR", 0) == 1 then  -- FEF-3
+      ControlValues["BlowOffCockShutOffRight"] = "BlowOffCockShutOffR"
    end
 
-   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then
-      ControlValues["SteamBrake"] = "VirtualLocoBrake"
+   if Call("*:ControlExists", "Dynamo", 0) == 1 then  -- FEF-3
+      ControlValues["Dynamo"] = "Dynamo"
    end
    
-   if Call("*:ControlExists", "SmallEjectorOnOff", 0) == 1 then
-      ControlValues["SmallEjector"] = "SmallEjectorOnOff"
-   elseif Call("*:ControlExists", "SmallCompressorOnOff", 0) == 1 then
-      ControlValues["SmallEjector"] = "SmallCompressorOnOff"
-   end
-
-   if Call("*:ControlExists", "LargeEjectorOnOff", 0) == 1 then
-      ControlValues["LargeEjector"] = "LargeEjectorOnOff"
+   if Call("*:ControlExists", "CompressorThrottle", 0) == 1 then  -- FEF-3
+      ControlValues["AirPump"] = "CompressorThrottle"
+   elseif Call("*:ControlExists", "AirPumpOnOff", 0) == 1 then
+      ControlValues["AirPump"] = "AirPumpOnOff"
    end
 
    if Call("*:ControlExists", "SteamHeatingValve", 0) == 1 then
@@ -285,6 +308,20 @@ function ConfigureOverlay()
       ControlValues["Generator"] = "Lichtmaschine"
    end
 
+   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then
+      ControlValues["SteamBrake"] = "VirtualLocoBrake"
+   end
+   
+   if Call("*:ControlExists", "SmallEjectorOnOff", 0) == 1 then
+      ControlValues["SmallEjector"] = "SmallEjectorOnOff"
+   elseif Call("*:ControlExists", "SmallCompressorOnOff", 0) == 1 then
+      ControlValues["SmallEjector"] = "SmallCompressorOnOff"
+   end
+
+   if Call("*:ControlExists", "LargeEjectorOnOff", 0) == 1 then
+      ControlValues["LargeEjector"] = "LargeEjectorOnOff"
+   end
+
    if Call("*:ControlExists", "Lubricator", 0) == 1 then
       ControlValues["Lubricator"] = "Lubricator"
    end
@@ -293,12 +330,24 @@ function ConfigureOverlay()
       ControlValues["LubricatorWarming"] = "LubricatorWarming"
    end
 
-   if Call("*:ControlExists", "TestCock1", 0) == 1 then
-      ControlValues["WaterGaugeTest1"] = "TestCock1"
+   if Call("*:ControlExists", "RevGearAir", 0) == 1 then  -- FEF-3
+      ControlValues["ReverseGear"] = "RevGearAir"
    end
 
-   if Call("*:ControlExists", "TestCock2", 0) == 1 then
-      ControlValues["WaterGaugeTest2"] = "TestCock2"
+   if Call("*:ControlExists", "Defroster", 0) == 1 then  -- FEF-3
+      ControlValues["Defroster"] = "Defroster"
+   end
+
+   if Call("*:ControlExists", "SludgeRemoverR", 0) == 1 then  -- FEF-3
+      ControlValues["SludgeRemoverRight"] = "SludgeRemoverR"
+   end
+
+   if Call("*:ControlExists", "Sander", 0) == 1 then  -- FEF-3
+      ControlValues["Sander"] = "Sander"
+   end
+
+   if Call("*:ControlExists", "Sander2", 0) == 1 then  -- FEF-3
+      ControlValues["SanderRear"] = "Sander2"
    end
 
    if Call("*:ControlExists", "AshpanSprinkler", 0) == 1 then
@@ -311,12 +360,12 @@ function ConfigureOverlay()
       ControlValues["FireholeFlap"] = "Flap"
    end
 
-   if Call("*:ControlExists", "CylinderCock", 0) == 1 then
-      ControlValues["CylinderCock"] = "CylinderCock"
+   if Call("*:ControlExists", "CylinderCockMaster", 0) == 1 then  -- FEF-3
+      ControlValues["CylinderCockMaster"] = "CylinderCockMaster"
    end
 
-   if Call("*:ControlExists", "Damper", 0) == 1 then
-      ControlValues["Damper"] = "Damper"
+   if Call("*:ControlExists", "CylinderCock", 0) == 1 then
+      ControlValues["CylinderCock"] = "CylinderCock"
    end
 
    if Call("*:ControlExists", "WaterScoopRaiseLower", 0) == 1 then
@@ -325,24 +374,46 @@ function ConfigureOverlay()
 
    -- Steamers (fire-man)
 
-   if Call("*:ControlExists", "WaterGauge", 0) == 1 then
-      ControlValues["WaterGauge"] = "WaterGauge"
+   if Call("*:ControlExists", "BlowOffCockShutOffL", 0) == 1 then  -- FEF-3
+      ControlValues["BlowOffCockShutOffLeft"] = "BlowOffCockShutOffL"
    end
 
-   if Call("*:ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
-      ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
+   if Call("*:ControlExists", "FWPumpShutOff", 0) == 1 then  -- FEF-3
+      ControlValues["FeedWaterPumpShutOff"] = "FWPumpShutOff"
    end
 
-   if Call("*:ControlExists", "ExhaustInjectorWater", 0) == 1 then
-      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
+   if Call("*:ControlExists", "ControlValve", 0) == 1 then  -- FEF-3
+      ControlValues["ControlValve"] = "ControlValve"
    end
 
-   if Call("*:ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
-      ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
+   if Call("*:ControlExists", "TankHeater", 0) == 1 then  -- FEF-3
+      ControlValues["TankHeater"] = "TankHeater"
    end
 
-   if Call("*:ControlExists", "LiveInjectorWater", 0) == 1 then
-      ControlValues["LiveInjectorWater"] = "LiveInjectorWater"
+   if Call("*:ControlExists", "SludgeRemoverL", 0) == 1 then  -- FEF-3
+      ControlValues["SludgeRemoverLeft"] = "SludgeRemoverL"
+   end
+
+   if Call("*:ControlExists", "BurnerBlowBack", 0) == 1 then  -- FEF-3
+      ControlValues["BurnerBlowBack"] = "BurnerBlowBack"
+   end
+
+   if Call("*:ControlExists", "TankBlowBack", 0) == 1 then  -- FEF-3
+      ControlValues["TankBlowBack"] = "TankBlowBack"
+   end
+
+   if Call("*:ControlExists", "SandHoleCover", 0) == 1 then  -- FEF-3
+      ControlValues["SandHoleCover"] = "SandHoleCover"
+   end
+   
+   if Call("*:ControlExists", "SandBucket", 0) == 1 then  -- FEF-3
+      ControlValues["SandBucket"] = "SandBucket"
+   end
+   
+   -- FireboxMass from the functions
+
+   if Call("*:ControlExists", "AtomizerPressure", 0) == 1 then  -- FEF-3
+      ControlValues["AtomizerPressure"] = "AtomizerPressure"
    end
 
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 then
@@ -353,16 +424,78 @@ function ConfigureOverlay()
       ControlValues["Stoking"] = "Stoking"
    end
 
-   if Call("*:ControlExists", "Blower", 0) == 1 then
+   if Call("*:ControlExists", "Firing", 0) == 1 then  -- FEF-3
+      ControlValues["OilRegulator"] = "Firing"
+   end
+
+   if Call("*:ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
+      ControlValues["Blower"] = "BlowerControlValve"
+   elseif Call("*:ControlExists", "Blower", 0) == 1 then
       ControlValues["Blower"] = "Blower"
    end
 
-   if Call("*:ControlExists", "SafetyValve1", 0) == 1 then
+   if Call("*:ControlExists", "Atomizer", 0) == 1 then  -- FEF-3
+      ControlValues["Atomizer"] = "Atomizer"
+   end
+
+   if Call("*:ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
+      ControlValues["Damper"] = "FiredoorDamper"
+   elseif Call("*:ControlExists", "Damper", 0) == 1 then
+      ControlValues["Damper"] = "Damper"
+   end
+
+   if Call("*:ControlExists", "DamperLeft", 0) == 1 then
+      ControlValues["DamperLeft"] = "DamperLeft"
+   end
+
+   if Call("*:ControlExists", "DamperRight", 0) == 1 then
+      ControlValues["DamperRight"] = "DamperRight"
+   end
+
+   if Call("*:ControlExists", "WaterGauge", 0) == 1 then
+      ControlValues["WaterGauge"] = "WaterGauge"
+   end
+
+   if Call("*:ControlExists", "FWHpressure", 0) == 1 then  -- FEF-3
+      ControlValues["FeedWaterPressure"] = "FWHpressure"
+   end
+
+   if Call("*:ControlExists", "FWPump", 0) == 1 then  -- FEF-3
+      ControlValues["FeedWaterPump"] = "FWPump"
+   end
+
+   if Call("*:ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
+      ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
+   end
+
+   if Call("*:ControlExists", "ExhaustInjectorWater", 0) == 1 then
+      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
+   end
+
+   if Call("*:ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
+      ControlValues["LiveInjectorSteam"] = "InjectorLeverR"
+   elseif Call("*:ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
+      ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
+   end
+
+   if Call("*:ControlExists", "LiveInjectorWater", 0) == 1 then
+      ControlValues["LiveInjectorWater"] = "LiveInjectorWater"
+   end
+
+   if Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 then  -- FEF-3
+      ControlValues["SafetyValve1"] = "SafetyValveEngineer"
+   elseif Call("*:ControlExists", "SafetyValve1", 0) == 1 then
       ControlValues["SafetyValve1"] = "SafetyValve1"
    end
    
-   if Call("*:ControlExists", "SafetyValve2", 0) == 1 then
+   if Call("*:ControlExists", "SafetyValveFireman", 0) == 1 then  -- FEF-3
+      ControlValues["SafetyValve2"] = "SafetyValveFireman"
+   elseif Call("*:ControlExists", "SafetyValve2", 0) == 1 then
       ControlValues["SafetyValve2"] = "SafetyValve2"
+   end
+
+   if Call("*:ControlExists", "SafetyValveUnmuffled", 0) == 1 then  -- FEF-3
+      ControlValues["SafetyValve3"] = "SafetyValveUnmuffled"
    end
 
    -- Warning values
@@ -393,6 +526,29 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "Startup", 0) == 1 then
       ControlValues["Startup"] = "Startup"
+   end
+
+   -- Override defaults for custom locos. Detect functions are in the main script.
+   -- Sometimes I have to do this as a loco might have a control value that is
+   -- detected but it should not be displayed. E.g. it's internal to the
+   -- implementation or is basically useless for this loco.
+
+   if DetectFEF3_ADV_Smokebox(true) then
+      -- Disable the internal values
+      ControlValues["SteamChestPressure"] = nil
+      ControlValues["TrainBrakeCylinderPressure"] = nil
+      ControlValues["FireboxDoor"] = nil
+      ControlValues["Stoking"] = nil
+      ControlValues["ExhaustInjectorSteam"] = nil
+      ControlValues["ExhaustInjectorWater"] = nil
+
+      -- Firebox is 0-5%, make it full range (0-100%)
+      ControlValuesModifiers["FireboxMass"] = 20
+   end
+
+   if DetectJ94_ADV_Meshtools(1) then
+      -- It has left and right dampers
+      ControlValues["Damper"] = nil
    end
 
    -- Set at the very end to be a mark whether the configuration has been successful.
@@ -434,6 +590,7 @@ function GetOverlayData()
    if Gradient then data = data.."Gradient: "..Gradient.."\n" end
 
    local FireboxMass = Call("*:GetFireboxMass")
+   if FireboxMass and ControlValuesModifiers["FireboxMass"] then FireboxMass = FireboxMass * ControlValuesModifiers["FireboxMass"] end
    if FireboxMass then data = data.."FireboxMass: "..FireboxMass.."\n" end
 
    -- Static Values loop

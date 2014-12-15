@@ -105,35 +105,61 @@ struct SimData {
 	Value<float>		fEqReservoirPressure;
 
 	// Steamers (driver, displayed in separate section)
+	Value<float>		fBlowOffCockShutOffRight;
+	Value<float>		fDynamo;
 	Value<float>		fAirPump;
-	Value<float>		fSteamBrake;
-	Value<float>		fSmallEjector;
-	Value<float>		fLargeEjector;
 	Value<float>		fSteamHeating;
 	Value<float>		fMasonsValve;
 	Value<float>		fGenerator;
+	Value<float>		fSteamBrake;
+	Value<float>		fSmallEjector;
+	Value<float>		fLargeEjector;
 	Value<float>		fLubricator;
 	Value<float>		fLubricatorWarming;
-	Value<float>		fWaterGaugeTest1;
-	Value<float>		fWaterGaugeTest2;
+	Value<float>		fReverseGear;
+	Value<float>		fDefroster;
+	Value<float>		fSludgeRemoverRight;
+	Value<float>		fSander;
+	Value<float>		fSanderRear;
 	Value<float>		fAshpanSprinkler;
 	Value<float>		fFireholeFlap;
 	Value<float>		fCylinderCock;
-	Value<float>		fDamper;
+	Value<float>		fCylinderCockMaster;
 	Value<float>		fWaterScoopRaiseLower;
 
 	// Steamers (fireman, displayed on the right side)
+	Value<float>		fBlowOffCockShutOffLeft;
+	Value<float>		fFeedWaterPumpShutOff;
+	Value<float>		fControlValve;
+	Value<float>		fTankHeater;
+	Value<float>		fSludgeRemoverLeft;
+	Value<float>		fBurnerBlowBack;
+	Value<float>		fTankBlowBack;
+	Value<float>		fSandHoleCover;
+	Value<float>		fSandBucket;
+
+	Value<float>		fFireboxMass;
+	Value<float>		fAtomizerPressure;
+	Value<float>		fFireboxDoor;
+	Value<float>		fStoking;
+	Value<float>		fOilRegulator;
+	Value<float>		fBlower;
+	Value<float>		fAtomizer;
+	Value<float>		fDamper;
+	Value<float>		fDamperLeft;
+	Value<float>		fDamperRight;
+
 	Value<float>		fWaterGauge;
+	Value<float>		fFeedWaterPressure;
+	Value<float>		fFeedWaterPump;
 	Value<float>		fExhaustInjectorSteam;
 	Value<float>		fExhaustInjectorWater;
 	Value<float>		fLiveInjectorSteam;
 	Value<float>		fLiveInjectorWater;
-	Value<float>		fFireboxMass;
-	Value<float>		fFireboxDoor;
-	Value<float>		fStoking;
-	Value<float>		fBlower;
+
 	Value<float>		fSafetyValve1;
 	Value<float>		fSafetyValve2;
+	Value<float>		fSafetyValve3;
 
 	// Warning values
 	Value<int>			nSunflower;
@@ -317,35 +343,61 @@ int FillData(SimData* data)
 		else if (!strcmp("EqReservoirPressure:", param))		data->fEqReservoirPressure = value;
 
 		// Steamers (driver, displayed with the above 3 groups)
+		else if (!strcmp("BlowOffCockShutOffRight:", param))	data->fBlowOffCockShutOffRight = value;
+		else if (!strcmp("Dynamo:", param))						data->fDynamo = value;
 		else if (!strcmp("AirPump:", param))					data->fAirPump = value;
-		else if (!strcmp("SteamBrake:", param))					data->fSteamBrake = value;
-		else if (!strcmp("SmallEjector:", param))				data->fSmallEjector = value;
-		else if (!strcmp("LargeEjector:", param))				data->fLargeEjector = value;
 		else if (!strcmp("SteamHeating:", param))				data->fSteamHeating = value;
 		else if (!strcmp("MasonsValve:", param))				data->fMasonsValve = value;
 		else if (!strcmp("Generator:", param))					data->fGenerator = value;
+		else if (!strcmp("SteamBrake:", param))					data->fSteamBrake = value;
+		else if (!strcmp("SmallEjector:", param))				data->fSmallEjector = value;
+		else if (!strcmp("LargeEjector:", param))				data->fLargeEjector = value;
 		else if (!strcmp("Lubricator:", param))					data->fLubricator = value;
 		else if (!strcmp("LubricatorWarming:", param))			data->fLubricatorWarming = value;
-		else if (!strcmp("WaterGaugeTest1:", param))			data->fWaterGaugeTest1 = value;
-		else if (!strcmp("WaterGaugeTest2:", param))			data->fWaterGaugeTest2 = value;
+		else if (!strcmp("ReverseGear:", param))				data->fReverseGear = value;
+		else if (!strcmp("Defroster:", param))					data->fDefroster = value;
+		else if (!strcmp("SludgeRemoverRight:", param))			data->fSludgeRemoverRight = value;
+		else if (!strcmp("Sander:", param))						data->fSander = value;
+		else if (!strcmp("SanderRear:", param))					data->fSanderRear = value;
 		else if (!strcmp("AshpanSprinkler:", param))			data->fAshpanSprinkler = value;
 		else if (!strcmp("FireholeFlap:", param))				data->fFireholeFlap = value;
 		else if (!strcmp("CylinderCock:", param))				data->fCylinderCock = value;
-		else if (!strcmp("Damper:", param))						data->fDamper = value;
+		else if (!strcmp("CylinderCockMaster:", param))			data->fCylinderCockMaster = value;
 		else if (!strcmp("WaterScoopRaiseLower:", param))		data->fWaterScoopRaiseLower = value;
 
 		// Steamers (fireman, displayed on the right side)
+		else if (!strcmp("BlowOffCockShutOffLeft:", param))		data->fBlowOffCockShutOffLeft = value;
+		else if (!strcmp("FeedWaterPumpShutOff:", param))		data->fFeedWaterPumpShutOff = value;
+		else if (!strcmp("ControlValve:", param))				data->fControlValve = value;
+		else if (!strcmp("TankHeater:", param))					data->fTankHeater = value;
+		else if (!strcmp("SludgeRemoverLeft:", param))			data->fSludgeRemoverLeft = value;
+		else if (!strcmp("BurnerBlowBack:", param))				data->fBurnerBlowBack = value;
+		else if (!strcmp("TankBlowBack:", param))				data->fTankBlowBack = value;
+		else if (!strcmp("SandHoleCover:", param))				data->fSandHoleCover = value;
+		else if (!strcmp("SandBucket:", param))					data->fSandBucket = value;
+
+		else if (!strcmp("FireboxMass:", param))				data->fFireboxMass = value;
+		else if (!strcmp("AtomizerPressure:", param))			data->fAtomizerPressure = value;
+		else if (!strcmp("FireboxDoor:", param))				data->fFireboxDoor = value;
+		else if (!strcmp("Stoking:", param))					data->fStoking = value;
+		else if (!strcmp("OilRegulator:", param))				data->fOilRegulator = value;
+		else if (!strcmp("Blower:", param))						data->fBlower = value;
+		else if (!strcmp("Atomizer:", param))					data->fAtomizer = value;
+		else if (!strcmp("Damper:", param))						data->fDamper = value;
+		else if (!strcmp("DamperLeft:", param))					data->fDamperLeft = value;
+		else if (!strcmp("DamperRight:", param))				data->fDamperRight = value;
+
 		else if (!strcmp("WaterGauge:", param))					data->fWaterGauge = value;
+		else if (!strcmp("FeedWaterPressure:", param))			data->fFeedWaterPressure = value;
+		else if (!strcmp("FeedWaterPump:", param))				data->fFeedWaterPump = value;
 		else if (!strcmp("ExhaustInjectorSteam:", param))		data->fExhaustInjectorSteam = value;
 		else if (!strcmp("ExhaustInjectorWater:", param))		data->fExhaustInjectorWater = value;
 		else if (!strcmp("LiveInjectorSteam:", param))			data->fLiveInjectorSteam = value;
 		else if (!strcmp("LiveInjectorWater:", param))			data->fLiveInjectorWater = value;
-		else if (!strcmp("FireboxMass:", param))				data->fFireboxMass = value;
-		else if (!strcmp("FireboxDoor:", param))				data->fFireboxDoor = value;
-		else if (!strcmp("Stoking:", param))					data->fStoking = value;
-		else if (!strcmp("Blower:", param))						data->fBlower = value;
+
 		else if (!strcmp("SafetyValve1:", param))				data->fSafetyValve1 = value;
 		else if (!strcmp("SafetyValve2:", param))				data->fSafetyValve2 = value;
+		else if (!strcmp("SafetyValve3:", param))				data->fSafetyValve3 = value;
 
 		// Warning values
 		else if (!strcmp("Sunflower:", param))					data->nSunflower = value;
@@ -666,44 +718,75 @@ void RenderOverlay()
 
 	if (!g_bHideSection[9] && data.fFireboxMass)
 	{
-		y = DrawString(data.fWaterScoopRaiseLower,			x+40,	y, white, pSmallFont, "Water Scoop: %d %%", (int)(data.fWaterScoopRaiseLower()*100));
-		y = DrawString(data.fDamper,						x+71,	y, white, pSmallFont, "Damper: %d %%", (int)(data.fDamper()*100));
-		y = DrawString(data.fCylinderCock,					x+28,	y, white, pSmallFont, "Cylinder Cocks: %d %%", (int)(data.fCylinderCock()*100));
-		y = DrawString(data.fFireholeFlap,					x+41,	y, white, pSmallFont, "Firehole Flap: %d %%", (int)(data.fFireholeFlap()*100));
-		y = DrawString(data.fAshpanSprinkler,				x+17,	y, white, pSmallFont, "Ashpan Sprinkler: %d %%", (int)(data.fAshpanSprinkler()*100));
-		//y = DrawString(data.fWaterGaugeTest2,				x+0,	y, white, pSmallFont, "Water Gauge Test 2: %d %%", (int)(data.fWaterGaugeTest2()*100));
-		//y = DrawString(data.fWaterGaugeTest1,				x+0,	y, white, pSmallFont, "Water Gauge Test 1: %d %%", (int)(data.fWaterGaugeTest1()*100));
-		y = DrawString(data.fLubricatorWarming,				x+3,	y, white, pSmallFont, "Lubricator Warming: %d %%", (int)(data.fLubricatorWarming()*100));
-		y = DrawString(data.fLubricator,					x+59,	y, white, pSmallFont, "Lubricator: %d %%", (int)(data.fLubricator()*100));
-		y = DrawString(data.fGenerator,						x+59,	y, white, pSmallFont, "Generator: %d %%", (int)(data.fGenerator()*100));
-		y = DrawString(data.fMasonsValve,					x+36,	y, white, pSmallFont, "Masons Valve: %d %%", (int)(data.fMasonsValve()*100));
-		y = DrawString(data.fSteamHeating,					x+30,	y, white, pSmallFont, "Steam Heating: %d %%", (int)(data.fSteamHeating()*100));
-		y = DrawString(data.fLargeEjector,					x+39,	y, white, pSmallFont, "Large Ejector: %d %%", (int)(data.fLargeEjector()*100));
-		y = DrawString(data.fSmallEjector,					x+38,	y, white, pSmallFont, "Small Ejector: %d %%", (int)(data.fSmallEjector()*100));
-		y = DrawString(data.fSteamBrake,					x+40,	y, white, pSmallFont, "Steam Brake: %d %%", (int)(data.fSteamBrake()*100));
-		y = DrawString(data.fAirPump,						x+62,	y, white, pSmallFont, "Air Pump: %d %%", (int)(data.fAirPump()*100));
+		y = DrawString(data.fWaterScoopRaiseLower,			x+57,	y, white, pSmallFont, "Water Scoop: %d %%", (int)(data.fWaterScoopRaiseLower()*100));
+		y = DrawString(data.fCylinderCockMaster,			x+1,	y, white, pSmallFont, "Cylinder Cocks Master: %d %%", (int)(data.fCylinderCockMaster()*100));
+		y = DrawString(data.fCylinderCock,					x+45,	y, white, pSmallFont, "Cylinder Cocks: %d %%", (int)(data.fCylinderCock()*100));
+		y = DrawString(data.fFireholeFlap,					x+58,	y, white, pSmallFont, "Firehole Flap: %d %%", (int)(data.fFireholeFlap()*100));
+		y = DrawString(data.fAshpanSprinkler,				x+34,	y, white, pSmallFont, "Ashpan Sprinkler: %d %%", (int)(data.fAshpanSprinkler()*100));
+		y = DrawString(data.fSanderRear,					x+61,	y, white, pSmallFont, "Sander Rear: %d %%", (int)(data.fSanderRear()*100));
+		y = DrawString(data.fSander,						x+92,	y, white, pSmallFont, "Sander: %d %%", (int)(data.fSander()*100));
+		y = DrawString(data.fSludgeRemoverRight,			x+39,	y, white, pSmallFont, "Sludge Remover: %d %%", (int)(data.fSludgeRemoverRight()*100));
+		y = DrawString(data.fDefroster,						x+81,	y, white, pSmallFont, "Defroster: %d %%", (int)(data.fDefroster()*100));
+		y = DrawString(data.fReverseGear,					x+55,	y, white, pSmallFont, "Reverse Gear: %d %%", (int)(data.fReverseGear()*100));
+		y = DrawString(data.fLubricatorWarming,				x+20,	y, white, pSmallFont, "Lubricator Warming: %d %%", (int)(data.fLubricatorWarming()*100));
+		y = DrawString(data.fLubricator,					x+76,	y, white, pSmallFont, "Lubricator: %d %%", (int)(data.fLubricator()*100));
+		y = DrawString(data.fLargeEjector,					x+56,	y, white, pSmallFont, "Large Ejector: %d %%", (int)(data.fLargeEjector()*100));
+		y = DrawString(data.fSmallEjector,					x+55,	y, white, pSmallFont, "Small Ejector: %d %%", (int)(data.fSmallEjector()*100));
+		y = DrawString(data.fSteamBrake,					x+57,	y, white, pSmallFont, "Steam Brake: %d %%", (int)(data.fSteamBrake()*100));
+		y = DrawString(data.fGenerator,						x+76,	y, white, pSmallFont, "Generator: %d %%", (int)(data.fGenerator()*100));
+		y = DrawString(data.fMasonsValve,					x+53,	y, white, pSmallFont, "Masons Valve: %d %%", (int)(data.fMasonsValve()*100));
+		y = DrawString(data.fSteamHeating,					x+47,	y, white, pSmallFont, "Steam Heating: %d %%", (int)(data.fSteamHeating()*100));
+		y = DrawString(data.fAirPump,						x+79,	y, white, pSmallFont, "Air Pump: %d %%", (int)(data.fAirPump()*100));
+		y = DrawString(data.fDynamo,						x+85,	y, white, pSmallFont, "Dynamo: %d %%", (int)(data.fDynamo()*100));
+		y = DrawString(data.fBlowOffCockShutOffRight,		x+0,	y, white, pSmallFont, "Blow Off Cock Shut Off: %d %%", (int)(data.fBlowOffCockShutOffRight()*100));
 	}
 
-	// Steamer fire-man support
-	x = g_nWidth - 250;
+	// Steamer fire-man support 
+	x = g_nWidth - 460;
 	y = g_nHeight - yD;
 	yP = y;
 
 	if (!g_bHideSection[10] && data.fFireboxMass)
 	{
-		y = DrawString(data.fSafetyValve2,					x+72,	y, white, pSmallFont, "Safety Valve 2: %d %%", (int)(data.fSafetyValve2()*100));
-		y = DrawString(data.fSafetyValve1,					x+72,	y, white, pSmallFont, "Safety Valve 1: %d %%", (int)(data.fSafetyValve1()*100));
-		y = DrawString(data.fBlower,						x+94,	y, white, pSmallFont, "Blower (N): %d %%", (int)(data.fBlower()*100));
+		y = DrawString(data.fSandBucket,					x+74,	y, white, pSmallFont, "Sand Bucket: %d %%", (int)(data.fSandBucket()*100));
+		y = DrawString(data.fSandHoleCover,					x+53,	y, white, pSmallFont, "Sand Hole Cover: %d %%", (int)(data.fSandHoleCover()*100));
+		y = DrawString(data.fTankBlowBack,					x+56,	y, white, pSmallFont, "Tank Blow Back: %d %%", (int)(data.fTankBlowBack()*100));
+		y = DrawString(data.fBurnerBlowBack,				x+45,	y, white, pSmallFont, "Burner Blow Back: %d %%", (int)(data.fBurnerBlowBack()*100));
+		y = DrawString(data.fSludgeRemoverLeft,				x+55,	y, white, pSmallFont, "Sludge Remover: %d %%", (int)(data.fSludgeRemoverLeft()*100));
+		y = DrawString(data.fTankHeater,					x+80,	y, white, pSmallFont, "Tank Heater: %d %%", (int)(data.fTankHeater()*100));
+		y = DrawString(data.fControlValve,					x+74,	y, white, pSmallFont, "Control Valve: %d %%", (int)(data.fControlValve()*100));
+		y = DrawString(data.fFeedWaterPumpShutOff,			x+0,	y, white, pSmallFont, "Feedwater Pump Shut Off: %d %%", (int)(data.fFeedWaterPumpShutOff()*100));
+		y = DrawString(data.fBlowOffCockShutOffLeft,		x+16,	y, white, pSmallFont, "Blow Off Cock Shut Off: %d %%", (int)(data.fBlowOffCockShutOffLeft()*100));
+	}
+
+	x = g_nWidth - 260;
+	y = g_nHeight - yD;
+	yP = y;
+
+	if (!g_bHideSection[10] && data.fFireboxMass)
+	{
+		y = DrawString(data.fSafetyValve3,					x+76,	y, white, pSmallFont, "Safety Valve 3: %d %%", (int)(data.fSafetyValve3()*100));
+		y = DrawString(data.fSafetyValve2,					x+76,	y, white, pSmallFont, "Safety Valve 2: %d %%", (int)(data.fSafetyValve2()*100));
+		y = DrawString(data.fSafetyValve1,					x+76,	y, white, pSmallFont, "Safety Valve 1: %d %%", (int)(data.fSafetyValve1()*100));
 		y = NextSection(y, &yP, yD);
-		y = DrawString(data.fStoking,						x+89,	y, whitered, pSmallFont, "Stoking (R): %d %%", (int)(data.fStoking()*100));
-		y = DrawString(data.fFireboxDoor,					x+60,	y, whitered, pSmallFont, "Firebox Door (F): %d %%", (int)(data.fFireboxDoor()*100));
-		y = DrawString(data.fFireboxMass,					x+99,	y, whitered, pMediumFont, "Firebox: %.1f %%", data.fFireboxMass()*100);
+		y = DrawString(data.fLiveInjectorWater,				x+32,	y, whiteblue, pSmallFont, "Live Injector Water (L): %d %%", (int)(data.fLiveInjectorWater()*100));
+		y = DrawString(data.fLiveInjectorSteam,				x+26,	y, whiteblue, pSmallFont, "Live Injector Steam (O): %d %%", (int)(data.fLiveInjectorSteam()*100));
+		y = DrawString(data.fExhaustInjectorWater,			x+4,	y, whiteblue, pSmallFont, "Exhaust Injector Water (K): %d %%", (int)(data.fExhaustInjectorWater()*100));
+		y = DrawString(data.fExhaustInjectorSteam,			x+7,	y, whiteblue, pSmallFont, "Exhaust Injector Steam (I): %d %%", (int)(data.fExhaustInjectorSteam()*100));
+		y = DrawString(data.fFeedWaterPump,					x+39,	y, whiteblue, pSmallFont, "Feedwater Pump (K): %d %%", (int)(data.fFeedWaterPump()*100));
+		y = DrawString(data.fFeedWaterPressure,				x+10,	y, whiteblue, pMediumFont, "Feedwater Pressure: %.1f PSI", data.fFeedWaterPressure());
+		y = DrawString(data.fWaterGauge,					x+113,	y, whiteblue, pMediumFont, "Water: %.1f %%", data.fWaterGauge()*100);
 		y = NextSection(y, &yP, yD);
-		y = DrawString(data.fLiveInjectorWater,				x+28,	y, whiteblue, pSmallFont, "Live Injector Water (L): %d %%", (int)(data.fLiveInjectorWater()*100));
-		y = DrawString(data.fLiveInjectorSteam,				x+22,	y, whiteblue, pSmallFont, "Live Injector Steam (O): %d %%", (int)(data.fLiveInjectorSteam()*100));
-		y = DrawString(data.fExhaustInjectorWater,			x+0,	y, whiteblue, pSmallFont, "Exhaust Injector Water (K): %d %%", (int)(data.fExhaustInjectorWater()*100));
-		y = DrawString(data.fExhaustInjectorSteam,			x+3,	y, whiteblue, pSmallFont, "Exhaust Injector Steam (I): %d %%", (int)(data.fExhaustInjectorSteam()*100));
-		y = DrawString(data.fWaterGauge,					x+109,	y, whiteblue, pMediumFont, "Water: %.1f %%", data.fWaterGauge()*100);
+		y = DrawString(data.fDamperRight,					x+56,	y, whitered, pSmallFont, "Damper Right (M): %d %%", (int)(data.fDamperRight()*100));
+		y = DrawString(data.fDamperLeft,					x+65,	y, whitered, pSmallFont, "Damper Left (M): %d %%", (int)(data.fDamperLeft()*100));
+		y = DrawString(data.fDamper,						x+90,	y, whitered, pSmallFont, "Damper (M): %d %%", (int)(data.fDamper()*100));
+		y = DrawString(data.fAtomizer,						x+106,	y, whitered, pSmallFont, "Atomizer: %d %%", (int)(data.fAtomizer()*100));
+		y = DrawString(data.fBlower,						x+98,	y, whitered, pSmallFont, "Blower (N): %d %%", (int)(data.fBlower()*100));
+		y = DrawString(data.fOilRegulator,					x+62,	y, whitered, pSmallFont, "Oil Regulator (R): %d %%", (int)(data.fOilRegulator()*100));
+		y = DrawString(data.fStoking,						x+93,	y, whitered, pSmallFont, "Stoking (R): %d %%", (int)(data.fStoking()*100));
+		y = DrawString(data.fFireboxDoor,					x+64,	y, whitered, pSmallFont, "Firebox Door (F): %d %%", (int)(data.fFireboxDoor()*100));
+		y = DrawString(data.fAtomizerPressure,				x+22,	y, whitered, pMediumFont, "Atomizer Pressure: %.1f PSI", data.fAtomizerPressure());
+		y = DrawString(data.fFireboxMass,					x+103,	y, whitered, pMediumFont, "Firebox: %.1f %%", data.fFireboxMass()*100);
 	}
 
 	d3ddev->EndScene();    // ends the 3D scene

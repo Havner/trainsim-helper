@@ -225,6 +225,12 @@ function ConfigureJoystick()
 
    -- Steamers here
 
+   elseif DetectFEF3_ADV_Smokebox() then
+      -- Ignore emergency values (0.85, 1)
+      TrainBrakeRange = {0, 0.85}
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
    elseif DetectCastle() then
       -- This loco has VirtualReverser but it doesn't work, override
       ReverserControl = "Reverser"
@@ -381,7 +387,7 @@ function ConfigureJoystick()
       ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
 
    else
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "No custom configuration for this loco", 3, 0)
+      DisplayPopup("No custom configuration for this loco")
 
    end
 
@@ -426,7 +432,9 @@ function FindGear()
 end
 
 function FindReverser()
-   if Call("*:ControlExists", "VirtualReverser", 0) == 1 then
+   if Call("*:ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
+      return "MyReverser"
+   elseif Call("*:ControlExists", "VirtualReverser", 0) == 1 then
       return "VirtualReverser"
    elseif Call("*:ControlExists", "Reverser", 0) == 1 then
       return "Reverser"
@@ -440,7 +448,9 @@ function FindCombinedThrottle()
 end
 
 function FindThrottle()
-   if Call("*:ControlExists", "VirtualThrottle", 0) == 1 then
+   if Call("*:ControlExists", "RegulatorLever", 0) == 1 then  -- FEF-3
+      return "RegulatorLever"
+   elseif Call("*:ControlExists", "VirtualThrottle", 0) == 1 then
       return "VirtualThrottle"
    elseif Call("*:ControlExists", "Regulator", 0) == 1 then
       return "Regulator"
@@ -448,7 +458,9 @@ function FindThrottle()
 end
 
 function FindTrainBrake()
-   if Call("*:ControlExists", "M8Brake", 0) == 1 then
+   if Call("*:ControlExists", "TrainBrakeHandle", 0) == 1 then  -- FEF-3
+      return "TrainBrakeHandle"
+   elseif Call("*:ControlExists", "M8Brake", 0) == 1 then
       return "M8Brake"
    elseif Call("*:ControlExists", "VirtualBrake", 0) == 1 then
       return "VirtualBrake"
@@ -460,7 +472,9 @@ function FindTrainBrake()
 end
 
 function FindLocoBrake()
-   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then -- J94
+   if Call("*:ControlExists", "MyEngineBrakeControl", 0) == 1 then  -- FEF-3
+      return "MyEngineBrakeControl"
+   elseif Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then  -- J94
       return "VirtualLocoBrake"
    elseif Call("*:ControlExists", "VirtualEngineBrakeControl", 0) == 1 then
       return "VirtualEngineBrakeControl"
@@ -506,13 +520,17 @@ function FindHandBrake()
 end
 
 function FindBlower()
-   if Call("*:ControlExists", "Blower", 0) == 1 then
+   if Call("*:ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
+      return "BlowerControlValve"
+   elseif Call("*:ControlExists", "Blower", 0) == 1 then
       return "Blower"
    end
 end
 
 function FindDamper()
-   if Call("*:ControlExists", "Damper", 0) == 1 then
+   if Call("*:ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
+      return "FiredoorDamper"
+   elseif Call("*:ControlExists", "Damper", 0) == 1 then
       return "Damper"
    end
 end

@@ -376,6 +376,29 @@ end
 
 -- Steamers
 
+function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
+   if Call("*:ControlExists", "MarsLight", 0) == 1 and
+      Call("*:ControlExists", "WhistlePull", 0) == 1 and
+      Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
+      Call("*:ControlExists", "ReverserClutch", 0) == 1 and
+      Call("*:ControlExists", "MRPSI", 0) == 1 and
+      Call("*:ControlExists", "HideDetail", 0) == 1 and
+      Call("*:ControlExists", "Dynamo", 0) == 1 and
+      Call("*:ControlExists", "WheelAngularSpeed", 0) == 1 and
+      Call("*:ControlExists", "WheelslipDamage", 0) == 1 and
+      Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 and
+      Call("*:ControlExists", "TenderFrontToolbox", 0) == 1 and
+      Call("*:ControlExists", "BlowerControlValve", 0) == 1 and
+      Call("*:ControlExists", "RealSteamChestPressure", 0) == 1 and
+      Call("*:ControlExists", "SludgeRemoverL", 0) == 1 and
+      Call("*:ControlExists", "HTDPressure1s", 0) == 1 and
+      Call("*:ControlExists", "MUvisibility", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("FEF-3 (ADV, Smokebox) detected") end
+      return 1
+   end
+end
+
 function DetectCastle() -- Riviera Line
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1 and
@@ -401,7 +424,7 @@ function DetectCastle() -- Riviera Line
    end
 end
 
-function DetectJ94_ADV_Meshtools() -- Memories of Maerdy
+function DetectJ94_ADV_Meshtools(DisablePopup) -- Memories of Maerdy
    if Call("*:ControlExists", "Headcode1", 0) == 1 and
       Call("*:ControlExists", "Headcode4", 0) == 1 and
       Call("*:ControlExists", "WindowLeft", 0) == 1 and
@@ -414,7 +437,7 @@ function DetectJ94_ADV_Meshtools() -- Memories of Maerdy
       Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
       Call("*:ControlExists", "CabLamp", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "J94 (ADV, Meshtools) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("J94 (ADV, Meshtools) detected") end
       return 1
    end
 end
@@ -820,7 +843,7 @@ function DetectSD70MAC_ATC() -- Academy
       SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "SD70MAC (ATC) detected", 3, 0)
       return 1
    end
-end 
+end
 
 function DetectSD70M() -- Sherman Hill
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
@@ -837,7 +860,7 @@ function DetectSD70M() -- Sherman Hill
       SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "SD70M detected", 3, 0)
       return 1
    end
-end 
+end
 
 function DetectES44DC() -- Stevens Pass, Marias Pass
    if Call("*:GetControlMinimum", "DynamicBrake", 0) == -0.125 and
@@ -913,28 +936,24 @@ end
    
 -- some general detections
 
-function DetectGermanAFB(DisableNote)
+function DetectGermanAFB(DisablePopup)
    if Call("*:ControlExists", "AFB", 0) == 1
    then
-      if not DisableNote then
-         SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "German AFB detected", 3, 0)
-      end
+      if not DisablePopup then DisplayPopup("German AFB detected") end
       return 1
    end
 end
 
-function DetectSteam(DisableNote)
+function DetectSteam(DisablePopup)
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1
    then
-      if not DisableNote then
-         SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Steam detected", 3, 0)
-      end
+      if not DisablePopup then DisplayPopup("Steam detected") end
       return 1
    end
 end
    
-function DetectGenericUS(DisableNote)
+function DetectGenericUS(DisablePopup)
    if Call("*:ControlExists", "RPM", 0) == 1 and
       Call("*:ControlExists", "Ammeter", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -958,14 +977,12 @@ function DetectGenericUS(DisableNote)
       ) and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
-      if not DisableNote then
-         SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Generic US detected", 3, 0)
-      end
+      if not DisablePopup then DisplayPopup("Generic US detected") end
       return 1
    end
 end
 
-function DetectUK() -- MPH and BAR, should be UK, hopefully, used for Gradient
+function DetectGenericUK(DisablePopup) -- MPH and BAR, should be UK, hopefully, used for Gradient
    if Call("*:ControlExists", "SpeedometerMPH", 0) == 1 and
       (
          Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 or
@@ -978,8 +995,17 @@ function DetectUK() -- MPH and BAR, should be UK, hopefully, used for Gradient
          Call("*:ControlExists", "aBrakePipePressureBAR", 0) == 1
       )
    then
+      if not DisablePopup then DisplayPopup("Generic UK detected") end
       return 1
    end
+end
+
+-----------------------------------------------------------
+-------------------  Helper functions  --------------------
+-----------------------------------------------------------
+
+function DisplayPopup(text)
+   SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", text, 3, 0)
 end
 
 -----------------------------------------------------------
