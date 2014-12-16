@@ -37,6 +37,7 @@ function ConfigureOverlay()
    
    StaticValues = {}
    ControlValues = {}
+   ControlValuesFunctions = {}
    ControlValuesModifiers = {}
 
    -- Units
@@ -105,7 +106,7 @@ function ConfigureOverlay()
       ControlValues["BoilerPressure"] = "BoilerPressureGauge"
    end
 
-   if Call("*:ControlExists", "BackPressure") == 1 then  -- FEF-3
+   if Call("*:ControlExists", "BackPressure", 0) == 1 then  -- FEF-3
       ControlValues["BackPressure"] = "BackPressure"
    end
 
@@ -125,16 +126,16 @@ function ConfigureOverlay()
       ControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
    end
 
-   if Call("*:ControlExists", "Voltage", 0) == 1 then
+   if Call("*:ControlExists", "Voltage", 0) == 1 then  -- FEF-3
       ControlValues["Voltage"] = "Voltage"
-   end
-
-   if Call("*:ControlExists", "Ammeter", 0) == 1 then
-      ControlValues["Ammeter"] = "Ammeter"
    end
 
    if Call("*:ControlExists", "RPM", 0) == 1 then
       ControlValues["RPM"] = "RPM"
+   end
+
+   if Call("*:ControlExists", "Ammeter", 0) == 1 then
+      ControlValues["Ammeter"] = "Ammeter"
    end
 
    if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 then
@@ -386,10 +387,6 @@ function ConfigureOverlay()
       ControlValues["ControlValve"] = "ControlValve"
    end
 
-   if Call("*:ControlExists", "TankHeater", 0) == 1 then  -- FEF-3
-      ControlValues["TankHeater"] = "TankHeater"
-   end
-
    if Call("*:ControlExists", "SludgeRemoverL", 0) == 1 then  -- FEF-3
       ControlValues["SludgeRemoverLeft"] = "SludgeRemoverL"
    end
@@ -416,6 +413,10 @@ function ConfigureOverlay()
       ControlValues["AtomizerPressure"] = "AtomizerPressure"
    end
 
+   if Call("*:ControlExists", "TankTemperature", 0) == 1 then  -- FEF-3
+      ControlValues["TankTemperature"] = "TankTemperature"
+   end   
+
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 then
       ControlValues["FireboxDoor"] = "FireboxDoor"
    end
@@ -432,6 +433,10 @@ function ConfigureOverlay()
       ControlValues["Blower"] = "BlowerControlValve"
    elseif Call("*:ControlExists", "Blower", 0) == 1 then
       ControlValues["Blower"] = "Blower"
+   end
+
+   if Call("*:ControlExists", "TankHeater", 0) == 1 then  -- FEF-3
+      ControlValues["TankHeater"] = "TankHeater"
    end
 
    if Call("*:ControlExists", "Atomizer", 0) == 1 then  -- FEF-3
@@ -541,9 +546,23 @@ function ConfigureOverlay()
       ControlValues["Stoking"] = nil
       ControlValues["ExhaustInjectorSteam"] = nil
       ControlValues["ExhaustInjectorWater"] = nil
+      ControlValues["SafetyValve1"] = nil
+      ControlValues["SafetyValve2"] = nil
+      ControlValues["SafetyValve3"] = nil
 
       -- Firebox is 0-5%, make it full range (0-100%)
       ControlValuesModifiers["FireboxMass"] = 20
+      -- BackPressure needs to be converted
+      ControlValuesFunctions["BackPressure"] =
+         function(value)
+            value = value - 0.3
+            if (value < 0) then
+               value = value * 100
+            else
+               value = value * 50
+            end
+            return value
+         end
    end
 
    if DetectJ94_ADV_Meshtools(1) then
@@ -601,7 +620,9 @@ function GetOverlayData()
    -- Control Values loop
    for key, name in pairs(ControlValues) do
       local value = Call("*:GetControlValue", name, 0)
-      if ControlValuesModifiers[key] then
+      if ControlValuesFunctions[key] then
+         value = ControlValuesFunctions[key](value)
+      elseif ControlValuesModifiers[key] then
          value = value * ControlValuesModifiers[key]
       end
       data = data..key..": "..value.."\n"
