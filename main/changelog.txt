@@ -1,3 +1,11 @@
+0.6d
+ - FEF-3 support. Not all controls are in the HUD simply because there
+   is too many of them, but all that are used during normal startup,
+   firing and driving are.
+ - Separate Blowers for J94
+ - Experimental green speed indicator when speed is up to 5 units
+   (mph/kph) below the speed limit.
+
 0.6
  - WARNING: some of my internal configurations have changed a little.
    If you rely on them have a look in the locoss sections.

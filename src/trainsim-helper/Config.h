@@ -1,4 +1,4 @@
-#define VERSION		"0.6c"
+#define VERSION		"0.6d"
 
 #ifdef _DEBUG
 #define SETDATATXT	"C:/Games/Steam/steamapps/common/RailWorks/plugins/trainsim-helper-joystick.txt"

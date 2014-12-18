@@ -142,10 +142,6 @@ function ConfigureOverlay()
       ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureINCHES"
    end
 
-   if Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 then
-      ControlValues["VacuumBrakeChamberPressure"] = "VacuumBrakeChamberPressureINCHES"
-   end
-
    if Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then
       ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressureBAR"
       StaticValues["TrainBrakeCylinderUnits"] = "BAR"
@@ -331,18 +327,6 @@ function ConfigureOverlay()
       ControlValues["LubricatorWarming"] = "LubricatorWarming"
    end
 
-   if Call("*:ControlExists", "RevGearAir", 0) == 1 then  -- FEF-3
-      ControlValues["ReverseGear"] = "RevGearAir"
-   end
-
-   if Call("*:ControlExists", "Defroster", 0) == 1 then  -- FEF-3
-      ControlValues["Defroster"] = "Defroster"
-   end
-
-   if Call("*:ControlExists", "SludgeRemoverR", 0) == 1 then  -- FEF-3
-      ControlValues["SludgeRemoverRight"] = "SludgeRemoverR"
-   end
-
    if Call("*:ControlExists", "Sander", 0) == 1 then  -- FEF-3
       ControlValues["Sander"] = "Sander"
    end
@@ -385,26 +369,6 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "ControlValve", 0) == 1 then  -- FEF-3
       ControlValues["ControlValve"] = "ControlValve"
-   end
-
-   if Call("*:ControlExists", "SludgeRemoverL", 0) == 1 then  -- FEF-3
-      ControlValues["SludgeRemoverLeft"] = "SludgeRemoverL"
-   end
-
-   if Call("*:ControlExists", "BurnerBlowBack", 0) == 1 then  -- FEF-3
-      ControlValues["BurnerBlowBack"] = "BurnerBlowBack"
-   end
-
-   if Call("*:ControlExists", "TankBlowBack", 0) == 1 then  -- FEF-3
-      ControlValues["TankBlowBack"] = "TankBlowBack"
-   end
-
-   if Call("*:ControlExists", "SandHoleCover", 0) == 1 then  -- FEF-3
-      ControlValues["SandHoleCover"] = "SandHoleCover"
-   end
-   
-   if Call("*:ControlExists", "SandBucket", 0) == 1 then  -- FEF-3
-      ControlValues["SandBucket"] = "SandBucket"
    end
    
    -- FireboxMass from the functions
@@ -509,7 +473,9 @@ function ConfigureOverlay()
       ControlValues["Sunflower"] = "AWS"
    end
 
-   if Call("*:ControlExists", "AWSWarnCount", 0) == 1 then
+   if Call("*:ControlExists", "AlerterCountdown", 0) == 1 then
+      ControlValues["AWS"] = "AlerterCountdown"
+   elseif Call("*:ControlExists", "AWSWarnCount", 0) == 1 then
       ControlValues["AWS"] = "AWSWarnCount"
    end
 

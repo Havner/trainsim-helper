@@ -100,7 +100,6 @@ struct SimData {
 	Value<float>		fAmmeter;
 
 	Value<float>		fVacuumBrakePipePressure;
-	Value<float>		fVacuumBrakeChamberPressure;
 	Value<float>		fTrainBrakeCylinderPressure;
 	Value<float>		fLocoBrakeCylinderPressure;
 	Value<float>		fAirBrakePipePressure;
@@ -119,9 +118,6 @@ struct SimData {
 	Value<float>		fLargeEjector;
 	Value<float>		fLubricator;
 	Value<float>		fLubricatorWarming;
-	Value<float>		fReverseGear;
-	Value<float>		fDefroster;
-	Value<float>		fSludgeRemoverRight;
 	Value<float>		fSander;
 	Value<float>		fSanderRear;
 	Value<float>		fAshpanSprinkler;
@@ -134,11 +130,6 @@ struct SimData {
 	Value<float>		fBlowOffCockShutOffLeft;
 	Value<float>		fFeedWaterPumpShutOff;
 	Value<float>		fControlValve;
-	Value<float>		fSludgeRemoverLeft;
-	Value<float>		fBurnerBlowBack;
-	Value<float>		fTankBlowBack;
-	Value<float>		fSandHoleCover;
-	Value<float>		fSandBucket;
 
 	Value<float>		fFireboxMass;
 	Value<float>		fAtomizerPressure;
@@ -342,7 +333,6 @@ int FillData(SimData* data)
 		else if (!strcmp("RPM:", param))						data->nRPM = value;
 		else if (!strcmp("Ammeter:", param))					data->fAmmeter = value;
 		else if (!strcmp("VacuumBrakePipePressure:", param))	data->fVacuumBrakePipePressure = value;
-		else if (!strcmp("VacuumBrakeChamberPressure:", param))	data->fVacuumBrakeChamberPressure = value;
 		else if (!strcmp("TrainBrakeCylinderPressure:", param))	data->fTrainBrakeCylinderPressure = value;
 		else if (!strcmp("LocoBrakeCylinderPressure:", param))	data->fLocoBrakeCylinderPressure = value;
 		else if (!strcmp("AirBrakePipePressure:", param))		data->fAirBrakePipePressure = value;
@@ -361,9 +351,6 @@ int FillData(SimData* data)
 		else if (!strcmp("LargeEjector:", param))				data->fLargeEjector = value;
 		else if (!strcmp("Lubricator:", param))					data->fLubricator = value;
 		else if (!strcmp("LubricatorWarming:", param))			data->fLubricatorWarming = value;
-		else if (!strcmp("ReverseGear:", param))				data->fReverseGear = value;
-		else if (!strcmp("Defroster:", param))					data->fDefroster = value;
-		else if (!strcmp("SludgeRemoverRight:", param))			data->fSludgeRemoverRight = value;
 		else if (!strcmp("Sander:", param))						data->fSander = value;
 		else if (!strcmp("SanderRear:", param))					data->fSanderRear = value;
 		else if (!strcmp("AshpanSprinkler:", param))			data->fAshpanSprinkler = value;
@@ -376,11 +363,6 @@ int FillData(SimData* data)
 		else if (!strcmp("BlowOffCockShutOffLeft:", param))		data->fBlowOffCockShutOffLeft = value;
 		else if (!strcmp("FeedWaterPumpShutOff:", param))		data->fFeedWaterPumpShutOff = value;
 		else if (!strcmp("ControlValve:", param))				data->fControlValve = value;
-		else if (!strcmp("SludgeRemoverLeft:", param))			data->fSludgeRemoverLeft = value;
-		else if (!strcmp("BurnerBlowBack:", param))				data->fBurnerBlowBack = value;
-		else if (!strcmp("TankBlowBack:", param))				data->fTankBlowBack = value;
-		else if (!strcmp("SandHoleCover:", param))				data->fSandHoleCover = value;
-		else if (!strcmp("SandBucket:", param))					data->fSandBucket = value;
 
 		else if (!strcmp("FireboxMass:", param))				data->fFireboxMass = value;
 		else if (!strcmp("AtomizerPressure:", param))			data->fAtomizerPressure = value;
@@ -587,15 +569,17 @@ void RenderOverlay()
 	DWORD speedcolor = white;
 	if (fSpeed < -0.1f)
 		speedcolor = yellow;
-	if (abs(fSpeed) - nSpeedLimit > 0.9f)
+	else if (nSpeedLimit - abs(fSpeed) < -0.9f)
 		speedcolor = red;
+	else if (nSpeedLimit - fSpeed >= -0.9f && nSpeedLimit - fSpeed <= 5.f)
+		speedcolor = whitegreen;
 
 	// countdown color
 	DWORD countdowncolor = white;
-	if (g_fDistance * fModifierDistance <= 1.0)
-		countdowncolor = yellow;
 	if (g_fDistance * fModifierDistance < 0.0)
 		countdowncolor = red;
+	else if (g_fDistance * fModifierDistance <= 1.0)
+		countdowncolor = yellow;
 
 	// boiler color
 	DWORD boilercolor = grey;
@@ -664,7 +648,6 @@ void RenderOverlay()
 		y = DrawString(data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sAirBrakePipeUnits());
 		y = DrawString(data.fLocoBrakeCylinderPressure,		x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sLocoBrakeCylinderUnits());
 		y = DrawString(data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sTrainBrakeCylinderUnits());
-		//y = DrawString(data.fVacuumBrakeChamberPressure,	x+6,	y, whitered, pSmallFont, "Vacuum Chamber: %.1f Inches Hg", data.fVacuumBrakeChamberPressure());
 		y = DrawString(data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f Inches Hg", data.fVacuumBrakePipePressure());
 		y = NextSection(y, &yP, yD);
 		y = DrawString(data.fAmmeter,						x+56,	y, whitered, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
@@ -735,9 +718,6 @@ void RenderOverlay()
 		y = DrawString(data.fAshpanSprinkler,				x+34,	y, white, pSmallFont, "Ashpan Sprinkler: %d %%", (int)(data.fAshpanSprinkler()*100));
 		y = DrawString(data.fSanderRear,					x+61,	y, white, pSmallFont, "Sander Rear: %d %%", (int)(data.fSanderRear()*100));
 		y = DrawString(data.fSander,						x+92,	y, white, pSmallFont, "Sander: %d %%", (int)(data.fSander()*100));
-		//y = DrawString(data.fSludgeRemoverRight,			x+39,	y, white, pSmallFont, "Sludge Remover: %d %%", (int)(data.fSludgeRemoverRight()*100));
-		//y = DrawString(data.fDefroster,						x+81,	y, white, pSmallFont, "Defroster: %d %%", (int)(data.fDefroster()*100));
-		//y = DrawString(data.fReverseGear,					x+55,	y, white, pSmallFont, "Reverse Gear: %d %%", (int)(data.fReverseGear()*100));
 		y = DrawString(data.fLubricatorWarming,				x+20,	y, white, pSmallFont, "Lubricator Warming: %d %%", (int)(data.fLubricatorWarming()*100));
 		y = DrawString(data.fLubricator,					x+76,	y, white, pSmallFont, "Lubricator: %d %%", (int)(data.fLubricator()*100));
 		y = DrawString(data.fLargeEjector,					x+56,	y, white, pSmallFont, "Large Ejector: %d %%", (int)(data.fLargeEjector()*100));
@@ -758,11 +738,6 @@ void RenderOverlay()
 
 	if (!g_bHideSection[10] && data.fFireboxMass)
 	{
-		//y = DrawString(data.fSandBucket,					x+74,	y, white, pSmallFont, "Sand Bucket: %d %%", (int)(data.fSandBucket()*100));
-		//y = DrawString(data.fSandHoleCover,					x+53,	y, white, pSmallFont, "Sand Hole Cover: %d %%", (int)(data.fSandHoleCover()*100));
-		//y = DrawString(data.fTankBlowBack,					x+56,	y, white, pSmallFont, "Tank Blow Back: %d %%", (int)(data.fTankBlowBack()*100));
-		//y = DrawString(data.fBurnerBlowBack,				x+45,	y, white, pSmallFont, "Burner Blow Back: %d %%", (int)(data.fBurnerBlowBack()*100));
-		//y = DrawString(data.fSludgeRemoverLeft,				x+55,	y, white, pSmallFont, "Sludge Remover: %d %%", (int)(data.fSludgeRemoverLeft()*100));
 		y = DrawString(data.fControlValve,					x+74,	y, white, pSmallFont, "Control Valve: %d %%", (int)(data.fControlValve()*100));
 		y = DrawString(data.fFeedWaterPumpShutOff,			x+0,	y, white, pSmallFont, "Feedwater Pump Shut Off: %d %%", (int)(data.fFeedWaterPumpShutOff()*100));
 		y = DrawString(data.fBlowOffCockShutOffLeft,		x+16,	y, white, pSmallFont, "Blow Off Cock Shut Off: %d %%", (int)(data.fBlowOffCockShutOffLeft()*100));
