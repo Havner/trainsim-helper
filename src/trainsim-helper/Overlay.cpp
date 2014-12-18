@@ -569,7 +569,7 @@ void RenderOverlay()
 	DWORD speedcolor = white;
 	if (fSpeed < -0.1f)
 		speedcolor = yellow;
-	else if (nSpeedLimit - abs(fSpeed) < -0.9f)
+	if (nSpeedLimit - abs(fSpeed) < -0.9f)
 		speedcolor = red;
 	else if (nSpeedLimit - fSpeed >= -0.9f && nSpeedLimit - fSpeed <= 5.f)
 		speedcolor = whitegreen;
