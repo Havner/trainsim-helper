@@ -586,7 +586,7 @@ function ReadFile(name)
       local cut = line
       local space = string.find(cut, "%s")
       if space then
-     cut = string.sub(cut, 1, string.find(cut, "%s") - 1)
+         cut = string.sub(cut, 1, string.find(cut, "%s") - 1)
       end
       lines[i] = tonumber(cut)
       i=i+1
@@ -599,10 +599,10 @@ function GetLineValue(lines, line, invert)
    if line and line > 0 then
       local value = lines[line]
       if not value or value < 0.0 or value > 1.0 then
-     return -99999
+         return -99999
       end
       if invert and invert ~= 0 then
-     value = 1.0 - value
+         value = 1.0 - value
       end
       return value
    end
@@ -696,8 +696,8 @@ function SetControlValue(control, value)
    if OnControlValueChange then
       OnControlValueChange(control, 0, value)
    else
-   --if Call("*:ControlExists", control, 0) == 1 then
+      --if Call("*:ControlExists", control, 0) == 1 then
       Call("*:SetControlValue", control, 0, value)
-   --end
+      --end
    end
 end

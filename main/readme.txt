@@ -325,8 +325,9 @@ B. Licence
   - 56xx (VictoryWorks)
   - GWR Steam Motor (VictoryWorks)
   - J94 Memories of Maerdy (MeshTools)
+  - FEF-3 (Smokebox)
 
-  I hope to have FEF-3 in the next version.
+  More to be added after the Steam Christmas sale ;-)
 
   Final note: if the steamer is not on this list it doesn't mean it
   won't work. It will. You just probably won't see all the essential
@@ -635,6 +636,7 @@ A. Acknowledgements
   later. My current Lua_Out editor is heavily based on his program,
   although the current method used here is different.
 
+  Smokebox for his invaluable help with getting the FEF-3 right.
   linuxbox for pointing this new method and for notches implementation.
   nschichan for the idea itself.
 
