@@ -84,6 +84,8 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "MyEngineBrakeControl", 0) == 1 then  -- FEF-3
       ControlValues["LocoBrake"] = "MyEngineBrakeControl"
+   elseif Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then  -- J94
+      ControlValues["LocoBrake"] = "VirtualLocoBrake"
    elseif Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
       ControlValues["LocoBrake"] = "EngineBrakeControl"
    end
@@ -305,10 +307,6 @@ function ConfigureOverlay()
       ControlValues["Generator"] = "Lichtmaschine"
    end
 
-   if Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then
-      ControlValues["SteamBrake"] = "VirtualLocoBrake"
-   end
-   
    if Call("*:ControlExists", "SmallEjectorOnOff", 0) == 1 then
       ControlValues["SmallEjector"] = "SmallEjectorOnOff"
    elseif Call("*:ControlExists", "SmallCompressorOnOff", 0) == 1 then
