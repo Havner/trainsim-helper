@@ -231,6 +231,15 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
+   elseif DetectFEF3_HUD_Smokebox() then
+      -- Ignore emergency values (0.85, 1)
+      TrainBrakeRange = {0, 0.85}
+      -- Disable My* controls, they exist, but don't work in the HUD version
+      ReverserControl = "Reverser"
+      LocoBrakeControl = "EngineBrakeControl"
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
    elseif DetectCastle() then
       -- This loco has VirtualReverser but it doesn't work, override
       ReverserControl = "Reverser"
@@ -629,12 +638,12 @@ end
 function GetControlRange(control)
    if control then
       --if Call("*:ControlExists", control, 0) == 1 then
-      local range = {}
-      range[1] = Call("*:GetControlMinimum", control, 0)
-      range[2] = Call("*:GetControlMaximum", control, 0)
-      if range[1] ~= 0 or range[2] ~= 1 then
-         return range
-      end
+         local range = {}
+         range[1] = Call("*:GetControlMinimum", control, 0)
+         range[2] = Call("*:GetControlMaximum", control, 0)
+         if range[1] ~= 0 or range[2] ~= 1 then
+            return range
+         end
       --end
    end
 end
@@ -697,7 +706,7 @@ function SetControlValue(control, value)
       OnControlValueChange(control, 0, value)
    else
       --if Call("*:ControlExists", control, 0) == 1 then
-      Call("*:SetControlValue", control, 0, value)
+          Call("*:SetControlValue", control, 0, value)
       --end
    end
 end

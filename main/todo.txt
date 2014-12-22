@@ -2,6 +2,7 @@ Next version:
 - Clean up the C++ code, split into classes
 - More generalization in the C++ code and cleaning it a bit
 - Train Length
+- Notches names
 
 Things to consider for the very distant future:
 - Make the overlay display values in the data file it doesn't know about

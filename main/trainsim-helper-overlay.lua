@@ -325,7 +325,7 @@ function ConfigureOverlay()
       ControlValues["LubricatorWarming"] = "LubricatorWarming"
    end
 
-   if Call("*:ControlExists", "Sander", 0) == 1 then  -- FEF-3
+   if Call("*:ControlExists", "Sander", 0) == 1 then
       ControlValues["Sander"] = "Sander"
    end
 
@@ -502,7 +502,7 @@ function ConfigureOverlay()
    -- detected but it should not be displayed. E.g. it's internal to the
    -- implementation or is basically useless for this loco.
 
-   if DetectFEF3_ADV_Smokebox(true) then
+   if DetectFEF3_ADV_Smokebox(true) or DetectFEF3_HUD_Smokebox(true) then
       -- Disable the internal values
       ControlValues["SteamChestPressure"] = nil
       ControlValues["TrainBrakeCylinderPressure"] = nil

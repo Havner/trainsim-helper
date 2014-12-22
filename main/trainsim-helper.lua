@@ -379,6 +379,8 @@ end
 function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("*:ControlExists", "MarsLight", 0) == 1 and
       Call("*:ControlExists", "WhistlePull", 0) == 1 and
+      Call("*:ControlExists", "SanderLever", 0) == 1 and
+      Call("*:ControlExists", "FWPump", 0) == 1 and
       Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
       Call("*:ControlExists", "ReverserClutch", 0) == 1 and
       Call("*:ControlExists", "MRPSI", 0) == 1 and
@@ -395,6 +397,31 @@ function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
       Call("*:ControlExists", "MUvisibility", 0) == 1
    then
       if not DisablePopup then DisplayPopup("FEF-3 (ADV, Smokebox) detected") end
+      return 1
+   end
+end
+
+function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
+   if Call("*:ControlExists", "MarsLight", 0) == 1 and
+      Call("*:ControlExists", "WhistlePull", 0) == 0 and
+      Call("*:ControlExists", "SanderLever", 0) == 0 and
+      Call("*:ControlExists", "FWPump", 0) == 1 and
+      Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
+      Call("*:ControlExists", "ReverserClutch", 0) == 1 and
+      Call("*:ControlExists", "MRPSI", 0) == 1 and
+      Call("*:ControlExists", "HideDetail", 0) == 1 and
+      Call("*:ControlExists", "Dynamo", 0) == 1 and
+      Call("*:ControlExists", "WheelAngularSpeed", 0) == 1 and
+      Call("*:ControlExists", "WheelslipDamage", 0) == 1 and
+      Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 and
+      Call("*:ControlExists", "TenderFrontToolbox", 0) == 1 and
+      Call("*:ControlExists", "BlowerControlValve", 0) == 1 and
+      Call("*:ControlExists", "RealSteamChestPressure", 0) == 1 and
+      Call("*:ControlExists", "SludgeRemoverL", 0) == 1 and
+      Call("*:ControlExists", "HTDPressure1s", 0) == 1 and
+      Call("*:ControlExists", "MUvisibility", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("FEF-3 (HUD, Smokebox) detected") end
       return 1
    end
 end
