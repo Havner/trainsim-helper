@@ -683,4 +683,4 @@ B. Licence
   is not mine as it didn't come with a License note.
 
 Lukasz 'Havner' Pawelczyk
-havner@gmail.com
+havner at gmail dot com

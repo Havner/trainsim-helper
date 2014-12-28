@@ -1,4 +1,5 @@
 Next version:
+- Add AWS/DSD sound alerter
 - Clean up the C++ code, split into classes
 - More generalization in the C++ code and cleaning it a bit
 - Train Length
