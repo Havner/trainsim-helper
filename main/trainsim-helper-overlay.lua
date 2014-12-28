@@ -524,6 +524,11 @@ function ConfigureOverlay()
       -- It has left and right dampers
       ControlValues["Damper"] = nil
 
+   elseif DetectClass37_Thomson() then
+      -- The internals are delayed significantly, show levers
+      ControlValues["Throttle"] = "VirtualThrottle"
+      ControlValues["TrainBrake"] = "VirtualBrake"
+
    elseif DetectGermanAFB(true) then
       TextVigilAlarm = "Sifa"
 
