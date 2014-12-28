@@ -1,3 +1,12 @@
+0.6e
+ - Support for FEF-3 HUD version, sorry, forgot previously.
+ - Further modifications in a way the overlay is configured
+   (similar to the joystick part, autodetections first, then locos).
+ - Range added to all GenerateEqualNotches calls, even the {0,1} cases.
+ - Minor changes here and there.
+ - README updated again. I remind you that I constantly update it when
+   adding some new functionality or changing something substantially.
+
 0.6d
  - FEF-3 support. Not all controls are in the HUD simply because there
    is too many of them, but all that are used during normal startup,

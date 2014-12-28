@@ -8,19 +8,19 @@
 --  Can be used for both, Overlay and Joystick modules  ---
 -----------------------------------------------------------
 
-function DetectClass365() -- London - Peterborough
+function DetectClass365(DisablePopup) -- London - Peterborough
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "Thingy", 0) == 1 and
       Call("*:ControlExists", "SpeedTriangle", 0) == 1 and
       Call("*:ControlExists", "SpeedTarget", 0) == 1 and
       Call("*:ControlExists", "DashLights", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 365 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 365 detected") end
       return 1
    end
 end
 
-function DetectHST() -- London - Peterborough, Riviera Line
+function DetectHST(DisablePopup) -- London - Peterborough, Riviera Line
    if Call("*:ControlExists", "RpmDial", 0) == 1 and
       Call("*:ControlExists", "HandBrakeOff", 0) == 1 and
       Call("*:ControlExists", "Headlightsmarker", 0) == 1 and
@@ -29,12 +29,12 @@ function DetectHST() -- London - Peterborough, Riviera Line
       Call("*:ControlExists", "CompressorState", 0) == 1 and
       Call("*:ControlExists", "EmergencyValve", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "HST detected", 3, 0)
+      if not DisablePopup then DisplayPopup("HST detected") end
       return 1
    end
 end
 
-function DetectClass801() -- London - Peterborough
+function DetectClass801(DisablePopup) -- London - Peterborough
    if Call("*:ControlExists", "SpeedoUnits", 0) == 1 and
       Call("*:ControlExists", "SpeedoTens", 0) == 1 and
       Call("*:ControlExists", "SpeedoHundreds", 0) == 1 and
@@ -50,12 +50,12 @@ function DetectClass801() -- London - Peterborough
       Call("*:ControlExists", "ReadingLight", 0) == 1 and
       Call("*:ControlExists", "DeskIllumination", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 801 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 801 detected") end
       return 1
    end
 end   
 
-function DetectClass375Class377() -- London - Faversham, London - Brighton
+function DetectClass375Class377(DisablePopup) -- London - Faversham, London - Brighton
    if Call("*:ControlExists", "Buzzer", 0) == 1 and
       Call("*:ControlExists", "BrakeHold", 0) == 1 and
       Call("*:ControlExists", "CarSlider", 0) == 1 and
@@ -65,12 +65,12 @@ function DetectClass375Class377() -- London - Faversham, London - Brighton
       Call("*:ControlExists", "SpeedSetUp", 0) == 1 and
       Call("*:ControlExists", "SideBlind", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 375/377 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 375/377 detected") end
       return 1
    end
 end
 
-function DetectClass450() -- London - Brighton
+function DetectClass450(DisablePopup) -- London - Brighton
    if Call("*:ControlExists", "SimulationJustSetup", 0) == 1 and
       Call("*:ControlExists", "CoachID", 0) == 1 and
       Call("*:ControlExists", "RegenerativeSound", 0) == 1 and
@@ -78,12 +78,12 @@ function DetectClass450() -- London - Brighton
       Call("*:ControlExists", "InputDisabler", 0) == 1 and
       Call("*:ControlExists", "SignalBell", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 450 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 450 detected") end
       return 1
    end
 end
 
-function DetectClass395() -- London - Faversham
+function DetectClass395(DisablePopup) -- London - Faversham
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:GetControlMinimum", "ThrottleAndBrake", 0) == -1.5 and
       Call("*:ControlExists", "PanUpShoesDown", 0) == 1 and
@@ -91,12 +91,12 @@ function DetectClass395() -- London - Faversham
       Call("*:ControlExists", "DC", 0) == 1 and
       Call("*:ControlExists", "CTRL", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 395 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 395 detected") end
       return 1
    end
 end
 
-function DetectClass360() -- London - Ipswich
+function DetectClass360(DisablePopup) -- London - Ipswich
    if Call("*:ControlExists", "LineVolts", 0) == 1 and
       Call("*:ControlExists", "CoachType", 0) == 1 and
       Call("*:ControlExists", "CamInCab", 0) == 1 and
@@ -110,12 +110,12 @@ function DetectClass360() -- London - Ipswich
       Call("*:ControlExists", "Instruments", 0) == 1 and
       Call("*:ControlExists", "Fuerza", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 360 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 360 detected") end
       return 1
    end
 end
 
-function DetectClass90_ADV_AP() -- London - Ipswich
+function DetectClass90_ADV_AP(DisablePopup) -- London - Ipswich
    if Call("*:ControlExists", "VisualAids", 0) == 1 and
       Call("*:ControlExists", "CabAmbience", 0) == 1 and
       Call("*:ControlExists", "AirCon", 0) == 1 and
@@ -128,12 +128,12 @@ function DetectClass90_ADV_AP() -- London - Ipswich
       Call("*:ControlExists", "DSDPedal", 0) == 1 and
       Call("*:ControlExists", "VirtualEngineBrakeControl", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 90 (ADV, AP) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 90 (ADV, AP) detected") end
       return 1
    end
 end
 
-function DetectMK3DVT_ADV_AP() -- London - Ipswich
+function DetectMK3DVT_ADV_AP(DisablePopup) -- London - Ipswich
    if Call("*:ControlExists", "VisualAids", 0) == 1 and
       Call("*:ControlExists", "CabAmbience", 0) == 1 and
       Call("*:ControlExists", "AirCon", 0) == 1 and
@@ -146,12 +146,12 @@ function DetectMK3DVT_ADV_AP() -- London - Ipswich
       Call("*:ControlExists", "DSDPedal", 0) == 1 and
       Call("*:ControlExists", "DVTTraction", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "MK3 DVT (ADV, AP) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("MK3 DVT (ADV, AP) detected") end
       return 1
    end
 end
 
-function DetectClass158() -- Liverpool - Manchester
+function DetectClass158(DisablePopup) -- Liverpool - Manchester
    if Call("*:ControlExists", "SptEngineStartLight", 0) == 1 and
       Call("*:ControlExists", "VirtualBrake", 0) == 1 and
       Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
@@ -165,12 +165,12 @@ function DetectClass158() -- Liverpool - Manchester
       Call("*:ControlExists", "AWSReady", 0) == 1 and
       Call("*:ControlExists", "AWSTesting", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 158 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 158 detected") end
       return 1
    end
 end   
 
-function DetectClass101() -- Liverpool - Manchester
+function DetectClass101(DisablePopup) -- Liverpool - Manchester
    if Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "ReservoirPressurePSI", 0) == 1 and
       Call("*:ControlExists", "VacuumChamberPressureINCHES", 0) == 1 and
@@ -186,12 +186,12 @@ function DetectClass101() -- Liverpool - Manchester
       Call("*:ControlExists", "CabLight", 0) == 1 and
       Call("*:ControlExists", "InstrumentLights", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 101 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 101 detected") end
       return 1
    end
 end   
 
-function DetectClass143() -- Riviera Line
+function DetectClass143(DisablePopup) -- Riviera Line
    if Call("*:ControlExists", "RPM", 0) == 1 and
       Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 and
       Call("*:ControlExists", "VirtualBrake", 0) == 1 and
@@ -205,12 +205,12 @@ function DetectClass143() -- Riviera Line
       Call("*:ControlExists", "AWSReady", 0) == 1 and
       Call("*:ControlExists", "AWSTesting", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 143 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 143 detected") end
       return 1
    end
 end
 
-function DetectClass35() -- Riviera Line
+function DetectClass35(DisablePopup) -- Riviera Line
    if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
       Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
       Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 and
@@ -221,12 +221,12 @@ function DetectClass35() -- Riviera Line
       Call("*:ControlExists", "InstrumentLights", 0) == 1 and
       Call("*:ControlExists", "Pasty", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 35 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 35 detected") end
       return 1
    end
 end
 
-function DetectClass33() -- West Somerset Railway
+function DetectClass33(DisablePopup) -- West Somerset Railway
    if Call("*:ControlExists", "EQReservoirPressure", 0) == 1 and
       Call("*:ControlExists", "SpeedometerMPH", 0) == 1 and
       Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
@@ -240,12 +240,12 @@ function DetectClass33() -- West Somerset Railway
       Call("*:ControlExists", "AWS", 0) == 1 and
       Call("*:ControlExists", "Panel", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 33 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 33 detected") end
       return 1
    end
 end
 
-function DetectClass03() -- West Somerset Railway addon
+function DetectClass03(DisablePopup) -- West Somerset Railway addon
    if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
       Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
       Call("*:ControlExists", "OilPressure", 0) == 1 and
@@ -256,12 +256,12 @@ function DetectClass03() -- West Somerset Railway addon
       Call("*:ControlExists", "GearLever", 0) == 1 and
       Call("*:ControlExists", "CabLight", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 03 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 03 detected") end
       return 1
    end
 end
 
-function DetectClass47() -- West Somerset Railway addon
+function DetectClass47(DisablePopup) -- West Somerset Railway addon
    if Call("*:ControlExists", "TractiveEffort", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -275,12 +275,12 @@ function DetectClass47() -- West Somerset Railway addon
       Call("*:ControlExists", "DoorsOpenClose", 0) == 1 and
       Call("*:ControlExists", "CabLight", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 47 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 47 detected") end
       return 1
    end
 end
 
-function DetectClass117() -- West Somerset Railway addon
+function DetectClass117(DisablePopup) -- West Somerset Railway addon
    if Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
       Call("*:ControlExists", "GearLever", 0) == 1 and
       Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
@@ -295,12 +295,12 @@ function DetectClass117() -- West Somerset Railway addon
       Call("*:ControlExists", "AWSWarnCount", 0) == 1 and
       Call("*:ControlExists", "CabLight", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 117 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 117 detected") end
       return 1
    end
 end
 
-function DetectClass321_AP()
+function DetectClass321_AP(DisablePopup)
    if Call("*:ControlExists", "desind", 0) == 1 and
       Call("*:ControlExists", "Destination", 0) == 1 and
       Call("*:ControlExists", "Bogie1Flat", 0) == 1 and
@@ -316,12 +316,12 @@ function DetectClass321_AP()
       Call("*:ControlExists", "VCB", 0) == 1 and
       Call("*:ControlExists", "TPWS", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 321 (AP) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 321 (AP) detected") end
       return 1
    end
 end
 
-function DetectClass156_Oovee()
+function DetectClass156_Oovee(DisablePopup)
    if Call("*:ControlExists", "VirtualRPM", 0) == 1 and
       Call("*:ControlExists", "VirtualFluid", 0) == 1 and
       Call("*:ControlExists", "Surge", 0) == 1 and
@@ -333,12 +333,12 @@ function DetectClass156_Oovee()
       Call("*:ControlExists", "HeaterFan", 0) == 1 and
       Call("*:ControlExists", "SunblindLeft", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 156 (Oovee) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 156 (Oovee) detected") end
       return 1
    end
 end
 
-function DetectClass37_Thomson()
+function DetectClass37_Thomson(DisablePopup)
    if Call("*:ControlExists", "ScenarioRunning", 0) == 1 and
       Call("*:ControlExists", "VirtualRPM", 0) == 1 and
       Call("*:ControlExists", "S1", 0) == 1 and
@@ -350,12 +350,12 @@ function DetectClass37_Thomson()
       Call("*:ControlExists", "retbkey", 0) == 1 and
       Call("*:ControlExists", "nextsectionclear", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 37/4 (Thomson) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 37/4 (Thomson) detected") end
       return 1
    end
 end
 
-function DetectClass170() -- Academy
+function DetectClass170(DisablePopup) -- Academy
    if Call("*:ControlExists", "Buzzer", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 and
@@ -369,7 +369,7 @@ function DetectClass170() -- Academy
       Call("*:ControlExists", "InteriorCamera", 0) == 1 and
       Call("*:ControlExists", "Loco", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Class 170 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Class 170 detected") end
       return 1
    end
 end
@@ -380,6 +380,8 @@ function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("*:ControlExists", "MarsLight", 0) == 1 and
       Call("*:ControlExists", "WhistlePull", 0) == 1 and
       Call("*:ControlExists", "SanderLever", 0) == 1 and
+      Call("*:ControlExists", "RegulatorLever", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeHandle", 0) == 1 and
       Call("*:ControlExists", "FWPump", 0) == 1 and
       Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
       Call("*:ControlExists", "ReverserClutch", 0) == 1 and
@@ -405,6 +407,8 @@ function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("*:ControlExists", "MarsLight", 0) == 1 and
       Call("*:ControlExists", "WhistlePull", 0) == 0 and
       Call("*:ControlExists", "SanderLever", 0) == 0 and
+      Call("*:ControlExists", "RegulatorLever", 0) == 0 and
+      Call("*:ControlExists", "TrainBrakeHandle", 0) == 0 and
       Call("*:ControlExists", "FWPump", 0) == 1 and
       Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
       Call("*:ControlExists", "ReverserClutch", 0) == 1 and
@@ -426,7 +430,7 @@ function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
    end
 end
 
-function DetectCastle() -- Riviera Line
+function DetectCastle(DisablePopup) -- Riviera Line
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1 and
       Call("*:ControlExists", "SteamFlow", 0) == 1 and
@@ -446,7 +450,7 @@ function DetectCastle() -- Riviera Line
       Call("*:ControlExists", "SeatFireman", 0) == 1 and
       Call("*:ControlExists", "CastleThunder", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Castle detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Castle detected") end
       return 1
    end
 end
@@ -469,7 +473,7 @@ function DetectJ94_ADV_Meshtools(DisablePopup) -- Memories of Maerdy
    end
 end
 
-function Detect56xx_VictoryWorks() -- Memories of Maerdy addon
+function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1 and
       Call("*:ControlExists", "PantographControl", 0) == 1 and
@@ -483,14 +487,14 @@ function Detect56xx_VictoryWorks() -- Memories of Maerdy addon
       Call("*:ControlExists", "ToolBoxLid", 0) == 1 and
       Call("*:ControlExists", "SafetyFeather", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "56xx (VictoryWorks) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("56xx (VictoryWorks) detected") end
       return 1
    end
 end
 
 -- German
 
-function DetectBR294() -- Munich - Augsburg, Hamburg - Hanover
+function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 0 and
       Call("*:ControlExists", "LZBEnable", 0) == 0 and
@@ -508,12 +512,12 @@ function DetectBR294() -- Munich - Augsburg, Hamburg - Hanover
       Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 0 and
       Call("*:ControlExists", "DoorsOpenClose", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "BR294 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("BR294 detected") end
       return 1
    end
 end
 
-function DetectBR101() -- Munich - Augsburg, Hamburg - Hanover
+function DetectBR101(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 250 and
@@ -532,12 +536,12 @@ function DetectBR101() -- Munich - Augsburg, Hamburg - Hanover
       Call("*:ControlExists", "HandBrake", 0) == 1 and
       Call("*:ControlExists", "Tilt", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "BR101 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("BR101 detected") end
       return 1
    end
 end
 
-function DetectBR426() -- Munich - Garmisch
+function DetectBR426(DisablePopup) -- Munich - Garmisch
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 300 and
@@ -556,12 +560,12 @@ function DetectBR426() -- Munich - Garmisch
       Call("*:ControlExists", "HandBrake", 0) == 1 and
       Call("*:ControlExists", "Tilt", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "BR426 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("BR426 detected") end
       return 1
    end
 end
 
-function DetectICE2() -- Hamburg - Hanover
+function DetectICE2(DisablePopup) -- Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 300 and
@@ -580,12 +584,12 @@ function DetectICE2() -- Hamburg - Hanover
       Call("*:ControlExists", "HandBrake", 0) == 1 and
       Call("*:ControlExists", "Tilt", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ICE 2 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ICE 2 detected") end
       return 1
    end
 end
 
-function DetectICE2Cab() -- Hamburg - Hanover
+function DetectICE2Cab(DisablePopup) -- Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 300 and
@@ -604,12 +608,12 @@ function DetectICE2Cab() -- Hamburg - Hanover
       Call("*:ControlExists", "HandBrake", 0) == 1 and
       Call("*:ControlExists", "Tilt", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ICE 2 CabCar detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ICE 2 CabCar detected") end
       return 1
    end
 end
 
-function DetectICE3() -- Hamburg - Hanover
+function DetectICE3(DisablePopup) -- Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 350 and
@@ -628,12 +632,12 @@ function DetectICE3() -- Hamburg - Hanover
       Call("*:ControlExists", "HandBrake", 0) == 0 and
       Call("*:ControlExists", "Tilt", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ICE 3 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ICE 3 detected") end
       return 1
    end
 end
 
-function DetectICET() -- Hamburg - Hanover
+function DetectICET(DisablePopup) -- Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 350 and
@@ -652,12 +656,12 @@ function DetectICET() -- Hamburg - Hanover
       Call("*:ControlExists", "HandBrake", 0) == 1 and
       Call("*:ControlExists", "Tilt", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ICE T detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ICE T detected") end
       return 1
    end
 end
 
-function DetectBR189() -- Academy
+function DetectBR189(DisablePopup) -- Academy
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 1 and
       Call("*:GetControlMaximum", "VSoll", 0) == 140 and
@@ -679,14 +683,14 @@ function DetectBR189() -- Academy
       Call("*:ControlExists", "CabDirection", 0) == 1 and
       Call("*:ControlExists", "PowerBar", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "BR189 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("BR189 detected") end
       return 1
    end
 end
 
 -- US
 
-function DetectGP20_ADV_Reppo() -- Donner Pass addon
+function DetectGP20_ADV_Reppo(DisablePopup) -- Donner Pass addon
    if Call("*:ControlExists", "Pitch", 0) == 1 and
       Call("*:ControlExists", "PositionIndicatorSW", 0) == 1 and
       Call("*:ControlExists", "Alerta", 0) == 1 and
@@ -697,12 +701,12 @@ function DetectGP20_ADV_Reppo() -- Donner Pass addon
       Call("*:ControlExists", "AutoSanderDelay", 0) == 1 and
       Call("*:ControlExists", "PcOpen", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "GP20 (ADV, Reppo) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("GP20 (ADV, Reppo) detected") end
       return 1
    end
 end
 
-function DetectSD45_DTM() -- Donner Pass addon
+function DetectSD45_DTM(DisablePopup) -- Donner Pass addon
    if Call("*:ControlExists", "Driven", 0) == 1 and
       Call("*:ControlExists", "FrontLights", 0) == 1 and
       Call("*:ControlExists", "RearLights", 0) == 1 and
@@ -715,12 +719,12 @@ function DetectSD45_DTM() -- Donner Pass addon
       Call("*:ControlExists", "ClassLights", 0) == 1 and
       Call("*:ControlExists", "Gyralight", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "SD45 (DTM) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("SD45 (DTM) detected") end
       return 1
    end
 end
 
-function DetectGE44_DTM() -- Donner Pass addon
+function DetectGE44_DTM(DisablePopup) -- Donner Pass addon
    if Call("*:ControlExists", "EngineStart", 0) == 1 and
       Call("*:ControlExists", "EngineStop", 0) == 0 and
       Call("*:ControlExists", "Mirrors_Front", 0) == 1 and
@@ -733,12 +737,12 @@ function DetectGE44_DTM() -- Donner Pass addon
       Call("*:ControlExists", "GageLights", 0) == 1 and
       Call("*:ControlExists", "CabHeater", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "GE44 (DTM) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("GE44 (DTM) detected") end
       return 1
    end
 end
 
-function DetectCabCar() -- Pacific Surfliner and its addons
+function DetectCabCar(DisablePopup) -- Pacific Surfliner and its addons
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -750,12 +754,12 @@ function DetectCabCar() -- Pacific Surfliner and its addons
       Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 1 and
       Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "CabCar detected", 3, 0)
+      if not DisablePopup then DisplayPopup("CabCar detected") end
       return 1
    end
 end
 
-function DetectF59PHI() -- Pacific Surfliner and its addon
+function DetectF59PHI(DisablePopup) -- Pacific Surfliner and its addon
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -769,12 +773,12 @@ function DetectF59PHI() -- Pacific Surfliner and its addon
       Call("*:ControlExists", "VisorMiddle", 0) == 0 and
       Call("*:ControlExists", "VisorRight", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "F59PHI detected", 3, 0)
+      if not DisablePopup then DisplayPopup("F59PHI detected") end
       return 1
    end
 end
 
-function DetectF59PH() -- Pacific Surfliner addon
+function DetectF59PH(DisablePopup) -- Pacific Surfliner addon
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -787,12 +791,12 @@ function DetectF59PH() -- Pacific Surfliner addon
       Call("*:ControlExists", "VisorMiddle", 0) == 1 and
       Call("*:ControlExists", "VisorRight", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "F59PH detected", 3, 0)
+      if not DisablePopup then DisplayPopup("F59PH detected") end
       return 1
    end
 end
 
-function DetectACS64() -- New York - New Haven
+function DetectACS64(DisablePopup) -- New York - New Haven
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "ATCCutIn", 0) == 1 and
       Call("*:ControlExists", "TimeToPenalty", 0) == 1 and
@@ -806,12 +810,12 @@ function DetectACS64() -- New York - New Haven
       Call("*:ControlExists", "TractiveEffortKLBF", 0) == 1 and
       Call("*:ControlExists", "SigModeACSES", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ACS64 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ACS64 detected") end
       return 1
    end
 end
 
-function DetectAcela() -- New York - New Haven
+function DetectAcela(DisablePopup) -- New York - New Haven
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 0 and
       Call("*:ControlExists", "ATCCutIn", 0) == 1 and
       Call("*:ControlExists", "TimeToPenalty", 0) == 1 and
@@ -827,12 +831,12 @@ function DetectAcela() -- New York - New Haven
       Call("*:ControlExists", "SpeedoGuide", 0) == 1 and
       Call("*:ControlExists", "DestJoy", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "Acela detected", 3, 0)
+      if not DisablePopup then DisplayPopup("Acela detected") end
       return 1
    end
 end   
 
-function DetectM8() -- New York - New Haven
+function DetectM8(DisablePopup) -- New York - New Haven
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "ATCCutIn", 0) == 1 and
       Call("*:ControlExists", "TimeToPenalty", 0) == 1 and
@@ -846,12 +850,12 @@ function DetectM8() -- New York - New Haven
       Call("*:ControlExists", "PowerOverhead", 0) == 1 and
       Call("*:ControlExists", "MotorVolume", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "M8 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("M8 detected") end
       return 1
    end
 end   
 
-function DetectSD70MAC_ATC() -- Academy
+function DetectSD70MAC_ATC(DisablePopup) -- Academy
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "ATCCutIn", 0) == 1 and
       Call("*:ControlExists", "TimeToPenalty", 0) == 1 and
@@ -867,12 +871,12 @@ function DetectSD70MAC_ATC() -- Academy
       Call("*:ControlExists", "AirCompressor", 0) == 1 and
       Call("*:ControlExists", "CurrentAmtrakSignal", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "SD70MAC (ATC) detected", 3, 0)
+      if not DisablePopup then DisplayPopup("SD70MAC (ATC) detected") end
       return 1
    end
 end
 
-function DetectSD70M() -- Sherman Hill
+function DetectSD70M(DisablePopup) -- Sherman Hill
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -884,12 +888,12 @@ function DetectSD70M() -- Sherman Hill
       Call("*:ControlExists", "StepsLight", 0) == 1 and
       Call("*:ControlExists", "EqReservoirPressurePSI", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "SD70M detected", 3, 0)
+      if not DisablePopup then DisplayPopup("SD70M detected") end
       return 1
    end
 end
 
-function DetectES44DC() -- Stevens Pass, Marias Pass
+function DetectES44DC(DisablePopup) -- Stevens Pass, Marias Pass
    if Call("*:GetControlMinimum", "DynamicBrake", 0) == -0.125 and
       Call("*:ControlExists", "UnitNumber", 0) == 1 and
       Call("*:ControlExists", "G_Speedo", 0) == 1 and
@@ -902,12 +906,12 @@ function DetectES44DC() -- Stevens Pass, Marias Pass
       Call("*:ControlExists", "MAIN_units", 0) == 1 and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ES44DC detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ES44DC detected") end
       return 1
    end
 end
 
-function DetectC449W() -- Donner Pass
+function DetectC449W(DisablePopup) -- Donner Pass
    if Call("*:GetControlMaximum", "Ammeter", 0) == 1800 and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "CompressorState", 0) == 1 and
@@ -917,12 +921,12 @@ function DetectC449W() -- Donner Pass
       Call("*:ControlExists", "TrackDetect1", 0) == 1 and
       Call("*:ControlExists", "TrackDetect2", 0) == 1
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "C44-9W detected", 3, 0)
+      if not DisablePopup then DisplayPopup("C44-9W detected") end
       return 1
    end
 end
 
-function DetectES44AC() -- Sherman Hill, Norfolk Southern
+function DetectES44AC(DisablePopup) -- Sherman Hill, Norfolk Southern
    if Call("*:GetControlMinimum", "DynamicBrake", 0) == 0 and
       Call("*:ControlExists", "UnitNumber", 0) == 1 and
       Call("*:ControlExists", "G_Speedo", 0) == 1 and
@@ -935,12 +939,12 @@ function DetectES44AC() -- Sherman Hill, Norfolk Southern
       Call("*:ControlExists", "MAIN_units", 0) == 1 and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "ES44AC detected", 3, 0)
+      if not DisablePopup then DisplayPopup("ES44AC detected") end
       return 1
    end
 end
 
-function DetectF45() -- Marias Pass
+function DetectF45(DisablePopup) -- Marias Pass
    if Call("*:GetControlMaximum", "RPM", 0) == 1050 and
       Call("*:ControlExists", "Strobe", 0) == 1 and
       Call("*:ControlExists", "RPM", 0) == 1 and
@@ -956,7 +960,7 @@ function DetectF45() -- Marias Pass
       Call("*:ControlExists", "Sander", 0) == 1 and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
-      SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", "F45 detected", 3, 0)
+      if not DisablePopup then DisplayPopup("F45 detected") end
       return 1
    end
 end

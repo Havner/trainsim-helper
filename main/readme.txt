@@ -468,9 +468,11 @@ B. Licence
 
 13. Advanced configuration / custom locos
 
-  It is possible to customize controls per loco. There is no simple
-  way to detect a loco you are driving though. I use a unique set of
-  ControlValues a loco has to recognize it. See the example functions
+  a) Loco detection
+
+  It is possible to customize controls/olverlay per loco. There is no
+  simple way to detect a loco you are driving though. I use a unique set
+  of ControlValues a loco has to recognize it. See the example functions
   in the trainsim-helper.lua script:
 
   function DetectClass365()
@@ -483,14 +485,17 @@ B. Licence
   included Data Extractor instead of RW_Tools. It's output should be
   easier to read.
 
-  Then in the ConfigureJoystick() you can customize settings for this
-  specific loco. I've added few examples.
+  b) Joystick configuration
+
+  Then in the ConfigureJoystick() in the trainsim-helper-joystick.lua
+  script you can customize settings for this specific loco. See the
+  already configured locos for examples.
 
   Worth noting is that for a control to work it has to have those
   values set:
   *Line         (to know where to take the joystick data from)
   *Control      (to know which variable in the sim to control)
-  *Range        (will be autodetected, you can override it)
+  *Range        (will be autodetected, you can override it though)
 
   Those are optional:
   *Invert       (self explanatory)
@@ -522,13 +527,38 @@ B. Licence
   GenerateEqualNotches(5,r) for r = {-1,1} will give:
   {-1, -0.5, 0, 0.5, 1}
 
-  You can also configure the overlay a little in the
-  trainsim-helper-overlay.lua script.
-  You can redefine warning texts and set UK Gradient format
-  (1:XXX). Those things can be set globally or per loco using the same
-  loco detection functions as described above.
+  c) Overlay configuration
 
-  In summary:
+  Similarly to the controls/joystick you can also configure the
+  overlay a little in the trainsim-helper-overlay.lua script in the
+  ConfigureOverlay() function.
+
+  You can:
+  - redefine warning texts
+  - set the UK Gradient format (1:XXX)
+
+  Those things can be set globally or per loco using the same loco
+  detection functions as described above.
+
+  For locos you can additionally modify autodetected values to be
+  displayed. By default I try to autodetect and display as much as
+  possible. The exception are the controls (the ones displayed in
+  blue) where I only detect the low-level internal values to see what is
+  actually happening to the engine under the hood when it's controlled.
+
+  If you want to further fine-tune that you can override everything that
+  has been detected per loco. E.g.:
+  - disable some control from being displayed
+  - change the ControlValue for a specific control
+
+  There are few locos configured so have a look there for
+  examples. For some locos (e.g. FEF-3) displaying low-level values
+  makes little sense so you can choose what to display instead. In J94
+  I disable the Damper, as this locos has 2 separate Dampers and
+  displaying all 3 values makes little sense.
+
+  d) In summary:
+
   - trainsim-helper.lua: loco detections and main frame update function.
   - trainsim-helper-overlay.lua: Overlay configuration an implementation.
   - trainsim-helper-joystick.lua: Joystick configuration an implementation.

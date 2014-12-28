@@ -19,16 +19,6 @@ function ConfigureOverlay()
    -- Set UK gradient format. Can be set per loco.
    --GradientUK = 1
 
-   -- Override defaults for custom locos. Detect functions are in the main script.
-
-   if DetectGermanAFB(true) then
-      TextVigilAlarm = "Sifa"
-
-   elseif DetectGenericUK(true) then
-      GradientUK = 1
-
-   end
-
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
    -----------------------------------------------------------
@@ -48,7 +38,8 @@ function ConfigureOverlay()
       StaticValues["Units"] = "K"
    end
 
-   -- Loco's controls
+   -- Loco's controls, those are mostly low-level values so one can see what is happening
+   -- under the hood. They can be overriden with high-level ones per loco when needed.
 
    if Call("*:ControlExists", "SpeedSet", 0) == 1 then                 -- Class 90 AP
       ControlValues["TargetSpeed"] = "SpeedSet"
@@ -60,9 +51,7 @@ function ConfigureOverlay()
       ControlValues["TargetSpeed"] = "TargetSpeed"
    end
 
-   if Call("*:ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
-      ControlValues["Reverser"] = "MyReverser"
-   elseif Call("*:ControlExists", "Reverser", 0) == 1 then
+   if Call("*:ControlExists", "Reverser", 0) == 1 then
       ControlValues["Reverser"] = "Reverser"
    end
 
@@ -70,23 +59,15 @@ function ConfigureOverlay()
       ControlValues["GearLever"] = "GearLever"
    end
    
-   if Call("*:ControlExists", "RegulatorLever", 0) == 1 then  -- FEF-3
-      ControlValues["Throttle"] = "RegulatorLever"
-   elseif Call("*:ControlExists", "Regulator", 0) == 1 then
+   if Call("*:ControlExists", "Regulator", 0) == 1 then
       ControlValues["Throttle"] = "Regulator"
    end
    
-   if Call("*:ControlExists", "TrainBrakeHandle", 0) == 1 then  -- FEF-3
-      ControlValues["TrainBrake"] = "TrainBrakeHandle"
-   elseif Call("*:ControlExists", "TrainBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "TrainBrakeControl", 0) == 1 then
       ControlValues["TrainBrake"] = "TrainBrakeControl"
    end
 
-   if Call("*:ControlExists", "MyEngineBrakeControl", 0) == 1 then  -- FEF-3
-      ControlValues["LocoBrake"] = "MyEngineBrakeControl"
-   elseif Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 then  -- J94
-      ControlValues["LocoBrake"] = "VirtualLocoBrake"
-   elseif Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
+   if Call("*:ControlExists", "EngineBrakeControl", 0) == 1 then
       ControlValues["LocoBrake"] = "EngineBrakeControl"
    end
    
@@ -529,9 +510,26 @@ function ConfigureOverlay()
          end
    end
 
-   if DetectJ94_ADV_Meshtools(1) then
+   if DetectFEF3_ADV_Smokebox(true) then
+      -- Show levers values instead of internal, they make little sense here
+      -- This is only for the ADV version, not the HUD.
+      ControlValues["Reverser"] = "MyReverser"
+      ControlValues["Throttle"] = "RegulatorLever"
+      ControlValues["TrainBrake"] = "TrainBrakeHandle"
+      ControlValues["LocoBrake"] = "MyEngineBrakeControl"      
+
+   elseif DetectJ94_ADV_Meshtools(1) then
+      -- Loco/Steam Brake lever, internal should be hidden
+      ControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers
       ControlValues["Damper"] = nil
+
+   elseif DetectGermanAFB(true) then
+      TextVigilAlarm = "Sifa"
+
+   elseif DetectGenericUK(true) then
+      GradientUK = 1
+
    end
 
    -- Set at the very end to be a mark whether the configuration has been successful.

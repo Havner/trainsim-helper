@@ -86,13 +86,13 @@ function ConfigureJoystick()
       -- Ignore emergency values on CombinedThrottle (0, 0.1)
       CombinedThrottleRange = {0.1, 1}
       CombinedThrottleNotches = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
-      CruiseControlNotches = GenerateEqualNotches(25) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(25, CruiseControlRange) -- (0,1)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
    elseif DetectHST() then
-      ThrottleNotches = GenerateEqualNotches(6) -- (0,1)
-      TrainBrakeNotches = GenerateEqualNotches(8) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(6, ThrottleRange) -- (0,1)
+      TrainBrakeNotches = GenerateEqualNotches(8, TrainBrakeRange) -- (0,1)
 
    elseif DetectClass801() then
       -- Ignore emergency values on CombinedThrottle (-1.5, -1)
@@ -155,25 +155,25 @@ function ConfigureJoystick()
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
    elseif DetectClass158() then
-      ThrottleNotches = GenerateEqualNotches(8) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
       -- Ignore emergency values (0.75, 1)
       TrainBrakeRange = {0, 0.75}
       TrainBrakeNotches = GenerateEqualNotches(4, TrainBrakeRange)
 
    elseif DetectClass101() then
-      ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
       GearNotches = GenerateEqualNotches(5, GearRange) -- (0,4)
       -- Havner's config
       GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
 
    elseif DetectClass143() then
-      ThrottleNotches = GenerateEqualNotches(8) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
       -- Ignore emergency values (0.75, 1)
       TrainBrakeRange = {0, 0.75}
       TrainBrakeNotches = GenerateEqualNotches(4, TrainBrakeRange) -- not defined as equal in .bin but they are
 
    elseif DetectClass35() then
-      ThrottleNotches = GenerateEqualNotches(10) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(10, ThrottleRange) -- (0,1)
       -- Ignore emergency values (0.9, 1)
       TrainBrakeRange = {0, 0.9}
       TrainBrakeNotches = {0, 0.1, 0.2, 0.235, 0.27, 0.305, 0.34, 0.375, 0.41, 0.445, 0.48, 0.515, 0.55, 0.585, 0.62, 0.655, 0.69, 0.725, 0.76, 0.795, 0.83, 0.865, 0.9}
@@ -187,17 +187,17 @@ function ConfigureJoystick()
       GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
 
    elseif DetectClass47() then
-      ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
 
    elseif DetectClass117() then
-      ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
       GearNotches = GenerateEqualNotches(5, GearRange) -- (0,4)
       -- Havner's config
       GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
 
    elseif DetectClass321_AP() then
-      ThrottleNotches = GenerateEqualNotches(5) -- (0,1)
-      TrainBrakeNotches = GenerateEqualNotches(5) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
+      TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange) -- (0,1)
       -- Reverser is 4 state Virtual
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Havner's config
@@ -234,7 +234,7 @@ function ConfigureJoystick()
    elseif DetectFEF3_HUD_Smokebox() then
       -- Ignore emergency values (0.85, 1)
       TrainBrakeRange = {0, 0.85}
-      -- Disable My* controls, they exist, but don't work in the HUD version
+      -- Use regular controls instead of My* versions, they exist, but don't work in the HUD version
       ReverserControl = "Reverser"
       LocoBrakeControl = "EngineBrakeControl"
       -- Havner's config
@@ -246,6 +246,7 @@ function ConfigureJoystick()
       --ReverserCenterDetent = 0.05
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
    elseif DetectJ94_ADV_Meshtools() then
       TrainBrakeNotches = {0.04, 0.15, 0.25}
@@ -266,14 +267,14 @@ function ConfigureJoystick()
 
    elseif DetectBR101() then
       TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      CruiseControlNotches = GenerateEqualNotches(26) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(26, CruiseControlRange) -- (0,1)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
    elseif DetectBR426() then
       -- Makes it easier to center, it's not notched
       CombinedThrottleCenterDetent = 0.05
-      CruiseControlNotches = GenerateEqualNotches(31) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(31, CruiseControlRange) -- (0,1)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
       -- Dynamic brake should not be used directly
@@ -281,14 +282,14 @@ function ConfigureJoystick()
 
    elseif DetectICE2() or DetectICE2Cab() or DetectICE3() or DetectICET() then
       TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      CruiseControlNotches = GenerateEqualNotches(31) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(31, CruiseControlRange) -- (0,1)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
       -- Dynamic brake should not be used directly
       DynamicBrakeLine = nil
 
    elseif DetectBR189() then
-      TrainBrakeNotches = GenerateEqualNotches(11) -- (0,1)
+      TrainBrakeNotches = GenerateEqualNotches(11, TrainBrakeRange) -- (0,1)
       CruiseControlNotches = GenerateEqualNotches(29, CruiseControlRange) -- (0,0.466666)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
@@ -303,12 +304,12 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    elseif DetectSD45_DTM() then
-      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
       -- Dynamic brake should not be used directly
       DynamicBrakeLine = nil
 
    elseif DetectGE44_DTM() then
-      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
 
    elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       -- Not a simple case as the implementation merges two controls with different notches
@@ -330,16 +331,16 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    elseif DetectAcela() then
-      ThrottleNotches = GenerateEqualNotches(7) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(7, ThrottleRange) -- (0,1)
       -- Following the .bin file
       TrainBrakeRange = {0, 0.99}
       TrainBrakeNotches = {0, 0.2, 0.4, 0.6, 0.8, 0.99}
+      CruiseControlNotches = GenerateEqualNotches(33, CruiseControlRange) -- (0,160)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
    elseif DetectM8() then
-      -- Makes it easier to center, it's not notched
-      CombinedThrottleCenterDetent = 0.05
+      CombinedThrottleNotches = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
       -- DynamicBrake kinda exists here but is useless
       DynamicBrakeLine = nil
 
@@ -355,7 +356,7 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    elseif DetectSD70M() then
-      CombinedThrottleNotches = GenerateEqualNotches(19) -- (0,1)
+      CombinedThrottleNotches = GenerateEqualNotches(19, CombinedThrottleRange) -- (0,1)
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
       TrainBrakeControl = FindTrainBrake()
@@ -363,7 +364,7 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    elseif DetectC449W() then
-      CombinedThrottleNotches = GenerateEqualNotches(19) -- (0,1)
+      CombinedThrottleNotches = GenerateEqualNotches(19, CombinedThrottleRange) -- (0,1)
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
       TrainBrakeControl = FindTrainBrake()
@@ -371,15 +372,15 @@ function ConfigureJoystick()
       DynamicBrakeLine = nil
 
    elseif DetectES44DC() then
-      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
       DynamicBrakeNotches = GenerateEqualNotches(10, DynamicBrakeRange) -- (-0.125, 1)
 
    elseif DetectES44AC() then
-      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
 
    elseif DetectF45() then
-      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
-      DynamicBrakeNotches = GenerateEqualNotches(9) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      DynamicBrakeNotches = GenerateEqualNotches(9, DynamicBrakeRange) -- (0,1)
 
    -- Generic detections, don't put any specific locos below, they might get caught by those
 
@@ -393,7 +394,7 @@ function ConfigureJoystick()
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
    elseif DetectGenericUS() then
-      ThrottleNotches = GenerateEqualNotches(9) -- (0,1)
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
 
    else
       DisplayPopup("No custom configuration for this loco")
