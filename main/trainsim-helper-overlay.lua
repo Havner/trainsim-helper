@@ -15,6 +15,7 @@ function ConfigureOverlay()
    TextVigilAlarm =  "DSD"
    TextEmergency =   "Emergency"
    TextStartup =     "Engine"
+   TextDoors =       "Doors"
 
    -- Set UK gradient format. Can be set per loco.
    --GradientUK = 1
@@ -27,6 +28,7 @@ function ConfigureOverlay()
    
    StaticValues = {}
    ControlValues = {}
+   DoorsValues = {}
    ControlValuesFunctions = {}
    ControlValuesModifiers = {}
 
@@ -478,6 +480,20 @@ function ConfigureOverlay()
       ControlValues["Startup"] = "Startup"
    end
 
+   -- Doors Values
+
+   if Call("*:ControlExists", "DoorsOpenClose", 0) == 1 then
+      DoorsValues["Doors"] = "DoorsOpenClose"
+   end
+
+   if Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 then
+      DoorsValues["DoorsLeft"] = "DoorsOpenCloseLeft"
+   end
+
+   if Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 1 then
+      DoorsValues["DoorsRight"] = "DoorsOpenCloseRight"
+   end   
+
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- Sometimes I have to do this as a loco might have a control value that is
    -- detected but it should not be displayed. E.g. it's internal to the
@@ -595,12 +611,24 @@ function GetOverlayData()
       data = data..key..": "..value.."\n"
    end
 
+   -- Doors Values loop, doesn't matter which
+   local doors = 0
+   for key, name in pairs(DoorsValues) do
+      local value = Call("*:GetControlValue", name, 0)
+      if value ~= 0 then
+         doors = value
+         break
+      end
+   end
+   data = data.."Doors: "..doors.."\n"
+
    -- Config values
 
    if TextAWS then data = data.."TextAWS: "..TextAWS.."\n" end
    if TextVigilAlarm then data = data.."TextVigilAlarm: "..TextVigilAlarm.."\n" end
    if TextEmergency then data = data.."TextEmergency: "..TextEmergency.."\n" end
    if TextStartup then data = data.."TextStartup: "..TextStartup.."\n" end
+   if TextDoors then data = data.."TextDoors: "..TextDoors.."\n" end
    if GradientUK then data = data.."GradientUK: "..GradientUK.."\n" end
    
    -- SimulationTime is used to show script is running as clock updates in real time

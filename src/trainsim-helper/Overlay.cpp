@@ -54,6 +54,8 @@ DWORD whitered = D3DCOLOR_ARGB(255,255,200,200);
 DWORD whitegreen = D3DCOLOR_ARGB(255,200,255,200);
 DWORD whiteblue = D3DCOLOR_ARGB(255,200,200,255);
 DWORD red = D3DCOLOR_ARGB(255,200,0,0);
+DWORD green = D3DCOLOR_ARGB(255,0,200,0);
+DWORD blue = D3DCOLOR_ARGB(255,0,0,200);
 DWORD yellow = D3DCOLOR_ARGB(255,200,200,0);
 DWORD grey = D3DCOLOR_ARGB(255,200,200,200);
 
@@ -161,12 +163,14 @@ struct SimData {
 	Value<int>			nVigilAlarm;
 	Value<int>			nEmergencyBrake;
 	Value<int>			nStartup;
+	Value<int>			nDoors;
 
 	// Config values
 	Value<std::string>  sTextAWS;
 	Value<std::string>  sTextVigilAlarm;
 	Value<std::string>  sTextEmergency;
 	Value<std::string>  sTextStartup;
+	Value<std::string>  sTextDoors;
 	Value<int>			nGradientUK;
 
 	// Misc
@@ -392,12 +396,14 @@ int FillData(SimData* data)
 		else if (!strcmp("VigilAlarm:", param))					data->nVigilAlarm = value;
 		else if (!strcmp("EmergencyBrake:", param))				data->nEmergencyBrake = value;
 		else if (!strcmp("Startup:", param))					data->nStartup = value;
+		else if (!strcmp("Doors:", param))						data->nDoors = value;
 
 		// Config values
 		else if (!strcmp("TextAWS:", param))					data->sTextAWS = value;
 		else if (!strcmp("TextVigilAlarm:", param))				data->sTextVigilAlarm = value;
 		else if (!strcmp("TextEmergency:", param))				data->sTextEmergency = value;
 		else if (!strcmp("TextStartup:", param))				data->sTextStartup = value;
+		else if (!strcmp("TextDoors:", param))					data->sTextDoors = value;
 		else if (!strcmp("GradientUK:", param))					data->nGradientUK = value;
 
 		// Misc
@@ -563,6 +569,11 @@ void RenderOverlay()
 	if (data.nStartup() == -1)
 		startupcolor = red;
 
+	// Doors color
+	DWORD doorscolor = transparent;
+	if (data.nDoors() > 0)
+		doorscolor = green;
+
 	// speed color (white - OK, yellow - back, red - overspeed)
 	DWORD speedcolor = white;
 	if (fSpeed < -0.1f)
@@ -696,6 +707,7 @@ void RenderOverlay()
 
 	if (!g_bHideSection[12])
 	{
+		y = DrawString(data.sTextDoors,						x,		y, doorscolor, pBigFont, data.sTextDoors());
 		y = DrawString(data.sTextStartup,					x,		y, startupcolor, pBigFont, data.sTextStartup());
 		y = DrawString(data.sTextEmergency,					x,		y, emergencycolor, pBigFont, data.sTextEmergency());
 		y = DrawString(data.sTextVigilAlarm,				x,		y, vigilalarmcolor, pBigFont, data.sTextVigilAlarm());
