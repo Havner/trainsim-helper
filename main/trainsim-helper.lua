@@ -492,6 +492,25 @@ function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    end
 end
 
+function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addon
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "Stoking", 0) == 1 and
+      Call("*:ControlExists", "TractiveEffortCalculated", 0) == 1 and
+      Call("*:ControlExists", "AvgGradient", 0) == 1 and
+      Call("*:ControlExists", "ExcessTE", 0) == 1 and
+      Call("*:ControlExists", "BeatNumber", 0) == 1 and
+      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
+      Call("*:ControlExists", "VirtualWaterGaugeL", 0) == 1 and
+      Call("*:ControlExists", "WaterGauge_BottomValveL", 0) == 1 and
+      Call("*:ControlExists", "C_CoalLevel", 0) == 1 and
+      Call("*:ControlExists", "C_HideMechLub", 0) == 1 and
+      Call("*:ControlExists", "Audio_WheelSlipSqueal", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Bulleid Q1 (VictoryWorks) detected") end
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover

@@ -259,6 +259,11 @@ function ConfigureJoystick()
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
+   elseif DetectBulleidQ1_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+
    -- German locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectBR294() then

@@ -321,13 +321,25 @@ B. Licence
   they should be fully supported. I try to add indicators for
   realistic 3rd party steamers but I don't own many of those yet.
 
-  Right now those have been checked:
+  Right now those have been checked and are fully supported:
   - 56xx (VictoryWorks)
   - GWR Steam Motor (VictoryWorks)
   - J94 Memories of Maerdy (MeshTools)
   - FEF-3 (Smokebox)
+  - Bulleid Q1 (VictoryWorks)
 
   More to be added after the Steam Christmas sale ;-)
+
+  ad. Bulleid Q1:
+  By default it shows advanced controls for the water. Contrary to
+  what the manual says they are NOT controlled with keyboard. The
+  simple ones are. You have several options:
+  - Use the valves with mouse.
+  - Change the InputMapper so they are controlled with keyboard. I can
+    help with that if you have no idea how to do that.
+  - See the configuration section for Q1 in the overlay script and
+    uncomment several lines that I provided so the overlay will show the
+    simple controls.
 
   Final note: if the steamer is not on this list it doesn't mean it
   won't work. It will. You just probably won't see all the essential
