@@ -492,6 +492,42 @@ function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    end
 end
 
+function DetectGWRRailmotor_VictoryWorks(DisablePopup) -- West Somerset Railway addon
+   if Call("*:ControlExists", "AdvancedMode", 0) == 1 and
+      Call("*:ControlExists", "CabControlLock", 0) == 1 and
+      Call("*:ControlExists", "CabSwap", 0) == 1 and
+      Call("*:ControlExists", "V_DoorLeft", 0) == 1 and
+      Call("*:ControlExists", "V_DoorWindowLeft", 0) == 1 and
+      Call("*:ControlExists", "C_WindowHorizLeft", 0) == 1 and
+      Call("*:ControlExists", "C_WindowHorizRight", 0) == 1 and
+      Call("*:ControlExists", "C_RoofHatch", 0) == 1 and
+      Call("*:ControlExists", "CV_Bulbs", 0) == 1 and
+      Call("*:ControlExists", "BellReply1", 0) == 1 and
+      Call("*:ControlExists", "LocationAudioControl", 0) == 1 and
+      Call("*:ControlExists", "Boom", 0) == 1 and
+      Call("*:ControlExists", "DupeRev", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("GWR Railmotor (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectGWRRailmotorBoogie_VictoryWorks(DisablePopup) -- West Somerset Railway addon
+   if Call("*:ControlExists", "AdvancedMode", 0) == 1 and
+      Call("*:ControlExists", "CabControlLock", 0) == 1 and
+      Call("*:ControlExists", "VirtualThrottle", 0) == 1 and
+      Call("*:ControlExists", "VirtualBrake", 0) == 1 and
+      Call("*:ControlExists", "SteamFlow", 0) == 1 and
+      Call("*:ControlExists", "LocationAudioControl", 0) == 1 and
+      Call("*:ControlExists", "WaterInCylinders", 0) == 1 and
+      Call("*:ControlExists", "Boom", 0) == 1 and
+      Call("*:ControlExists", "Motion_InternalView", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("GWR Railmotor Boogie (VictoryWorks) detected") end
+      return 1
+   end
+end
+
 function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addon
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1 and

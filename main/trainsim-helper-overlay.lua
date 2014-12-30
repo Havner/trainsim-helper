@@ -541,6 +541,21 @@ function ConfigureOverlay()
    -- detected but it should not be displayed. E.g. it's internal to the
    -- implementation or is basically useless for this loco.
 
+   if DetectSteam(true) then
+      -- Some steamers use regulator for steam chest pressure, display lever
+      if Call("*:ControlExists", "VirtualThrottle", 0) == 1 then
+         ControlValues["Throttle"] = "VirtualThrottle"
+      end
+   end
+
+   if DetectGermanAFB(true) then
+      TextVigilAlarm = "Sifa"
+   end
+   
+   if DetectGenericUK(true) then
+      GradientUK = 1
+   end
+
    -- Things common for the ADV and HUD versions of FEF-3
    if DetectFEF3_ADV_Smokebox(true) or DetectFEF3_HUD_Smokebox(true) then
       -- Disable the internal values
@@ -580,12 +595,10 @@ function ConfigureOverlay()
       ControlValues["LocoBrake"] = "MyEngineBrakeControl"
 
    elseif DetectBulleidQ1_VictoryWorks(1) then
-      -- Show levers as the internals are too complicated
-      ControlValues["Throttle"] = "VirtualThrottle"
-      ControlValues["TrainBrake"] = "VirtualBrake"
-      
       -- It has front and rear dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
+      -- Not functional
+      ControlValues["WaterScoopRaiseLower"] = nil
 
       -- Uncomment all if you want to display simple water controls
       --ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
@@ -595,6 +608,10 @@ function ConfigureOverlay()
       --ControlValues["ExhaustInjectorShutOff"] = nil
       --ControlValues["LiveInjectorShutOff"] = nil
       --ControlValues["TenderWaterShutOff"] = nil
+
+   elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
+      -- Not functional
+      ControlValues["SmallEjector"] = nil
 
    elseif DetectJ94_ADV_Meshtools(1) then
       -- Loco/Steam Brake lever, internal should be hidden
@@ -606,12 +623,6 @@ function ConfigureOverlay()
       -- The internals are delayed significantly, show levers
       ControlValues["Throttle"] = "VirtualThrottle"
       ControlValues["TrainBrake"] = "VirtualBrake"
-
-   elseif DetectGermanAFB(true) then
-      TextVigilAlarm = "Sifa"
-
-   elseif DetectGenericUK(true) then
-      GradientUK = 1
 
    end
 
