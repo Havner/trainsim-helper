@@ -95,14 +95,14 @@ function ConfigureOverlay()
       ControlValues["BackPressure"] = "BackPressure"
    end
 
-   if Call("*:ControlExists", "SteamChestPressureGaugePSI", 0) == 1 then
-      ControlValues["SteamChestPressure"] = "SteamChestPressureGaugePSI"
-   elseif Call("*:ControlExists", "SteamChestGaugePSI", 0) == 1 then
+   if Call("*:ControlExists", "SteamChestGaugePSI", 0) == 1 then
       ControlValues["SteamChestPressure"] = "SteamChestGaugePSI"
-   elseif Call("*:ControlExists", "SteamChestPressureGauge", 0) == 1 then
-      ControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
    elseif Call("*:ControlExists", "SteamChestGauge", 0) == 1 then
       ControlValues["SteamChestPressure"] = "SteamChestGauge"
+   elseif Call("*:ControlExists", "SteamChestPressureGaugePSI", 0) == 1 then
+      ControlValues["SteamChestPressure"] = "SteamChestPressureGaugePSI"
+   elseif Call("*:ControlExists", "SteamChestPressureGauge", 0) == 1 then
+      ControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
    end
 
    if Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 then

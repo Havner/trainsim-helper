@@ -36,9 +36,10 @@ B. Licence
   NOTE 2: This software does not handle switches and shortcuts for the
   joystick. For this use your joystick's software (Thrustmaster,
   Logitech, Saitek) to assign keyboard shortcuts. This software handles
-  axes only. Supported are: Reverser, Gear, CombinedThrottle,
-  Throttle, TrainBrake, LocoBrake, DynamicBrake, CruiseControl,
-  SmallEjector, HandBrake, Blower, Damper.
+  axes only. Supported are: Reverser, Gear, CruiseControl,
+  CombinedThrottle, Throttle, TrainBrake, LocoBrake, DynamicBrake,
+  HandBrake, SmallEjector, Blower, Damper, Stoking, ExhaustWater,
+  LiveWater.
 
   I wrote a guide on how to customize loco controls:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139086
@@ -291,7 +292,8 @@ B. Licence
   From version 0.5 the steamers received additional support. For the
   controlling not much has changed changed. You have Regulator
   (Throttle), Reverser and Brakes as usual. The Small Ejector, Blower,
-  Damper are steamer specific axes you can asign.
+  Damper, Stoking, ExhaustWater, LiveWater are steamer specific axes you
+  can asign.
 
   - Boiler pressure got added with color indicators depending on
     whether the pressure is increasing (green), constant (grey) and

@@ -16,29 +16,35 @@ function ConfigureJoystick()
 
    --ReverserLine = 7
    --GearLine = 7
+   --CruiseControlLine = 7
    CombinedThrottleLine = 3
    ThrottleLine = 3
    TrainBrakeLine = 6
    LocoBrakeLine = 10      -- might also be used for SmallEjector if it's not explicitly set
    DynamicBrakeLine = 7    -- might also be used for Reverser, Gear or CruiseControl if they're not explicitly set
-   --CruiseControlLine = 7
+   --HandBrakeLine = 0
    --SmallEjectorLine = 10
-   HandBrakeLine = 14
-   BlowerLine = 11
-   DamperLine = 12
+   --BlowerLine = 0
+   --DamperLine = 0
+   StokingLine = 14
+   ExhaustWaterLine = 12
+   LiveWaterLine = 11
 
    ReverserInvert = 1
    GearInvert = 1
+   CruiseControlInvert = 1
    CombinedThrottleInvert = 1
    ThrottleInvert = 1
    --TrainBrakeInvert = 1
    --LocoBrakeInvert = 1
    --DynamicBrakeInvert = 1
-   CruiseControlInvert = 1
-   --SmallEjectorInvert = 1
    --HandBrakeInvert = 1
+   --SmallEjectorInvert = 1
    --BlowerInvert = 1
    --DamperInvert = 1
+   --StokingInvert = 1
+   --ExhaustWaterInvert = 1
+   --LiveWaterInvert = 1
 
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
@@ -49,6 +55,7 @@ function ConfigureJoystick()
    -- If combined is with dynamic brake we'll deal with that per loco below.
    ReverserControl =          FindReverser()
    GearControl =              FindGear()
+   CruiseControlControl =     FindCruiseControl()
    CombinedThrottleControl =  FindCombinedThrottle()
    if not CombinedThrottleControl then
       ThrottleControl =       FindThrottle()
@@ -56,25 +63,30 @@ function ConfigureJoystick()
    end
    LocoBrakeControl =         FindLocoBrake()
    DynamicBrakeControl =      FindDynamicBrake()
-   CruiseControlControl =     FindCruiseControl()
-   SmallEjectorControl =      FindSmallEjector()
    HandBrakeControl =         FindHandBrake()
+   SmallEjectorControl =      FindSmallEjector()
    BlowerControl =            FindBlower()
    DamperControl =            FindDamper()
+   StokingControl =           FindStoking()
+   ExhaustWaterControl =      FindExhaustWater()
+   LiveWaterControl =         FindLiveWater()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later.
    ReverserRange =         GetControlRange(FindReverser())
    GearRange =             GetControlRange(FindGear())
+   CruiseControlRange =    GetControlRange(FindCruiseControl())
    CombinedThrottleRange = GetControlRange(FindCombinedThrottle())
    ThrottleRange =         GetControlRange(FindThrottle())
    TrainBrakeRange =       GetControlRange(FindTrainBrake())
    LocoBrakeRange =        GetControlRange(FindLocoBrake())
    DynamicBrakeRange =     GetControlRange(FindDynamicBrake())
-   CruiseControlRange =    GetControlRange(FindCruiseControl())
-   SmallEjectorRange =     GetControlRange(FindSmallEjector())
    HandBrakeRange =        GetControlRange(FindHandBrake())
+   SmallEjectorRange =     GetControlRange(FindSmallEjector())
    BlowerRange =           GetControlRange(FindBlower())
    DamperRange =           GetControlRange(FindDamper())
+   StokingRange =          GetControlRange(FindStoking())
+   ExhaustWaterRange =     GetControlRange(FindExhaustWater())
+   LiveWaterRange =        GetControlRange(FindLiveWater())
 
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- In my case (3 throttle axes) I often make use of the DynamicLine in
@@ -419,16 +431,19 @@ function ConfigureJoystick()
    local lines = ReadFile("trainsim-helper-joystick.txt")
    PreviousReverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
    PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
+   PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
    PreviousCombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
    PreviousThrottle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
    PreviousTrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
    PreviousLocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
    PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-   PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
-   PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    PreviousHandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
+   PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    PreviousBlower =           GetLineValue(lines, BlowerLine, BlowerInvert)
    PreviousDamper =           GetLineValue(lines, DamperLine, DamperInvert)
+   PreviousStoking =          GetLineValue(lines, StokingLine, StokingInvert)
+   PreviousExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
+   PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
 
    -- Set at the very end to be a mark whether the configuration has been successful.
    JoystickConfigured = 1
@@ -453,6 +468,20 @@ function FindReverser()
       return "VirtualReverser"
    elseif Call("*:ControlExists", "Reverser", 0) == 1 then
       return "Reverser"
+   end
+end
+
+function FindCruiseControl()
+   if Call("*:ControlExists", "SpeedSet", 0) == 1 then               -- Class 90 AP
+      return "SpeedSet"
+   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela
+      return "CruiseControlSpeed"
+   elseif Call("*:ControlExists", "AFB", 0) == 1 then                -- German
+      return "AFB"
+   elseif Call("*:ControlExists", "SpeedTarget", 0) == 1 then        -- Class 365
+      return "SpeedTarget"
+   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then        -- Class 375/377
+      return "TargetSpeed"
    end
 end
 
@@ -506,31 +535,17 @@ function FindDynamicBrake()
    end
 end
 
-function FindCruiseControl()
-   if Call("*:ControlExists", "SpeedSet", 0) == 1 then               -- Class 90 AP
-      return "SpeedSet"
-   elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela
-      return "CruiseControlSpeed"
-   elseif Call("*:ControlExists", "AFB", 0) == 1 then                -- German
-      return "AFB"
-   elseif Call("*:ControlExists", "SpeedTarget", 0) == 1 then        -- Class 365
-      return "SpeedTarget"
-   elseif Call("*:ControlExists", "TargetSpeed", 0) == 1 then        -- Class 375/377
-      return "TargetSpeed"
+function FindHandBrake()
+   if Call("*:ControlExists", "HandBrake", 0) == 1 then
+      return "HandBrake"
+   elseif Call("*:ControlExists", "Handbrake", 0) == 1 then
+      return "Handbrake"
    end
 end
 
 function FindSmallEjector()
    if Call("*:ControlExists", "SmallCompressorOnOff", 0) == 1 then
       return "SmallCompressorOnOff"
-   end
-end
-
-function FindHandBrake()
-   if Call("*:ControlExists", "HandBrake", 0) == 1 then
-      return "HandBrake"
-   elseif Call("*:ControlExists", "Handbrake", 0) == 1 then
-      return "Handbrake"
    end
 end
 
@@ -550,6 +565,32 @@ function FindDamper()
    end
 end
 
+function FindStoking()
+   if Call("*:ControlExists", "Firing", 0) == 1 then  -- FEF-3
+      return "Firing"
+   elseif Call("*:ControlExists", "Stoking", 0) == 1 then
+      return "Stoking"
+   end
+end
+
+function FindExhaustWater()
+   if Call("*:ControlExists", "FWPump", 0) == 1 then  -- FEF-3
+      return "FWPump"
+   elseif Call("*:ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
+      return "ExhaustInjectorWaterFineControl"
+   elseif Call("*:ControlExists", "ExhaustInjectorWater", 0) == 1 then
+      return "ExhaustInjectorWater"
+   end
+end
+
+function FindLiveWater()
+   if Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
+      return "LiveInjectorWaterFineControl"
+   elseif Call("*:ControlExists", "LiveInjectorWater", 0) == 1 then
+      return "LiveInjectorWater"
+   end
+end
+
 -----------------------------------------------------------
 ----------------  Main joystick function  -----------------
 -----------------------------------------------------------
@@ -559,30 +600,36 @@ function SetJoystickData()
 
    local Reverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
    local Gear =             GetLineValue(lines, GearLine, GearInvert)
+   local CruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
    local CombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
    local Throttle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
    local TrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
    local LocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
    local DynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-   local CruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
-   local SmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    local HandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
+   local SmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    local Blower =           GetLineValue(lines, BlowerLine, BlowerInvert)
    local Damper =           GetLineValue(lines, DamperLine, DamperInvert)
+   local Stoking =          GetLineValue(lines, StokingLine, StokingInvert)
+   local ExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
+   local LiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
 
    -- Feed with data
    PreviousReverser =         SetControl(ReverserControl,         PreviousReverser,         Reverser,         ReverserRange,         ReverserNotches,         ReverserCenterDetent)
    PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
+   PreviousCruiseControl =    SetControl(CruiseControlControl,    PreviousCruiseControl,    CruiseControl,    CruiseControlRange,    CruiseControlNotches)
    PreviousCombinedThrottle = SetControl(CombinedThrottleControl, PreviousCombinedThrottle, CombinedThrottle, CombinedThrottleRange, CombinedThrottleNotches, CombinedThrottleCenterDetent)
    PreviousThrottle =         SetControl(ThrottleControl,         PreviousThrottle,         Throttle,         ThrottleRange,         ThrottleNotches)
    PreviousTrainBrake =       SetControl(TrainBrakeControl,       PreviousTrainBrake,       TrainBrake,       TrainBrakeRange,       TrainBrakeNotches)
    PreviousLocoBrake =        SetControl(LocoBrakeControl,        PreviousLocoBrake,        LocoBrake,        LocoBrakeRange,        LocoBrakeNotches)
    PreviousDynamicBrake =     SetControl(DynamicBrakeControl,     PreviousDynamicBrake,     DynamicBrake,     DynamicBrakeRange,     DynamicBrakeNotches)
-   PreviousCruiseControl =    SetControl(CruiseControlControl,    PreviousCruiseControl,    CruiseControl,    CruiseControlRange,    CruiseControlNotches)
-   PreviousSmallEjector =     SetControl(SmallEjectorControl,     PreviousSmallEjector,     SmallEjector,     SmallEjectorRange,     SmallEjectorNotches)
    PreviousHandBrake =        SetControl(HandBrakeControl,        PreviousHandBrake,        HandBrake,        HandBrakeRange,        HandBrakeNotches)
+   PreviousSmallEjector =     SetControl(SmallEjectorControl,     PreviousSmallEjector,     SmallEjector,     SmallEjectorRange,     SmallEjectorNotches)
    PreviousBlower =           SetControl(BlowerControl,           PreviousBlower,           Blower,           BlowerRange,           BlowerNotches)
    PreviousDamper =           SetControl(DamperControl,           PreviousDamper,           Damper,           DamperRange,           DamperNotches)
+   PreviousStoking =          SetControl(StokingControl,          PreviousStoking,          Stoking,          StokingRange,          StokingNotches)
+   PreviousExhaustWater =     SetControl(ExhaustWaterControl,     PreviousExhaustWater,     ExhaustWater,     ExhaustWaterRange,     ExhaustWaterNotches)
+   PreviousLiveWater =        SetControl(LiveWaterControl,        PreviousLiveWater,        LiveWater,        LiveWaterRange,        LiveWaterNotches)
 end
 
 -----------------------------------------------------------
