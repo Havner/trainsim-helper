@@ -1,6 +1,7 @@
 0.6e
  - Support for FEF-3 HUD version, sorry, forgot previously.
  - Support for Bulleid Q1, see the steamers section in the readme.
+ - Support for BR442 Talent 2
  - Stoking, ExhaustWater, LiveWater added to axes controls
  - Further modifications in a way the overlay is configured
    (similar to the joystick part, autodetections first, then locos).

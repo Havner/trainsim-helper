@@ -282,6 +282,19 @@ function ConfigureJoystick()
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
+   elseif DetectBR442Talent2() then
+      CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,180)
+      -- Ignore emergency values (-1, -0.9)
+      CombinedThrottleRange = {-0.9, 1}
+      CombinedThrottleNotches = {-0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
+      -- TrainBrake is controlled with LocoBrake here, reflect that
+      LocoBrakeLine = TrainBrakeLine
+      TrainBrakeLine = nil
+      -- TrainBrake is self lapped here, add some notches to help
+      LocoBrakeNotches = {-1, -0.5, -0.2, 0, 0.2, 0.5, 1}
+      -- Havner's config
+      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+
    elseif DetectBR294() then
       -- Makes it easier to center, it's not notched
       CombinedThrottleCenterDetent = 0.05
@@ -476,7 +489,9 @@ function FindReverser()
 end
 
 function FindCruiseControl()
-   if Call("*:ControlExists", "SpeedSet", 0) == 1 then               -- Class 90 AP
+   if Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 then         -- BR442 Talent 2
+      return "AFBTargetSpeed"
+   elseif Call("*:ControlExists", "SpeedSet", 0) == 1 then           -- Class 90 AP
       return "SpeedSet"
    elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela
       return "CruiseControlSpeed"

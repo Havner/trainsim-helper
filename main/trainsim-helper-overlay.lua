@@ -43,7 +43,9 @@ function ConfigureOverlay()
    -- Loco's controls, those are mostly low-level values so one can see what is happening
    -- under the hood. They can be overriden with high-level ones per loco when needed.
 
-   if Call("*:ControlExists", "SpeedSet", 0) == 1 then                 -- Class 90 AP
+   if Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 then           -- BR442 Talent 2
+      ControlValues["TargetSpeed"] = "AFBTargetSpeed"
+   elseif Call("*:ControlExists", "SpeedSet", 0) == 1 then             -- Class 90 AP
       ControlValues["TargetSpeed"] = "SpeedSet"
    elseif Call("*:ControlExists", "CruiseControlSpeed", 0) == 1 then   -- Acela
       ControlValues["TargetSpeed"] = "CruiseControlSpeed"
@@ -502,7 +504,9 @@ function ConfigureOverlay()
       ControlValues["AWS"] = "AWSWarnCount"
    end
 
-   if Call("*:ControlExists", "DSDAlarm", 0) == 1 then
+   if Call("*:ControlExists", "SiFaWarning", 0) == 1 then
+      ControlValues["VigilAlarm"] = "SiFaWarning"
+   elseif Call("*:ControlExists", "DSDAlarm", 0) == 1 then
       ControlValues["VigilAlarm"] = "DSDAlarm"
    elseif Call("*:ControlExists", "VigilAlarm", 0) == 1 then
       ControlValues["VigilAlarm"] = "VigilAlarm"
@@ -594,7 +598,7 @@ function ConfigureOverlay()
       ControlValues["TrainBrake"] = "TrainBrakeHandle"
       ControlValues["LocoBrake"] = "MyEngineBrakeControl"
 
-   elseif DetectBulleidQ1_VictoryWorks(1) then
+   elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
       -- Not functional
@@ -613,16 +617,23 @@ function ConfigureOverlay()
       -- Not functional
       ControlValues["SmallEjector"] = nil
 
-   elseif DetectJ94_ADV_Meshtools(1) then
+   elseif DetectJ94_ADV_Meshtools(true) then
       -- Loco/Steam Brake lever, internal should be hidden
       ControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 
-   elseif DetectClass37_Thomson() then
+   elseif DetectClass37_Thomson(true) then
       -- The internals are delayed significantly, show levers
       ControlValues["Throttle"] = "VirtualThrottle"
       ControlValues["TrainBrake"] = "VirtualBrake"
+
+   elseif DetectBR442Talent2(true) then
+      -- LocoBrake is actually a TrainBrake, replace them
+      ControlValues["TrainBrake"] = "EngineBrakeControl"
+      ControlValues["LocoBrake"] = nil
+      -- Not functional
+      ControlValues["LocoBrakeCylinderPressure"] = nil
 
    end
 

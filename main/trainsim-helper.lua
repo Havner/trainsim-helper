@@ -549,6 +549,27 @@ end
 
 -- German
 
+function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
+   if Call("*:ControlExists", "CabEQNeedle", 0) == 1 and
+      Call("*:ControlExists", "CabTBNeedle", 0) == 1 and
+      Call("*:ControlExists", "HornLow", 0) == 1 and
+      Call("*:ControlExists", "BellSoft", 0) == 1 and
+      Call("*:ControlExists", "PassGoods", 0) == 1 and
+      Call("*:ControlExists", "TEUnits", 0) == 1 and
+      Call("*:ControlExists", "PZB_85_2", 0) == 1 and
+      Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 and
+      Call("*:ControlExists", "AFBSet", 0) == 1 and
+      Call("*:ControlExists", "SiFaAudioWarning", 0) == 1 and
+      Call("*:ControlExists", "MegaPhone", 0) == 1 and
+      Call("*:ControlExists", "EffortGraphs", 0) == 1 and
+      Call("*:ControlExists", "BrakeGraphBar", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR442 Talent 2 detected") end
+      return 1
+   end
+end
+
+
 function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 0 and
@@ -1023,7 +1044,8 @@ end
 -- some general detections
 
 function DetectGermanAFB(DisablePopup)
-   if Call("*:ControlExists", "AFB", 0) == 1
+   if Call("*:ControlExists", "AFB", 0) == 1 or
+      Call("*:ControlExists", "AFBTargetSpeed", 0) == 1
    then
       if not DisablePopup then DisplayPopup("German AFB detected") end
       return 1
