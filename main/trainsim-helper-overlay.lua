@@ -633,6 +633,7 @@ function ConfigureOverlay()
       ControlValues["TrainBrake"] = "EngineBrakeControl"
       ControlValues["LocoBrake"] = nil
       -- Not functional
+      ControlValues["Sunflower"] = nil
       ControlValues["LocoBrakeCylinderPressure"] = nil
 
    end
