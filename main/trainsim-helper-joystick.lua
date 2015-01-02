@@ -207,6 +207,10 @@ function ConfigureJoystick()
       -- Havner's config
       GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
 
+   elseif DetectClass170() then
+      -- Set custom notches for the CombinedThrottle, it's continuous below center
+      CombinedThrottleNotches = {0.5, 0.5713, 0.6427, 0.7142, 0.7857, 0.8571, 0.9285, 1}
+
    elseif DetectClass321_AP() then
       ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
       TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange) -- (0,1)
@@ -231,9 +235,12 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
-   elseif DetectClass170() then
-      -- Set custom notches for the CombinedThrottle, it's continuous below center
-      CombinedThrottleNotches = {0.5, 0.5713, 0.6427, 0.7142, 0.7857, 0.8571, 0.9285, 1}
+   elseif DetectClass50_MeshTools() then
+      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
+      -- Reverser is 4 state Virtual
+      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
    -- Steamers here
 
@@ -260,7 +267,7 @@ function ConfigureJoystick()
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
-   elseif DetectJ94_ADV_Meshtools() then
+   elseif DetectJ94_ADV_MeshTools() then
       TrainBrakeNotches = {0.04, 0.15, 0.25}
       LocoBrakeNotches = {0.30, 0.40, 0.50}
       -- Havner's config
@@ -281,6 +288,12 @@ function ConfigureJoystick()
       SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
    -- German locos here, detection might be flaky as they are very similar to eachother
+
+   elseif DetectBR420_Influenzo() then
+      ThrottleNotches = GenerateEqualNotches(20, ThrottleRange) -- (-10, 9)
+      TrainBrakeNotches = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
+      -- Dynamic brake should not be used directly
+      DynamicBrakeLine = nil
 
    elseif DetectBR442Talent2() then
       CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,180)

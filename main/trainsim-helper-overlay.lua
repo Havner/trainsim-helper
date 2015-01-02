@@ -504,7 +504,9 @@ function ConfigureOverlay()
       ControlValues["AWS"] = "AWSWarnCount"
    end
 
-   if Call("*:ControlExists", "SiFaWarning", 0) == 1 then
+   if Call("*:ControlExists", "SifaLampe", 0) == 1 then  -- BR420
+      ControlValues["VigilAlarm"] = "SifaLampe"
+   elseif Call("*:ControlExists", "SiFaWarning", 0) == 1 then  -- BR442
       ControlValues["VigilAlarm"] = "SiFaWarning"
    elseif Call("*:ControlExists", "DSDAlarm", 0) == 1 then
       ControlValues["VigilAlarm"] = "DSDAlarm"
@@ -562,7 +564,7 @@ function ConfigureOverlay()
 
    -- Things common for the ADV and HUD versions of FEF-3
    if DetectFEF3_ADV_Smokebox(true) or DetectFEF3_HUD_Smokebox(true) then
-      -- Disable the internal values
+      -- Hide the internal values
       ControlValues["SteamChestPressure"] = nil
       ControlValues["TrainBrakeCylinderPressure"] = nil
       ControlValues["FireboxDoor"] = nil
@@ -601,7 +603,7 @@ function ConfigureOverlay()
    elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
-      -- Not functional
+      -- Not functional, hide
       ControlValues["WaterScoopRaiseLower"] = nil
 
       -- Uncomment all if you want to display simple water controls
@@ -614,25 +616,27 @@ function ConfigureOverlay()
       --ControlValues["TenderWaterShutOff"] = nil
 
    elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
-      -- Not functional
+      -- Not functional, hide
       ControlValues["SmallEjector"] = nil
 
-   elseif DetectJ94_ADV_Meshtools(true) then
+   elseif DetectJ94_ADV_MeshTools(true) then
       -- Loco/Steam Brake lever, internal should be hidden
       ControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 
-   elseif DetectClass37_Thomson(true) then
-      -- The internals are delayed significantly, show levers
+   elseif DetectClass37_Thomson(true) or DetectClass50_MeshTools(true) then
+      -- Throttle is delayed significantly, show lever
       ControlValues["Throttle"] = "VirtualThrottle"
-      ControlValues["TrainBrake"] = "VirtualBrake"
+
+   elseif DetectBR420_Influenzo(true) then
+      TextVigilAlarm = "Sifa"
 
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, replace them
       ControlValues["TrainBrake"] = "EngineBrakeControl"
       ControlValues["LocoBrake"] = nil
-      -- Not functional
+      -- Not functional, hide
       ControlValues["Sunflower"] = nil
       ControlValues["LocoBrakeCylinderPressure"] = nil
 

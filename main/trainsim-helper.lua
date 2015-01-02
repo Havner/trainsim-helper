@@ -300,6 +300,25 @@ function DetectClass117(DisablePopup) -- West Somerset Railway addon
    end
 end
 
+function DetectClass170(DisablePopup) -- Academy
+   if Call("*:ControlExists", "Buzzer", 0) == 1 and
+      Call("*:ControlExists", "RPMDelta", 0) == 1 and
+      Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 1 and
+      Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("*:ControlExists", "GlareScreen", 0) == 1 and
+      Call("*:ControlExists", "DRA", 0) == 1 and
+      Call("*:ControlExists", "DSDEnabled", 0) == 1 and
+      Call("*:ControlExists", "InteriorCamera", 0) == 1 and
+      Call("*:ControlExists", "Loco", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Class 170 detected") end
+      return 1
+   end
+end
+
 function DetectClass321_AP(DisablePopup)
    if Call("*:ControlExists", "desind", 0) == 1 and
       Call("*:ControlExists", "Destination", 0) == 1 and
@@ -355,21 +374,20 @@ function DetectClass37_Thomson(DisablePopup)
    end
 end
 
-function DetectClass170(DisablePopup) -- Academy
-   if Call("*:ControlExists", "Buzzer", 0) == 1 and
-      Call("*:ControlExists", "RPMDelta", 0) == 1 and
-      Call("*:ControlExists", "MainReservoirPressureBAR", 0) == 1 and
-      Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
-      Call("*:ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
-      Call("*:ControlExists", "DoorsOpenCloseRight", 0) == 1 and
-      Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
-      Call("*:ControlExists", "GlareScreen", 0) == 1 and
-      Call("*:ControlExists", "DRA", 0) == 1 and
-      Call("*:ControlExists", "DSDEnabled", 0) == 1 and
-      Call("*:ControlExists", "InteriorCamera", 0) == 1 and
-      Call("*:ControlExists", "Loco", 0) == 1
+function DetectClass50_MeshTools(DisablePopup) -- Academy
+   if Call("*:ControlExists", "rightvisor", 0) == 1 and
+      Call("*:ControlExists", "LeftVisor", 0) == 1 and
+      Call("*:ControlExists", "HighAndLow", 0) == 1 and
+      Call("*:ControlExists", "BrakeCylinderDial2", 0) == 1 and
+      Call("*:ControlExists", "BrakeMode", 0) == 1 and
+      Call("*:ControlExists", "Thirdtone", 0) == 1 and
+      Call("*:ControlExists", "firetest", 0) == 1 and
+      Call("*:ControlExists", "WaterTemperature", 0) == 1 and
+      Call("*:ControlExists", "Revtemp", 0) == 1 and
+      Call("*:ControlExists", "Vents", 0) == 1 and
+      Call("*:ControlExists", "CoolingFan", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("Class 170 detected") end
+      if not DisablePopup then DisplayPopup("Class 50 (MeshTools) detected") end
       return 1
    end
 end
@@ -455,7 +473,7 @@ function DetectCastle(DisablePopup) -- Riviera Line
    end
 end
 
-function DetectJ94_ADV_Meshtools(DisablePopup) -- Memories of Maerdy
+function DetectJ94_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    if Call("*:ControlExists", "Headcode1", 0) == 1 and
       Call("*:ControlExists", "Headcode4", 0) == 1 and
       Call("*:ControlExists", "WindowLeft", 0) == 1 and
@@ -468,7 +486,7 @@ function DetectJ94_ADV_Meshtools(DisablePopup) -- Memories of Maerdy
       Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
       Call("*:ControlExists", "CabLamp", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("J94 (ADV, Meshtools) detected") end
+      if not DisablePopup then DisplayPopup("J94 (ADV, MeshTools) detected") end
       return 1
    end
 end
@@ -549,6 +567,25 @@ end
 
 -- German
 
+function DetectBR420_Influenzo(DisablePopup) -- Munich - Augsburg addon
+   if Call("*:ControlExists", "ZZAauf", 0) == 1 and
+      Call("*:ControlExists", "SifaLampe", 0) == 1 and
+      Call("*:ControlExists", "SifaWarnung", 0) == 1 and
+      Call("*:ControlExists", "RearPantographControl", 0) == 1 and
+      Call("*:ControlExists", "SunblindL", 0) == 1 and
+      Call("*:ControlExists", "InterlockRight", 0) == 1 and
+      Call("*:ControlExists", "Bremsschuetz", 0) == 1 and
+      Call("*:ControlExists", "Trennschuetz", 0) == 1 and
+      Call("*:ControlExists", "AICabVolume", 0) == 1 and
+      Call("*:ControlExists", "PZBWachsamTaster", 0) == 1 and
+      Call("*:ControlExists", "Zwangsbremse", 0) == 1 and
+      Call("*:ControlExists", "PZBZugart", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR420 (Influenzo) detected") end
+      return 1
+   end
+end
+
 function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
    if Call("*:ControlExists", "CabEQNeedle", 0) == 1 and
       Call("*:ControlExists", "CabTBNeedle", 0) == 1 and
@@ -568,7 +605,6 @@ function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
       return 1
    end
 end
-
 
 function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
@@ -1053,9 +1089,7 @@ function DetectGermanAFB(DisablePopup)
 end
 
 function DetectSteam(DisablePopup)
-   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "Stoking", 0) == 1
-   then
+   if Call("*:GetFireboxMass") then
       if not DisablePopup then DisplayPopup("Steam detected") end
       return 1
    end
