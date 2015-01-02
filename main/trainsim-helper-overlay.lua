@@ -134,6 +134,13 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 then
       ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureINCHES"
+      StaticValues["VacuumBrakePipeUnits"] = "Inches"
+   elseif Call("*:ControlExists", "VacuumBrakePipePressureBAR", 0) == 1 then
+      ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureBAR"
+      StaticValues["VacuumBrakePipeUnits"] = "BAR"
+   elseif Call("*:ControlExists", "VacuumBrakePipePressurePSI", 0) == 1 then
+      ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressurePSI"
+      StaticValues["VacuumBrakePipeUnits"] = "PSI"
    end
 
    if Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then

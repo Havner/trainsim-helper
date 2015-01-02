@@ -76,6 +76,7 @@ struct SimData {
 
 	// Units
 	Value<std::string>	sUnits;
+	Value<std::string>	sVacuumBrakePipeUnits;
 	Value<std::string>	sTrainBrakeCylinderUnits;
 	Value<std::string>	sLocoBrakeCylinderUnits;
 	Value<std::string>	sAirBrakePipeUnits;
@@ -319,6 +320,7 @@ int FillData(SimData* data)
 
 		// Units
 		else if (!strcmp("Units:", param))						data->sUnits = value;
+		else if (!strcmp("VacuumBrakePipeUnits:", param))		data->sVacuumBrakePipeUnits = value;
 		else if (!strcmp("TrainBrakeCylinderUnits:", param))	data->sTrainBrakeCylinderUnits = value;
 		else if (!strcmp("LocoBrakeCylinderUnits:", param))		data->sLocoBrakeCylinderUnits = value;
 		else if (!strcmp("AirBrakePipeUnits:", param))			data->sAirBrakePipeUnits = value;
@@ -676,7 +678,7 @@ void RenderOverlay()
 		y = DrawString(data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sAirBrakePipeUnits());
 		y = DrawString(data.fLocoBrakeCylinderPressure,		x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sLocoBrakeCylinderUnits());
 		y = DrawString(data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sTrainBrakeCylinderUnits());
-		y = DrawString(data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f Inches Hg", data.fVacuumBrakePipePressure());
+		y = DrawString(data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f %s", data.fVacuumBrakePipePressure(), data.sVacuumBrakePipeUnits());
 		y = NextSection(y, &yP, yD);
 		y = DrawString(data.fAmmeter,						x+56,	y, whitered, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
 		y = DrawString(data.nRPM,							x+80,	y, whitered, pSmallFont, "RPM: %d RPM", data.nRPM());
