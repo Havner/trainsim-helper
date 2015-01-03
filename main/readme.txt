@@ -329,8 +329,10 @@ B. Licence
   - J94 Memories of Maerdy (MeshTools)
   - FEF-3 (Smokebox)
   - Bulleid Q1 (VictoryWorks)
+  - 14xx/48xx/58xx (VictoryWorks)
 
-  More to be added after the Steam Christmas sale ;-)
+  To be done soon are the MeshTools creations, 2F Dock Tank, 3F Jinty
+  and J50.
 
   ad. Bulleid Q1:
   By default it shows advanced controls for the water. Contrary to
@@ -342,6 +344,15 @@ B. Licence
   - See the configuration section for Q1 in the overlay script and
     uncomment several lines that I provided so the overlay will show the
     simple controls.
+
+  ad. 14xx/48xx/58xx:
+  Due to a bug in TS the overlay will not always show all the values
+  properly when driving with Autocoach attached (this doesn't always
+  happen). Things like: Boiler Pressure (always dropping), Water Gauge
+  (stuck at 99-100%) might be broken. This is the case for the F4 HUD
+  as well. This is due to the game taking the values from the
+  Autocoach instead of the leading loco. I'm not sure anything can be
+  done here.
 
   Final note: if the steamer is not on this list it doesn't mean it
   won't work. It will. You just probably won't see all the essential

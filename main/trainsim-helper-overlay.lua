@@ -645,10 +645,11 @@ function ConfigureOverlay()
       ControlValues["Throttle"] = "VirtualThrottle"
 
    elseif DetectBR420_Influenzo(true) then
+      TextAWS = "PZB"
       TextVigilAlarm = "Sifa"
 
    elseif DetectBR442Talent2(true) then
-      -- LocoBrake is actually a TrainBrake, replace them
+      -- LocoBrake is actually a TrainBrake, reflect that
       ControlValues["TrainBrake"] = "EngineBrakeControl"
       ControlValues["LocoBrake"] = nil
       -- Not functional, hide

@@ -115,7 +115,7 @@ function DetectClass360(DisablePopup) -- London - Ipswich
    end
 end
 
-function DetectClass90_ADV_AP(DisablePopup) -- London - Ipswich
+function DetectClass90_ADV_AP(DisablePopup) -- London - Ipswich addon
    if Call("*:ControlExists", "VisualAids", 0) == 1 and
       Call("*:ControlExists", "CabAmbience", 0) == 1 and
       Call("*:ControlExists", "AirCon", 0) == 1 and
@@ -133,7 +133,7 @@ function DetectClass90_ADV_AP(DisablePopup) -- London - Ipswich
    end
 end
 
-function DetectMK3DVT_ADV_AP(DisablePopup) -- London - Ipswich
+function DetectMK3DVT_ADV_AP(DisablePopup) -- London - Ipswich addon
    if Call("*:ControlExists", "VisualAids", 0) == 1 and
       Call("*:ControlExists", "CabAmbience", 0) == 1 and
       Call("*:ControlExists", "AirCon", 0) == 1 and
@@ -170,7 +170,7 @@ function DetectClass158(DisablePopup) -- Liverpool - Manchester
    end
 end   
 
-function DetectClass101(DisablePopup) -- Liverpool - Manchester
+function DetectClass101(DisablePopup) -- Liverpool - Manchester addon
    if Call("*:ControlExists", "RPMDelta", 0) == 1 and
       Call("*:ControlExists", "ReservoirPressurePSI", 0) == 1 and
       Call("*:ControlExists", "VacuumChamberPressureINCHES", 0) == 1 and
@@ -210,7 +210,7 @@ function DetectClass143(DisablePopup) -- Riviera Line
    end
 end
 
-function DetectClass35(DisablePopup) -- Riviera Line
+function DetectClass35(DisablePopup) -- Riviera Line addon
    if Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
       Call("*:ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
       Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 and
@@ -357,7 +357,7 @@ function DetectClass156_Oovee(DisablePopup)
    end
 end
 
-function DetectClass37_Thomson(DisablePopup)
+function DetectClass37_Thomson(DisablePopup) -- West Highland Line 
    if Call("*:ControlExists", "ScenarioRunning", 0) == 1 and
       Call("*:ControlExists", "VirtualRPM", 0) == 1 and
       Call("*:ControlExists", "S1", 0) == 1 and
@@ -374,7 +374,7 @@ function DetectClass37_Thomson(DisablePopup)
    end
 end
 
-function DetectClass50_MeshTools(DisablePopup) -- Academy
+function DetectClass50_MeshTools(DisablePopup) -- Settle to Carlisle addon
    if Call("*:ControlExists", "rightvisor", 0) == 1 and
       Call("*:ControlExists", "LeftVisor", 0) == 1 and
       Call("*:ControlExists", "HighAndLow", 0) == 1 and
@@ -394,7 +394,7 @@ end
 
 -- Steamers
 
-function DetectCastle(DisablePopup) -- Riviera Line
+function DetectCastle(DisablePopup) -- Riviera Line addon
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1 and
       Call("*:ControlExists", "SteamFlow", 0) == 1 and
@@ -962,7 +962,7 @@ function DetectACS64(DisablePopup) -- New York - New Haven
    end
 end
 
-function DetectAcela(DisablePopup) -- New York - New Haven
+function DetectAcela(DisablePopup) -- New York - New Haven addon
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 0 and
       Call("*:ControlExists", "ATCCutIn", 0) == 1 and
       Call("*:ControlExists", "TimeToPenalty", 0) == 1 and
@@ -983,7 +983,7 @@ function DetectAcela(DisablePopup) -- New York - New Haven
    end
 end   
 
-function DetectM8(DisablePopup) -- New York - New Haven
+function DetectM8(DisablePopup) -- New York - New Haven addon
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "ATCCutIn", 0) == 1 and
       Call("*:ControlExists", "TimeToPenalty", 0) == 1 and
