@@ -244,6 +244,14 @@ function ConfigureJoystick()
 
    -- Steamers here
 
+   elseif DetectCastle() then
+      -- This loco has VirtualReverser but it doesn't work, override
+      ReverserControl = "Reverser"
+      --ReverserCenterDetent = 0.05
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+
    elseif DetectFEF3_ADV_Smokebox() then
       -- Ignore emergency values (0.85, 1)
       TrainBrakeRange = {0, 0.85}
@@ -258,14 +266,6 @@ function ConfigureJoystick()
       LocoBrakeControl = "EngineBrakeControl"
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   elseif DetectCastle() then
-      -- This loco has VirtualReverser but it doesn't work, override
-      ReverserControl = "Reverser"
-      --ReverserCenterDetent = 0.05
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
    elseif DetectJ94_ADV_MeshTools() then
       TrainBrakeNotches = {0.04, 0.15, 0.25}

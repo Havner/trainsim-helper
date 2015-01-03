@@ -394,6 +394,31 @@ end
 
 -- Steamers
 
+function DetectCastle(DisablePopup) -- Riviera Line
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "Stoking", 0) == 1 and
+      Call("*:ControlExists", "SteamFlow", 0) == 1 and
+      Call("*:ControlExists", "Flap", 0) == 1 and
+      Call("*:ControlExists", "HeadBoard", 0) == 1 and
+      Call("*:ControlExists", "Lamp1", 0) == 1 and
+      Call("*:ControlExists", "Lamp4", 0) == 1 and
+      Call("*:ControlExists", "SteamHeat", 0) == 1 and
+      Call("*:ControlExists", "SteamHeatGauge", 0) == 1 and
+      Call("*:ControlExists", "MasonsValve", 0) == 1 and
+      Call("*:ControlExists", "TestCock1", 0) == 1 and
+      Call("*:ControlExists", "TestCock2", 0) == 1 and
+      Call("*:ControlExists", "Lubricator", 0) == 1 and
+      Call("*:ControlExists", "LubricatorWarming", 0) == 1 and
+      Call("*:ControlExists", "AshpanSprinkler", 0) == 1 and
+      Call("*:ControlExists", "SeatDriver", 0) == 1 and
+      Call("*:ControlExists", "SeatFireman", 0) == 1 and
+      Call("*:ControlExists", "CastleThunder", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Castle detected") end
+      return 1
+   end
+end
+
 function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("*:ControlExists", "MarsLight", 0) == 1 and
       Call("*:ControlExists", "WhistlePull", 0) == 1 and
@@ -444,31 +469,6 @@ function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
       Call("*:ControlExists", "MUvisibility", 0) == 1
    then
       if not DisablePopup then DisplayPopup("FEF-3 (HUD, Smokebox) detected") end
-      return 1
-   end
-end
-
-function DetectCastle(DisablePopup) -- Riviera Line
-   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "Stoking", 0) == 1 and
-      Call("*:ControlExists", "SteamFlow", 0) == 1 and
-      Call("*:ControlExists", "Flap", 0) == 1 and
-      Call("*:ControlExists", "HeadBoard", 0) == 1 and
-      Call("*:ControlExists", "Lamp1", 0) == 1 and
-      Call("*:ControlExists", "Lamp4", 0) == 1 and
-      Call("*:ControlExists", "SteamHeat", 0) == 1 and
-      Call("*:ControlExists", "SteamHeatGauge", 0) == 1 and
-      Call("*:ControlExists", "MasonsValve", 0) == 1 and
-      Call("*:ControlExists", "TestCock1", 0) == 1 and
-      Call("*:ControlExists", "TestCock2", 0) == 1 and
-      Call("*:ControlExists", "Lubricator", 0) == 1 and
-      Call("*:ControlExists", "LubricatorWarming", 0) == 1 and
-      Call("*:ControlExists", "AshpanSprinkler", 0) == 1 and
-      Call("*:ControlExists", "SeatDriver", 0) == 1 and
-      Call("*:ControlExists", "SeatFireman", 0) == 1 and
-      Call("*:ControlExists", "CastleThunder", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("Castle detected") end
       return 1
    end
 end

@@ -611,6 +611,12 @@ function ConfigureOverlay()
       ControlValues["TrainBrake"] = "TrainBrakeHandle"
       ControlValues["LocoBrake"] = "MyEngineBrakeControl"
 
+   elseif DetectJ94_ADV_MeshTools(true) then
+      -- Loco/Steam Brake lever, internal should be hidden
+      ControlValues["LocoBrake"] = "VirtualLocoBrake"
+      -- It has left and right dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
+
    elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
@@ -632,12 +638,6 @@ function ConfigureOverlay()
 
    elseif Detect14xx_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
-
-   elseif DetectJ94_ADV_MeshTools(true) then
-      -- Loco/Steam Brake lever, internal should be hidden
-      ControlValues["LocoBrake"] = "VirtualLocoBrake"
-      -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 
    elseif DetectClass37_Thomson(true) or DetectClass50_MeshTools(true) then
