@@ -287,6 +287,14 @@ function ConfigureJoystick()
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
+   elseif Detect14xx_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
+   elseif DetectAutocoachA31_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
    -- German locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectBR420_Influenzo() then
@@ -608,6 +616,8 @@ end
 function FindExhaustWater()
    if Call("*:ControlExists", "FWPump", 0) == 1 then  -- FEF-3
       return "FWPump"
+   elseif Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
+      return "ExhaustInjectorWaterLever"
    elseif Call("*:ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
       return "ExhaustInjectorWaterFineControl"
    elseif Call("*:ControlExists", "ExhaustInjectorWater", 0) == 1 then
@@ -616,7 +626,9 @@ function FindExhaustWater()
 end
 
 function FindLiveWater()
-   if Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
+   if Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
+      return "LiveInjectorWaterLever"
+   elseif Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
       return "LiveInjectorWaterFineControl"
    elseif Call("*:ControlExists", "LiveInjectorWater", 0) == 1 then
       return "LiveInjectorWater"

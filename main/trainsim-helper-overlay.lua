@@ -457,13 +457,15 @@ function ConfigureOverlay()
       ControlValues["FeedWaterPump"] = "FWPump"
    end
 
-   if Call("*:ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- Q1
+   if Call("*:ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamLever"
    elseif Call("*:ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
       ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
    end
 
-   if Call("*:ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
+   if Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
+      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterLever"
+   elseif Call("*:ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
       ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterFineControl"
    elseif Call("*:ControlExists", "ExhaustInjectorWater", 0) == 1 then
       ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
@@ -471,13 +473,15 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
       ControlValues["LiveInjectorSteam"] = "InjectorLeverR"
-   elseif Call("*:ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- Q1
+   elseif Call("*:ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamLever"
    elseif Call("*:ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
       ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
    end
 
-   if Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
+   if Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
+      ControlValues["LiveInjectorWater"] = "LiveInjectorWaterLever"
+   elseif Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
       ControlValues["LiveInjectorWater"] = "LiveInjectorWaterFineControl"
    elseif Call("*:ControlExists", "LiveInjectorWater", 0) == 1 then
       ControlValues["LiveInjectorWater"] = "LiveInjectorWater"
@@ -622,9 +626,13 @@ function ConfigureOverlay()
       --ControlValues["LiveInjectorShutOff"] = nil
       --ControlValues["TenderWaterShutOff"] = nil
 
-   elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
+   elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
       ControlValues["SmallEjector"] = nil
+
+   elseif Detect14xx_VictoryWorks(true) then
+      -- It has front and rear dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
 
    elseif DetectJ94_ADV_MeshTools(true) then
       -- Loco/Steam Brake lever, internal should be hidden

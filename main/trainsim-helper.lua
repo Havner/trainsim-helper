@@ -565,6 +565,41 @@ function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addo
    end
 end
 
+function Detect14xx_VictoryWorks(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
+      Call("*:ControlExists", "SpinExtra", 0) == 1 and
+      Call("*:ControlExists", "CurrentRotation", 0) == 1 and
+      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
+      Call("*:ControlExists", "ConsistRegulator", 0) == 1 and
+      Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 and
+      Call("*:ControlExists", "Whistle2", 0) == 1 and
+      Call("*:ControlExists", "VWFakeWaterGauge", 0) == 1 and
+      Call("*:ControlExists", "RoofHatch", 0) == 1 and
+      Call("*:ControlExists", "HideBonnet", 0) == 1 and
+      Call("*:ControlExists", "Audio_SteamChestRegulator", 0) == 1 and
+      Call("*:ControlExists", "AutoControl_Front", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("14xx/48xx/58xx (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectAutocoachA31_VictoryWorks(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "CabControlLock", 0) == 1 and
+      Call("*:ControlExists", "HornAnimation", 0) == 1 and
+      Call("*:ControlExists", "WhistleChain", 0) == 1 and
+      Call("*:ControlExists", "Gong", 0) == 1 and
+      Call("*:ControlExists", "V_DoorLeft", 0) == 1 and
+      Call("*:ControlExists", "V_DoorWindowRight", 0) == 1 and
+      Call("*:ControlExists", "BellReply1", 0) == 1 and
+      Call("*:ControlExists", "Audio_InCab", 0) == 1 and
+      Call("*:ControlExists", "Audio_Connected", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Autocoach A31 (VictoryWorks) detected") end
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR420_Influenzo(DisablePopup) -- Munich - Augsburg addon
