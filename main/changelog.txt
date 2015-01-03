@@ -1,4 +1,4 @@
-0.6e
+0.7
  - Support for FEF-3 HUD version, sorry, forgot previously.
  - Support for Bulleid Q1, see the steamers section in the readme.
  - Support for 14xx/48xx/58xx, see the steamers section in the readme.
