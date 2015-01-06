@@ -11,7 +11,7 @@ function ConfigureOverlay()
    -- Define strings for warning messages. You can override them per loco.
    -- Or comment out / redefine to nil if you don't want specific one.
    -- NO SPACES IN THE STRINGS ALLOWED (will fix that later, use '_')
-   TextAWS =         "AWS"
+   TextAlarm =       "AWS"
    TextVigilAlarm =  "DSD"
    TextEmergency =   "Emergency"
    TextStartup =     "Engine"
@@ -19,6 +19,15 @@ function ConfigureOverlay()
 
    -- Set UK gradient format. Can be set per loco.
    --GradientUK = 1
+
+   if DetectGenericGerman(true) then
+      TextAlarm = "PZB"
+      TextVigilAlarm = "Sifa"
+   end
+   
+   if DetectGenericUK(true) then
+      GradientUK = 1
+   end
 
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
@@ -361,7 +370,7 @@ function ConfigureOverlay()
       ControlValues["WaterScoopRaiseLower"] = "WaterScoopRaiseLower"
    end
 
-   -- Steamers (fire-man)
+   -- Steamers (fireman)
 
    if Call("*:ControlExists", "BlowOffCockShutOffL", 0) == 1 then  -- FEF-3
       ControlValues["BlowOffCockShutOffLeft"] = "BlowOffCockShutOffL"
@@ -505,14 +514,10 @@ function ConfigureOverlay()
 
    -- Warning values
    
-   if Call("*:ControlExists", "AWS", 0) == 1 then
-      ControlValues["Sunflower"] = "AWS"
-   end
-
    if Call("*:ControlExists", "AlerterCountdown", 0) == 1 then
-      ControlValues["AWS"] = "AlerterCountdown"
+      ControlValues["Alarm"] = "AlerterCountdown"
    elseif Call("*:ControlExists", "AWSWarnCount", 0) == 1 then
-      ControlValues["AWS"] = "AWSWarnCount"
+      ControlValues["Alarm"] = "AWSWarnCount"
    end
 
    if Call("*:ControlExists", "SifaLampe", 0) == 1 then  -- BR420
@@ -527,7 +532,7 @@ function ConfigureOverlay()
       ControlValues["VigilAlarm"] = "DSD"
    end
 
-   if Call("*:ControlExists", "BrakeDemandLamp", 0) == 1 then
+   if Call("*:ControlExists", "BrakeDemandLamp", 0) == 1 then  -- CLass 37/4
       ControlValues["EmergencyBrake"] = "BrakeDemandLamp"
    elseif Call("*:ControlExists", "EmergencyAlarm", 0) == 1 then
       ControlValues["EmergencyBrake"] = "EmergencyAlarm"
@@ -558,19 +563,11 @@ function ConfigureOverlay()
    -- detected but it should not be displayed. E.g. it's internal to the
    -- implementation or is basically useless for this loco.
 
-   if DetectSteam(true) then
-      -- Some steamers use regulator for steam chest pressure, display lever
+   -- Some steamers use regulator for steam chest pressure, display lever
+   if DetectGenericSteam(true) then
       if Call("*:ControlExists", "VirtualThrottle", 0) == 1 then
          ControlValues["Throttle"] = "VirtualThrottle"
       end
-   end
-
-   if DetectGermanAFB(true) then
-      TextVigilAlarm = "Sifa"
-   end
-   
-   if DetectGenericUK(true) then
-      GradientUK = 1
    end
 
    -- Things common for the ADV and HUD versions of FEF-3
@@ -644,16 +641,11 @@ function ConfigureOverlay()
       -- Throttle is delayed significantly, show lever
       ControlValues["Throttle"] = "VirtualThrottle"
 
-   elseif DetectBR420_Influenzo(true) then
-      TextAWS = "PZB"
-      TextVigilAlarm = "Sifa"
-
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that
       ControlValues["TrainBrake"] = "EngineBrakeControl"
       ControlValues["LocoBrake"] = nil
       -- Not functional, hide
-      ControlValues["Sunflower"] = nil
       ControlValues["LocoBrakeCylinderPressure"] = nil
 
    end
@@ -729,7 +721,7 @@ function GetOverlayData()
 
    -- Config values
 
-   if TextAWS then data = data.."TextAWS: "..TextAWS.."\n" end
+   if TextAlarm then data = data.."TextAlarm: "..TextAlarm.."\n" end
    if TextVigilAlarm then data = data.."TextVigilAlarm: "..TextVigilAlarm.."\n" end
    if TextEmergency then data = data.."TextEmergency: "..TextEmergency.."\n" end
    if TextStartup then data = data.."TextStartup: "..TextStartup.."\n" end
@@ -751,12 +743,6 @@ end
 -----------------------------------------------------------
 -----  Here be dragons, careful with modifications  -------
 -----------------------------------------------------------
-
-function TryGetControlValue(control)
-   if Call("*:ControlExists", control, 0) == 1 then
-      return Call("*:GetControlValue", control, 0)
-   end
-end
 
 function WriteFile(name, data)
    local file = io.open("plugins/"..name, "w")

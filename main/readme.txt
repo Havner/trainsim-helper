@@ -196,50 +196,93 @@ B. Licence
 
    cmd line switch | keyboard shortcut |           function
   -----------------|-------------------|--------------------------------
+
+                                 General             
+
+  -----------------|-------------------|--------------------------------
          -j        |       n/a         |       disables joystick
                    |                   |      support and warning
   -----------------|-------------------|--------------------------------
          -v        |    SHIFT+ALT+v    |   toggles the overlay display
   -----------------|-------------------|--------------------------------
-         -1        |   SHIFT+ALT+F1    |      toggles the speed
+         -f        |    SHIFT+ALT+f    |    toggles the font outline
   -----------------|-------------------|--------------------------------
-         -2        |   SHIFT+ALT+F2    |  toggles the boiler pressure
+    runtime only   |    SHIFT+ALT+s    |    invert driving direction
   -----------------|-------------------|--------------------------------
-         -3        |   SHIFT+ALT+F2    | toggles the distance/countdown
+
+                          Main HUD parts toggles
+
   -----------------|-------------------|--------------------------------
-         -4        |   SHIFT+ALT+F3    |    toggles the next limit
+         -m1       |   SHIFT+ALT+F1    |            speed
   -----------------|-------------------|--------------------------------
-         -5        |   SHIFT+ALT+F4    |   toggles the acceleration
+         -m2       |   SHIFT+ALT+F2    |       distance/countdown
   -----------------|-------------------|--------------------------------
-         -6        |   SHIFT+ALT+F5    |     toggles the controls
+         -m3       |   SHIFT+ALT+F3    |        next speed limit
   -----------------|-------------------|--------------------------------
-         -7        |   SHIFT+ALT+F6    |     toggles the indicators
+         -m4       |   SHIFT+ALT+F4    |         acceleration
   -----------------|-------------------|--------------------------------
-         -8        |   SHIFT+ALT+F8    |     toggles the gradient
+         -m5       |   SHIFT+ALT+F5    |           controls
   -----------------|-------------------|--------------------------------
-         -9        |   SHIFT+ALT+F9    | toggles the driver's indicators
+         -m6       |   SHIFT+ALT+F6    |          indicators
   -----------------|-------------------|--------------------------------
-         -10       |   SHIFT+ALT+F10   |toggles the fireman's indicators
+         -m7       |   SHIFT+ALT+F7    |      brakes' indicators
   -----------------|-------------------|--------------------------------
-         -11       |   SHIFT+ALT+F11   |      toggles the clock
+         -m8       |   SHIFT+ALT+F8    |           gradient
   -----------------|-------------------|--------------------------------
-         -12       |   SHIFT+ALT+F12   | toggles warnings (AWS, DSD...)
+         -m9       |   SHIFT+ALT+F9    |           reserved
+  -----------------|-------------------|--------------------------------
+         -m10      |   SHIFT+ALT+F10   |           reserved
+  -----------------|-------------------|--------------------------------
+         -m11      |   SHIFT+ALT+F11   |     warnings (AWS, DSD...)
+  -----------------|-------------------|--------------------------------
+         -m12      |   SHIFT+ALT+F12   |            clock
+  -----------------|-------------------|--------------------------------
+
+                         Steam HUD parts toggles
+
+  -----------------|-------------------|--------------------------------
+         -s1       |   SHIFT+CTL+F1    |        boiler pressure
+  -----------------|-------------------|--------------------------------
+         -s2       |   SHIFT+CTL+F2    |       steam indicators
+  -----------------|-------------------|--------------------------------
+         -s3       |   SHIFT+CTL+F3    |    driver's primary controls
+  -----------------|-------------------|--------------------------------
+         -s4       |   SHIFT+CTL+F4    |   driver's secondary controls
+  -----------------|-------------------|--------------------------------
+         -s5       |   SHIFT+CTL+F5    |           reserved
+  -----------------|-------------------|--------------------------------
+         -s6       |   SHIFT+CTL+F6    |   fireman's primary controls
+  -----------------|-------------------|--------------------------------
+         -s7       |   SHIFT+CTL+F7    |  fireman's secondary controls
+  -----------------|-------------------|--------------------------------
+         -s8       |   SHIFT+CTL+F8    |         safety valves
+  -----------------|-------------------|--------------------------------
+         -s9       |   SHIFT+CTL+F9    |          fire primary
+  -----------------|-------------------|--------------------------------
+         -s10      |   SHIFT+CTL+F10   |         fire secondary
+  -----------------|-------------------|--------------------------------
+         -s11      |   SHIFT+CTL+F11   |         water primary
+  -----------------|-------------------|--------------------------------
+         -s12      |   SHIFT+CTL+F12   |        water secondary
+  -----------------|-------------------|--------------------------------
+
+                    Distance / countdown / odometer
+
   -----------------|-------------------|--------------------------------
     runtime only   |    SHIFT+ALT+r    |      reset the distance
                    |                   |      turn off countdown
   -----------------|-------------------|--------------------------------
     runtime only   |  SHIFT+ALT+(0-9)  |      setup the countdown
   -----------------|-------------------|--------------------------------
-    runtime only   |    SHIFT+ALT+s    |    invert driving direction
-  -----------------|-------------------|--------------------------------
 
   By default everything is turned on. If you want to permanently
   disable some function make a shortcut to the trainsim-helper.exe,
-  and in its properties add the switches for the functions you don't want.
+  and in its properties add the switches for the functions you don't
+  want.
 
   Command line switches are toggles as well, they accumulate. If you
-  pass a single "-1" you will disable current speed. But if you pass
-  it twice "-1 -1" you will end up with it being enabled again.
+  pass a single "-m1" you will disable current speed. But if you pass
+  it twice "-m1 -m1" you will end up with it being enabled again.
 
 7. Additional funcionality
 
@@ -585,17 +628,18 @@ B. Licence
   d) In summary:
 
   - trainsim-helper.lua: loco detections and main frame update function.
-  - trainsim-helper-overlay.lua: Overlay configuration an implementation.
-  - trainsim-helper-joystick.lua: Joystick configuration an implementation.
+  - trainsim-helper-overlay.lua: Overlay configuration and implementation.
+  - trainsim-helper-joystick.lua: Joystick configuration and implementation.
 
 14. HELP! It doesn't work
 
-  Forum thread:
+  Forums support:
+  http://railworksamerica.com/forum/viewforum.php?f=56
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139304
 
   If you can't get it to work at all re-read the readme, try
   again. From what I've seen so far none of the poeple I've spoken to
-  have not had major problems to get it to work. It's a little bit
+  have had any major problems with getting it work. It's a little bit
   complicated but definitely doable.
 
   If in general it works but you have only problems with one loco:
@@ -658,7 +702,7 @@ B. Licence
 
   - Change placement/colors/fonts of the UI.
   - Add new values to be displayed in the Overlay (you need to export
-    them first with LUA.
+    them first with LUA).
   - Write your own UI, you have a D3D surface there and data exported
     from the sim. Do whatever your imagination lets you.
 
@@ -667,7 +711,7 @@ B. Licence
 
 16. C# tools
 
-  Those are tools written by CobraOne which I adapted for my own
+  Those are the tools written by CobraOne which I adapted for my own
   needs. I know very little about C#.
 
   a) The Lua_Out editor
@@ -694,8 +738,10 @@ A. Acknowledgements
   Smokebox for his invaluable help with getting the FEF-3 right.
   linuxbox for pointing this new method and for notches implementation.
   nschichan for the idea itself.
+  An anonymous donnor that bought me the Bulleid Q1 loco just to show
+  his gratitude for the helper. Thank you.
 
-  The C++ part uses code from here:
+  The C++ part uses the code from here:
   http://code.msdn.microsoft.com/windowsdesktop/DirectInput-Samples-8ac6f5e3/sourcecode?fileId=121930&pathId=1414531679
   http://www.unknowncheats.me/forum/c-and-c/84234-c-external-directx-overlay-translated-c.html
 
@@ -703,9 +749,9 @@ B. Licence
 
   Basically free for non-commercial use. You can modify the code,
   adapt it to your own needs. Just don't forget about acknowledgements
-  and please note that not all code here originates from my own mind
-  so treat it with respect. I don't know the License for the code that
-  is not mine as it didn't come with a License note.
+  and please note that not all of the code here originates from my own
+  mind so treat it with respect. I don't know the License for the code
+  that is not mine as it didn't come with a License note.
 
 Lukasz 'Havner' Pawelczyk
 havner at gmail dot com

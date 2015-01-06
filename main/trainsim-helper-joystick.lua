@@ -20,9 +20,9 @@ function ConfigureJoystick()
    CombinedThrottleLine = 3
    ThrottleLine = 3
    TrainBrakeLine = 6
-   LocoBrakeLine = 10      -- might also be used for SmallEjector if it's not explicitly set
+   LocoBrakeLine = 10      -- might also be used for SmallEjector or HandBrake if it's not explicitly set
    DynamicBrakeLine = 7    -- might also be used for Reverser, Gear or CruiseControl if they're not explicitly set
-   --HandBrakeLine = 0
+   --HandBrakeLine = 10
    --SmallEjectorLine = 10
    --BlowerLine = 0
    --DamperLine = 0
@@ -45,6 +45,9 @@ function ConfigureJoystick()
    --StokingInvert = 1
    --ExhaustWaterInvert = 1
    --LiveWaterInvert = 1
+
+   --ReverserCenterDetent = 0.05
+   --CombinedThrottleCenterDetent = 0.05
 
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
@@ -247,7 +250,6 @@ function ConfigureJoystick()
    elseif DetectCastle() then
       -- This loco has VirtualReverser but it doesn't work, override
       ReverserControl = "Reverser"
-      --ReverserCenterDetent = 0.05
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
@@ -281,19 +283,22 @@ function ConfigureJoystick()
    elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectBulleidQ1_VictoryWorks() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif Detect14xx_VictoryWorks() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectAutocoachA31_VictoryWorks() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
@@ -439,16 +444,13 @@ function ConfigureJoystick()
 
    -- Generic detections, don't put any specific locos below, they might get caught by those
 
-   elseif DetectSteam() then
-      --ReverserCenterDetent = 0.05
+   elseif DetectGenericSteam() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   elseif DetectGermanAFB() then
-      -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectGenericUS() then
+      -- Simple US diesels usually have notched throttle
       ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
 
    else

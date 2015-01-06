@@ -1,3 +1,12 @@
+0.8
+ - Sunflower indicator removed, it was just obscuring the view
+ - PZB alarm indicator for a loco that exports this info (BR420)
+ - Toggleable font outline for better visibility
+ - Significat changes in the overlay shortcuts and cmd line:
+   - Split into 2 groups, main and steam
+   - Higher granularity in what you want to display
+   - See the readme for current shortcuts and cmd line
+
 0.7
  - Support for FEF-3 HUD version, sorry, forgot previously.
  - Support for Bulleid Q1, see the steamers section in the readme.

@@ -44,11 +44,27 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		if (strcmp(pArgList[i]+1, "v") == 0)
 			ToggleDisplaySection(0);
 
-		if (isdigit(pArgList[i][1]))
+		if (strcmp(pArgList[i]+1, "f") == 0)
+			ToggleFontOutline();
+
+		if (pArgList[i][1] == 'm')
 		{
-			int nSection = atoi(pArgList[i]+1);
-			if (nSection >= 1 && nSection <= 12)
-				ToggleDisplaySection(nSection);
+			if (isdigit(pArgList[i][2]))
+			{
+				int nSection = atoi(pArgList[i]+2);
+				if (nSection >= 1 && nSection <= 12)
+					ToggleDisplaySection(nSection);
+			}
+		}
+
+		if (pArgList[i][1] == 's')
+		{
+			if (isdigit(pArgList[i][2]))
+			{
+				int nSection = atoi(pArgList[i]+2);
+				if (nSection >= 1 && nSection <= 12)
+					ToggleDisplaySection(nSection + 12);
+			}
 		}
 	}
 
@@ -88,28 +104,29 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	MSG msg;
 	::SetWindowPos(hWndTS, HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 
-	// 0-9 digits for the countdown
-	for (int i = 0; i <= 9; ++i)
-		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, 0x30 + i);
+	// V for the whole overlay
+	RegisterHotKey(hWnd, 0, MOD_SHIFT | MOD_ALT, 0x56 /* V key */);
 
-	// additional 0, 7, 8, 9 for the countdown
-	RegisterHotKey(hWnd, 0, MOD_SHIFT | MOD_ALT, 0x4F); // O
-	RegisterHotKey(hWnd, 7, MOD_SHIFT | MOD_ALT, 0x51); // Q
-	RegisterHotKey(hWnd, 8, MOD_SHIFT | MOD_ALT, 0x57); // W
-	RegisterHotKey(hWnd, 9, MOD_SHIFT | MOD_ALT, 0x45); // E
+	// F1-F12 for the main overlay
+	for (int i = 1; i <= 12; ++i)
+		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, VK_F1 + i - 1);
+
+	// F1-F12 for the steam overlay
+	for (int i = 13; i <= 24; ++i)
+		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_CONTROL, VK_F1 + i - 13);
+
+	// 0-9 digits for the countdown
+	for (int i = 100; i <= 109; ++i)
+		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, 0x30 + i - 100);
 
 	// R for the countdown reset
-	RegisterHotKey(hWnd, 10, MOD_SHIFT | MOD_ALT, 0x52 /* R key */);
-
-	// F1-F12 for the overlay
-	for (int i = 11; i <= 22; ++i)
-		RegisterHotKey(hWnd, i, MOD_SHIFT | MOD_ALT, VK_F1-11 + i);
-
-	// V for the whole overlay
-	RegisterHotKey(hWnd, 23, MOD_SHIFT | MOD_ALT, 0x56 /* V key */);
+	RegisterHotKey(hWnd, 110, MOD_SHIFT | MOD_ALT, 0x52 /* R key */);
 
 	// S for invert
-	RegisterHotKey(hWnd, 24, MOD_SHIFT | MOD_ALT, 0x53 /* S key */);
+	RegisterHotKey(hWnd, 201, MOD_SHIFT | MOD_ALT, 0x53 /* S key */);
+
+	// F for font outline
+	RegisterHotKey(hWnd, 202, MOD_SHIFT | MOD_ALT, 0x46 /* F key */);
 
 	if (bUseJoystick)
 		if (FAILED(InitDirectInput()))
@@ -173,16 +190,16 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	case WM_HOTKEY:
-		if (wParam >= 0 && wParam <= 9)
-			SetCountdown(wParam);
-		else if (wParam == 10)
+		if (wParam >= 0 && wParam <= 24)
+			ToggleDisplaySection(wParam);
+		else if (wParam >= 100 && wParam <= 109)
+			SetCountdown(wParam - 100);
+		else if (wParam == 110)
 			ResetDistance();
-		else if (wParam >= 11 && wParam <= 22)
-			ToggleDisplaySection(wParam - 10);
-		else if (wParam == 23)
-			ToggleDisplaySection(0);
-		else if (wParam == 24)
+		else if (wParam == 201)
 			ToggleInvert();
+		else if (wParam == 202)
+			ToggleFontOutline();
 		break;
 	}
 

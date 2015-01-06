@@ -1114,16 +1114,7 @@ end
    
 -- some general detections
 
-function DetectGermanAFB(DisablePopup)
-   if Call("*:ControlExists", "AFB", 0) == 1 or
-      Call("*:ControlExists", "AFBTargetSpeed", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("German AFB detected") end
-      return 1
-   end
-end
-
-function DetectSteam(DisablePopup)
+function DetectGenericSteam(DisablePopup)
    if Call("*:GetFireboxMass") then
       if not DisablePopup then DisplayPopup("Steam detected") end
       return 1
@@ -1154,7 +1145,17 @@ function DetectGenericUS(DisablePopup)
       ) and
       Call("*:ControlExists", "ThrottleAndBrake", 0) == 0
    then
-      if not DisablePopup then DisplayPopup("Generic US detected") end
+      if not DisablePopup then DisplayPopup("US detected") end
+      return 1
+   end
+end
+
+function DetectGenericGerman(DisablePopup) -- Used for alerter texts
+   if Call("*:ControlExists", "AFB", 0) == 1 or
+      Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 or
+      Call("*:ControlExists", "PZBFrei", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("German detected") end
       return 1
    end
 end
