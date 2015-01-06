@@ -646,7 +646,6 @@ function ConfigureOverlay()
       ControlValues["TrainBrake"] = "VirtualBrake"
       -- Internal for steam brake should be hidden
       ControlValues["LocoBrake"] = nil
-
       -- Make the Sander {-1, 1}
       ControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
@@ -668,7 +667,7 @@ function ConfigureOverlay()
       --ControlValues["LiveInjectorShutOff"] = nil
       --ControlValues["TenderWaterShutOff"] = nil
 
-      -- Make the Sanbox {0,1}
+      -- Make the sander {0,1}
       ControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
 
 
