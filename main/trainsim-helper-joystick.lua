@@ -275,6 +275,11 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
+   elseif Detect2FDockTank_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
    elseif Detect56xx_VictoryWorks() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
@@ -618,6 +623,8 @@ end
 function FindExhaustWater()
    if Call("*:ControlExists", "FWPump", 0) == 1 then  -- FEF-3
       return "FWPump"
+   elseif Call("*:ControlExists", "Left Water", 0) == 1 then  -- 2F
+      return "Left Water"
    elseif Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
       return "ExhaustInjectorWaterLever"
    elseif Call("*:ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
@@ -628,7 +635,9 @@ function FindExhaustWater()
 end
 
 function FindLiveWater()
-   if Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
+   if Call("*:ControlExists", "Right Water", 0) == 1 then  -- 2F
+      return "Right Water"
+   elseif Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
       return "LiveInjectorWaterLever"
    elseif Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
       return "LiveInjectorWaterFineControl"

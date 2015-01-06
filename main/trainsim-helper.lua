@@ -491,6 +491,27 @@ function DetectJ94_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    end
 end
 
+function Detect2FDockTank_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
+      Call("*:ControlExists", "Left Steam", 0) == 1 and
+      Call("*:ControlExists", "MixtureL", 0) == 1 and
+      Call("*:ControlExists", "FrontSandBox", 0) == 1 and
+      Call("*:ControlExists", "LubricatorDrip", 0) == 1 and
+      Call("*:ControlExists", "VirtualSander", 0) == 1 and
+      Call("*:ControlExists", "Steam Manifold", 0) == 1 and
+      Call("*:ControlExists", "LeftGaugeGlassDrain", 0) == 1 and
+      Call("*:ControlExists", "WhistleBlast", 0) == 1 and
+      Call("*:ControlExists", "Brokeness", 0) == 1 and
+      Call("*:ControlExists", "WeightThingy", 0) == 1 and
+      Call("*:ControlExists", "ComputatedTE", 0) == 1 and
+      Call("*:ControlExists", "RainB", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("2F Dock Tank (ADV, MeshTools) detected") end
+      return 1
+   end
+end   
+
 function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
       Call("*:ControlExists", "Stoking", 0) == 1 and

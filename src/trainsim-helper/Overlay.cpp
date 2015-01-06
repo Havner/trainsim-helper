@@ -99,7 +99,8 @@ struct SimData {
 	Value<float>		fBackPressure;
 	Value<float>		fSteamChestPressure;
 	Value<float>		fSteamHeatingPressure;
-	Value<float>		fSanderLevel;
+	Value<float>		fSandbox;
+	Value<float>		fSandboxRear;
 	Value<float>		fVoltage;
 	Value<int>			nRPM;
 	Value<float>		fAmmeter;
@@ -119,6 +120,8 @@ struct SimData {
 	Value<float>		fSteamHeatingShutOff;
 	Value<float>		fSteamHeating;
 	Value<float>		fMasonsValve;
+	Value<float>		fSteamManifold;
+	Value<float>		fLubricatorSteam;
 	Value<float>		fLubricator;
 	Value<float>		fLubricatorWarming;
 	Value<float>		fSmallEjector;
@@ -364,7 +367,8 @@ int FillData(SimData* data)
 		else if (!strcmp("BackPressure:", param))				data->fBackPressure = value;
 		else if (!strcmp("SteamChestPressure:", param))			data->fSteamChestPressure = value;
 		else if (!strcmp("SteamHeatingPressure:", param))		data->fSteamHeatingPressure = value;
-		else if (!strcmp("SanderLevel:", param))				data->fSanderLevel = value;
+		else if (!strcmp("Sandbox:", param))					data->fSandbox = value;
+		else if (!strcmp("SandboxRear:", param))				data->fSandboxRear = value;
 		else if (!strcmp("Voltage:", param))					data->fVoltage = value;
 		else if (!strcmp("RPM:", param))						data->nRPM = value;
 		else if (!strcmp("Ammeter:", param))					data->fAmmeter = value;
@@ -384,6 +388,8 @@ int FillData(SimData* data)
 		else if (!strcmp("SteamHeatingShutOff:", param))		data->fSteamHeatingShutOff = value;
 		else if (!strcmp("SteamHeating:", param))				data->fSteamHeating = value;
 		else if (!strcmp("MasonsValve:", param))				data->fMasonsValve = value;
+		else if (!strcmp("SteamManifold:", param))				data->fSteamManifold = value;
+		else if (!strcmp("LubricatorSteam:", param))			data->fLubricatorSteam = value;
 		else if (!strcmp("Lubricator:", param))					data->fLubricator = value;
 		else if (!strcmp("LubricatorWarming:", param))			data->fLubricatorWarming = value;
 		else if (!strcmp("SmallEjector:", param))				data->fSmallEjector = value;
@@ -703,7 +709,8 @@ void RenderOverlay()
 	y = DrawString(eMainIndicators,			data.fAmmeter,						x+56,	y, whitegreen, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
 	y = DrawString(eMainIndicators,			data.nRPM,							x+80,	y, whitegreen, pSmallFont, "RPM: %d RPM", data.nRPM());
 	y = DrawString(eMainIndicators,			data.fVoltage,						x+66,	y, whitegreen, pSmallFont, "Voltage: %.1f V", data.fVoltage());
-	y = DrawString(eSteamIndicators,		data.fSanderLevel,					x+68,	y, whitegreen, pSmallFont, "Sander: %d %%", (int)(data.fSanderLevel()*100));
+	y = DrawString(eSteamIndicators,		data.fSandboxRear,					x+27,	y, whitegreen, pSmallFont, "Rear Sandbox: %d %%", (int)(data.fSandboxRear()*100));
+	y = DrawString(eSteamIndicators,		data.fSandbox,						x+58,	y, whitegreen, pSmallFont, "Sandbox: %d %%", (int)(data.fSandbox()*100));
 	y = DrawString(eSteamIndicators,		data.fSteamHeatingPressure,			x+23,	y, whitegreen, pSmallFont, "Steam Heating: %.1f PSI", data.fSteamHeatingPressure());
 	y = DrawString(eSteamIndicators,		data.fSteamChestPressure,			x+33,	y, whitegreen, pSmallFont, "Steam Chest: %.1f PSI", data.fSteamChestPressure());
 	y = DrawString(eSteamIndicators,		data.fBackPressure,					x+23,	y, whitegreen, pSmallFont, "Back Pressure: %.1f PSI", data.fBackPressure());
@@ -760,6 +767,8 @@ void RenderOverlay()
 	y = DrawString(eSteamDriverPrimary,		data.fSmallEjector,					x+59,	y, white, pSmallFont, "Small Ejector: %d %%", (int)(data.fSmallEjector()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fLubricatorWarming,			x+24,	y, white, pSmallFont, "Warming Lubricator: %d %%", (int)(data.fLubricatorWarming()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fLubricator,					x+80,	y, white, pSmallFont, "Lubricator: %d %%", (int)(data.fLubricator()*100));
+	y = DrawString(eSteamDriverSecondary,	data.fLubricatorSteam,				x+38,	y, white, pSmallFont, "Steam Lubricator: %d %%", (int)(data.fLubricatorSteam()*100));
+	y = DrawString(eSteamDriverSecondary,	data.fSteamManifold,				x+47,	y, white, pSmallFont, "Steam Manifold: %d %%", (int)(data.fSteamManifold()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fMasonsValve,					x+57,	y, white, pSmallFont, "Masons Valve: %d %%", (int)(data.fMasonsValve()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fSteamHeating,					x+51,	y, white, pSmallFont, "Steam Heating: %d %%", (int)(data.fSteamHeating()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fSteamHeatingShutOff,			x+0,	y, white, pSmallFont, "Shut Off Steam Heating: %d %%", (int)(data.fSteamHeatingShutOff()*100));

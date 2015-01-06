@@ -39,7 +39,6 @@ function ConfigureOverlay()
    ControlValues = {}
    DoorsValues = {}
    ControlValuesFunctions = {}
-   ControlValuesModifiers = {}
 
    -- Units
 
@@ -122,9 +121,14 @@ function ConfigureOverlay()
       ControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
    end
 
-   if Call("*:ControlExists", "SandLevel", 0) == 1 then  -- Q1
-      ControlValues["SanderLevel"] = "SandLevel"
-      ControlValuesModifiers["SanderLevel"] = 0.001111111111
+   if Call("*:ControlExists", "FrontSandBox", 0) == 1 then  -- 2F
+      ControlValues["Sandbox"] = "FrontSandBox"
+   elseif Call("*:ControlExists", "SandLevel", 0) == 1 then  -- Q1
+      ControlValues["Sandbox"] = "SandLevel"
+   end
+
+   if Call("*:ControlExists", "RearSandBox", 0) == 1 then  -- 2F
+      ControlValues["SandboxRear"] = "RearSandBox"
    end
 
    if Call("*:ControlExists", "Voltage", 0) == 1 then  -- FEF-3
@@ -314,7 +318,17 @@ function ConfigureOverlay()
       ControlValues["MasonsValve"] = "MasonsValve"
    end
 
-   if Call("*:ControlExists", "SteamShutOffR", 0) == 1 then  -- Q1
+   if Call("*:ControlExists", "Steam Manifold", 0) == 1 then  -- 2F
+      ControlValues["SteamManifold"] = "Steam Manifold"
+   end
+
+   if Call("*:ControlExists", "LubricatorSteamValve", 0) == 1 then  -- 2F
+      ControlValues["LubricatorSteam"] = "LubricatorSteamValve"
+   end
+
+   if Call("*:ControlExists", "LubricatorOilValve", 0) == 1 then  -- 2F
+      ControlValues["Lubricator"] = "LubricatorOilValve"
+   elseif Call("*:ControlExists", "SteamShutOffR", 0) == 1 then  -- Q1
       ControlValues["Lubricator"] = "SteamShutOffR"
    elseif Call("*:ControlExists", "Lubricator", 0) == 1 then
       ControlValues["Lubricator"] = "Lubricator"
@@ -338,7 +352,9 @@ function ConfigureOverlay()
       ControlValues["SanderSteam"] = "SanderSteam"
    end
 
-   if Call("*:ControlExists", "Sander", 0) == 1 then
+   if Call("*:ControlExists", "VirtualSander", 0) == 1 then  -- 2F
+      ControlValues["Sander"] = "VirtualSander"
+   elseif Call("*:ControlExists", "Sander", 0) == 1 then
       ControlValues["Sander"] = "Sander"
    end
 
@@ -466,13 +482,17 @@ function ConfigureOverlay()
       ControlValues["FeedWaterPump"] = "FWPump"
    end
 
-   if Call("*:ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
+   if Call("*:ControlExists", "Left Steam", 0) == 1 then  -- 2F
+      ControlValues["ExhaustInjectorSteam"] = "Left Steam"
+   elseif Call("*:ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamLever"
    elseif Call("*:ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
       ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
    end
 
-   if Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
+   if Call("*:ControlExists", "Left Water", 0) == 1 then  -- 2F
+      ControlValues["ExhaustInjectorWater"] = "Left Water"
+   elseif Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
       ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterLever"
    elseif Call("*:ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
       ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterFineControl"
@@ -482,13 +502,17 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
       ControlValues["LiveInjectorSteam"] = "InjectorLeverR"
+   elseif Call("*:ControlExists", "Right Steam", 0) == 1 then  -- 2F
+      ControlValues["LiveInjectorSteam"] = "Right Steam"
    elseif Call("*:ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamLever"
    elseif Call("*:ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
       ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
    end
 
-   if Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
+   if Call("*:ControlExists", "Right Water", 0) == 1 then  -- 2F
+      ControlValues["LiveInjectorWater"] = "Right Water"
+   elseif Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
       ControlValues["LiveInjectorWater"] = "LiveInjectorWaterLever"
    elseif Call("*:ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
       ControlValues["LiveInjectorWater"] = "LiveInjectorWaterFineControl"
@@ -586,7 +610,10 @@ function ConfigureOverlay()
       ControlValues["SafetyValve3"] = nil
 
       -- Firebox is 0-5%, make it full range (0-100%)
-      ControlValuesModifiers["FireboxMass"] = 20
+      ControlValuesFunctions["FireboxMass"] =
+         function(value)
+            return value * 20
+         end
       -- BackPressure needs to be converted
       ControlValuesFunctions["BackPressure"] =
          function(value)
@@ -614,6 +641,18 @@ function ConfigureOverlay()
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 
+   elseif Detect2FDockTank_ADV_MeshTools(true) then
+      -- Lever for Train/Steam brake
+      ControlValues["TrainBrake"] = "VirtualBrake"
+      -- Internal for steam brake should be hidden
+      ControlValues["LocoBrake"] = nil
+
+      -- Make the Sander {-1, 1}
+      ControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      -- Make the Sanboxes {0, 1}
+      ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
+      ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+
    elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
@@ -628,6 +667,10 @@ function ConfigureOverlay()
       --ControlValues["ExhaustInjectorShutOff"] = nil
       --ControlValues["LiveInjectorShutOff"] = nil
       --ControlValues["TenderWaterShutOff"] = nil
+
+      -- Make the Sanbox {0,1}
+      ControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
+
 
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
@@ -689,7 +732,7 @@ function GetOverlayData()
    if Gradient then data = data.."Gradient: "..Gradient.."\n" end
 
    local FireboxMass = Call("*:GetFireboxMass")
-   if FireboxMass and ControlValuesModifiers["FireboxMass"] then FireboxMass = FireboxMass * ControlValuesModifiers["FireboxMass"] end
+   if FireboxMass and ControlValuesFunctions["FireboxMass"] then FireboxMass = ControlValuesFunctions["FireboxMass"](FireboxMass) end
    if FireboxMass then data = data.."FireboxMass: "..FireboxMass.."\n" end
 
    -- Static Values loop
@@ -702,8 +745,6 @@ function GetOverlayData()
       local value = Call("*:GetControlValue", name, 0)
       if ControlValuesFunctions[key] then
          value = ControlValuesFunctions[key](value)
-      elseif ControlValuesModifiers[key] then
-         value = value * ControlValuesModifiers[key]
       end
       data = data..key..": "..value.."\n"
    end
