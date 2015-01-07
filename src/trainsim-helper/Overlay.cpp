@@ -78,6 +78,7 @@ struct SimData {
 	// Units
 	Value<std::string>	sUnits;
 	Value<std::string>	sVacuumBrakePipeUnits;
+	Value<std::string>	sVacuumBrakeChamberUnits;
 	Value<std::string>	sTrainBrakeCylinderUnits;
 	Value<std::string>	sLocoBrakeCylinderUnits;
 	Value<std::string>	sAirBrakePipeUnits;
@@ -107,6 +108,7 @@ struct SimData {
 
 	// Brake's indicators
 	Value<float>		fVacuumBrakePipePressure;
+	Value<float>		fVacuumBrakeChamberPressure;
 	Value<float>		fTrainBrakeCylinderPressure;
 	Value<float>		fLocoBrakeCylinderPressure;
 	Value<float>		fAirBrakePipePressure;
@@ -346,6 +348,7 @@ int FillData(SimData* data)
 		// Units
 		else if (!strcmp("Units:", param))						data->sUnits = value;
 		else if (!strcmp("VacuumBrakePipeUnits:", param))		data->sVacuumBrakePipeUnits = value;
+		else if (!strcmp("VacuumBrakeChamberUnits:", param))	data->sVacuumBrakeChamberUnits = value;
 		else if (!strcmp("TrainBrakeCylinderUnits:", param))	data->sTrainBrakeCylinderUnits = value;
 		else if (!strcmp("LocoBrakeCylinderUnits:", param))		data->sLocoBrakeCylinderUnits = value;
 		else if (!strcmp("AirBrakePipeUnits:", param))			data->sAirBrakePipeUnits = value;
@@ -375,6 +378,7 @@ int FillData(SimData* data)
 
 		// Brake's indicators
 		else if (!strcmp("VacuumBrakePipePressure:", param))	data->fVacuumBrakePipePressure = value;
+		else if (!strcmp("VacuumBrakeChamberPressure:", param))	data->fVacuumBrakeChamberPressure = value;
 		else if (!strcmp("TrainBrakeCylinderPressure:", param))	data->fTrainBrakeCylinderPressure = value;
 		else if (!strcmp("LocoBrakeCylinderPressure:", param))	data->fLocoBrakeCylinderPressure = value;
 		else if (!strcmp("AirBrakePipePressure:", param))		data->fAirBrakePipePressure = value;
@@ -702,6 +706,7 @@ void RenderOverlay()
 	y = DrawString(eMainIndicatorsBrakes,	data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sAirBrakePipeUnits());
 	y = DrawString(eMainIndicatorsBrakes,	data.fLocoBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sLocoBrakeCylinderUnits());
 	y = DrawString(eMainIndicatorsBrakes,	data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sTrainBrakeCylinderUnits());
+	y = DrawString(eMainIndicatorsBrakes,	data.fVacuumBrakeChamberPressure,	x+6,	y, whitered, pSmallFont, "Vacuum Chamber: %.1f %s", data.fVacuumBrakeChamberPressure(), data.sVacuumBrakeChamberUnits());
 	y = DrawString(eMainIndicatorsBrakes,	data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f %s", data.fVacuumBrakePipePressure(), data.sVacuumBrakePipeUnits());
 
 	y = NextSection(y, &yP, yD);

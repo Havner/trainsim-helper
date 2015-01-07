@@ -115,7 +115,9 @@ function ConfigureOverlay()
       ControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
    end
 
-   if Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 then
+   if Call("*:ControlExists", "Steam Heat Gauge", 0) == 1 then  -- J50
+      ControlValues["SteamHeatingPressure"] = "Steam Heat Gauge"
+   elseif Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 then
       ControlValues["SteamHeatingPressure"] = "SteamHeatingPressureGaugePSI"
    elseif Call("*:ControlExists", "SteamHeatGauge", 0) == 1 then
       ControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
@@ -154,6 +156,12 @@ function ConfigureOverlay()
    elseif Call("*:ControlExists", "VacuumBrakePipePressurePSI", 0) == 1 then
       ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressurePSI"
       StaticValues["VacuumBrakePipeUnits"] = "PSI"
+   end
+
+   -- Do not add VacuumBrakeChamberPressureINCHES here, it's mostly useless
+   if Call("*:ControlExists", "Vacuum Chamber Side", 0) == 1 then  -- J50
+      ControlValues["VacuumBrakeChamberPressure"] = "Vacuum Chamber Side"
+      StaticValues["VacuumBrakeChamberUnits"] = "Inches"
    end
 
    if Call("*:ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then
@@ -308,7 +316,9 @@ function ConfigureOverlay()
       ControlValues["SteamHeatingShutOff"] = "SteamHeatShutOff"
    end
 
-   if Call("*:ControlExists", "SteamHeatingValve", 0) == 1 then
+   if Call("*:ControlExists", "Steam Heat Valve", 0) == 1 then  -- J50
+      ControlValues["SteamHeating"] = "Steam Heat Valve"
+   elseif Call("*:ControlExists", "SteamHeatingValve", 0) == 1 then
       ControlValues["SteamHeating"] = "SteamHeatingValve"
    elseif Call("*:ControlExists", "SteamHeat", 0) == 1 then
       ControlValues["SteamHeating"] = "SteamHeat"
@@ -352,7 +362,9 @@ function ConfigureOverlay()
       ControlValues["SanderSteam"] = "SanderSteam"
    end
 
-   if Call("*:ControlExists", "VirtualSander", 0) == 1 then  -- 2F
+   if Call("*:ControlExists", "FrontSander", 0) == 1 then  -- J50
+      ControlValues["Sander"] = "FrontSander"
+   elseif Call("*:ControlExists", "VirtualSander", 0) == 1 then  -- 2F
       ControlValues["Sander"] = "VirtualSander"
    elseif Call("*:ControlExists", "Sander", 0) == 1 then
       ControlValues["Sander"] = "Sander"
@@ -360,6 +372,8 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "Sander2", 0) == 1 then  -- FEF-3
       ControlValues["SanderRear"] = "Sander2"
+   elseif Call("*:ControlExists", "RearSander", 0) == 1 then  -- J50
+      ControlValues["SanderRear"] = "RearSander"
    end
 
    if Call("*:ControlExists", "SandCaps", 0) == 1 then  -- Q1
@@ -638,6 +652,13 @@ function ConfigureOverlay()
    elseif DetectJ94_ADV_MeshTools(true) then
       -- Loco/Steam Brake lever, internal should be hidden
       ControlValues["LocoBrake"] = "VirtualLocoBrake"
+      -- It has left and right dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
+
+   elseif DetectJ50_ADV_MeshTools(true) then
+      -- Vacuum Brake lever, internal should be hidden
+      ControlValues["TrainBrake"] = "VirtualBrake"
+      ControlValues["LocoBrake"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 

@@ -491,6 +491,28 @@ function DetectJ94_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    end
 end
 
+function DetectJ50_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addon
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "Headcode4", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "ReverserLock", 0) == 1 and
+      Call("*:ControlExists", "DamperLeft", 0) == 1 and
+      Call("*:ControlExists", "Seat", 0) == 1 and
+      Call("*:ControlExists", "WhistleBlast", 0) == 1 and
+      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
+      Call("*:ControlExists", "RearSander", 0) == 1 and
+      Call("*:ControlExists", "SmallBrakeValve", 0) == 1 and
+      Call("*:ControlExists", "Vacuum Chamber Side", 0) == 1 and
+      Call("*:ControlExists", "Steam Heat Valve", 0) == 1 and
+      Call("*:ControlExists", "Right Door", 0) == 1 and
+      Call("*:ControlExists", "DFO", 0) == 1 and
+      Call("*:ControlExists", "WheelVelocity", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("J50 (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
 function Detect2FDockTank_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
    if Call("*:ControlExists", "Headcode1", 0) == 1 and
       Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
