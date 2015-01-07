@@ -25,9 +25,11 @@ function ConfigureJoystick()
    --HandBrakeLine = 10
    --SmallEjectorLine = 10
    --BlowerLine = 0
-   --DamperLine = 0
-   StokingLine = 14
-   ExhaustWaterLine = 12
+   FireboxDoorLine = 0     -- FEF-3: Atomizer
+   StokingLine = 14        -- FEF-3: Oil Regulator
+   ExhaustSteamLine = 0
+   ExhaustWaterLine = 12   -- FEF-3: Feedwater Pump
+   LiveSteamLine = 0
    LiveWaterLine = 11
 
    ReverserInvert = 1
@@ -41,7 +43,6 @@ function ConfigureJoystick()
    --HandBrakeInvert = 1
    --SmallEjectorInvert = 1
    --BlowerInvert = 1
-   --DamperInvert = 1
    --StokingInvert = 1
    --ExhaustWaterInvert = 1
    --LiveWaterInvert = 1
@@ -69,7 +70,6 @@ function ConfigureJoystick()
    HandBrakeControl =         FindHandBrake()
    SmallEjectorControl =      FindSmallEjector()
    BlowerControl =            FindBlower()
-   DamperControl =            FindDamper()
    StokingControl =           FindStoking()
    ExhaustWaterControl =      FindExhaustWater()
    LiveWaterControl =         FindLiveWater()
@@ -86,7 +86,6 @@ function ConfigureJoystick()
    HandBrakeRange =        GetControlRange(FindHandBrake())
    SmallEjectorRange =     GetControlRange(FindSmallEjector())
    BlowerRange =           GetControlRange(FindBlower())
-   DamperRange =           GetControlRange(FindDamper())
    StokingRange =          GetControlRange(FindStoking())
    ExhaustWaterRange =     GetControlRange(FindExhaustWater())
    LiveWaterRange =        GetControlRange(FindLiveWater())
@@ -491,7 +490,6 @@ function ConfigureJoystick()
    PreviousHandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
    PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    PreviousBlower =           GetLineValue(lines, BlowerLine, BlowerInvert)
-   PreviousDamper =           GetLineValue(lines, DamperLine, DamperInvert)
    PreviousStoking =          GetLineValue(lines, StokingLine, StokingInvert)
    PreviousExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
    PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
@@ -610,14 +608,6 @@ function FindBlower()
    end
 end
 
-function FindDamper()
-   if Call("*:ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
-      return "FiredoorDamper"
-   elseif Call("*:ControlExists", "Damper", 0) == 1 then
-      return "Damper"
-   end
-end
-
 function FindStoking()
    if Call("*:ControlExists", "Firing", 0) == 1 then  -- FEF-3
       return "Firing"
@@ -670,7 +660,6 @@ function SetJoystickData()
    local HandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
    local SmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    local Blower =           GetLineValue(lines, BlowerLine, BlowerInvert)
-   local Damper =           GetLineValue(lines, DamperLine, DamperInvert)
    local Stoking =          GetLineValue(lines, StokingLine, StokingInvert)
    local ExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
    local LiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
@@ -687,7 +676,6 @@ function SetJoystickData()
    PreviousHandBrake =        SetControl(HandBrakeControl,        PreviousHandBrake,        HandBrake,        HandBrakeRange,        HandBrakeNotches)
    PreviousSmallEjector =     SetControl(SmallEjectorControl,     PreviousSmallEjector,     SmallEjector,     SmallEjectorRange,     SmallEjectorNotches)
    PreviousBlower =           SetControl(BlowerControl,           PreviousBlower,           Blower,           BlowerRange,           BlowerNotches)
-   PreviousDamper =           SetControl(DamperControl,           PreviousDamper,           Damper,           DamperRange,           DamperNotches)
    PreviousStoking =          SetControl(StokingControl,          PreviousStoking,          Stoking,          StokingRange,          StokingNotches)
    PreviousExhaustWater =     SetControl(ExhaustWaterControl,     PreviousExhaustWater,     ExhaustWater,     ExhaustWaterRange,     ExhaustWaterNotches)
    PreviousLiveWater =        SetControl(LiveWaterControl,        PreviousLiveWater,        LiveWater,        LiveWaterRange,        LiveWaterNotches)

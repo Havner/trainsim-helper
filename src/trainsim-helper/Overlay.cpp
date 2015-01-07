@@ -152,9 +152,9 @@ struct SimData {
 	Value<float>		fFireboxDoor;
 	Value<float>		fStoking;
 	Value<float>		fOilRegulator;
-	Value<float>		fBlower;
-	Value<float>		fTankHeater;
 	Value<float>		fAtomizer;
+	Value<float>		fTankHeater;
+	Value<float>		fBlower;
 	Value<float>		fDamper;
 	Value<float>		fDamperLeft;
 	Value<float>		fDamperRight;
@@ -422,9 +422,9 @@ int FillData(SimData* data)
 		else if (!strcmp("FireboxDoor:", param))				data->fFireboxDoor = value;
 		else if (!strcmp("Stoking:", param))					data->fStoking = value;
 		else if (!strcmp("OilRegulator:", param))				data->fOilRegulator = value;
-		else if (!strcmp("Blower:", param))						data->fBlower = value;
-		else if (!strcmp("TankHeater:", param))					data->fTankHeater = value;
 		else if (!strcmp("Atomizer:", param))					data->fAtomizer = value;
+		else if (!strcmp("TankHeater:", param))					data->fTankHeater = value;
+		else if (!strcmp("Blower:", param))						data->fBlower = value;
 		else if (!strcmp("Damper:", param))						data->fDamper = value;
 		else if (!strcmp("DamperLeft:", param))					data->fDamperLeft = value;
 		else if (!strcmp("DamperRight:", param))				data->fDamperRight = value;
@@ -701,24 +701,24 @@ void RenderOverlay()
 
 	y = NextSection(y, &yP, yD);
 
-	y = DrawString(eMainIndicatorsBrakes,	data.fEqReservoirPressure,			x+36,	y, whitered, pSmallFont, "Eq Reservoir: %.1f %s", data.fEqReservoirPressure(), data.sEqReservoirUnits());
-	y = DrawString(eMainIndicatorsBrakes,	data.fMainReservoirPressure,		x+24,	y, whitered, pSmallFont, "Main Reservoir: %.1f %s", data.fMainReservoirPressure(), data.sMainReservoirUnits());
-	y = DrawString(eMainIndicatorsBrakes,	data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sAirBrakePipeUnits());
-	y = DrawString(eMainIndicatorsBrakes,	data.fLocoBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sLocoBrakeCylinderUnits());
-	y = DrawString(eMainIndicatorsBrakes,	data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sTrainBrakeCylinderUnits());
-	y = DrawString(eMainIndicatorsBrakes,	data.fVacuumBrakeChamberPressure,	x+6,	y, whitered, pSmallFont, "Vacuum Chamber: %.1f %s", data.fVacuumBrakeChamberPressure(), data.sVacuumBrakeChamberUnits());
-	y = DrawString(eMainIndicatorsBrakes,	data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f %s", data.fVacuumBrakePipePressure(), data.sVacuumBrakePipeUnits());
+	y = DrawString(eMainBrakes,				data.fEqReservoirPressure,			x+36,	y, whitered, pSmallFont, "Eq Reservoir: %.1f %s", data.fEqReservoirPressure(), data.sEqReservoirUnits());
+	y = DrawString(eMainBrakes,				data.fMainReservoirPressure,		x+24,	y, whitered, pSmallFont, "Main Reservoir: %.1f %s", data.fMainReservoirPressure(), data.sMainReservoirUnits());
+	y = DrawString(eMainBrakes,				data.fAirBrakePipePressure,			x+45,	y, whitered, pSmallFont, "Brake Pipe: %.1f %s", data.fAirBrakePipePressure(), data.sAirBrakePipeUnits());
+	y = DrawString(eMainBrakes,				data.fLocoBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Loco Brake: %.1f %s", data.fLocoBrakeCylinderPressure(), data.sLocoBrakeCylinderUnits());
+	y = DrawString(eMainBrakes,				data.fTrainBrakeCylinderPressure,	x+43,	y, whitered, pSmallFont, "Train Brake: %.1f %s", data.fTrainBrakeCylinderPressure(), data.sTrainBrakeCylinderUnits());
+	y = DrawString(eMainBrakes,				data.fVacuumBrakeChamberPressure,	x+6,	y, whitered, pSmallFont, "Vacuum Chamber: %.1f %s", data.fVacuumBrakeChamberPressure(), data.sVacuumBrakeChamberUnits());
+	y = DrawString(eMainBrakes,				data.fVacuumBrakePipePressure,		x+32,	y, whitered, pSmallFont, "Vacuum Pipe: %.1f %s", data.fVacuumBrakePipePressure(), data.sVacuumBrakePipeUnits());
 
 	y = NextSection(y, &yP, yD);
 
 	y = DrawString(eMainIndicators,			data.fAmmeter,						x+56,	y, whitegreen, pSmallFont, "Ammeter: %.1f Amps", normalizeSign(data.fAmmeter()));
 	y = DrawString(eMainIndicators,			data.nRPM,							x+80,	y, whitegreen, pSmallFont, "RPM: %d RPM", data.nRPM());
 	y = DrawString(eMainIndicators,			data.fVoltage,						x+66,	y, whitegreen, pSmallFont, "Voltage: %.1f V", data.fVoltage());
-	y = DrawString(eSteamIndicators,		data.fSandboxRear,					x+27,	y, whitegreen, pSmallFont, "Rear Sandbox: %d %%", (int)(data.fSandboxRear()*100));
-	y = DrawString(eSteamIndicators,		data.fSandbox,						x+58,	y, whitegreen, pSmallFont, "Sandbox: %d %%", (int)(data.fSandbox()*100));
-	y = DrawString(eSteamIndicators,		data.fSteamHeatingPressure,			x+23,	y, whitegreen, pSmallFont, "Steam Heating: %.1f PSI", data.fSteamHeatingPressure());
-	y = DrawString(eSteamIndicators,		data.fSteamChestPressure,			x+33,	y, whitegreen, pSmallFont, "Steam Chest: %.1f PSI", data.fSteamChestPressure());
-	y = DrawString(eSteamIndicators,		data.fBackPressure,					x+23,	y, whitegreen, pSmallFont, "Back Pressure: %.1f PSI", data.fBackPressure());
+	y = DrawString(eMainIndicators,			data.fSandboxRear,					x+27,	y, whitegreen, pSmallFont, "Rear Sandbox: %d %%", (int)(data.fSandboxRear()*100));
+	y = DrawString(eMainIndicators,			data.fSandbox,						x+58,	y, whitegreen, pSmallFont, "Sandbox: %d %%", (int)(data.fSandbox()*100));
+	y = DrawString(eMainIndicators,			data.fSteamHeatingPressure,			x+23,	y, whitegreen, pSmallFont, "Steam Heating: %.1f PSI", data.fSteamHeatingPressure());
+	y = DrawString(eMainIndicators,			data.fSteamChestPressure,			x+33,	y, whitegreen, pSmallFont, "Steam Chest: %.1f PSI", data.fSteamChestPressure());
+	y = DrawString(eMainIndicators,			data.fBackPressure,					x+23,	y, whitegreen, pSmallFont, "Back Pressure: %.1f PSI", data.fBackPressure());
 
 	y = NextSection(y, &yP, yD);
 
@@ -743,7 +743,7 @@ void RenderOverlay()
 	else
 		y = DrawString(eMainDistance,		ISVALID(fDistance),					x+45,	y, white, pMediumFont, "Distance: %.2f %s", fDistance, sUnitsDistance);
 
-	y = DrawString(eSteamBoiler,			data.fBoilerPressure,				x+67,	y, boilercolor, pMediumFont, "Boiler: %.1f PSI", data.fBoilerPressure());
+	y = DrawString(eMainBoiler,				data.fBoilerPressure,				x+67,	y, boilercolor, pMediumFont, "Boiler: %.1f PSI", data.fBoilerPressure());
 	y = DrawString(eMainSpeed,				data.fSpeed,						x+62,	y, speedcolor, pMediumFont, "Speed: %.1f / %d %s", normalizeSign(fSpeed), nSpeedLimit, sUnitsSpeed);
 
 	y = NextSection(y, &yP, yD);
@@ -801,28 +801,28 @@ void RenderOverlay()
 	y = DrawString(eSteamSafety,			data.fSafetyValve2,					x+76,	y, white, pSmallFont, "Safety Valve 2: %d %%", (int)(data.fSafetyValve2()*100));
 	y = DrawString(eSteamSafety,			data.fSafetyValve1,					x+76,	y, white, pSmallFont, "Safety Valve 1: %d %%", (int)(data.fSafetyValve1()*100));
 	y = NextSection(y, &yP, yD);
-	y = DrawString(eSteamWaterSecondary,	data.fLiveInjectorWater,			x+51,	y, whiteblue, pSmallFont, "Water Live Injector: %d %%", (int)(data.fLiveInjectorWater()*100));
-	y = DrawString(eSteamWaterSecondary,	data.fLiveInjectorSteam,			x+48,	y, whiteblue, pSmallFont, "Steam Live Injector: %d %%", (int)(data.fLiveInjectorSteam()*100));
-	y = DrawString(eSteamWaterSecondary,	data.fExhaustInjectorWater,			x+25,	y, whiteblue, pSmallFont, "Water Exhaust Injector: %d %%", (int)(data.fExhaustInjectorWater()*100));
-	y = DrawString(eSteamWaterSecondary,	data.fExhaustInjectorSteam,			x+22,	y, whiteblue, pSmallFont, "Steam Exhaust Injector: %d %%", (int)(data.fExhaustInjectorSteam()*100));
-	y = DrawString(eSteamWaterSecondary,	data.fFeedWaterPump,				x+60,	y, whiteblue, pSmallFont, "Feedwater Pump: %d %%", (int)(data.fFeedWaterPump()*100));
-	y = DrawString(eSteamWaterSecondary,	data.fFeedWaterPressure,			x+81,	y, whiteblue, pMediumFont, "Feedwater: %.1f PSI", data.fFeedWaterPressure());
-	y = DrawString(eSteamWaterPrimary,		data.fWaterGauge,					x+113,	y, whiteblue, pMediumFont, "Water: %.1f %%", data.fWaterGauge()*100);
+	y = DrawString(eSteamWaterControls,		data.fLiveInjectorWater,			x+51,	y, whiteblue, pSmallFont, "Water Live Injector: %d %%", (int)(data.fLiveInjectorWater()*100));
+	y = DrawString(eSteamWaterControls,		data.fLiveInjectorSteam,			x+48,	y, whiteblue, pSmallFont, "Steam Live Injector: %d %%", (int)(data.fLiveInjectorSteam()*100));
+	y = DrawString(eSteamWaterControls,		data.fExhaustInjectorWater,			x+25,	y, whiteblue, pSmallFont, "Water Exhaust Injector: %d %%", (int)(data.fExhaustInjectorWater()*100));
+	y = DrawString(eSteamWaterControls,		data.fExhaustInjectorSteam,			x+22,	y, whiteblue, pSmallFont, "Steam Exhaust Injector: %d %%", (int)(data.fExhaustInjectorSteam()*100));
+	y = DrawString(eSteamWaterControls,		data.fFeedWaterPump,				x+60,	y, whiteblue, pSmallFont, "Feedwater Pump: %d %%", (int)(data.fFeedWaterPump()*100));
+	y = DrawString(eSteamWaterIndicators,	data.fFeedWaterPressure,			x+81,	y, whiteblue, pMediumFont, "Feedwater: %.1f PSI", data.fFeedWaterPressure());
+	y = DrawString(eSteamWater,				data.fWaterGauge,					x+113,	y, whiteblue, pMediumFont, "Water: %.1f %%", data.fWaterGauge()*100);
 	y = NextSection(y, &yP, yD);
-	y = DrawString(eSteamFireSecondary,		data.fDamperRear,					x+82,	y, whitered, pSmallFont, "Rear Damper: %d %%", (int)(data.fDamperRear()*100));
-	y = DrawString(eSteamFireSecondary,		data.fDamperFront,					x+79,	y, whitered, pSmallFont, "Front Damper: %d %%", (int)(data.fDamperFront()*100));
-	y = DrawString(eSteamFireSecondary,		data.fDamperRight,					x+79,	y, whitered, pSmallFont, "Right Damper: %d %%", (int)(data.fDamperRight()*100));
-	y = DrawString(eSteamFireSecondary,		data.fDamperLeft,					x+88,	y, whitered, pSmallFont, "Left Damper: %d %%", (int)(data.fDamperLeft()*100));
-	y = DrawString(eSteamFireSecondary,		data.fDamper,						x+113,	y, whitered, pSmallFont, "Damper: %d %%", (int)(data.fDamper()*100));
-	y = DrawString(eSteamFireSecondary,		data.fAtomizer,						x+106,	y, whitered, pSmallFont, "Atomizer: %d %%", (int)(data.fAtomizer()*100));
-	y = DrawString(eSteamFireSecondary,		data.fTankHeater,					x+89,	y, whitered, pSmallFont, "Tank Heater: %d %%", (int)(data.fTankHeater()*100));
-	y = DrawString(eSteamFireSecondary,		data.fBlower,						x+119,	y, whitered, pSmallFont, "Blower: %d %%", (int)(data.fBlower()*100));
-	y = DrawString(eSteamFireSecondary,		data.fOilRegulator,					x+81,	y, whitered, pSmallFont, "Oil Regulator: %d %%", (int)(data.fOilRegulator()*100));
-	y = DrawString(eSteamFireSecondary,		data.fStoking,						x+114,	y, whitered, pSmallFont, "Stoking: %d %%", (int)(data.fStoking()*100));
-	y = DrawString(eSteamFireSecondary,		data.fFireboxDoor,					x+84,	y, whitered, pSmallFont, "Firebox Door: %d %%", (int)(data.fFireboxDoor()*100));
-	y = DrawString(eSteamFireSecondary,		data.fTankTemperature,				x+124,	y, whitered, pMediumFont, "Tank: %.1f °F",data.fTankTemperature());
-	y = DrawString(eSteamFireSecondary,		data.fAtomizerPressure,				x+93,	y, whitered, pMediumFont, "Atomizer: %.1f PSI", data.fAtomizerPressure());
-	y = DrawString(eSteamFirePrimary,		data.fFireboxMass,					x+103,	y, whitered, pMediumFont, "Firebox: %.1f %%", data.fFireboxMass()*100);
+	y = DrawString(eSteamFireControls,		data.fDamperRear,					x+82,	y, whitered, pSmallFont, "Rear Damper: %d %%", (int)(data.fDamperRear()*100));
+	y = DrawString(eSteamFireControls,		data.fDamperFront,					x+79,	y, whitered, pSmallFont, "Front Damper: %d %%", (int)(data.fDamperFront()*100));
+	y = DrawString(eSteamFireControls,		data.fDamperRight,					x+79,	y, whitered, pSmallFont, "Right Damper: %d %%", (int)(data.fDamperRight()*100));
+	y = DrawString(eSteamFireControls,		data.fDamperLeft,					x+88,	y, whitered, pSmallFont, "Left Damper: %d %%", (int)(data.fDamperLeft()*100));
+	y = DrawString(eSteamFireControls,		data.fDamper,						x+113,	y, whitered, pSmallFont, "Damper: %d %%", (int)(data.fDamper()*100));
+	y = DrawString(eSteamFireControls,		data.fBlower,						x+119,	y, whitered, pSmallFont, "Blower: %d %%", (int)(data.fBlower()*100));
+	y = DrawString(eSteamFireControls,		data.fTankHeater,					x+89,	y, whitered, pSmallFont, "Tank Heater: %d %%", (int)(data.fTankHeater()*100));
+	y = DrawString(eSteamFireControls,		data.fAtomizer,						x+106,	y, whitered, pSmallFont, "Atomizer: %d %%", (int)(data.fAtomizer()*100));
+	y = DrawString(eSteamFireControls,		data.fOilRegulator,					x+81,	y, whitered, pSmallFont, "Oil Regulator: %d %%", (int)(data.fOilRegulator()*100));
+	y = DrawString(eSteamFireControls,		data.fStoking,						x+114,	y, whitered, pSmallFont, "Stoking: %d %%", (int)(data.fStoking()*100));
+	y = DrawString(eSteamFireControls,		data.fFireboxDoor,					x+84,	y, whitered, pSmallFont, "Firebox Door: %d %%", (int)(data.fFireboxDoor()*100));
+	y = DrawString(eSteamFireIndicators,	data.fTankTemperature,				x+124,	y, whitered, pMediumFont, "Tank: %.1f °F",data.fTankTemperature());
+	y = DrawString(eSteamFireIndicators,	data.fAtomizerPressure,				x+93,	y, whitered, pMediumFont, "Atomizer: %.1f PSI", data.fAtomizerPressure());
+	y = DrawString(eSteamFire,				data.fFireboxMass,					x+103,	y, whitered, pMediumFont, "Firebox: %.1f %%", data.fFireboxMass()*100);
 
 	d3ddev->EndScene();    // ends the 3D scene
 	d3ddev->Present(NULL, NULL, NULL, NULL);   // displays the created frame on the screen

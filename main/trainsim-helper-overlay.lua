@@ -448,18 +448,18 @@ function ConfigureOverlay()
       ControlValues["OilRegulator"] = "Firing"
    end
 
-   if Call("*:ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
-      ControlValues["Blower"] = "BlowerControlValve"
-   elseif Call("*:ControlExists", "Blower", 0) == 1 then
-      ControlValues["Blower"] = "Blower"
+   if Call("*:ControlExists", "Atomizer", 0) == 1 then  -- FEF-3
+      ControlValues["Atomizer"] = "Atomizer"
    end
 
    if Call("*:ControlExists", "TankHeater", 0) == 1 then  -- FEF-3
       ControlValues["TankHeater"] = "TankHeater"
    end
 
-   if Call("*:ControlExists", "Atomizer", 0) == 1 then  -- FEF-3
-      ControlValues["Atomizer"] = "Atomizer"
+   if Call("*:ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
+      ControlValues["Blower"] = "BlowerControlValve"
+   elseif Call("*:ControlExists", "Blower", 0) == 1 then
+      ControlValues["Blower"] = "Blower"
    end
 
    if Call("*:ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3

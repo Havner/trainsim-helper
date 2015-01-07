@@ -215,21 +215,21 @@ B. Licence
   -----------------|-------------------|--------------------------------
          -m1       |   SHIFT+ALT+F1    |            speed
   -----------------|-------------------|--------------------------------
-         -m2       |   SHIFT+ALT+F2    |       distance/countdown
+         -m2       |   SHIFT+ALT+F2    |            boiler
   -----------------|-------------------|--------------------------------
-         -m3       |   SHIFT+ALT+F3    |        next speed limit
+         -m3       |   SHIFT+ALT+F3    |       distance/countdown
   -----------------|-------------------|--------------------------------
-         -m4       |   SHIFT+ALT+F4    |         acceleration
+         -m4       |   SHIFT+ALT+F4    |        next speed limit
   -----------------|-------------------|--------------------------------
-         -m5       |   SHIFT+ALT+F5    |           controls
+         -m5       |   SHIFT+ALT+F5    |         acceleration
   -----------------|-------------------|--------------------------------
-         -m6       |   SHIFT+ALT+F6    |          indicators
+         -m6       |   SHIFT+ALT+F6    |           controls
   -----------------|-------------------|--------------------------------
-         -m7       |   SHIFT+ALT+F7    |      brakes' indicators
+         -m7       |   SHIFT+ALT+F7    |          indicators
   -----------------|-------------------|--------------------------------
-         -m8       |   SHIFT+ALT+F8    |           gradient
+         -m8       |   SHIFT+ALT+F8    |            brakes
   -----------------|-------------------|--------------------------------
-         -m9       |   SHIFT+ALT+F9    |           reserved
+         -m9       |   SHIFT+ALT+F9    |           gradient
   -----------------|-------------------|--------------------------------
          -m10      |   SHIFT+ALT+F10   |           reserved
   -----------------|-------------------|--------------------------------
@@ -241,29 +241,29 @@ B. Licence
                          Steam HUD parts toggles
 
   -----------------|-------------------|--------------------------------
-         -s1       |   SHIFT+CTL+F1    |        boiler pressure
+         -s1       |   SHIFT+CTL+F1    |    driver's primary controls
   -----------------|-------------------|--------------------------------
-         -s2       |   SHIFT+CTL+F2    |       steam indicators
+         -s2       |   SHIFT+CTL+F2    |   driver's secondary controls
   -----------------|-------------------|--------------------------------
-         -s3       |   SHIFT+CTL+F3    |    driver's primary controls
+         -s3       |   SHIFT+CTL+F3    |   fireman's primary controls
   -----------------|-------------------|--------------------------------
-         -s4       |   SHIFT+CTL+F4    |   driver's secondary controls
+         -s4       |   SHIFT+CTL+F4    |  fireman's secondary controls
   -----------------|-------------------|--------------------------------
-         -s5       |   SHIFT+CTL+F5    |           reserved
+         -s5       |   SHIFT+CTL+F5    |             fire
   -----------------|-------------------|--------------------------------
-         -s6       |   SHIFT+CTL+F6    |   fireman's primary controls
+         -s6       |   SHIFT+CTL+F6    |        fire indicators
   -----------------|-------------------|--------------------------------
-         -s7       |   SHIFT+CTL+F7    |  fireman's secondary controls
+         -s7       |   SHIFT+CTL+F7    |         fire controls
   -----------------|-------------------|--------------------------------
-         -s8       |   SHIFT+CTL+F8    |         safety valves
+         -s8       |   SHIFT+CTL+F8    |           reserved
   -----------------|-------------------|--------------------------------
-         -s9       |   SHIFT+CTL+F9    |          fire primary
+         -s9       |   SHIFT+CTL+F9    |             water
   -----------------|-------------------|--------------------------------
-         -s10      |   SHIFT+CTL+F10   |         fire secondary
+         -s10      |   SHIFT+CTL+F10   |        water indicators
   -----------------|-------------------|--------------------------------
-         -s11      |   SHIFT+CTL+F11   |         water primary
+         -s11      |   SHIFT+CTL+F11   |         water controls
   -----------------|-------------------|--------------------------------
-         -s12      |   SHIFT+CTL+F12   |        water secondary
+         -s12      |   SHIFT+CTL+F12   |         safety valves
   -----------------|-------------------|--------------------------------
 
                     Distance / countdown / odometer
