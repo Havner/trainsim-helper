@@ -10,11 +10,6 @@
   - PZB warning for RSC German locos
   - removing Havner's reverser config?
   - Generic detections? elseif->if, remove things that go there anyway
-- Add Stoking, ExhaustSteam and LiveSteam on axes
-
-throttle: dynamic/loco
-male gorne: ejector
-slider: handbrake
 
 Things to consider for the very distant future:
 - Make the overlay display values in the data file it doesn't know about

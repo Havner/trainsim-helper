@@ -1,4 +1,5 @@
 0.8
+ - WARNING: Havner's configs changed (I got more physical throttles now)
  - Sunflower indicator removed, it was just obscuring the view
  - PZB alarm indicator for a loco that exports this info (BR420)
  - Toggleable font outline for better visibility
@@ -8,7 +9,8 @@
    - Colors changed a little
    - See the readme for current shortcuts and cmd line
  - J50, 2F Dock Tank and 3F Jinty by MeshTools
- - Damper axis removed, it makes little sense
+ - Damper axis removed, it made little sense
+ - FireboxDoor, ExhaustSteam and LiveSteam axes (also for FEF-3)
 
 0.7
  - Support for FEF-3 HUD version, sorry, forgot previously.

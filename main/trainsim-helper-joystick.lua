@@ -20,17 +20,17 @@ function ConfigureJoystick()
    CombinedThrottleLine = 3
    ThrottleLine = 3
    TrainBrakeLine = 6
-   LocoBrakeLine = 10      -- might also be used for SmallEjector or HandBrake if it's not explicitly set
+   LocoBrakeLine = 10      -- might also be used for HandBrake if it's not explicitly set
    DynamicBrakeLine = 7    -- might also be used for Reverser, Gear or CruiseControl if they're not explicitly set
    --HandBrakeLine = 10
-   --SmallEjectorLine = 10
-   --BlowerLine = 0
-   FireboxDoorLine = 0     -- FEF-3: Atomizer
-   StokingLine = 14        -- FEF-3: Oil Regulator
-   ExhaustSteamLine = 0
-   ExhaustWaterLine = 12   -- FEF-3: Feedwater Pump
-   LiveSteamLine = 0
-   LiveWaterLine = 11
+   SmallEjectorLine = 12
+   BlowerLine = 14
+   FireboxDoorLine = 21    -- FEF-3: Atomizer
+   StokingLine = 22        -- FEF-3: Oil Regulator
+   ExhaustSteamLine = 23
+   ExhaustWaterLine = 24   -- FEF-3: Feedwater Pump
+   LiveSteamLine = 25
+   LiveWaterLine = 26
 
    ReverserInvert = 1
    GearInvert = 1
@@ -41,10 +41,13 @@ function ConfigureJoystick()
    --LocoBrakeInvert = 1
    --DynamicBrakeInvert = 1
    --HandBrakeInvert = 1
-   --SmallEjectorInvert = 1
+   SmallEjectorInvert = 1
    --BlowerInvert = 1
+   --FireboxDoorInvert = 1
    --StokingInvert = 1
+   --ExhaustSteamInvert = 1
    --ExhaustWaterInvert = 1
+   --LiveSteamInvert = 1
    --LiveWaterInvert = 1
 
    --ReverserCenterDetent = 0.05
@@ -70,8 +73,11 @@ function ConfigureJoystick()
    HandBrakeControl =         FindHandBrake()
    SmallEjectorControl =      FindSmallEjector()
    BlowerControl =            FindBlower()
+   FireboxDoorControl =       FindFireboxDoor()
    StokingControl =           FindStoking()
+   ExhaustSteamControl =      FindExhaustSteam()
    ExhaustWaterControl =      FindExhaustWater()
+   LiveSteamControl =         FindLiveSteam()
    LiveWaterControl =         FindLiveWater()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later.
@@ -86,8 +92,11 @@ function ConfigureJoystick()
    HandBrakeRange =        GetControlRange(FindHandBrake())
    SmallEjectorRange =     GetControlRange(FindSmallEjector())
    BlowerRange =           GetControlRange(FindBlower())
+   FireboxDoorRange =      GetControlRange(FindFireboxDoor())
    StokingRange =          GetControlRange(FindStoking())
+   ExhaustSteamRange =     GetControlRange(FindExhaustSteam())
    ExhaustWaterRange =     GetControlRange(FindExhaustWater())
+   LiveSteamRange =        GetControlRange(FindLiveSteam())
    LiveWaterRange =        GetControlRange(FindLiveWater())
 
    -- Override defaults for custom locos. Detect functions are in the main script.
@@ -251,7 +260,6 @@ function ConfigureJoystick()
       ReverserControl = "Reverser"
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
 
    elseif DetectFEF3_ADV_Smokebox() then
       -- Ignore emergency values (0.85, 1)
@@ -268,16 +276,25 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
-   elseif DetectJ94_ADV_MeshTools() then
-      TrainBrakeNotches = {0.04, 0.15, 0.25}
+   elseif DetectJ94Steam_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      -- There is no TrainBrake here, use the steam brake as one
+      LocoBrakeLine = TrainBrakeLine
+      TrainBrakeLine = nil
+      -- Add notches as it's otherwise very hard to control the steam brake
       LocoBrakeNotches = {0.30, 0.40, 0.50}
+
+   elseif DetectJ94Train_ADV_MeshTools() then
+      TrainBrakeNotches = {0.04, 0.15, 0.25}
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
    elseif Detect3FJinty_ADV_MeshTools() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
       -- LocoBrake should not be used directly, only push/pull
       LocoBrakeLine = nil
       
@@ -285,7 +302,7 @@ function ConfigureJoystick()
       TrainBrakeNotches = {0.04, 0.15, 0.25}
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif Detect2FDockTank_ADV_MeshTools() then
       -- Havner's config
@@ -295,7 +312,7 @@ function ConfigureJoystick()
    elseif Detect56xx_VictoryWorks() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
       -- Havner's config
@@ -464,7 +481,6 @@ function ConfigureJoystick()
    elseif DetectGenericSteam() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectGenericUS() then
       -- Simple US diesels usually have notched throttle
@@ -497,8 +513,11 @@ function ConfigureJoystick()
    PreviousHandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
    PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    PreviousBlower =           GetLineValue(lines, BlowerLine, BlowerInvert)
+   PreviousFireboxDoor =      GetLineValue(lines, FireboxDoorLine, FireboxDoorInvert)
    PreviousStoking =          GetLineValue(lines, StokingLine, StokingInvert)
+   PreviousExhaustSteam =     GetLineValue(lines, ExhaustSteamLine, ExhaustSteamInvert)
    PreviousExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
+   PreviousLiveSteam =        GetLineValue(lines, LiveSteamLine, LiveSteamInvert)
    PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
 
    -- Set at the very end to be a mark whether the configuration has been successful.
@@ -615,6 +634,14 @@ function FindBlower()
    end
 end
 
+function FindFireboxDoor()
+   if Call("*:ControlExists", "Atomizer", 0) == 1 then  -- FEF-3
+      return "Atomizer"
+   elseif Call("*:ControlExists", "FireboxDoor", 0) == 1 then
+      return "FireboxDoor"
+   end
+end
+
 function FindStoking()
    if Call("*:ControlExists", "Firing", 0) == 1 then  -- FEF-3
       return "Firing"
@@ -623,10 +650,20 @@ function FindStoking()
    end
 end
 
+function FindExhaustSteam()
+   if Call("*:ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
+      return "Left Steam"
+   elseif Call("*:ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
+      return "ExhaustInjectorSteamLever"
+   elseif Call("*:ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
+      return "ExhaustInjectorSteamOnOff"
+   end
+end
+
 function FindExhaustWater()
    if Call("*:ControlExists", "FWPump", 0) == 1 then  -- FEF-3
       return "FWPump"
-   elseif Call("*:ControlExists", "Left Water", 0) == 1 then  -- 2F
+   elseif Call("*:ControlExists", "Left Water", 0) == 1 then  -- 2F, 3F
       return "Left Water"
    elseif Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
       return "ExhaustInjectorWaterLever"
@@ -637,8 +674,20 @@ function FindExhaustWater()
    end
 end
 
+function FindLiveSteam()
+   if Call("*:ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
+      return "InjectorLeverR"
+   elseif Call("*:ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
+      return "Right Steam"
+   elseif Call("*:ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
+      return "LiveInjectorSteamLever"
+   elseif Call("*:ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
+      return "LiveInjectorSteamOnOff"
+   end
+end
+
 function FindLiveWater()
-   if Call("*:ControlExists", "Right Water", 0) == 1 then  -- 2F
+   if Call("*:ControlExists", "Right Water", 0) == 1 then  -- 2F, 3F
       return "Right Water"
    elseif Call("*:ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
       return "LiveInjectorWaterLever"
@@ -667,8 +716,11 @@ function SetJoystickData()
    local HandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
    local SmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
    local Blower =           GetLineValue(lines, BlowerLine, BlowerInvert)
+   local FireboxDoor =      GetLineValue(lines, FireboxDoorLine, FireboxDoorInvert)
    local Stoking =          GetLineValue(lines, StokingLine, StokingInvert)
+   local ExhaustSteam =     GetLineValue(lines, ExhaustSteamLine, ExhaustSteamInvert)
    local ExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
+   local LiveSteam =        GetLineValue(lines, LiveSteamLine, LiveSteamInvert)
    local LiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
 
    -- Feed with data
@@ -683,8 +735,11 @@ function SetJoystickData()
    PreviousHandBrake =        SetControl(HandBrakeControl,        PreviousHandBrake,        HandBrake,        HandBrakeRange,        HandBrakeNotches)
    PreviousSmallEjector =     SetControl(SmallEjectorControl,     PreviousSmallEjector,     SmallEjector,     SmallEjectorRange,     SmallEjectorNotches)
    PreviousBlower =           SetControl(BlowerControl,           PreviousBlower,           Blower,           BlowerRange,           BlowerNotches)
+   PreviousFireboxDoor =      SetControl(FireboxDoorControl,      PreviousFireboxDoor,      FireboxDoor,      FireboxDoorRange,      FireboxDoorNotches)
    PreviousStoking =          SetControl(StokingControl,          PreviousStoking,          Stoking,          StokingRange,          StokingNotches)
+   PreviousExhaustSteam =     SetControl(ExhaustSteamControl,     PreviousExhaustSteam,     ExhaustSteam,     ExhaustSteamRange,     ExhaustSteamNotches)
    PreviousExhaustWater =     SetControl(ExhaustWaterControl,     PreviousExhaustWater,     ExhaustWater,     ExhaustWaterRange,     ExhaustWaterNotches)
+   PreviousLiveSteam =        SetControl(LiveSteamControl,        PreviousLiveSteam,        LiveSteam,        LiveSteamRange,        LiveSteamNotches)
    PreviousLiveWater =        SetControl(LiveWaterControl,        PreviousLiveWater,        LiveWater,        LiveWaterRange,        LiveWaterNotches)
 end
 

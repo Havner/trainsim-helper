@@ -473,7 +473,7 @@ function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
    end
 end
 
-function DetectJ94_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
+function DetectJ94Steam_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    if Call("*:ControlExists", "Headcode1", 0) == 1 and
       Call("*:ControlExists", "Headcode4", 0) == 1 and
       Call("*:ControlExists", "WindowLeft", 0) == 1 and
@@ -484,9 +484,29 @@ function DetectJ94_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
       Call("*:ControlExists", "WhistleToot", 0) == 1 and
       Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
       Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
-      Call("*:ControlExists", "CabLamp", 0) == 1
+      Call("*:ControlExists", "CabLamp", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeControl", 0) == 0
    then
-      if not DisablePopup then DisplayPopup("J94 (ADV, MeshTools) detected") end
+      if not DisablePopup then DisplayPopup("J94 SteamBrake (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
+function DetectJ94Train_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "Headcode4", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "CabVent", 0) == 1 and
+      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "DamperLeft", 0) == 1 and
+      Call("*:ControlExists", "DamperRight", 0) == 1 and
+      Call("*:ControlExists", "WhistleToot", 0) == 1 and
+      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
+      Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
+      Call("*:ControlExists", "CabLamp", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeControl", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("J94 TrainBrake (ADV, MeshTools) detected") end
       return 1
    end
 end
@@ -1238,7 +1258,7 @@ function DetectGenericUK(DisablePopup) -- MPH and BAR, should be UK, hopefully, 
          Call("*:ControlExists", "aBrakePipePressureBAR", 0) == 1
       )
    then
-      if not DisablePopup then DisplayPopup("Generic UK detected") end
+      if not DisablePopup then DisplayPopup("UK detected") end
       return 1
    end
 end

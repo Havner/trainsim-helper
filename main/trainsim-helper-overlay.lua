@@ -502,7 +502,7 @@ function ConfigureOverlay()
       ControlValues["FeedWaterPump"] = "FWPump"
    end
 
-   if Call("*:ControlExists", "Left Steam", 0) == 1 then  -- 2F
+   if Call("*:ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
       ControlValues["ExhaustInjectorSteam"] = "Left Steam"
    elseif Call("*:ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamLever"
@@ -510,7 +510,7 @@ function ConfigureOverlay()
       ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
    end
 
-   if Call("*:ControlExists", "Left Water", 0) == 1 then  -- 2F
+   if Call("*:ControlExists", "Left Water", 0) == 1 then  -- 2F, 3F
       ControlValues["ExhaustInjectorWater"] = "Left Water"
    elseif Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
       ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterLever"
@@ -522,7 +522,7 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
       ControlValues["LiveInjectorSteam"] = "InjectorLeverR"
-   elseif Call("*:ControlExists", "Right Steam", 0) == 1 then  -- 2F
+   elseif Call("*:ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
       ControlValues["LiveInjectorSteam"] = "Right Steam"
    elseif Call("*:ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamLever"
@@ -655,11 +655,23 @@ function ConfigureOverlay()
       ControlValues["TrainBrake"] = "TrainBrakeHandle"
       ControlValues["LocoBrake"] = "MyEngineBrakeControl"
 
-   elseif DetectJ94_ADV_MeshTools(true) then
+   elseif DetectJ94Steam_ADV_MeshTools(true) then
+      -- There is no TrainBrake here, use steam brake as one
+      ControlValues["TrainBrake"] = "VirtualLocoBrake"
+      -- Internal should be hidden
+      ControlValues["LocoBrake"] = nil
+      -- It has left and right dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
+      -- Not functional, hide
+      ControlValues["SmallEjector"] = nil
+
+   elseif DetectJ94Train_ADV_MeshTools(true) then
       -- Loco/Steam Brake lever, internal should be hidden
       ControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
+      -- Not functional, hide
+      ControlValues["SmallEjector"] = nil
 
    elseif Detect3FJinty_ADV_MeshTools(true) then
       -- Correct levers for Train and Steam (push/pull) brakes
@@ -706,7 +718,6 @@ function ConfigureOverlay()
 
       -- Make the sander {0,1}
       ControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
-
 
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
