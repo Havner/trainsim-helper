@@ -128,6 +128,7 @@ struct SimData {
 	Value<float>		fLubricatorWarming;
 	Value<float>		fSmallEjector;
 	Value<float>		fLargeEjector;
+	Value<float>		fBrakeHook;
 	Value<float>		fSanderSteam;
 	Value<float>		fSander;
 	Value<float>		fSanderRear;
@@ -398,6 +399,7 @@ int FillData(SimData* data)
 		else if (!strcmp("LubricatorWarming:", param))			data->fLubricatorWarming = value;
 		else if (!strcmp("SmallEjector:", param))				data->fSmallEjector = value;
 		else if (!strcmp("LargeEjector:", param))				data->fLargeEjector = value;
+		else if (!strcmp("BrakeHook:", param))					data->fBrakeHook = value;
 		else if (!strcmp("SanderSteam:", param))				data->fSanderSteam = value;
 		else if (!strcmp("Sander:", param))						data->fSander = value;
 		else if (!strcmp("SanderRear:", param))					data->fSanderRear = value;
@@ -768,6 +770,7 @@ void RenderOverlay()
 	y = DrawString(eSteamDriverPrimary,		data.fSanderRear,					x+65,	y, white, pSmallFont, "Rear Sander: %d %%", (int)(data.fSanderRear()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fSander,						x+96,	y, white, pSmallFont, "Sander: %d %%", (int)(data.fSander()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fSanderSteam,					x+54,	y, white, pSmallFont, "Steam Sander: %d %%", (int)(data.fSanderSteam()*100));
+	y = DrawString(eSteamDriverPrimary,		data.fBrakeHook,					x+69,	y, white, pSmallFont, "Brake Hook: %d %%", (int)(data.fBrakeHook()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fLargeEjector,					x+60,	y, white, pSmallFont, "Large Ejector: %d %%", (int)(data.fLargeEjector()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fSmallEjector,					x+59,	y, white, pSmallFont, "Small Ejector: %d %%", (int)(data.fSmallEjector()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fLubricatorWarming,			x+24,	y, white, pSmallFont, "Warming Lubricator: %d %%", (int)(data.fLubricatorWarming()*100));

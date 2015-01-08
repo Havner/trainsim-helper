@@ -354,8 +354,14 @@ function ConfigureOverlay()
       ControlValues["SmallEjector"] = "SmallCompressorOnOff"
    end
 
-   if Call("*:ControlExists", "LargeEjectorOnOff", 0) == 1 then
+   if Call("*:ControlExists", "LargeEjector", 0) == 1 then  -- 3F
+      ControlValues["LargeEjector"] = "LargeEjector"
+   elseif Call("*:ControlExists", "LargeEjectorOnOff", 0) == 1 then
       ControlValues["LargeEjector"] = "LargeEjectorOnOff"
+   end
+   
+   if Call("*:ControlExists", "SteamBrakeHook", 0) == 1 then  -- 3F
+      ControlValues["BrakeHook"] = "SteamBrakeHook"
    end
 
    if Call("*:ControlExists", "SanderSteam", 0) == 1 then  -- Q1
@@ -654,6 +660,16 @@ function ConfigureOverlay()
       ControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
+
+   elseif Detect3FJinty_ADV_MeshTools(true) then
+      -- Correct levers for Train and Steam (push/pull) brakes
+      ControlValues["TrainBrake"] = "VirtualBrake"
+      ControlValues["LocoBrake"] = "SteamBrakeSpindle"
+      -- Make the Sander {-1, 1}
+      ControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      -- Make the Sanboxes {0, 1}
+      ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
+      ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif DetectJ50_ADV_MeshTools(true) then
       -- Vacuum Brake lever, internal should be hidden

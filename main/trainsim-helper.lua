@@ -491,6 +491,28 @@ function DetectJ94_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    end
 end
 
+function Detect3FJinty_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
+      Call("*:ControlExists", "ReverserLock", 0) == 1 and
+      Call("*:ControlExists", "Left Steam", 0) == 1 and
+      Call("*:ControlExists", "MixtureL", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakePush", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakePull", 0) == 1 and
+      Call("*:ControlExists", "VacuumSpindle", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakeHook", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakeSpindle", 0) == 1 and
+      Call("*:ControlExists", "RearSandBox", 0) == 1 and
+      Call("*:ControlExists", "Right Cab Door", 0) == 1 and
+      Call("*:ControlExists", "Water fuel", 0) == 1 and
+      Call("*:ControlExists", "Priming", 0) == 1 and
+      Call("*:ControlExists", "CylinderWear", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("3F Jinty (ADV, MeshTools) detected") end
+      return 1
+   end
+end   
+
 function DetectJ50_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addon
    if Call("*:ControlExists", "Headcode1", 0) == 1 and
       Call("*:ControlExists", "Headcode4", 0) == 1 and

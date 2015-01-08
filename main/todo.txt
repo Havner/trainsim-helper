@@ -10,7 +10,6 @@
   - PZB warning for RSC German locos
   - removing Havner's reverser config?
   - Generic detections? elseif->if, remove things that go there anyway
-- 3F Jinty
 - Add Stoking, ExhaustSteam and LiveSteam on axes
 
 throttle: dynamic/loco

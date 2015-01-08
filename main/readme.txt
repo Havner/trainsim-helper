@@ -364,18 +364,18 @@ B. Licence
   The standard RSC/DTG steamers should display all their
   indicators. They all are fairly generic and similar to each other so
   they should be fully supported. I try to add indicators for
-  realistic 3rd party steamers but I don't own many of those yet.
+  realistic 3rd party steamers but I don't own all of them.
 
   Right now those have been checked and are fully supported:
+  - FEF-3 (Smokebox)
+  - J50 (MeshTools)
+  - 2F Dock Tank (MeshTools)
+  - 3F Jinty (MeshTools)
+  - J94 Memories of Maerdy (MeshTools)
   - 56xx (VictoryWorks)
   - GWR Steam Motor (VictoryWorks)
-  - J94 Memories of Maerdy (MeshTools)
-  - FEF-3 (Smokebox)
   - Bulleid Q1 (VictoryWorks)
   - 14xx/48xx/58xx (VictoryWorks)
-
-  To be done soon are the MeshTools creations, 2F Dock Tank, 3F Jinty
-  and J50.
 
   ad. Bulleid Q1:
   By default it shows advanced controls for the water. Contrary to
@@ -397,7 +397,7 @@ B. Licence
   Autocoach instead of the leading loco. I'm not sure anything can be
   done here.
 
-  Final note: if the steamer is not on this list it doesn't mean it
+  Final note: if a steamer is not on this list it doesn't mean it
   won't work. It will. You just probably won't see all the essential
   valves in the overlay. But you can still use it.
 

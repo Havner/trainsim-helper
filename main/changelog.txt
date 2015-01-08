@@ -7,7 +7,7 @@
    - Higher granularity in what you want to display
    - Colors changed a little
    - See the readme for current shortcuts and cmd line
- - J50 and 2F Dock Tank by MeshTools
+ - J50, 2F Dock Tank and 3F Jinty by MeshTools
  - Damper axis removed, it makes little sense
 
 0.7

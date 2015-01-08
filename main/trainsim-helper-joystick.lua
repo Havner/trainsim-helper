@@ -274,6 +274,13 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
+   elseif Detect3FJinty_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      SmallEjectorLine, LocoBrakeLine = ReplaceLines(SmallEjectorLine, LocoBrakeLine)
+      -- LocoBrake should not be used directly, only push/pull
+      LocoBrakeLine = nil
+      
    elseif DetectJ50_ADV_MeshTools() then
       TrainBrakeNotches = {0.04, 0.15, 0.25}
       -- Havner's config
