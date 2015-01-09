@@ -8,6 +8,301 @@
 --  Can be used for both, Overlay and Joystick modules  ---
 -----------------------------------------------------------
 
+-- Steamers
+
+function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
+   if Call("*:ControlExists", "MarsLight", 0) == 1 and
+      Call("*:ControlExists", "WhistlePull", 0) == 1 and
+      Call("*:ControlExists", "SanderLever", 0) == 1 and
+      Call("*:ControlExists", "RegulatorLever", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeHandle", 0) == 1 and
+      Call("*:ControlExists", "FWPump", 0) == 1 and
+      Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
+      Call("*:ControlExists", "ReverserClutch", 0) == 1 and
+      Call("*:ControlExists", "MRPSI", 0) == 1 and
+      Call("*:ControlExists", "HideDetail", 0) == 1 and
+      Call("*:ControlExists", "Dynamo", 0) == 1 and
+      Call("*:ControlExists", "WheelAngularSpeed", 0) == 1 and
+      Call("*:ControlExists", "WheelslipDamage", 0) == 1 and
+      Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 and
+      Call("*:ControlExists", "TenderFrontToolbox", 0) == 1 and
+      Call("*:ControlExists", "BlowerControlValve", 0) == 1 and
+      Call("*:ControlExists", "RealSteamChestPressure", 0) == 1 and
+      Call("*:ControlExists", "SludgeRemoverL", 0) == 1 and
+      Call("*:ControlExists", "HTDPressure1s", 0) == 1 and
+      Call("*:ControlExists", "MUvisibility", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("FEF-3 (ADV, Smokebox) detected") end
+      return 1
+   end
+end
+
+function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
+   if Call("*:ControlExists", "MarsLight", 0) == 1 and
+      Call("*:ControlExists", "WhistlePull", 0) == 0 and
+      Call("*:ControlExists", "SanderLever", 0) == 0 and
+      Call("*:ControlExists", "RegulatorLever", 0) == 0 and
+      Call("*:ControlExists", "TrainBrakeHandle", 0) == 0 and
+      Call("*:ControlExists", "FWPump", 0) == 1 and
+      Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
+      Call("*:ControlExists", "ReverserClutch", 0) == 1 and
+      Call("*:ControlExists", "MRPSI", 0) == 1 and
+      Call("*:ControlExists", "HideDetail", 0) == 1 and
+      Call("*:ControlExists", "Dynamo", 0) == 1 and
+      Call("*:ControlExists", "WheelAngularSpeed", 0) == 1 and
+      Call("*:ControlExists", "WheelslipDamage", 0) == 1 and
+      Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 and
+      Call("*:ControlExists", "TenderFrontToolbox", 0) == 1 and
+      Call("*:ControlExists", "BlowerControlValve", 0) == 1 and
+      Call("*:ControlExists", "RealSteamChestPressure", 0) == 1 and
+      Call("*:ControlExists", "SludgeRemoverL", 0) == 1 and
+      Call("*:ControlExists", "HTDPressure1s", 0) == 1 and
+      Call("*:ControlExists", "MUvisibility", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("FEF-3 (HUD, Smokebox) detected") end
+      return 1
+   end
+end
+
+function Detect2FDockTank_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
+      Call("*:ControlExists", "Left Steam", 0) == 1 and
+      Call("*:ControlExists", "MixtureL", 0) == 1 and
+      Call("*:ControlExists", "FrontSandBox", 0) == 1 and
+      Call("*:ControlExists", "LubricatorDrip", 0) == 1 and
+      Call("*:ControlExists", "VirtualSander", 0) == 1 and
+      Call("*:ControlExists", "Steam Manifold", 0) == 1 and
+      Call("*:ControlExists", "LeftGaugeGlassDrain", 0) == 1 and
+      Call("*:ControlExists", "WhistleBlast", 0) == 1 and
+      Call("*:ControlExists", "Brokeness", 0) == 1 and
+      Call("*:ControlExists", "WeightThingy", 0) == 1 and
+      Call("*:ControlExists", "ComputatedTE", 0) == 1 and
+      Call("*:ControlExists", "RainB", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("2F Dock Tank (ADV, MeshTools) detected") end
+      return 1
+   end
+end   
+
+function DetectJ50_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addon
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "Headcode4", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "ReverserLock", 0) == 1 and
+      Call("*:ControlExists", "DamperLeft", 0) == 1 and
+      Call("*:ControlExists", "Seat", 0) == 1 and
+      Call("*:ControlExists", "WhistleBlast", 0) == 1 and
+      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
+      Call("*:ControlExists", "RearSander", 0) == 1 and
+      Call("*:ControlExists", "SmallBrakeValve", 0) == 1 and
+      Call("*:ControlExists", "Vacuum Chamber Side", 0) == 1 and
+      Call("*:ControlExists", "Steam Heat Valve", 0) == 1 and
+      Call("*:ControlExists", "Right Door", 0) == 1 and
+      Call("*:ControlExists", "DFO", 0) == 1 and
+      Call("*:ControlExists", "WheelVelocity", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("J50 (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
+function Detect3FJinty_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
+      Call("*:ControlExists", "ReverserLock", 0) == 1 and
+      Call("*:ControlExists", "Left Steam", 0) == 1 and
+      Call("*:ControlExists", "MixtureL", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakePush", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakePull", 0) == 1 and
+      Call("*:ControlExists", "VacuumSpindle", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakeHook", 0) == 1 and
+      Call("*:ControlExists", "SteamBrakeSpindle", 0) == 1 and
+      Call("*:ControlExists", "RearSandBox", 0) == 1 and
+      Call("*:ControlExists", "Right Cab Door", 0) == 1 and
+      Call("*:ControlExists", "Water fuel", 0) == 1 and
+      Call("*:ControlExists", "Priming", 0) == 1 and
+      Call("*:ControlExists", "CylinderWear", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("3F Jinty (ADV, MeshTools) detected") end
+      return 1
+   end
+end   
+
+function DetectJ94Train_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "Headcode4", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "CabVent", 0) == 1 and
+      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "DamperLeft", 0) == 1 and
+      Call("*:ControlExists", "DamperRight", 0) == 1 and
+      Call("*:ControlExists", "WhistleToot", 0) == 1 and
+      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
+      Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
+      Call("*:ControlExists", "CabLamp", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeControl", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("J94 TrainBrake (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
+function DetectJ94Steam_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
+   if Call("*:ControlExists", "Headcode1", 0) == 1 and
+      Call("*:ControlExists", "Headcode4", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "CabVent", 0) == 1 and
+      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "DamperLeft", 0) == 1 and
+      Call("*:ControlExists", "DamperRight", 0) == 1 and
+      Call("*:ControlExists", "WhistleToot", 0) == 1 and
+      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
+      Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
+      Call("*:ControlExists", "CabLamp", 0) == 1 and
+      Call("*:ControlExists", "TrainBrakeControl", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("J94 SteamBrake (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
+function Detect14xx_VictoryWorks(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
+      Call("*:ControlExists", "SpinExtra", 0) == 1 and
+      Call("*:ControlExists", "CurrentRotation", 0) == 1 and
+      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
+      Call("*:ControlExists", "ConsistRegulator", 0) == 1 and
+      Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 and
+      Call("*:ControlExists", "Whistle2", 0) == 1 and
+      Call("*:ControlExists", "VWFakeWaterGauge", 0) == 1 and
+      Call("*:ControlExists", "RoofHatch", 0) == 1 and
+      Call("*:ControlExists", "HideBonnet", 0) == 1 and
+      Call("*:ControlExists", "Audio_SteamChestRegulator", 0) == 1 and
+      Call("*:ControlExists", "AutoControl_Front", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("14xx/48xx/58xx (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectAutocoachA31_VictoryWorks(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "CabControlLock", 0) == 1 and
+      Call("*:ControlExists", "HornAnimation", 0) == 1 and
+      Call("*:ControlExists", "WhistleChain", 0) == 1 and
+      Call("*:ControlExists", "Gong", 0) == 1 and
+      Call("*:ControlExists", "V_DoorLeft", 0) == 1 and
+      Call("*:ControlExists", "V_DoorWindowRight", 0) == 1 and
+      Call("*:ControlExists", "BellReply1", 0) == 1 and
+      Call("*:ControlExists", "Audio_InCab", 0) == 1 and
+      Call("*:ControlExists", "Audio_Connected", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Autocoach A31 (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addon
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "Stoking", 0) == 1 and
+      Call("*:ControlExists", "TractiveEffortCalculated", 0) == 1 and
+      Call("*:ControlExists", "AvgGradient", 0) == 1 and
+      Call("*:ControlExists", "ExcessTE", 0) == 1 and
+      Call("*:ControlExists", "BeatNumber", 0) == 1 and
+      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
+      Call("*:ControlExists", "VirtualWaterGaugeL", 0) == 1 and
+      Call("*:ControlExists", "WaterGauge_BottomValveL", 0) == 1 and
+      Call("*:ControlExists", "C_CoalLevel", 0) == 1 and
+      Call("*:ControlExists", "C_HideMechLub", 0) == 1 and
+      Call("*:ControlExists", "Audio_WheelSlipSqueal", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Bulleid Q1 (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectGWRRailmotor_VictoryWorks(DisablePopup) -- West Somerset Railway addon
+   if Call("*:ControlExists", "AdvancedMode", 0) == 1 and
+      Call("*:ControlExists", "CabControlLock", 0) == 1 and
+      Call("*:ControlExists", "CabSwap", 0) == 1 and
+      Call("*:ControlExists", "V_DoorLeft", 0) == 1 and
+      Call("*:ControlExists", "V_DoorWindowLeft", 0) == 1 and
+      Call("*:ControlExists", "C_WindowHorizLeft", 0) == 1 and
+      Call("*:ControlExists", "C_WindowHorizRight", 0) == 1 and
+      Call("*:ControlExists", "C_RoofHatch", 0) == 1 and
+      Call("*:ControlExists", "CV_Bulbs", 0) == 1 and
+      Call("*:ControlExists", "BellReply1", 0) == 1 and
+      Call("*:ControlExists", "LocationAudioControl", 0) == 1 and
+      Call("*:ControlExists", "Boom", 0) == 1 and
+      Call("*:ControlExists", "DupeRev", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("GWR Railmotor (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectGWRRailmotorBoogie_VictoryWorks(DisablePopup) -- West Somerset Railway addon
+   if Call("*:ControlExists", "AdvancedMode", 0) == 1 and
+      Call("*:ControlExists", "CabControlLock", 0) == 1 and
+      Call("*:ControlExists", "VirtualThrottle", 0) == 1 and
+      Call("*:ControlExists", "VirtualBrake", 0) == 1 and
+      Call("*:ControlExists", "SteamFlow", 0) == 1 and
+      Call("*:ControlExists", "LocationAudioControl", 0) == 1 and
+      Call("*:ControlExists", "WaterInCylinders", 0) == 1 and
+      Call("*:ControlExists", "Boom", 0) == 1 and
+      Call("*:ControlExists", "Motion_InternalView", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("GWR Railmotor Boogie (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "Stoking", 0) == 1 and
+      Call("*:ControlExists", "PantographControl", 0) == 1 and
+      Call("*:ControlExists", "gCocksWaterLevel", 0) == 1 and
+      Call("*:ControlExists", "gStationaryTime", 0) == 1 and
+      Call("*:ControlExists", "CylinderCocksClear", 0) == 1 and
+      Call("*:ControlExists", "CylinderCocksFilled", 0) == 1 and
+      Call("*:ControlExists", "gExtraCoal", 0) == 1 and
+      Call("*:ControlExists", "gSmokeColour", 0) == 1 and
+      Call("*:ControlExists", "LampBracket", 0) == 1 and
+      Call("*:ControlExists", "ToolBoxLid", 0) == 1 and
+      Call("*:ControlExists", "SafetyFeather", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("56xx (VictoryWorks) detected") end
+      return 1
+   end
+end
+
+function DetectCastle(DisablePopup) -- Riviera Line addon
+   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "Stoking", 0) == 1 and
+      Call("*:ControlExists", "SteamFlow", 0) == 1 and
+      Call("*:ControlExists", "Flap", 0) == 1 and
+      Call("*:ControlExists", "HeadBoard", 0) == 1 and
+      Call("*:ControlExists", "Lamp1", 0) == 1 and
+      Call("*:ControlExists", "Lamp4", 0) == 1 and
+      Call("*:ControlExists", "SteamHeat", 0) == 1 and
+      Call("*:ControlExists", "SteamHeatGauge", 0) == 1 and
+      Call("*:ControlExists", "MasonsValve", 0) == 1 and
+      Call("*:ControlExists", "TestCock1", 0) == 1 and
+      Call("*:ControlExists", "TestCock2", 0) == 1 and
+      Call("*:ControlExists", "Lubricator", 0) == 1 and
+      Call("*:ControlExists", "LubricatorWarming", 0) == 1 and
+      Call("*:ControlExists", "AshpanSprinkler", 0) == 1 and
+      Call("*:ControlExists", "SeatDriver", 0) == 1 and
+      Call("*:ControlExists", "SeatFireman", 0) == 1 and
+      Call("*:ControlExists", "CastleThunder", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Castle detected") end
+      return 1
+   end
+end
+
+-- UK
+
 function DetectClass365(DisablePopup) -- London - Peterborough
    if Call("*:ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("*:ControlExists", "Thingy", 0) == 1 and
@@ -388,299 +683,6 @@ function DetectClass50_MeshTools(DisablePopup) -- Settle to Carlisle addon
       Call("*:ControlExists", "CoolingFan", 0) == 1
    then
       if not DisablePopup then DisplayPopup("Class 50 (MeshTools) detected") end
-      return 1
-   end
-end
-
--- Steamers
-
-function DetectCastle(DisablePopup) -- Riviera Line addon
-   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "Stoking", 0) == 1 and
-      Call("*:ControlExists", "SteamFlow", 0) == 1 and
-      Call("*:ControlExists", "Flap", 0) == 1 and
-      Call("*:ControlExists", "HeadBoard", 0) == 1 and
-      Call("*:ControlExists", "Lamp1", 0) == 1 and
-      Call("*:ControlExists", "Lamp4", 0) == 1 and
-      Call("*:ControlExists", "SteamHeat", 0) == 1 and
-      Call("*:ControlExists", "SteamHeatGauge", 0) == 1 and
-      Call("*:ControlExists", "MasonsValve", 0) == 1 and
-      Call("*:ControlExists", "TestCock1", 0) == 1 and
-      Call("*:ControlExists", "TestCock2", 0) == 1 and
-      Call("*:ControlExists", "Lubricator", 0) == 1 and
-      Call("*:ControlExists", "LubricatorWarming", 0) == 1 and
-      Call("*:ControlExists", "AshpanSprinkler", 0) == 1 and
-      Call("*:ControlExists", "SeatDriver", 0) == 1 and
-      Call("*:ControlExists", "SeatFireman", 0) == 1 and
-      Call("*:ControlExists", "CastleThunder", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("Castle detected") end
-      return 1
-   end
-end
-
-function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
-   if Call("*:ControlExists", "MarsLight", 0) == 1 and
-      Call("*:ControlExists", "WhistlePull", 0) == 1 and
-      Call("*:ControlExists", "SanderLever", 0) == 1 and
-      Call("*:ControlExists", "RegulatorLever", 0) == 1 and
-      Call("*:ControlExists", "TrainBrakeHandle", 0) == 1 and
-      Call("*:ControlExists", "FWPump", 0) == 1 and
-      Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
-      Call("*:ControlExists", "ReverserClutch", 0) == 1 and
-      Call("*:ControlExists", "MRPSI", 0) == 1 and
-      Call("*:ControlExists", "HideDetail", 0) == 1 and
-      Call("*:ControlExists", "Dynamo", 0) == 1 and
-      Call("*:ControlExists", "WheelAngularSpeed", 0) == 1 and
-      Call("*:ControlExists", "WheelslipDamage", 0) == 1 and
-      Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 and
-      Call("*:ControlExists", "TenderFrontToolbox", 0) == 1 and
-      Call("*:ControlExists", "BlowerControlValve", 0) == 1 and
-      Call("*:ControlExists", "RealSteamChestPressure", 0) == 1 and
-      Call("*:ControlExists", "SludgeRemoverL", 0) == 1 and
-      Call("*:ControlExists", "HTDPressure1s", 0) == 1 and
-      Call("*:ControlExists", "MUvisibility", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("FEF-3 (ADV, Smokebox) detected") end
-      return 1
-   end
-end
-
-function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
-   if Call("*:ControlExists", "MarsLight", 0) == 1 and
-      Call("*:ControlExists", "WhistlePull", 0) == 0 and
-      Call("*:ControlExists", "SanderLever", 0) == 0 and
-      Call("*:ControlExists", "RegulatorLever", 0) == 0 and
-      Call("*:ControlExists", "TrainBrakeHandle", 0) == 0 and
-      Call("*:ControlExists", "FWPump", 0) == 1 and
-      Call("*:ControlExists", "RegulatorClutch", 0) == 1 and
-      Call("*:ControlExists", "ReverserClutch", 0) == 1 and
-      Call("*:ControlExists", "MRPSI", 0) == 1 and
-      Call("*:ControlExists", "HideDetail", 0) == 1 and
-      Call("*:ControlExists", "Dynamo", 0) == 1 and
-      Call("*:ControlExists", "WheelAngularSpeed", 0) == 1 and
-      Call("*:ControlExists", "WheelslipDamage", 0) == 1 and
-      Call("*:ControlExists", "SafetyValveEngineer", 0) == 1 and
-      Call("*:ControlExists", "TenderFrontToolbox", 0) == 1 and
-      Call("*:ControlExists", "BlowerControlValve", 0) == 1 and
-      Call("*:ControlExists", "RealSteamChestPressure", 0) == 1 and
-      Call("*:ControlExists", "SludgeRemoverL", 0) == 1 and
-      Call("*:ControlExists", "HTDPressure1s", 0) == 1 and
-      Call("*:ControlExists", "MUvisibility", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("FEF-3 (HUD, Smokebox) detected") end
-      return 1
-   end
-end
-
-function DetectJ94Steam_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
-   if Call("*:ControlExists", "Headcode1", 0) == 1 and
-      Call("*:ControlExists", "Headcode4", 0) == 1 and
-      Call("*:ControlExists", "WindowLeft", 0) == 1 and
-      Call("*:ControlExists", "CabVent", 0) == 1 and
-      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "DamperLeft", 0) == 1 and
-      Call("*:ControlExists", "DamperRight", 0) == 1 and
-      Call("*:ControlExists", "WhistleToot", 0) == 1 and
-      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
-      Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
-      Call("*:ControlExists", "CabLamp", 0) == 1 and
-      Call("*:ControlExists", "TrainBrakeControl", 0) == 0
-   then
-      if not DisablePopup then DisplayPopup("J94 SteamBrake (ADV, MeshTools) detected") end
-      return 1
-   end
-end
-
-function DetectJ94Train_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
-   if Call("*:ControlExists", "Headcode1", 0) == 1 and
-      Call("*:ControlExists", "Headcode4", 0) == 1 and
-      Call("*:ControlExists", "WindowLeft", 0) == 1 and
-      Call("*:ControlExists", "CabVent", 0) == 1 and
-      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "DamperLeft", 0) == 1 and
-      Call("*:ControlExists", "DamperRight", 0) == 1 and
-      Call("*:ControlExists", "WhistleToot", 0) == 1 and
-      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
-      Call("*:ControlExists", "VirtualLocoBrake", 0) == 1 and
-      Call("*:ControlExists", "CabLamp", 0) == 1 and
-      Call("*:ControlExists", "TrainBrakeControl", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("J94 TrainBrake (ADV, MeshTools) detected") end
-      return 1
-   end
-end
-
-function Detect3FJinty_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
-   if Call("*:ControlExists", "Headcode1", 0) == 1 and
-      Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
-      Call("*:ControlExists", "ReverserLock", 0) == 1 and
-      Call("*:ControlExists", "Left Steam", 0) == 1 and
-      Call("*:ControlExists", "MixtureL", 0) == 1 and
-      Call("*:ControlExists", "SteamBrakePush", 0) == 1 and
-      Call("*:ControlExists", "SteamBrakePull", 0) == 1 and
-      Call("*:ControlExists", "VacuumSpindle", 0) == 1 and
-      Call("*:ControlExists", "SteamBrakeHook", 0) == 1 and
-      Call("*:ControlExists", "SteamBrakeSpindle", 0) == 1 and
-      Call("*:ControlExists", "RearSandBox", 0) == 1 and
-      Call("*:ControlExists", "Right Cab Door", 0) == 1 and
-      Call("*:ControlExists", "Water fuel", 0) == 1 and
-      Call("*:ControlExists", "Priming", 0) == 1 and
-      Call("*:ControlExists", "CylinderWear", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("3F Jinty (ADV, MeshTools) detected") end
-      return 1
-   end
-end   
-
-function DetectJ50_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addon
-   if Call("*:ControlExists", "Headcode1", 0) == 1 and
-      Call("*:ControlExists", "Headcode4", 0) == 1 and
-      Call("*:ControlExists", "WindowLeft", 0) == 1 and
-      Call("*:ControlExists", "ReverserLock", 0) == 1 and
-      Call("*:ControlExists", "DamperLeft", 0) == 1 and
-      Call("*:ControlExists", "Seat", 0) == 1 and
-      Call("*:ControlExists", "WhistleBlast", 0) == 1 and
-      Call("*:ControlExists", "GaurdsWhistle", 0) == 1 and
-      Call("*:ControlExists", "RearSander", 0) == 1 and
-      Call("*:ControlExists", "SmallBrakeValve", 0) == 1 and
-      Call("*:ControlExists", "Vacuum Chamber Side", 0) == 1 and
-      Call("*:ControlExists", "Steam Heat Valve", 0) == 1 and
-      Call("*:ControlExists", "Right Door", 0) == 1 and
-      Call("*:ControlExists", "DFO", 0) == 1 and
-      Call("*:ControlExists", "WheelVelocity", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("J50 (ADV, MeshTools) detected") end
-      return 1
-   end
-end
-
-function Detect2FDockTank_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
-   if Call("*:ControlExists", "Headcode1", 0) == 1 and
-      Call("*:ControlExists", "MiddleLeftWindow", 0) == 1 and
-      Call("*:ControlExists", "Left Steam", 0) == 1 and
-      Call("*:ControlExists", "MixtureL", 0) == 1 and
-      Call("*:ControlExists", "FrontSandBox", 0) == 1 and
-      Call("*:ControlExists", "LubricatorDrip", 0) == 1 and
-      Call("*:ControlExists", "VirtualSander", 0) == 1 and
-      Call("*:ControlExists", "Steam Manifold", 0) == 1 and
-      Call("*:ControlExists", "LeftGaugeGlassDrain", 0) == 1 and
-      Call("*:ControlExists", "WhistleBlast", 0) == 1 and
-      Call("*:ControlExists", "Brokeness", 0) == 1 and
-      Call("*:ControlExists", "WeightThingy", 0) == 1 and
-      Call("*:ControlExists", "ComputatedTE", 0) == 1 and
-      Call("*:ControlExists", "RainB", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("2F Dock Tank (ADV, MeshTools) detected") end
-      return 1
-   end
-end   
-
-function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
-   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "Stoking", 0) == 1 and
-      Call("*:ControlExists", "PantographControl", 0) == 1 and
-      Call("*:ControlExists", "gCocksWaterLevel", 0) == 1 and
-      Call("*:ControlExists", "gStationaryTime", 0) == 1 and
-      Call("*:ControlExists", "CylinderCocksClear", 0) == 1 and
-      Call("*:ControlExists", "CylinderCocksFilled", 0) == 1 and
-      Call("*:ControlExists", "gExtraCoal", 0) == 1 and
-      Call("*:ControlExists", "gSmokeColour", 0) == 1 and
-      Call("*:ControlExists", "LampBracket", 0) == 1 and
-      Call("*:ControlExists", "ToolBoxLid", 0) == 1 and
-      Call("*:ControlExists", "SafetyFeather", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("56xx (VictoryWorks) detected") end
-      return 1
-   end
-end
-
-function DetectGWRRailmotor_VictoryWorks(DisablePopup) -- West Somerset Railway addon
-   if Call("*:ControlExists", "AdvancedMode", 0) == 1 and
-      Call("*:ControlExists", "CabControlLock", 0) == 1 and
-      Call("*:ControlExists", "CabSwap", 0) == 1 and
-      Call("*:ControlExists", "V_DoorLeft", 0) == 1 and
-      Call("*:ControlExists", "V_DoorWindowLeft", 0) == 1 and
-      Call("*:ControlExists", "C_WindowHorizLeft", 0) == 1 and
-      Call("*:ControlExists", "C_WindowHorizRight", 0) == 1 and
-      Call("*:ControlExists", "C_RoofHatch", 0) == 1 and
-      Call("*:ControlExists", "CV_Bulbs", 0) == 1 and
-      Call("*:ControlExists", "BellReply1", 0) == 1 and
-      Call("*:ControlExists", "LocationAudioControl", 0) == 1 and
-      Call("*:ControlExists", "Boom", 0) == 1 and
-      Call("*:ControlExists", "DupeRev", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("GWR Railmotor (VictoryWorks) detected") end
-      return 1
-   end
-end
-
-function DetectGWRRailmotorBoogie_VictoryWorks(DisablePopup) -- West Somerset Railway addon
-   if Call("*:ControlExists", "AdvancedMode", 0) == 1 and
-      Call("*:ControlExists", "CabControlLock", 0) == 1 and
-      Call("*:ControlExists", "VirtualThrottle", 0) == 1 and
-      Call("*:ControlExists", "VirtualBrake", 0) == 1 and
-      Call("*:ControlExists", "SteamFlow", 0) == 1 and
-      Call("*:ControlExists", "LocationAudioControl", 0) == 1 and
-      Call("*:ControlExists", "WaterInCylinders", 0) == 1 and
-      Call("*:ControlExists", "Boom", 0) == 1 and
-      Call("*:ControlExists", "Motion_InternalView", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("GWR Railmotor Boogie (VictoryWorks) detected") end
-      return 1
-   end
-end
-
-function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addon
-   if Call("*:ControlExists", "FireboxDoor", 0) == 1 and
-      Call("*:ControlExists", "Stoking", 0) == 1 and
-      Call("*:ControlExists", "TractiveEffortCalculated", 0) == 1 and
-      Call("*:ControlExists", "AvgGradient", 0) == 1 and
-      Call("*:ControlExists", "ExcessTE", 0) == 1 and
-      Call("*:ControlExists", "BeatNumber", 0) == 1 and
-      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
-      Call("*:ControlExists", "VirtualWaterGaugeL", 0) == 1 and
-      Call("*:ControlExists", "WaterGauge_BottomValveL", 0) == 1 and
-      Call("*:ControlExists", "C_CoalLevel", 0) == 1 and
-      Call("*:ControlExists", "C_HideMechLub", 0) == 1 and
-      Call("*:ControlExists", "Audio_WheelSlipSqueal", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("Bulleid Q1 (VictoryWorks) detected") end
-      return 1
-   end
-end
-
-function Detect14xx_VictoryWorks(DisablePopup) -- Falmouth Branch addon
-   if Call("*:ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
-      Call("*:ControlExists", "SpinExtra", 0) == 1 and
-      Call("*:ControlExists", "CurrentRotation", 0) == 1 and
-      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
-      Call("*:ControlExists", "ConsistRegulator", 0) == 1 and
-      Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 and
-      Call("*:ControlExists", "Whistle2", 0) == 1 and
-      Call("*:ControlExists", "VWFakeWaterGauge", 0) == 1 and
-      Call("*:ControlExists", "RoofHatch", 0) == 1 and
-      Call("*:ControlExists", "HideBonnet", 0) == 1 and
-      Call("*:ControlExists", "Audio_SteamChestRegulator", 0) == 1 and
-      Call("*:ControlExists", "AutoControl_Front", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("14xx/48xx/58xx (VictoryWorks) detected") end
-      return 1
-   end
-end
-
-function DetectAutocoachA31_VictoryWorks(DisablePopup) -- Falmouth Branch addon
-   if Call("*:ControlExists", "CabControlLock", 0) == 1 and
-      Call("*:ControlExists", "HornAnimation", 0) == 1 and
-      Call("*:ControlExists", "WhistleChain", 0) == 1 and
-      Call("*:ControlExists", "Gong", 0) == 1 and
-      Call("*:ControlExists", "V_DoorLeft", 0) == 1 and
-      Call("*:ControlExists", "V_DoorWindowRight", 0) == 1 and
-      Call("*:ControlExists", "BellReply1", 0) == 1 and
-      Call("*:ControlExists", "Audio_InCab", 0) == 1 and
-      Call("*:ControlExists", "Audio_Connected", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("Autocoach A31 (VictoryWorks) detected") end
       return 1
    end
 end

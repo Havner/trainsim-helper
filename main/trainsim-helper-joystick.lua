@@ -105,7 +105,90 @@ function ConfigureJoystick()
    -- more important. If you have more then 3 throttle axes you could assign
    -- all of them without having to make compromises.
 
-   if DetectClass365() then
+   -- Steamers
+
+   if DetectFEF3_ADV_Smokebox() then
+      -- Ignore emergency values (0.85, 1)
+      TrainBrakeRange = {0, 0.85}
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
+   elseif DetectFEF3_HUD_Smokebox() then
+      -- Ignore emergency values (0.85, 1)
+      TrainBrakeRange = {0, 0.85}
+      -- Use regular controls instead of My* versions, they exist, but don't work in the HUD version
+      ReverserControl = "Reverser"
+      LocoBrakeControl = "EngineBrakeControl"
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
+   elseif Detect2FDockTank_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif DetectJ50_ADV_MeshTools() then
+      TrainBrakeNotches = {0.04, 0.15, 0.25}
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif Detect3FJinty_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      -- LocoBrake should not be used directly, only push/pull
+      LocoBrakeLine = nil
+      
+   elseif DetectJ94Train_ADV_MeshTools() then
+      TrainBrakeNotches = {0.04, 0.15, 0.25}
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
+   elseif DetectJ94Steam_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      -- There is no TrainBrake here, use the steam brake as one
+      LocoBrakeLine = TrainBrakeLine
+      TrainBrakeLine = nil
+      -- Add notches as it's otherwise very hard to control the steam brake
+      LocoBrakeNotches = {0.30, 0.40, 0.50}
+
+   elseif Detect14xx_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif DetectAutocoachA31_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif DetectBulleidQ1_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif Detect56xx_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
+   elseif DetectCastle() then
+      -- This loco has VirtualReverser but it doesn't work, override
+      ReverserControl = "Reverser"
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
+   -- UK
+
+   elseif DetectClass365() then
       -- Ignore emergency values on CombinedThrottle (0, 0.1)
       CombinedThrottleRange = {0.1, 1}
       CombinedThrottleNotches = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
@@ -252,87 +335,6 @@ function ConfigureJoystick()
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   -- Steamers here
-
-   elseif DetectCastle() then
-      -- This loco has VirtualReverser but it doesn't work, override
-      ReverserControl = "Reverser"
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   elseif DetectFEF3_ADV_Smokebox() then
-      -- Ignore emergency values (0.85, 1)
-      TrainBrakeRange = {0, 0.85}
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   elseif DetectFEF3_HUD_Smokebox() then
-      -- Ignore emergency values (0.85, 1)
-      TrainBrakeRange = {0, 0.85}
-      -- Use regular controls instead of My* versions, they exist, but don't work in the HUD version
-      ReverserControl = "Reverser"
-      LocoBrakeControl = "EngineBrakeControl"
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   elseif DetectJ94Steam_ADV_MeshTools() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-      -- There is no TrainBrake here, use the steam brake as one
-      LocoBrakeLine = TrainBrakeLine
-      TrainBrakeLine = nil
-      -- Add notches as it's otherwise very hard to control the steam brake
-      LocoBrakeNotches = {0.30, 0.40, 0.50}
-
-   elseif DetectJ94Train_ADV_MeshTools() then
-      TrainBrakeNotches = {0.04, 0.15, 0.25}
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-
-   elseif Detect3FJinty_ADV_MeshTools() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-      -- LocoBrake should not be used directly, only push/pull
-      LocoBrakeLine = nil
-      
-   elseif DetectJ50_ADV_MeshTools() then
-      TrainBrakeNotches = {0.04, 0.15, 0.25}
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-
-   elseif Detect2FDockTank_ADV_MeshTools() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-
-   elseif Detect56xx_VictoryWorks() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-
-   elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-
-   elseif DetectBulleidQ1_VictoryWorks() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-
-   elseif Detect14xx_VictoryWorks() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-
-   elseif DetectAutocoachA31_VictoryWorks() then
-      -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
@@ -481,6 +483,7 @@ function ConfigureJoystick()
    elseif DetectGenericSteam() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectGenericUS() then
       -- Simple US diesels usually have notched throttle

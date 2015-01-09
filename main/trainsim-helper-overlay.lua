@@ -655,28 +655,11 @@ function ConfigureOverlay()
       ControlValues["TrainBrake"] = "TrainBrakeHandle"
       ControlValues["LocoBrake"] = "MyEngineBrakeControl"
 
-   elseif DetectJ94Steam_ADV_MeshTools(true) then
-      -- There is no TrainBrake here, use steam brake as one
-      ControlValues["TrainBrake"] = "VirtualLocoBrake"
-      -- Internal should be hidden
-      ControlValues["LocoBrake"] = nil
-      -- It has left and right dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
-      -- Not functional, hide
-      ControlValues["SmallEjector"] = nil
-
-   elseif DetectJ94Train_ADV_MeshTools(true) then
-      -- Loco/Steam Brake lever, internal should be hidden
-      ControlValues["LocoBrake"] = "VirtualLocoBrake"
-      -- It has left and right dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
-      -- Not functional, hide
-      ControlValues["SmallEjector"] = nil
-
-   elseif Detect3FJinty_ADV_MeshTools(true) then
-      -- Correct levers for Train and Steam (push/pull) brakes
+   elseif Detect2FDockTank_ADV_MeshTools(true) then
+      -- Lever for Train/Steam brake
       ControlValues["TrainBrake"] = "VirtualBrake"
-      ControlValues["LocoBrake"] = "SteamBrakeSpindle"
+      -- Internal for steam brake should be hidden
+      ControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
       ControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
@@ -690,16 +673,35 @@ function ConfigureOverlay()
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 
-   elseif Detect2FDockTank_ADV_MeshTools(true) then
-      -- Lever for Train/Steam brake
+   elseif Detect3FJinty_ADV_MeshTools(true) then
+      -- Correct levers for Train and Steam (push/pull) brakes
       ControlValues["TrainBrake"] = "VirtualBrake"
-      -- Internal for steam brake should be hidden
-      ControlValues["LocoBrake"] = nil
+      ControlValues["LocoBrake"] = "SteamBrakeSpindle"
       -- Make the Sander {-1, 1}
       ControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
       ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
       ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+
+   elseif DetectJ94Train_ADV_MeshTools(true) then
+      -- Loco/Steam Brake lever, internal should be hidden
+      ControlValues["LocoBrake"] = "VirtualLocoBrake"
+      -- It has left and right dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
+
+   elseif DetectJ94Steam_ADV_MeshTools(true) then
+      -- There is no TrainBrake here, use steam brake as one
+      ControlValues["TrainBrake"] = "VirtualLocoBrake"
+      -- Internal should be hidden
+      ControlValues["LocoBrake"] = nil
+      -- Not functional, hide
+      ControlValues["SmallEjector"] = nil
+      -- It has left and right dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
+
+   elseif Detect14xx_VictoryWorks(true) then
+      -- It has front and rear dampers, if you want to see effective damper comment out
+      ControlValues["Damper"] = nil
 
    elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
@@ -722,10 +724,6 @@ function ConfigureOverlay()
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
       ControlValues["SmallEjector"] = nil
-
-   elseif Detect14xx_VictoryWorks(true) then
-      -- It has front and rear dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
 
    elseif DetectClass37_Thomson(true) or DetectClass50_MeshTools(true) then
       -- Throttle is delayed significantly, show lever
