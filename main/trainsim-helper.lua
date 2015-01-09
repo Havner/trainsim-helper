@@ -301,6 +301,30 @@ function DetectCastle(DisablePopup) -- Riviera Line addon
    end
 end
 
+function DetectBlack5_KeithRoss(DisablePopup) -- Western Lines of Scotland
+   if Call("*:ControlExists", "CabLight", 0) == 1 and
+      Call("*:ControlExists", "Headlamp4", 0) == 1 and
+      Call("*:ControlExists", "Headlamp1", 0) == 1 and
+      Call("*:ControlExists", "PerformanceLogging", 0) == 1 and
+      Call("*:ControlExists", "VirtualThrottle", 0) == 1 and
+      Call("*:ControlExists", "SteamChestGaugePSI", 0) == 1 and
+      Call("*:ControlExists", "SteamFlow", 0) == 1 and
+      Call("*:ControlExists", "Wheelslip", 0) == 1 and
+      Call("*:ControlExists", "FireboxDoor", 0) == 1 and
+      Call("*:ControlExists", "EmergencyBrake", 0) == 1 and
+      Call("*:ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
+      Call("*:ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 and
+      Call("*:ControlExists", "WaterGauge", 0) == 1 and
+      Call("*:ControlExists", "HandBrake", 0) == 1 and
+      Call("*:ControlExists", "WaterScoopRaiseLower", 0) == 1 and
+      Call("*:ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("*:ControlExists", "SafetyValve2", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Black 5 (Keith Ross) detected") end
+      return 1
+   end
+end
+
 -- UK
 
 function DetectClass365(DisablePopup) -- London - Peterborough

@@ -725,6 +725,10 @@ function ConfigureOverlay()
       -- Not functional, hide
       ControlValues["SmallEjector"] = nil
 
+   elseif DetectBlack5_KeithRoss(true) then
+      -- Not functional, hide
+      ControlValues["WaterScoopRaiseLower"] = nil
+
    elseif DetectClass37_Thomson(true) or DetectClass50_MeshTools(true) then
       -- Throttle is delayed significantly, show lever
       ControlValues["Throttle"] = "VirtualThrottle"

@@ -186,6 +186,11 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
+   elseif DetectBlack5_KeithRoss() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+
    -- UK
 
    elseif DetectClass365() then
@@ -483,7 +488,6 @@ function ConfigureJoystick()
    elseif DetectGenericSteam() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif DetectGenericUS() then
       -- Simple US diesels usually have notched throttle
