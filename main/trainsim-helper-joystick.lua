@@ -25,12 +25,12 @@ function ConfigureJoystick()
    --HandBrakeLine = 10
    SmallEjectorLine = 12
    BlowerLine = 14
-   FireboxDoorLine = 21    -- FEF-3: Atomizer
-   StokingLine = 22        -- FEF-3: Oil Regulator
-   ExhaustSteamLine = 23
-   ExhaustWaterLine = 24   -- FEF-3: Feedwater Pump
-   LiveSteamLine = 25
-   LiveWaterLine = 26
+   FireboxDoorLine = 18    -- FEF-3: Atomizer
+   StokingLine = 19        -- FEF-3: Oil Regulator
+   ExhaustSteamLine = 20
+   ExhaustWaterLine = 15   -- FEF-3: Feedwater Pump
+   LiveSteamLine = 16
+   LiveWaterLine = 17
 
    ReverserInvert = 1
    GearInvert = 1
@@ -43,12 +43,12 @@ function ConfigureJoystick()
    --HandBrakeInvert = 1
    SmallEjectorInvert = 1
    --BlowerInvert = 1
-   --FireboxDoorInvert = 1
-   --StokingInvert = 1
-   --ExhaustSteamInvert = 1
-   --ExhaustWaterInvert = 1
-   --LiveSteamInvert = 1
-   --LiveWaterInvert = 1
+   FireboxDoorInvert = 1
+   StokingInvert = 1
+   ExhaustSteamInvert = 1
+   ExhaustWaterInvert = 1
+   LiveSteamInvert = 1
+   LiveWaterInvert = 1
 
    --ReverserCenterDetent = 0.05
    --CombinedThrottleCenterDetent = 0.05
@@ -154,6 +154,11 @@ function ConfigureJoystick()
       TrainBrakeLine = nil
       -- Add notches as it's otherwise very hard to control the steam brake
       LocoBrakeNotches = {0.30, 0.40, 0.50}
+
+   elseif DetectSmallPrairies_VictoryWorks() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
    elseif Detect14xx_VictoryWorks() then
       -- Havner's config

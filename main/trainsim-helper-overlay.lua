@@ -470,6 +470,8 @@ function ConfigureOverlay()
 
    if Call("*:ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
       ControlValues["Damper"] = "FiredoorDamper"
+   elseif Call("*:ControlExists", "VWDamper", 0) == 1 then  -- Small Prairies
+      ControlValues["Damper"] = "VWDamper"
    elseif Call("*:ControlExists", "Damper", 0) == 1 then
       ControlValues["Damper"] = "Damper"
    end
@@ -698,6 +700,10 @@ function ConfigureOverlay()
       ControlValues["SmallEjector"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
+
+   elseif DetectSmallPrairies_VictoryWorks(true) then
+      -- Correct lever for TrainBrake
+      ControlValues["TrainBrake"] = "VirtualBrake"	   
 
    elseif Detect14xx_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out

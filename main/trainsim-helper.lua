@@ -167,6 +167,30 @@ function DetectJ94Steam_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    end
 end
 
+function DetectSmallPrairies_VictoryWorks(DisablePopup) -- Falmouth Branch addon
+   if Call("*:ControlExists", "TestValue1", 0) == 1 and
+      Call("*:ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
+      Call("*:ControlExists", "SpinExtra", 0) == 1 and
+      Call("*:ControlExists", "CurrentRotation", 0) == 1 and
+      Call("*:ControlExists", "BeatChuff1", 0) == 1 and
+      Call("*:ControlExists", "ConsistRegulator", 0) == 1 and
+      Call("*:ControlExists", "ExhaustInjectorWaterLever", 0) == 1 and
+      Call("*:ControlExists", "VWDamper", 0) == 1 and
+      Call("*:ControlExists", "Whistle2", 0) == 1 and
+      Call("*:ControlExists", "VWWaterGauge", 0) == 1 and
+      Call("*:ControlExists", "RoofHatch", 0) == 1 and
+      Call("*:ControlExists", "HideATC", 0) == 1 and
+      Call("*:ControlExists", "HideBunkerGuard", 0) == 1 and
+      Call("*:ControlExists", "HideRearTopLampR", 0) == 1 and
+      Call("*:ControlExists", "Audio_SteamChestRegulator", 0) == 1 and
+      Call("*:ControlExists", "AutoControl_Front", 0) == 1 and
+      Call("*:ControlExists", "Audio_ConsistEnd", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Small Prairies (VictoryWorks) detected") end
+      return 1
+   end
+end
+
 function Detect14xx_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    if Call("*:ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
       Call("*:ControlExists", "SpinExtra", 0) == 1 and
