@@ -376,6 +376,7 @@ B. Licence
   - GWR Steam Motor (VictoryWorks)
   - Bulleid Q1 (VictoryWorks)
   - 14xx/48xx/58xx (VictoryWorks)
+  - GWR Small Prairies (VictoryWorks)
 
   ad. Bulleid Q1:
   By default it shows advanced controls for the water. Contrary to

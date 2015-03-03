@@ -183,7 +183,6 @@ function DetectSmallPrairies_VictoryWorks(DisablePopup) -- Falmouth Branch addon
       Call("*:ControlExists", "HideBunkerGuard", 0) == 1 and
       Call("*:ControlExists", "HideRearTopLampR", 0) == 1 and
       Call("*:ControlExists", "Audio_SteamChestRegulator", 0) == 1 and
-      Call("*:ControlExists", "AutoControl_Front", 0) == 1 and
       Call("*:ControlExists", "Audio_ConsistEnd", 0) == 1
    then
       if not DisablePopup then DisplayPopup("Small Prairies (VictoryWorks) detected") end
