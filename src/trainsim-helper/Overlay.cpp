@@ -756,6 +756,9 @@ void RenderOverlay()
 	y = DrawString(eMainWarnings,			data.sTextVigilAlarm,				x,		y, vigilalarmcolor, pBigFont, data.sTextVigilAlarm());
 	y = DrawString(eMainWarnings,			data.sTextAlarm,					x,		y, alarmcolor, pBigFont, data.sTextAlarm());
 
+	if (data.fFireboxMass)
+	{
+
 	// Steamer driver
 	x = 250;
 	y = g_nHeight - yD;
@@ -789,12 +792,12 @@ void RenderOverlay()
 	y = g_nHeight - yD;
 	yP = y;
 
-	y = DrawString(eSteamFiremanSecondary,	data.fControlValve,					x+74,	y, white, pSmallFont, "Control Valve: %d %%", (int)(data.fControlValve()*100));
-	y = DrawString(eSteamFiremanSecondary,	data.fFeedWaterPumpShutOff,			x+0,	y, white, pSmallFont, "Feedwater Pump Shut Off: %d %%", (int)(data.fFeedWaterPumpShutOff()*100));
-	y = DrawString(eSteamFiremanSecondary,	data.fBlowOffCockShutOffLeft,		x+16,	y, white, pSmallFont, "Blow Off Cock Shut Off: %d %%", (int)(data.fBlowOffCockShutOffLeft()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fTenderWaterShutOff,			x+21,	y, white, pSmallFont, "Tender Water Shut Off: %d %%", (int)(data.fTenderWaterShutOff()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fLiveInjectorShutOff,			x+30,	y, white, pSmallFont, "Live Injector Shut Off: %d %%", (int)(data.fLiveInjectorShutOff()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fExhaustInjectorShutOff,		x+4,	y, white, pSmallFont, "Exhaust Injector Shut Off: %d %%", (int)(data.fExhaustInjectorShutOff()*100));
+	y = DrawString(eSteamFiremanSecondary,	data.fControlValve,					x+74,	y, white, pSmallFont, "Control Valve: %d %%", (int)(data.fControlValve()*100));
+	y = DrawString(eSteamFiremanSecondary,	data.fFeedWaterPumpShutOff,			x+0,	y, white, pSmallFont, "Feedwater Pump Shut Off: %d %%", (int)(data.fFeedWaterPumpShutOff()*100));
+	y = DrawString(eSteamFiremanSecondary,	data.fBlowOffCockShutOffLeft,		x+16,	y, white, pSmallFont, "Blow Off Cock Shut Off: %d %%", (int)(data.fBlowOffCockShutOffLeft()*100));
 
 	x = g_nWidth - 260;
 	y = g_nHeight - yD;
@@ -826,6 +829,8 @@ void RenderOverlay()
 	y = DrawString(eSteamFireIndicators,	data.fTankTemperature,				x+124,	y, whitered, pMediumFont, "Tank: %.1f °F",data.fTankTemperature());
 	y = DrawString(eSteamFireIndicators,	data.fAtomizerPressure,				x+93,	y, whitered, pMediumFont, "Atomizer: %.1f PSI", data.fAtomizerPressure());
 	y = DrawString(eSteamFire,				data.fFireboxMass,					x+103,	y, whitered, pMediumFont, "Firebox: %.1f %%", data.fFireboxMass()*100);
+
+	} // Steamers
 
 	d3ddev->EndScene();    // ends the 3D scene
 	d3ddev->Present(NULL, NULL, NULL, NULL);   // displays the created frame on the screen
