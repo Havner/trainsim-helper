@@ -780,6 +780,8 @@ function GetOverlayData()
    if NextSpeedLimitBack then data = data.."NextSpeedLimitBack: "..NextSpeedLimitBack.."\n" end
    if NextSpeedLimitBackDistance then data = data.."NextSpeedLimitBackDistance: "..NextSpeedLimitBackDistance.."\n" end
 
+   -- Overlay is not using this, it calculates its own that behaves a little bit better
+   -- Leaving this exported though if someone is using it
    local Acceleration = Call("*:GetAcceleration")
    if Acceleration then data = data.."Acceleration: "..string.format("%.6f", Acceleration).."\n" end
 

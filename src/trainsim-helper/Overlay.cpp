@@ -35,6 +35,8 @@ float g_fBoilerTable[BOILER_TABLE_SIZE];
 double g_fDistance;
 double g_fPrevSimulationTime;
 double g_fPrevSimulationTime2;
+double g_fAcceleration; // TODO: doesn't have to be global
+double g_fPrevSpeed;
 bool g_bCountdown;
 char g_nCountdownDigits[4];
 int g_nSetCountdownProgress;
@@ -72,7 +74,7 @@ struct SimData {
 	Value<int>			nNextSpeedLimitBackType;
 	Value<float>		fNextSpeedLimitBack;
 	Value<float>		fNextSpeedLimitBackDistance;
-	Value<float>		fAcceleration;
+	Value<float>		fAcceleration; // unused, calculated from speed/time
 	Value<float>		fGradient;
 
 	// Units
@@ -507,28 +509,37 @@ void RenderOverlay()
 	if (!data.fSimulationTime)
 		return;
 
-	// Distance calculations, all in seconds, meters and meters per second
+	// Distance and Acceleration calculations, all in seconds, meters and meters per second
 	if (g_fPrevSimulationTime == 0.0)
 		g_fPrevSimulationTime = data.fSimulationTime();
 
 	if (data.fSimulationTime() < g_fPrevSimulationTime)
 	{
+		// New loco loaded, reset everything
 		g_fPrevSimulationTime = 0.0;
 		g_fDistance = 0.0;
 		g_bCountdown = false;
+		g_fPrevSpeed = 0.0;
+		g_fAcceleration = 0.0;
 	}
 	else
 	{
 		double fDeltaTime = data.fSimulationTime() - g_fPrevSimulationTime;
 		g_fPrevSimulationTime = data.fSimulationTime();
+		double fDeltaSpeed = data.fSpeed() - g_fPrevSpeed;
+		g_fPrevSpeed = data.fSpeed();
 		double fDeltaDistance = data.fSpeed() * fDeltaTime;
+
 		if (g_bCountdown)
 			fDeltaDistance *= -1.0;
 		if (g_bInvert)
 			fDeltaDistance *= -1.0;
 		g_fDistance += fDeltaDistance;
+		if (fDeltaTime != 0)
+			g_fAcceleration = fDeltaSpeed / fDeltaTime;
 	}
 
+	// Units conversions
 	char *sUnitsSpeed;
 	char *sUnitsDistance;
 	char *sUnitsAcceleration;
@@ -572,7 +583,7 @@ void RenderOverlay()
 		g_nSetCountdownProgress = 0;
 	}
 
-	if (g_bHideSection[0]) // -0, -12, CTRL+SHIFT+F12
+	if (g_bHideSection[0]) // -v, CTRL+SHIFT+v
 	{
 		d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0,0, 0, 0), 1.0f, 0);
 		d3ddev->Present(NULL, NULL, NULL, NULL);
@@ -580,7 +591,7 @@ void RenderOverlay()
 	}
 
 	float fSpeed = (float)data.fSpeed() * fModifierSpeed;
-	float fAcceleration = data.fAcceleration() * fModifierAcceleration;
+	float fAcceleration = (float)g_fAcceleration * fModifierAcceleration;
 	float fDistance = (float)g_fDistance * fModifierDistance;
 	int nSpeedLimit = (int)(data.fSpeedLimit() * fModifierSpeed);
 	int nNextSpeedLimit;

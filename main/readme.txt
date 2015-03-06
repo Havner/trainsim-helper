@@ -404,7 +404,12 @@ B. Licence
 
 9. Additional tools
 
-  a) Data Extractor
+  a) Lua Out
+
+  This is the patcher for the scripts (.lua/.out). It is described
+  above in the section 3.
+
+  b) Data Extractor
 
   In the tools directory you'll also find a small utility called Data
   Extractor. It's a tool that parses information from engine and input
