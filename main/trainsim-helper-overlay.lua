@@ -739,6 +739,16 @@ function ConfigureOverlay()
       -- Throttle is delayed significantly, show lever
       ControlValues["Throttle"] = "VirtualThrottle"
 
+   elseif DetectBR103TEE_vRailroads(true) then
+	   -- Throttle is delayed significantly, show lever
+	   ControlValues["Throttle"] = "VirtualThrottle"
+	   ControlValues["DynamicBrake"] = "VirtualDynamicBrake"
+	   -- Scale values to (0,1)
+	   ControlValuesFunctions["Throttle"] = function(value) return value / 39 end
+	   ControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
+	   -- Not functional, hide
+	   ControlValues["TargetSpeed"] = nil
+
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that
       ControlValues["TrainBrake"] = "EngineBrakeControl"

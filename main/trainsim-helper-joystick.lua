@@ -348,6 +348,14 @@ function ConfigureJoystick()
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
+   elseif DetectBR103TEE_vRailroads() then
+	   ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
+	   -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
+	   TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+	   DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+	   -- Self lapped, continuous between (0.1, 1)
+	   LocoBrakeNotches = {-1, 0.1}
+
    elseif DetectBR420_Influenzo() then
       ThrottleNotches = GenerateEqualNotches(20, ThrottleRange) -- (-10, 9)
       TrainBrakeNotches = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
