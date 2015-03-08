@@ -353,7 +353,7 @@ function ConfigureJoystick()
 	   -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
 	   TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 	   DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-	   -- Self lapped, continuous between (0.1, 1)
+	   -- Self lapped, it's continuous above 0.1
 	   LocoBrakeNotches = {-1, 0.1}
 
    elseif DetectBR420_Influenzo() then
