@@ -755,6 +755,48 @@ function DetectBR103TEE_vRailroads(DisablePopup) -- Hamburg - Hannover addon
    end
 end
 
+function DetectBR111_vRailroads(DisablePopup) -- Hamburg - Hannover addon
+   if Call("*:ControlExists", "RolloR", 0) == 1 and
+      Call("*:ControlExists", "RolloRR", 0) == 0 and
+      Call("*:ControlExists", "ZZAauf", 0) == 1 and
+      Call("*:ControlExists", "PZBBefehl", 0) == 1 and
+      Call("*:ControlExists", "StMelder", 0) == 1 and
+      Call("*:ControlExists", "HoheAbbremsungLM", 0) == 1 and
+      Call("*:ControlExists", "Fahrstufe", 0) == 1 and
+      Call("*:ControlExists", "PZBWachsamTaster", 0) == 1 and
+      Call("*:ControlExists", "HSLM", 0) == 1 and
+      Call("*:ControlExists", "Schleudermelder", 0) == 1 and
+      Call("*:ControlExists", "Trennschuetz", 0) == 1 and
+      Call("*:ControlExists", "Stoerung", 0) == 1 and
+      Call("*:ControlExists", "engineWithKey", 0) == 0 and
+      Call("*:ControlExists", "driverActiveCab", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("BR111 (vRailroads) detected") end
+      return 1
+   end
+end
+
+function DetectDBbzf_vRailroads(DisablePopup) -- Hamburg - Hannover addon
+   if Call("*:ControlExists", "RolloR", 0) == 1 and
+      Call("*:ControlExists", "RolloRR", 0) == 1 and
+      Call("*:ControlExists", "ZZAauf", 0) == 1 and
+      Call("*:ControlExists", "PZBBefehl", 0) == 1 and
+      Call("*:ControlExists", "StMelder", 0) == 1 and
+      Call("*:ControlExists", "HoheAbbremsungLM", 0) == 1 and
+      Call("*:ControlExists", "Fahrstufe", 0) == 1 and
+      Call("*:ControlExists", "PZBWachsamTaster", 0) == 1 and
+      Call("*:ControlExists", "HSLM", 0) == 1 and
+      Call("*:ControlExists", "Schleudermelder", 0) == 1 and
+      Call("*:ControlExists", "Trennschuetz", 0) == 1 and
+      Call("*:ControlExists", "Stoerung", 0) == 1 and
+      Call("*:ControlExists", "engineWithKey", 0) == 1 and
+      Call("*:ControlExists", "driverActiveCab", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("DBbzf (vRailroads) detected") end
+      return 1
+   end
+end
+
 function DetectBR420_Influenzo(DisablePopup) -- Munich - Augsburg addon
    if Call("*:ControlExists", "ZZAauf", 0) == 1 and
       Call("*:ControlExists", "SifaLampe", 0) == 1 and

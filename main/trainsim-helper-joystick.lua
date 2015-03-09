@@ -356,6 +356,11 @@ function ConfigureJoystick()
       -- Self lapped, it's continuous above 0.1
       LocoBrakeNotches = {-1, 0.1}
 
+   elseif DetectBR111_vRailroads() or DetectDBbzf_vRailroads() then
+      -- Brake levers desynchronize if using correct notches
+      --TrainBrakeNotches = {0, 0.14, 0.35, 0.42, 0.48, 0.61, 0.74, 0.87, 1}
+      TrainBrakeNotches = GenerateEqualNotches(10, TrainBrakeRange)
+
    elseif DetectBR420_Influenzo() then
       -- Throttle used as CombinedThrottle
       ThrottleNotches = GenerateEqualNotches(20, ThrottleRange) -- (-10, 9)

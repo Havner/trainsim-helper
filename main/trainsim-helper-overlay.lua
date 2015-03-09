@@ -568,8 +568,8 @@ function ConfigureOverlay()
       ControlValues["Alarm"] = "AWSWarnCount"
    end
 
-   if Call("*:ControlExists", "SifaLampe", 0) == 1 then  -- BR420
-      ControlValues["VigilAlarm"] = "SifaLampe"
+   if Call("*:ControlExists", "SifaWarnung", 0) == 1 then  -- BR420, BR103, BR111
+      ControlValues["VigilAlarm"] = "SifaWarnung"
    elseif Call("*:ControlExists", "SiFaWarning", 0) == 1 then  -- BR442
       ControlValues["VigilAlarm"] = "SiFaWarning"
    elseif Call("*:ControlExists", "DSDAlarm", 0) == 1 then
@@ -610,6 +610,8 @@ function ConfigureOverlay()
    -- Sometimes I have to do this as a loco might have a control value that is
    -- detected but it should not be displayed. E.g. it's internal to the
    -- implementation or is basically useless for this loco.
+
+   -- Steamers
 
    -- Some steamers use regulator for steam chest pressure, display lever
    if DetectGenericSteam(true) then
@@ -737,9 +739,17 @@ function ConfigureOverlay()
       -- Not functional, hide
       ControlValues["WaterScoopRaiseLower"] = nil
 
-   elseif DetectClass37_Thomson(true) or DetectClass50_MeshTools(true) then
+   -- UK
+
+   elseif DetectClass37_Thomson(true) then
       -- Throttle is delayed significantly, show lever
       ControlValues["Throttle"] = "VirtualThrottle"
+
+   elseif DetectClass50_MeshTools(true) then
+      -- Throttle is delayed significantly, show lever
+      ControlValues["Throttle"] = "VirtualThrottle"
+
+   -- German
 
    elseif DetectBR103TEE_vRailroads(true) then
 	   -- Throttle is delayed significantly, show lever
@@ -749,6 +759,10 @@ function ConfigureOverlay()
 	   ControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
 	   -- Not functional, hide
 	   ControlValues["TargetSpeed"] = nil
+
+   elseif DetectBR111_vRailroads(true) or DetectDBbzf_vRailroads(true) then
+	   -- Throttle is delayed significantly, show lever
+	   ControlValues["Throttle"] = "VirtualThrottle"
 
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that

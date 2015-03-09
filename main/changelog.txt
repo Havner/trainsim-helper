@@ -13,6 +13,7 @@
  - Configs for J50, 2F Dock Tank and 3F Jinty by MeshTools
  - Config for GWR Small Prairies by VictoryWorks
  - Configs for Cologne Koblenz locos
+ - Configs for BR103 and BR111 by vRailroads
  - Damper axis removed, it made little sense
  - FireboxDoor, ExhaustSteam and LiveSteam axes (also for FEF-3)
 
