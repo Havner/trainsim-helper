@@ -794,6 +794,81 @@ function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
    end
 end
 
+function DetectBR1460(DisablePopup) -- Cologne - Koblenz
+   if Call("*:ControlExists", "RawTargetDistance", 0) == 1 and
+      Call("*:ControlExists", "TargetDistanceDigits100", 0) == 1 and
+      Call("*:ControlExists", "TractionBug", 0) == 1 and
+      Call("*:ControlExists", "VSoll", 0) == 1 and
+      Call("*:ControlExists", "TargetSpeed10", 0) == 1 and
+      Call("*:ControlExists", "Cmd_Free", 0) == 1 and
+      Call("*:ControlExists", "FrontPantographControl", 0) == 1 and
+      Call("*:ControlExists", "RearPantographControl", 0) == 1 and
+      Call("*:ControlExists", "LZBEnding", 0) == 1 and
+      Call("*:ControlExists", "PZB_500hz_Control", 0) == 1 and
+      Call("*:ControlExists", "GlarePanel_L", 0) == 1 and
+      Call("*:ControlExists", "LZB_Buzzer", 0) == 1 and
+      Call("*:ControlExists", "TrackLimit", 0) == 1 and
+      Call("*:ControlExists", "DynamicBrakeFanSound", 0) == 1 and
+      Call("*:ControlExists", "Destination", 0) == 1 and
+      Call("*:ControlExists", "InstrumentLights", 0) == 1 and
+      Call("*:ControlExists", "ForceBar", 0) == 0 and
+      Call("*:ControlExists", "BrakeBar", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("BR146.0 detected") end
+      return 1
+   end
+end
+
+function DetectBR1462(DisablePopup) -- Cologne - Koblenz
+   if Call("*:ControlExists", "RawTargetDistance", 0) == 1 and
+      Call("*:ControlExists", "TargetDistanceDigits100", 0) == 1 and
+      Call("*:ControlExists", "TractionBug", 0) == 1 and
+      Call("*:ControlExists", "VSoll", 0) == 1 and
+      Call("*:ControlExists", "TargetSpeed10", 0) == 1 and
+      Call("*:ControlExists", "Cmd_Free", 0) == 1 and
+      Call("*:ControlExists", "FrontPantographControl", 0) == 1 and
+      Call("*:ControlExists", "RearPantographControl", 0) == 1 and
+      Call("*:ControlExists", "LZBEnding", 0) == 1 and
+      Call("*:ControlExists", "PZB_500hz_Control", 0) == 1 and
+      Call("*:ControlExists", "GlarePanel_L", 0) == 1 and
+      Call("*:ControlExists", "LZB_Buzzer", 0) == 1 and
+      Call("*:ControlExists", "TrackLimit", 0) == 1 and
+      Call("*:ControlExists", "DynamicBrakeFanSound", 0) == 1 and
+      Call("*:ControlExists", "Destination", 0) == 1 and
+      Call("*:ControlExists", "DeskLight", 0) == 1 and
+      Call("*:ControlExists", "ForceBar", 0) == 1 and
+      Call("*:ControlExists", "BrakeBar", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR146.2 detected") end
+      return 1
+   end
+end
+
+function DetectDABpbzkfa(DisablePopup) -- Cologne - Koblenz
+   if Call("*:ControlExists", "RawTargetDistance", 0) == 1 and
+      Call("*:ControlExists", "TargetDistanceDigits100", 0) == 1 and
+      Call("*:ControlExists", "TractionBug", 0) == 0 and
+      Call("*:ControlExists", "VSoll", 0) == 1 and
+      Call("*:ControlExists", "TargetSpeed10", 0) == 1 and
+      Call("*:ControlExists", "Cmd_Free", 0) == 1 and
+      Call("*:ControlExists", "FrontPantographControl", 0) == 1 and
+      Call("*:ControlExists", "RearPantographControl", 0) == 1 and
+      Call("*:ControlExists", "LZBEnding", 0) == 1 and
+      Call("*:ControlExists", "PZB_500hz_Control", 0) == 1 and
+      Call("*:ControlExists", "GlarePanel_L", 0) == 0 and
+      Call("*:ControlExists", "LZB_Buzzer", 0) == 1 and
+      Call("*:ControlExists", "TrackLimit", 0) == 1 and
+      Call("*:ControlExists", "DynamicBrakeFanSound", 0) == 0 and
+      Call("*:ControlExists", "Destination", 0) == 0 and
+      Call("*:ControlExists", "DeskLight", 0) == 1 and
+      Call("*:ControlExists", "Force", 0) == 1 and
+      Call("*:ControlExists", "Brake", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("DABpbzkfa detected") end
+      return 1
+   end
+end
+
 function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
    if Call("*:ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("*:ControlExists", "VSoll", 0) == 0 and
@@ -1264,7 +1339,7 @@ function DetectF45(DisablePopup) -- Marias Pass
       return 1
    end
 end
-   
+
 -- some general detections
 
 function DetectGenericSteam(DisablePopup)
@@ -1273,7 +1348,7 @@ function DetectGenericSteam(DisablePopup)
       return 1
    end
 end
-   
+
 function DetectGenericUS(DisablePopup)
    if Call("*:ControlExists", "RPM", 0) == 1 and
       Call("*:ControlExists", "Ammeter", 0) == 1 and

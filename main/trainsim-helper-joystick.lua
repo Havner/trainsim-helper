@@ -139,7 +139,7 @@ function ConfigureJoystick()
       HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
       -- LocoBrake should not be used directly, only push/pull
       LocoBrakeLine = nil
-      
+
    elseif DetectJ94Train_ADV_MeshTools() then
       TrainBrakeNotches = {0.04, 0.15, 0.25}
       -- Havner's config
@@ -349,14 +349,15 @@ function ConfigureJoystick()
    -- German locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectBR103TEE_vRailroads() then
-	   ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
-	   -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
-	   TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-	   DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-	   -- Self lapped, it's continuous above 0.1
-	   LocoBrakeNotches = {-1, 0.1}
+      ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
+      -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
+      TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      -- Self lapped, it's continuous above 0.1
+      LocoBrakeNotches = {-1, 0.1}
 
    elseif DetectBR420_Influenzo() then
+      -- Throttle used as CombinedThrottle
       ThrottleNotches = GenerateEqualNotches(20, ThrottleRange) -- (-10, 9)
       TrainBrakeNotches = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
       -- Dynamic brake should not be used directly
@@ -372,6 +373,12 @@ function ConfigureJoystick()
       TrainBrakeLine = nil
       -- TrainBrake is self lapped here, add some notches to help
       LocoBrakeNotches = {-1, -0.5, -0.2, 0, 0.2, 0.5, 1}
+      -- Havner's config
+      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+
+   elseif DetectBR1460() or DetectBR1462() or DetectDABpbzkfa() then
+      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,1)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
@@ -890,7 +897,7 @@ function SetControlValue(control, value)
       OnControlValueChange(control, 0, value)
    else
       --if Call("*:ControlExists", control, 0) == 1 then
-          Call("*:SetControlValue", control, 0, value)
+         Call("*:SetControlValue", control, 0, value)
       --end
    end
 end
