@@ -372,10 +372,20 @@ function ConfigureJoystick()
       LocoBrakeLine = TrainBrakeLine
       TrainBrakeLine = nil
       -- TrainBrake is self lapped here, add some notches to help
-      LocoBrakeNotches = {-1, -0.5, -0.2, 0, 0.2, 0.5, 1}
+      LocoBrakeNotches = {-1, -0.2, 0, 0.2, 1}
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
+   elseif DetectBR266() then
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      CruiseControlNotches = GenerateEqualNotches(21, CruiseControlRange) -- (0,200)
+      -- TrainBrake, LocoBrake and CruiseControl are self lapped here, add some notches to help
+      TrainBrakeNotches = {-1, 0, 1}
+      LocoBrakeNotches = {-1, 0, 0.5, 1}
+      CruiseControlNotches = {-1, 0, 1}
+      -- Havner's config
+      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      
    elseif DetectBR1460() or DetectBR1462() or DetectDABpbzkfa() then
       TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,1)
@@ -555,14 +565,6 @@ end
 ------------  Control values finder functions  ------------
 -----------------------------------------------------------
 
-function FindGear()
-   if Call("*:ControlExists", "VirtualGearLever", 0) == 1 then
-      return "VirtualGearLever"
-   elseif Call("*:ControlExists", "GearLever", 0) == 1 then
-      return "GearLever"
-   end
-end
-
 function FindReverser()
    if Call("*:ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
       return "MyReverser"
@@ -573,8 +575,18 @@ function FindReverser()
    end
 end
 
+function FindGear()
+   if Call("*:ControlExists", "VirtualGearLever", 0) == 1 then
+      return "VirtualGearLever"
+   elseif Call("*:ControlExists", "GearLever", 0) == 1 then
+      return "GearLever"
+   end
+end
+
 function FindCruiseControl()
-   if Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 then         -- BR442 Talent 2
+   if Call("*:ControlExists", "SpeedControlTarget", 0) == 1 then     -- BR266
+      return "SpeedControlTarget"
+   elseif Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 then     -- BR442 Talent 2
       return "AFBTargetSpeed"
    elseif Call("*:ControlExists", "SpeedSet", 0) == 1 then           -- Class 90 AP
       return "SpeedSet"

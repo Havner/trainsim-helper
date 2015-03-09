@@ -51,7 +51,9 @@ function ConfigureOverlay()
    -- Loco's controls, those are mostly low-level values so one can see what is happening
    -- under the hood. They can be overriden with high-level ones per loco when needed.
 
-   if Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 then           -- BR442 Talent 2
+   if Call("*:ControlExists", "SpeedControlSpeed", 0) == 1 then         -- BR266
+      ControlValues["TargetSpeed"] = "SpeedControlSpeed"
+   elseif Call("*:ControlExists", "AFBTargetSpeed", 0) == 1 then        -- BR442 Talent 2
       ControlValues["TargetSpeed"] = "AFBTargetSpeed"
    elseif Call("*:ControlExists", "SpeedSet", 0) == 1 then             -- Class 90 AP
       ControlValues["TargetSpeed"] = "SpeedSet"
@@ -703,7 +705,7 @@ function ConfigureOverlay()
 
    elseif DetectSmallPrairies_VictoryWorks(true) then
       -- Correct lever for TrainBrake
-      ControlValues["TrainBrake"] = "VirtualBrake"	   
+      ControlValues["TrainBrake"] = "VirtualBrake"
 
    elseif Detect14xx_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
@@ -754,6 +756,10 @@ function ConfigureOverlay()
       ControlValues["LocoBrake"] = nil
       -- Not functional, hide
       ControlValues["LocoBrakeCylinderPressure"] = nil
+
+   elseif DetectBR266(true) then
+      -- TrainBrake lever, internal should be hidden
+      ControlValues["TrainBrake"] = "VirtualBrake"
 
    end
 

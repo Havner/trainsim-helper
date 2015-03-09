@@ -794,6 +794,26 @@ function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
    end
 end
 
+function DetectBR266(DisablePopup) -- Cologne - Koblenz addon
+   if Call("*:ControlExists", "CabEQNeedle", 0) == 1 and
+      Call("*:ControlExists", "CabTBNeedle", 0) == 1 and
+      Call("*:ControlExists", "HornSoft", 0) == 1 and
+      Call("*:ControlExists", "BellSoft", 0) == 1 and
+      Call("*:ControlExists", "Wipers2", 0) == 1 and
+      Call("*:ControlExists", "PassGoods", 0) == 1 and
+      Call("*:ControlExists", "BrakeAirFlow", 0) == 1 and
+      Call("*:ControlExists", "TrainLength", 0) == 1 and
+      Call("*:ControlExists", "WindowLeft", 0) == 1 and
+      Call("*:ControlExists", "TETens", 0) == 1 and
+      Call("*:ControlExists", "SpeedControlEnabled", 0) == 1 and
+      Call("*:ControlExists", "SpeedControlSpeed", 0) == 1 and
+      Call("*:ControlExists", "gnTB", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR266 detected") end
+      return 1
+   end
+end
+
 function DetectBR1460(DisablePopup) -- Cologne - Koblenz
    if Call("*:ControlExists", "RawTargetDistance", 0) == 1 and
       Call("*:ControlExists", "TargetDistanceDigits100", 0) == 1 and
