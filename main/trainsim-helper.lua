@@ -1472,8 +1472,9 @@ end
 -------------------  Helper functions  --------------------
 -----------------------------------------------------------
 
-function DisplayPopup(text)
-   SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", text, 3, 0)
+function DisplayPopup(text, time)
+   time = time or 3
+   SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", text, time, 0)
 end
 
 -----------------------------------------------------------
@@ -1491,6 +1492,13 @@ function UpdateHelper(time)
    -- Check if the player is driving this train
    if Call("*:GetIsEngineWithKey") ~= 1 then
       return nil
+   end
+
+   if not ExpertWarningReceived then
+      if Call("*:IsExpertMode") ~= 1 then
+         DisplayPopup("SIMPLE MODE DETECTED!\n\nTrainSim Helper won't work properly.", 30)
+      end
+      ExpertWarningReceived = 1
    end
 
    if not OverlayConfigured then
