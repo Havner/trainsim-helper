@@ -1,7 +1,6 @@
 0.8
  - WARNING: Havner's configs changed (I got more physical throttles now)
  - Sunflower indicator removed, it was just obscuring the view
- - PZB alarm indicator for a loco that exports this info (BR420)
  - Toggleable font outline for better visibility (see readme)
  - Acceleration implemented on the C++ side, works properly when
    driving after changing sides of the loco

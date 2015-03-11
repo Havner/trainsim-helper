@@ -8,13 +8,8 @@
   - general cleanups
 - Clean up the LUA code:
   - lever values?
-  - ordering of locos
   - PZB warning for RSC German locos
-  - removing Havner's reverser config?
-  - Generic detections? elseif->if, remove things that go there anyway
 - Alternative script for locos with broken scripts
-- Think of displaying real, not underlaying values for throttles on non steamers
-  (put Find* functions to main script, use them in overlay)
 
 Things to consider for the very distant future:
 - Make the overlay display values in the data file it doesn't know about
