@@ -362,7 +362,7 @@ function DetectClass365(DisablePopup) -- London - Peterborough
    end
 end
 
-function DetectHST(DisablePopup) -- London - Peterborough, Riviera Line
+function DetectHST(DisablePopup) -- London - Peterborough, Riviera Line, EU Pack
    if Call("ControlExists", "RpmDial", 0) == 1 and
       Call("ControlExists", "HandBrakeOff", 0) == 1 and
       Call("ControlExists", "Headlightsmarker", 0) == 1 and
@@ -603,7 +603,7 @@ function DetectClass03(DisablePopup) -- West Somerset Railway addon
    end
 end
 
-function DetectClass47(DisablePopup) -- West Somerset Railway addon
+function DetectClass47(DisablePopup) -- West Somerset Railway addon, Liverpool - Manchester, EU Pack
    if Call("ControlExists", "TractiveEffort", 0) == 1 and
       Call("ControlExists", "RPMDelta", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
@@ -730,6 +730,27 @@ function DetectClass50_MeshTools(DisablePopup) -- Settle to Carlisle addon
       Call("ControlExists", "CoolingFan", 0) == 1
    then
       if not DisablePopup then DisplayPopup("Class 50 (MeshTools) detected") end
+      return 1
+   end
+end
+
+function DetectClass166(DisablePopup) -- EU Pack
+   if Call("ControlExists", "Active", 0) == 1 and
+      Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "EngineStop", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("ControlExists", "AWSClearCount", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "DRAButton", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -1000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 1000 and
+      Call("GetControlMaximum", "RPM", 0) == 2400 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 10 and
+      Call("GetControlMaximum", "TrainBrakeCylinderPressureBAR", 0) == 7 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 100
+   then
+      if not DisablePopup then DisplayPopup("Class 166 detected") end
       return 1
    end
 end
