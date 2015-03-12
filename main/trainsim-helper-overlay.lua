@@ -189,6 +189,9 @@ function ConfigureOverlay()
    if Call("ControlExists", "MyLocoBrakeCylinderPressurePSI", 0) == 1 then  -- FEF-3
       ControlValues["LocoBrakeCylinderPressure"] = "MyLocoBrakeCylinderPressurePSI"
       StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("ControlExists", "BrakeCylinderDial1", 0) == 1 then  -- Class 50
+      ControlValues["TrainBrakeCylinderPressure"] = "BrakeCylinderDial1"
+      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "LocoBrakeNeedle", 0) == 1 then  -- Duchess of Sutherland community patch
       ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeNeedle"
       StaticValues["LocoBrakeCylinderUnits"] = "PSI"
@@ -766,7 +769,7 @@ function ConfigureOverlay()
 
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that
-      ControlValues["TrainBrake"] = "EngineBrakeControl"
+      ControlValues["TrainBrake"] = ControlValues["LocoBrake"]
       ControlValues["LocoBrake"] = nil
       -- Not functional, hide
       ControlValues["LocoBrakeCylinderPressure"] = nil

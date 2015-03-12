@@ -200,14 +200,16 @@ B. Licence
                                  General             
 
   -----------------|-------------------|--------------------------------
-         -j        |       n/a         |       disables joystick
+         -j        |   cmd line only   |       disables joystick
                    |                   |      support and warning
   -----------------|-------------------|--------------------------------
          -v        |    SHIFT+ALT+v    |   toggles the overlay display
   -----------------|-------------------|--------------------------------
          -f        |    SHIFT+ALT+f    |    toggles the font outline
   -----------------|-------------------|--------------------------------
-    runtime only   |    SHIFT+ALT+s    |    invert driving direction
+         -s        |    SHIFT+ALT+s    |  toggles the speed limit only
+  -----------------|-------------------|--------------------------------
+    runtime only   |    SHIFT+ALT+d    |  changes the driving direction
   -----------------|-------------------|--------------------------------
 
                           Main HUD parts toggles

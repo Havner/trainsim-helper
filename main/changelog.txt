@@ -1,3 +1,9 @@
+0.9
+ - WARNING: Default for "change direction" changed to "D"
+ - Removed *: from scripts calls as per dev documents
+ - Added warning if Simple controls are detected
+ - Added an option "S" to switch to speed limit only
+
 0.8
  - WARNING: Havner's configs changed (I got more physical throttles now)
  - Sunflower indicator removed, it was just obscuring the view

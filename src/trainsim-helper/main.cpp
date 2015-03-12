@@ -47,6 +47,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		if (strcmp(pArgList[i]+1, "f") == 0)
 			ToggleFontOutline();
 
+		if (strcmp(pArgList[i]+1, "s") == 0)
+			ToggleSpeedLimitOnly();
+
 		if (pArgList[i][1] == 'm')
 		{
 			if (isdigit(pArgList[i][2]))
@@ -122,11 +125,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// R for the countdown reset
 	RegisterHotKey(hWnd, 110, MOD_SHIFT | MOD_ALT, 0x52 /* R key */);
 
-	// S for invert
-	RegisterHotKey(hWnd, 201, MOD_SHIFT | MOD_ALT, 0x53 /* S key */);
+	// D for driving direction
+	RegisterHotKey(hWnd, 201, MOD_SHIFT | MOD_ALT, 0x44 /* D key */);
 
 	// F for font outline
 	RegisterHotKey(hWnd, 202, MOD_SHIFT | MOD_ALT, 0x46 /* F key */);
+
+	// S for speed limit only
+	RegisterHotKey(hWnd, 203, MOD_SHIFT | MOD_ALT, 0x53 /* S key */);
 
 	if (bUseJoystick)
 		if (FAILED(InitDirectInput()))
@@ -200,6 +206,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			ToggleInvert();
 		else if (wParam == 202)
 			ToggleFontOutline();
+		else if (wParam == 203)
+			ToggleSpeedLimitOnly();
 		break;
 	}
 

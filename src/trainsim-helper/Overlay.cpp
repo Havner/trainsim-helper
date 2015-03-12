@@ -42,6 +42,7 @@ char g_nCountdownDigits[4];
 int g_nSetCountdownProgress;
 bool g_bInvert;
 bool g_bFontOutline = true;
+bool g_bSpeedLimitOnly;
 
 LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
 LPDIRECT3DDEVICE9 d3ddev;
@@ -210,6 +211,11 @@ void ToggleInvert()
 void ToggleFontOutline()
 {
 	g_bFontOutline = !g_bFontOutline;
+}
+
+void ToggleSpeedLimitOnly()
+{
+	g_bSpeedLimitOnly = !g_bSpeedLimitOnly;
 }
 
 void ResetDistance()
@@ -757,7 +763,10 @@ void RenderOverlay()
 		y = DrawString(eMainDistance,		ISVALID(fDistance),					x+45,	y, white, pMediumFont, "Distance: %.2f %s", fDistance, sUnitsDistance);
 
 	y = DrawString(eMainBoiler,				data.fBoilerPressure,				x+67,	y, boilercolor, pMediumFont, "Boiler: %.1f PSI", data.fBoilerPressure());
-	y = DrawString(eMainSpeed,				data.fSpeed,						x+62,	y, speedcolor, pMediumFont, "Speed: %.1f / %d %s", normalizeSign(fSpeed), nSpeedLimit, sUnitsSpeed);
+	if (g_bSpeedLimitOnly)
+		y = DrawString(eMainSpeed,			data.fSpeed,						x+75,	y, white, pMediumFont, "Limit: %d %s", nSpeedLimit, sUnitsSpeed);
+	else
+		y = DrawString(eMainSpeed,			data.fSpeed,						x+62,	y, speedcolor, pMediumFont, "Speed: %.1f / %d %s", normalizeSign(fSpeed), nSpeedLimit, sUnitsSpeed);
 
 	y = NextSection(y, &yP, yD);
 

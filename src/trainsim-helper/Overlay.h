@@ -39,4 +39,5 @@ void SetCountdown(char n);
 void ToggleDisplaySection(int s);
 void ToggleInvert();
 void ToggleFontOutline();
+void ToggleSpeedLimitOnly();
 void RenderOverlay();
