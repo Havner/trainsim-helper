@@ -294,9 +294,6 @@ function ConfigureJoystick()
       TrainBrakeRange = {0, 0.9}
       TrainBrakeNotches = {0, 0.1, 0.2, 0.235, 0.27, 0.305, 0.34, 0.375, 0.41, 0.445, 0.48, 0.515, 0.55, 0.585, 0.62, 0.655, 0.69, 0.725, 0.76, 0.795, 0.83, 0.865, 0.9}
 
-   elseif DetectClass33() then
-      -- Nothing to configure here
-
    elseif DetectClass03() then
       GearNotches = GenerateEqualNotches(6, GearRange) -- (0,5)
       -- Havner's config
@@ -347,6 +344,12 @@ function ConfigureJoystick()
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+
+   elseif DetectClass158_Old() then
+      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
+
+   elseif DetectClass66() then
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
 
    elseif DetectClass166() then
       CombinedThrottleNotches = {0, 0.08, 0.18, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9, 1}
@@ -434,6 +437,15 @@ function ConfigureJoystick()
       CruiseControlNotches = GenerateEqualNotches(29, CruiseControlRange) -- (0,0.466666)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+
+   elseif DetectBR101_Old() then
+      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+
+   elseif DetectBR294_Old() then
+      CombinedThrottleCenterDetent = 0.05
+
+   elseif DetectV200() then
+      ThrottleNotches = GenerateEqualNotches(7, ThrottleRange) -- (0,1)
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 

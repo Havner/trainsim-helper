@@ -568,25 +568,6 @@ function DetectClass35(DisablePopup) -- Riviera Line addon
    end
 end
 
-function DetectClass33(DisablePopup) -- West Somerset Railway
-   if Call("ControlExists", "EQReservoirPressure", 0) == 1 and
-      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
-      Call("ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
-      Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
-      Call("ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 and
-      Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 and
-      Call("ControlExists", "Startup", 0) == 1 and
-      Call("ControlExists", "EngineStart", 0) == 1 and
-      Call("ControlExists", "EngineStop", 0) == 1 and
-      Call("ControlExists", "CompressorState", 0) == 1 and
-      Call("ControlExists", "AWS", 0) == 1 and
-      Call("ControlExists", "Panel", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("Class 33 detected") end
-      return 1
-   end
-end
-
 function DetectClass03(DisablePopup) -- West Somerset Railway addon
    if Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
       Call("ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
@@ -603,7 +584,7 @@ function DetectClass03(DisablePopup) -- West Somerset Railway addon
    end
 end
 
-function DetectClass47(DisablePopup) -- West Somerset Railway addon, Liverpool - Manchester, EU Pack
+function DetectClass47(DisablePopup) -- West Somerset Railway addon only, older have no notches
    if Call("ControlExists", "TractiveEffort", 0) == 1 and
       Call("ControlExists", "RPMDelta", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
@@ -734,9 +715,56 @@ function DetectClass50_MeshTools(DisablePopup) -- Settle to Carlisle addon
    end
 end
 
+function DetectClass158_Old(DisablePopup) -- Settle to Carlisle
+   if Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "SptEngineStartLight", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("ControlExists", "AWSClearCount", 0) == 1 and
+      Call("ControlExists", "SptDoorInterlock", 0) == 1 and
+      Call("ControlExists", "EngineStart", 0) == 1 and
+      Call("ControlExists", "CabLight", 0) == 1 and
+      Call("ControlExists", "Blower", 0) == 1 and
+      Call("GetControlMaximum", "RPM", 0) == 2400 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 10 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 100 and
+      Call("GetControlMaximum", "Blower", 0) == 17
+   then
+      if not DisablePopup then DisplayPopup("Class 158 (Old) detected") end
+      return 1
+   end
+end
+
+function DetectClass66(DisablePopup) -- Settle to Carlisle
+   if Call("ControlExists", "BrakePipePressureBAR", 0) == 1 and
+      Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "RPMDelta", 0) == 1 and
+      Call("ControlExists", "EngineStart", 0) == 1 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "CabLight", 0) == 1 and
+      Call("GetControlMaximum", "BrakePipePressureBAR", 0) == 14 and
+      Call("GetControlMaximum", "AirBrakePipePressureBAR", 0) == 6 and
+      Call("GetControlMaximum", "TrainBrakeCylinderPressureBAR", 0) == 7 and
+      Call("GetControlMaximum", "Ammeter", 0) == 8000 and
+      Call("GetControlMaximum", "RPM", 0) == 900
+   then
+      if not DisablePopup then DisplayPopup("Class 66 detected") end
+      return 1
+   end
+end
+
 function DetectClass166(DisablePopup) -- EU Pack
    if Call("ControlExists", "Active", 0) == 1 and
       Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
       Call("ControlExists", "EngineStop", 0) == 1 and
       Call("ControlExists", "AWS", 0) == 1 and
       Call("ControlExists", "AWSClearCount", 0) == 1 and
@@ -1142,6 +1170,84 @@ function DetectBR189(DisablePopup) -- Academy
       Call("ControlExists", "PowerBar", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR189 detected") end
+      return 1
+   end
+end
+
+function DetectBR101_Old(DisablePopup) -- EU Pack
+   if Call("ControlExists", "Active", 0) == 1 and
+      Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "Current", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "CabAmmeter", 0) == 1 and
+      Call("ControlExists", "Accelerometer", 0) == 1 and
+      Call("ControlExists", "CruiseControl", 0) == 1 and
+      Call("ControlExists", "VirtualBrake", 0) == 1 and
+      Call("ControlExists", "FrontPantographControl", 0) == 1 and
+      Call("ControlExists", "RearPantographControl", 0) == 1 and
+      Call("ControlExists", "DynamicBrake", 0) == 1 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -1000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 10000 and
+      Call("GetControlMaximum", "Current", 0) == 100000 and
+      Call("GetControlMinimum", "Ammeter", 0) == -600 and
+      Call("GetControlMaximum", "Ammeter", 0) == 600 and
+      Call("GetControlMinimum", "Accelerometer", 0) == -320 and
+      Call("GetControlMaximum", "Accelerometer", 0) == 320
+   then
+      if not DisablePopup then DisplayPopup("BR101 (Old) detected") end
+      return 1
+   end
+end
+
+function DetectBR294_Old(DisablePopup) -- EU Pack
+   if Call("ControlExists", "Active", 0) == 1 and
+      Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "RPMDelta", 0) == 1 and
+      Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "EngineStart", 0) == 1 and
+      Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 and
+      Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "DummyAmmeter", 0) == 1 and
+      Call("ControlExists", "DummyVoltmeter", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -1000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 1000 and
+      Call("GetControlMaximum", "RPM", 0) == 2000 and
+      Call("GetControlMinimum", "DummyAmmeter", 0) == -200 and
+      Call("GetControlMaximum", "DummyAmmeter", 0) == 200 and
+      Call("GetControlMaximum", "DummyVoltmeter", 0) == 150
+   then
+      if not DisablePopup then DisplayPopup("BR294 (Old) detected") end
+      return 1
+   end
+end
+
+function DetectV200(DisablePopup) -- EU Pack
+   if Call("ControlExists", "Active", 0) == 1 and
+      Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "BrakePipePressureBAR", 0) == 1 and
+      Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "RPMDelta", 0) == 1 and
+      Call("ControlExists", "EngineBrakeControl", 0) == 1 and
+      Call("ControlExists", "EngineStart", 0) == 1 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -1000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 1000 and
+      Call("GetControlMaximum", "LocoBrakeCylinderPressureBAR", 0) == 12 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 12 and
+      Call("GetControlMaximum", "BrakePipePressureBAR", 0) == 10 and
+      Call("GetControlMaximum", "SpeedometerKPH", 0) == 150 and
+      Call("GetControlMaximum", "RPM", 0) == 1800
+   then
+      if not DisablePopup then DisplayPopup("V200 detected") end
       return 1
    end
 end
