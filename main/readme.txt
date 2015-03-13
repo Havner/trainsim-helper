@@ -180,6 +180,13 @@ B. Licence
   note on the UKTrainSim forums in the release thread. I'll try to
   help you there.
 
+  Additional variables in the config section are:
+  - *CenterDetent - to make it easier with centering
+  - SyncOnStart - set virtual values to your physical ones on start
+                  (this requires to move one of your throttles per
+		  physical device once per trainsim-helper.exe
+		  runtime, sorry, Windows limitation)
+
 5. Patching further locos
 
   Now what is left is to patch all the locos/engines you want this

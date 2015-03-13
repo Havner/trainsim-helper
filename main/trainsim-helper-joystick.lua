@@ -53,6 +53,13 @@ function ConfigureJoystick()
    --ReverserCenterDetent = 0.05
    --CombinedThrottleCenterDetent = 0.05
 
+   -- Sync virtual values with physical ones on start of the sim
+   -- after that many seconds. Set to 0 or comment out to disable.
+   -- This also disables the throttles before this time's elapsed.
+   -- Increase the number if it doesn't work or the loco script is
+   -- messing with the values on start. Can be set per loco.
+   --SyncOnStart = 0.1
+
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
    -----------------------------------------------------------
@@ -559,25 +566,27 @@ function ConfigureJoystick()
    ---------------  End of user configuration  ---------------
    -----------------------------------------------------------
 
-   -- Set real values at the start to avoid uncontrolled changing the state after game loads
-   local lines = ReadFile("trainsim-helper-joystick.txt")
-   PreviousReverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
-   PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
-   PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
-   PreviousCombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
-   PreviousThrottle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
-   PreviousTrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
-   PreviousLocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
-   PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-   PreviousHandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
-   PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
-   PreviousBlower =           GetLineValue(lines, BlowerLine, BlowerInvert)
-   PreviousFireboxDoor =      GetLineValue(lines, FireboxDoorLine, FireboxDoorInvert)
-   PreviousStoking =          GetLineValue(lines, StokingLine, StokingInvert)
-   PreviousExhaustSteam =     GetLineValue(lines, ExhaustSteamLine, ExhaustSteamInvert)
-   PreviousExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
-   PreviousLiveSteam =        GetLineValue(lines, LiveSteamLine, LiveSteamInvert)
-   PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
+   if not SyncOnStart or SyncOnStart == 0 then
+      -- Set real values at the start to avoid uncontrolled changing the state after game loads
+      local lines = ReadFile("trainsim-helper-joystick.txt")
+      PreviousReverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
+      PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
+      PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
+      PreviousCombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
+      PreviousThrottle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
+      PreviousTrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
+      PreviousLocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
+      PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
+      PreviousHandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
+      PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
+      PreviousBlower =           GetLineValue(lines, BlowerLine, BlowerInvert)
+      PreviousFireboxDoor =      GetLineValue(lines, FireboxDoorLine, FireboxDoorInvert)
+      PreviousStoking =          GetLineValue(lines, StokingLine, StokingInvert)
+      PreviousExhaustSteam =     GetLineValue(lines, ExhaustSteamLine, ExhaustSteamInvert)
+      PreviousExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
+      PreviousLiveSteam =        GetLineValue(lines, LiveSteamLine, LiveSteamInvert)
+      PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
+   end
 
    -- Set at the very end to be a mark whether the configuration has been successful.
    JoystickConfigured = 1
@@ -764,6 +773,8 @@ end
 -----------------------------------------------------------
 
 function SetJoystickData()
+   if SyncOnStart and SyncOnStart ~= 0 and Call("GetSimulationTime", 0) < SyncOnStart then return end
+
    local lines = ReadFile("trainsim-helper-joystick.txt")
 
    local Reverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
@@ -918,7 +929,8 @@ function SetControl(control, previous, value, range, notches, detent)
 end
 
 function ValueChanged(previous, value)
-   if math.abs(value - previous) > 0.005 or
+   if not previous or
+      math.abs(value - previous) > 0.005 or
       (value == 0 and previous ~= 0) or
       (value == 1 and previous ~= 1)
    then
