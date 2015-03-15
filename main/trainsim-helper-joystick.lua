@@ -144,17 +144,18 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-      -- LocoBrake should not be used directly, only push/pull
+      -- Steam brake internal should not be used directly, only push/pull
       LocoBrakeLine = nil
 
    elseif Detect3FJintySteam_ADV_MeshTools() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
-      -- LocoBrake (steam) should not be used directly
+      -- Steam brake internal should not be used directly
       LocoBrakeLine = nil
 
    elseif DetectJ94Train_ADV_MeshTools() then
+      -- Notches for the Vacuum or Air brakes (the latter are not keyboard-notched due to a bug)
       TrainBrakeNotches = {0.04, 0.15, 0.25}
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
@@ -166,7 +167,7 @@ function ConfigureJoystick()
       -- There is no TrainBrake here, use the steam brake as one
       LocoBrakeLine = TrainBrakeLine
       TrainBrakeLine = nil
-      -- Add notches as it's otherwise very hard to control the steam brake
+      -- Add notches as it's otherwise very hard to control the steam brake (the only one)
       LocoBrakeNotches = {0.30, 0.40, 0.50}
 
    elseif DetectSmallPrairies_VictoryWorks() then
