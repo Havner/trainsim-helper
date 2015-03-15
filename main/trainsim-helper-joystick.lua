@@ -140,11 +140,18 @@ function ConfigureJoystick()
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
 
-   elseif Detect3FJinty_ADV_MeshTools() then
+   elseif Detect3FJintyTrain_ADV_MeshTools() then
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
       HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
       -- LocoBrake should not be used directly, only push/pull
+      LocoBrakeLine = nil
+
+   elseif Detect3FJintySteam_ADV_MeshTools() then
+      -- Havner's config
+      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      -- LocoBrake (steam) should not be used directly
       LocoBrakeLine = nil
 
    elseif DetectJ94Train_ADV_MeshTools() then
@@ -691,7 +698,9 @@ function FindHandBrake()
 end
 
 function FindSmallEjector()
-   if Call("ControlExists", "SmallCompressorOnOff", 0) == 1 then
+   if Call("ControlExists", "SmallEjectorOnOff", 0) == 1 then
+      return "SmallEjectorOnOff"
+   elseif Call("ControlExists", "SmallCompressorOnOff", 0) == 1 then
       return "SmallCompressorOnOff"
    end
 end

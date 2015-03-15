@@ -682,7 +682,7 @@ function ConfigureOverlay()
       -- It has left and right dampers, if you want to see effective damper comment out
       ControlValues["Damper"] = nil
 
-   elseif Detect3FJinty_ADV_MeshTools(true) then
+   elseif Detect3FJintyTrain_ADV_MeshTools(true) then
       -- Correct levers for Train and Steam (push/pull) brakes
       ControlValues["TrainBrake"] = "VirtualBrake"
       ControlValues["LocoBrake"] = "SteamBrakeSpindle"
@@ -691,6 +691,20 @@ function ConfigureOverlay()
       -- Make the Sanboxes {0, 1}
       ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
       ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+
+   elseif Detect3FJintySteam_ADV_MeshTools(true) then
+      -- Steam brake lever
+      ControlValues["TrainBrake"] = "VirtualBrake"
+      -- Internal should be hidden
+      ControlValues["LocoBrake"] = nil
+      -- Make the Sander {-1, 1}
+      ControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      -- Make the Sanboxes {0, 1}
+      ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
+      ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+      -- It doesn't have vacuum brakes, hide
+      ControlValues["VacuumBrakePipePressure"] = nil
+      StaticValues["VacuumBrakePipeUnits"] = nil
 
    elseif DetectJ94Train_ADV_MeshTools(true) then
       -- Loco/Steam Brake lever, internal should be hidden

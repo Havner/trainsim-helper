@@ -107,7 +107,7 @@ function DetectJ50_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addo
    end
 end
 
-function Detect3FJinty_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
+function Detect3FJintyTrain_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addon
    if Call("ControlExists", "Headcode1", 0) == 1 and
       Call("ControlExists", "MiddleLeftWindow", 0) == 1 and
       Call("ControlExists", "ReverserLock", 0) == 1 and
@@ -119,12 +119,40 @@ function Detect3FJinty_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
       Call("ControlExists", "SteamBrakeHook", 0) == 1 and
       Call("ControlExists", "SteamBrakeSpindle", 0) == 1 and
       Call("ControlExists", "RearSandBox", 0) == 1 and
+      Call("ControlExists", "VirtualDamper", 0) == 1 and
+      Call("ControlExists", "RightGaugeGlassIsolatingHandle", 0) == 1 and
+      Call("ControlExists", "BafflePlate", 0) == 1 and
       Call("ControlExists", "Right Cab Door", 0) == 1 and
       Call("ControlExists", "Water fuel", 0) == 1 and
       Call("ControlExists", "Priming", 0) == 1 and
       Call("ControlExists", "CylinderWear", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("3F Jinty (ADV, MeshTools) detected") end
+      if not DisablePopup then DisplayPopup("3F Jinty TrainBrake (ADV, MeshTools) detected") end
+      return 1
+   end
+end   
+
+function Detect3FJintySteam_ADV_MeshTools(DisablePopup) -- Western Lines of Scotland addon
+   if Call("ControlExists", "Headcode1", 0) == 1 and
+      Call("ControlExists", "MiddleLeftWindow", 0) == 1 and
+      Call("ControlExists", "ReverserLock", 0) == 1 and
+      Call("ControlExists", "Left Steam", 0) == 1 and
+      Call("ControlExists", "MixtureL", 0) == 1 and
+      Call("ControlExists", "SteamBrakePush", 0) == 0 and
+      Call("ControlExists", "SteamBrakePull", 0) == 0 and
+      Call("ControlExists", "VacuumSpindle", 0) == 0 and
+      Call("ControlExists", "SteamBrakeHook", 0) == 0 and
+      Call("ControlExists", "SteamBrakeSpindle", 0) == 0 and
+      Call("ControlExists", "RearSandBox", 0) == 1 and
+      Call("ControlExists", "VirtualDamper", 0) == 1 and
+      Call("ControlExists", "RightGaugeGlassIsolatingHandle", 0) == 1 and
+      Call("ControlExists", "BafflePlate", 0) == 1 and
+      Call("ControlExists", "Right Cab Door", 0) == 1 and
+      Call("ControlExists", "Water fuel", 0) == 1 and
+      Call("ControlExists", "Priming", 0) == 1 and
+      Call("ControlExists", "CylinderWear", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("3F Jinty SteamBrake (ADV, MeshTools) detected") end
       return 1
    end
 end   
