@@ -84,7 +84,7 @@ function ConfigureOverlay()
    if Call("ControlExists", "EngineBrakeControl", 0) == 1 then
       ControlValues["LocoBrake"] = "EngineBrakeControl"
    end
-   
+
    if Call("ControlExists", "DynamicBrake", 0) == 1 then
       ControlValues["DynamicBrake"] = "DynamicBrake"
    end
@@ -96,7 +96,7 @@ function ConfigureOverlay()
    end
 
    -- Loco's indicators
-   
+
    if Call("ControlExists", "BoilerPressureGaugePSI",0) == 1 then
       ControlValues["BoilerPressure"] = "BoilerPressureGaugePSI"
    elseif Call("ControlExists", "BoilerPressureGauge", 0) == 1 then
@@ -757,6 +757,16 @@ function ConfigureOverlay()
       ControlValues["WaterScoopRaiseLower"] = nil
 
    -- UK
+
+   elseif DetectClass90_ADV_AP(true) then
+      -- Throttle is delayed significantly, show lever
+      ControlValues["Throttle"] = "VirtualThrottle"
+      -- LocoBrake lever, internal should be hidden
+      ControlValues["LocoBrake"] = "VirtualEngineBrakeControl"
+
+   elseif DetectMK3DVT_ADV_AP() then
+      -- Throttle is delayed significantly, show lever
+      ControlValues["Throttle"] = "VirtualThrottle"
 
    elseif DetectClass37_Thomson(true) then
       -- Throttle is delayed significantly, show lever

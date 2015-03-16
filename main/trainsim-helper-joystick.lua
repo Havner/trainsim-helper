@@ -269,6 +269,8 @@ function ConfigureJoystick()
       -- Ignore emergency and useless release border values
       TrainBrakeRange = {0.125, 0.875}
       TrainBrakeNotches = GenerateEqualNotches(7, TrainBrakeRange) -- not defined as equal in .bin but they are
+      -- LocoBrake is self lapped
+      LocoBrakeNotches = {-1, 0, 1}
       -- Reverser is 4 state Virtual
       ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
       CruiseControlNotches = GenerateEqualNotches(23, CruiseControlRange) -- (0,110)
