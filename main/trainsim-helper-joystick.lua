@@ -27,7 +27,7 @@ function ConfigureJoystick()
    BlowerLine = 14
    FireboxDoorLine = 18    -- FEF-3: Atomizer
    StokingLine = 19        -- FEF-3: Oil Regulator
-   ExhaustSteamLine = 20
+   ExhaustSteamLine = 20   -- FEF-3: Damper
    ExhaustWaterLine = 15   -- FEF-3: Feedwater Pump
    LiveSteamLine = 16
    LiveWaterLine = 17
@@ -411,7 +411,7 @@ function ConfigureJoystick()
       CruiseControlNotches = GenerateEqualNotches(21, CruiseControlRange) -- (0,200)
       -- TrainBrake, LocoBrake and CruiseControl are self lapped here, add some notches to help
       TrainBrakeNotches = {-1, 0, 1}
-      LocoBrakeNotches = {-1, 0, 0.5, 1}
+      LocoBrakeNotches = {-1, 0, 1}
       CruiseControlNotches = {-1, 0, 1}
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
@@ -733,7 +733,9 @@ function FindStoking()
 end
 
 function FindExhaustSteam()
-   if Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
+   if Call("ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
+      return "FiredoorDamper"
+   elseif Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
       return "Left Steam"
    elseif Call("ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       return "ExhaustInjectorSteamLever"

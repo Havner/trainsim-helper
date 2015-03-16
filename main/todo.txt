@@ -10,6 +10,7 @@
   - lever values?
   - PZB warning for RSC German locos
 - Alternative script for locos with broken scripts
+- FEF-3 joy: set variables in FEF3 section?
 
 Things to consider for the very distant future:
 - Make the overlay display values in the data file it doesn't know about

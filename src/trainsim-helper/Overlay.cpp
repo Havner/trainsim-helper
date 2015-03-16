@@ -843,7 +843,7 @@ void RenderOverlay()
 	y = DrawString(eSteamFireControls,		data.fBlower,						x+119,	y, whitered, pSmallFont, "Blower: %d %%", (int)(data.fBlower()*100));
 	y = DrawString(eSteamFireControls,		data.fTankHeater,					x+89,	y, whitered, pSmallFont, "Tank Heater: %d %%", (int)(data.fTankHeater()*100));
 	y = DrawString(eSteamFireControls,		data.fAtomizer,						x+106,	y, whitered, pSmallFont, "Atomizer: %d %%", (int)(data.fAtomizer()*100));
-	y = DrawString(eSteamFireControls,		data.fOilRegulator,					x+81,	y, whitered, pSmallFont, "Oil Regulator: %d %%", (int)(data.fOilRegulator()*100));
+	y = DrawString(eSteamFireControls,		data.fOilRegulator,					x+83,	y, whitered, pSmallFont, "Oil Regulator: %d %%", (int)(data.fOilRegulator()*100));
 	y = DrawString(eSteamFireControls,		data.fStoking,						x+114,	y, whitered, pSmallFont, "Stoking: %d %%", (int)(data.fStoking()*100));
 	y = DrawString(eSteamFireControls,		data.fFireboxDoor,					x+84,	y, whitered, pSmallFont, "Firebox Door: %d %%", (int)(data.fFireboxDoor()*100));
 	y = DrawString(eSteamFireIndicators,	data.fTankTemperature,				x+124,	y, whitered, pMediumFont, "Tank: %.1f °F",data.fTankTemperature());

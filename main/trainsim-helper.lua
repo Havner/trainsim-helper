@@ -13,7 +13,6 @@
 function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("ControlExists", "MarsLight", 0) == 1 and
       Call("ControlExists", "WhistlePull", 0) == 1 and
-      Call("ControlExists", "SanderLever", 0) == 1 and
       Call("ControlExists", "RegulatorLever", 0) == 1 and
       Call("ControlExists", "TrainBrakeHandle", 0) == 1 and
       Call("ControlExists", "FWPump", 0) == 1 and
@@ -40,7 +39,6 @@ end
 function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("ControlExists", "MarsLight", 0) == 1 and
       Call("ControlExists", "WhistlePull", 0) == 0 and
-      Call("ControlExists", "SanderLever", 0) == 0 and
       Call("ControlExists", "RegulatorLever", 0) == 0 and
       Call("ControlExists", "TrainBrakeHandle", 0) == 0 and
       Call("ControlExists", "FWPump", 0) == 1 and
