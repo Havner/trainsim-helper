@@ -1386,24 +1386,24 @@ function DetectF59PH(DisablePopup) -- Pacific Surfliner addon
    end
 end
 
-function DetectACS64(DisablePopup) -- New York - New Haven
+function DetectM8(DisablePopup) -- New York - New Haven addon
    if Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("ControlExists", "ATCCutIn", 0) == 1 and
       Call("ControlExists", "TimeToPenalty", 0) == 1 and
-      Call("ControlExists", "SpeedDigit_units", 0) == 1 and
-      Call("ControlExists", "SigAspectTopGreen", 0) == 1 and
-      Call("ControlExists", "SigText", 0) == 1 and
-      Call("ControlExists", "ScreenDoorsBypassed", 0) == 1 and
-      Call("ControlExists", "ScreenFireSuppressionDisabled", 0) == 1 and
-      Call("ControlExists", "SpeedDigit_guide", 0) == 1 and
-      Call("ControlExists", "AlarmsToExterior", 0) == 1 and
-      Call("ControlExists", "TractiveEffortKLBF", 0) == 1 and
-      Call("ControlExists", "SigModeACSES", 0) == 1
+      Call("ControlExists", "MyNumber", 0) == 1 and
+      Call("ControlExists", "Coach_2", 0) == 1 and
+      Call("ControlExists", "Cars", 0) == 1 and
+      Call("ControlExists", "SpeedoUnits", 0) == 1 and
+      Call("ControlExists", "CylinderUnits", 0) == 1 and
+      Call("ControlExists", "PipeUnits", 0) == 1 and
+      Call("ControlExists", "PowerAC", 0) == 1 and
+      Call("ControlExists", "PowerOverhead", 0) == 1 and
+      Call("ControlExists", "MotorVolume", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("ACS64 detected") end
+      if not DisablePopup then DisplayPopup("M8 detected") end
       return 1
    end
-end
+end   
 
 function DetectAcela(DisablePopup) -- New York - New Haven addon
    if Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
@@ -1426,59 +1426,107 @@ function DetectAcela(DisablePopup) -- New York - New Haven addon
    end
 end   
 
-function DetectM8(DisablePopup) -- New York - New Haven addon
+function DetectACS64(DisablePopup) -- New York - New Haven
    if Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("ControlExists", "ATCCutIn", 0) == 1 and
       Call("ControlExists", "TimeToPenalty", 0) == 1 and
-      Call("ControlExists", "MyNumber", 0) == 1 and
-      Call("ControlExists", "Coach_2", 0) == 1 and
-      Call("ControlExists", "Cars", 0) == 1 and
-      Call("ControlExists", "SpeedoUnits", 0) == 1 and
-      Call("ControlExists", "CylinderUnits", 0) == 1 and
-      Call("ControlExists", "PipeUnits", 0) == 1 and
-      Call("ControlExists", "PowerAC", 0) == 1 and
-      Call("ControlExists", "PowerOverhead", 0) == 1 and
-      Call("ControlExists", "MotorVolume", 0) == 1
+      Call("ControlExists", "SpeedDigit_units", 0) == 1 and
+      Call("ControlExists", "SigAspectTopGreen", 0) == 1 and
+      Call("ControlExists", "SigText", 0) == 1 and
+      Call("ControlExists", "ScreenDoorsBypassed", 0) == 1 and
+      Call("ControlExists", "ScreenFireSuppressionDisabled", 0) == 1 and
+      Call("ControlExists", "SpeedDigit_guide", 0) == 1 and
+      Call("ControlExists", "AlarmsToExterior", 0) == 1 and
+      Call("ControlExists", "TractiveEffortKLBF", 0) == 1 and
+      Call("ControlExists", "SigModeACSES", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("M8 detected") end
+      if not DisablePopup then DisplayPopup("ACS64 detected") end
       return 1
    end
-end   
+end
+
+function DetectSD402(DisablePopup) -- New York - New Haven
+   if Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("ControlExists", "UN_units", 0) == 1 and
+      Call("ControlExists", "UN_thousands", 0) == 1 and
+      Call("ControlExists", "CabSignal1", 0) == 1 and
+      Call("ControlExists", "CabSignal5", 0) == 1 and
+      Call("ControlExists", "VirtualThrottle", 0) == 1 and
+      Call("ControlExists", "ATCCutIn", 0) == 1 and
+      Call("ControlExists", "ACSESCutIn", 0) == 1 and
+      Call("ControlExists", "SpeedReductionAlert", 0) == 1 and
+      Call("ControlExists", "AutoSuppression", 0) == 1 and
+      Call("ControlExists", "CurrentAmtrakSignal", 0) == 1 and
+      Call("ControlExists", "CurrentSignalType", 0) == 1 and
+      Call("ControlExists", "wibble", 0) == 1 and
+      Call("ControlExists", "BrakesInitialised", 0) == 1 and
+      Call("ControlExists", "BrakeDifficulty", 0) == 1 and
+      Call("ControlExists", "MaximumSpeedLimit", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("SD40-2 detected") end
+      return 1
+   end
+end
+
 
 function DetectSD70MAC_ATC(DisablePopup) -- Academy
-   if Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
-      Call("ControlExists", "ATCCutIn", 0) == 1 and
-      Call("ControlExists", "TimeToPenalty", 0) == 1 and
-      Call("ControlExists", "RPMDelta", 0) == 1 and
-      Call("ControlExists", "CompressorState", 0) == 1 and
+   if Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1 and
+      Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1 and
+      Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "AirCompressor", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("ControlExists", "AWS", 0) == 1 and
       Call("ControlExists", "AWSReset", 0) == 1 and
       Call("ControlExists", "GlarePanels", 0) == 1 and
       Call("ControlExists", "StepsLight", 0) == 1 and
-      Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1 and
-      Call("ControlExists", "EmergencyBrake_Flap", 0) == 1 and
+      Call("ControlExists", "BrakeDifficulty", 0) == 1 and
+      Call("ControlExists", "G_ER", 0) == 1 and
+      Call("ControlExists", "ER_units", 0) == 1 and
       Call("ControlExists", "G_BP", 0) == 1 and
-      Call("ControlExists", "AirCompressor", 0) == 1 and
-      Call("ControlExists", "CurrentAmtrakSignal", 0) == 1
+      Call("ControlExists", "BP_units", 0) == 1 and
+      Call("ControlExists", "G_BC", 0) == 1 and
+      Call("ControlExists", "BC_units", 0) == 1 and
+      Call("ControlExists", "G_MAIN", 0) == 1 and
+      Call("ControlExists", "MAIN_units", 0) == 1 and
+      Call("ControlExists", "SpeedReductionAlert", 0) == 1 and
+      Call("ControlExists", "CurrentAmtrakSignal", 0) == 1 and
+      Call("ControlExists", "MNRRMinimumRestriction", 0) == 1 and
+      Call("ControlExists", "TimeToPenalty", 0) == 1 and
+      Call("ControlExists", "ATCCutIn", 0) == 1 and
+      Call("ControlExists", "EmergencyBrake_Flap", 0) == 1
    then
       if not DisablePopup then DisplayPopup("SD70MAC (ATC) detected") end
       return 1
    end
 end
 
-function DetectSD70M(DisablePopup) -- Sherman Hill
-   if Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
-      Call("ControlExists", "RPMDelta", 0) == 1 and
+function DetectF45(DisablePopup) -- Marias Pass
+   if Call("ControlExists", "RPM", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
-      Call("ControlExists", "AWS", 0) == 1 and
-      Call("ControlExists", "AWSReset", 0) == 1 and
-      Call("ControlExists", "GlarePanels", 0) == 1 and
-      Call("ControlExists", "UN_units", 0) == 1 and
-      Call("ControlExists", "UN_thousands", 0) == 1 and
-      Call("ControlExists", "StepsLight", 0) == 1 and
-      Call("ControlExists", "EqReservoirPressurePSI", 0) == 1
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "Strobe", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 and
+      Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "EngineStop", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 and
+      Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 and
+      Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "Instruments", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "AWS", 0) == 0 and
+      Call("GetControlMaximum", "RPM", 0) == 1050 and
+      Call("GetControlMinimum", "Ammeter", 0) == -900 and
+      Call("GetControlMaximum", "Ammeter", 0) == 1500 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 120
    then
-      if not DisablePopup then DisplayPopup("SD70M detected") end
+      if not DisablePopup then DisplayPopup("F45 detected") end
       return 1
    end
 end
@@ -1507,8 +1555,15 @@ function DetectC409W(DisablePopup) -- Norfolk Southern
    end
 end
 
-function DetectES44DC(DisablePopup) -- Stevens Pass, Marias Pass
-   if Call("GetControlMinimum", "DynamicBrake", 0) == -0.125 and
+function DetectES44DC(DisablePopup) -- Marias Pass, Stevens Pass
+   if Call("ControlExists", "EngineStop", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "MAIN_hundreds", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 and
+      Call("ControlExists", "DynamicBrake", 0) == 1 and
+      Call("ControlExists", "GlarePanels", 0) == 1 and
+      Call("ControlExists", "StepsLight", 0) == 1 and
       Call("ControlExists", "UnitNumber", 0) == 1 and
       Call("ControlExists", "G_Speedo", 0) == 1 and
       Call("ControlExists", "SPEED_units", 0) == 1 and
@@ -1518,15 +1573,50 @@ function DetectES44DC(DisablePopup) -- Stevens Pass, Marias Pass
       Call("ControlExists", "BC_units", 0) == 1 and
       Call("ControlExists", "G_MAIN", 0) == 1 and
       Call("ControlExists", "MAIN_units", 0) == 1 and
-      Call("ControlExists", "ThrottleAndBrake", 0) == 0
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "AWS", 0) == 0 and
+      Call("GetControlMinimum", "Ammeter", 0) == -700 and
+      Call("GetControlMaximum", "Ammeter", 0) == 1000 and
+      Call("GetControlMaximum", "RPM", 0) == 1050 and
+      Call("GetControlMaximum", "LocoBrakeCylinderPressurePSI", 0) == 160 and
+      Call("GetControlMaximum", "UnitNumber", 0) == 8000
    then
       if not DisablePopup then DisplayPopup("ES44DC detected") end
       return 1
    end
 end
 
+function DetectSD70M(DisablePopup) -- Sherman Hill
+   if Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "RPMDelta", 0) == 1 and
+      Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("ControlExists", "AWSReset", 0) == 1 and
+      Call("ControlExists", "GlarePanels", 0) == 1 and
+      Call("ControlExists", "UN_units", 0) == 1 and
+      Call("ControlExists", "UN_thousands", 0) == 1 and
+      Call("ControlExists", "StepsLight", 0) == 1 and
+      Call("GetControlMaximum", "RPM", 0) == 1050 and
+      Call("GetControlMaximum", "EqReservoirPressurePSI", 0) == 160 and
+      Call("GetControlMinimum", "Ammeter", 0) == -900 and
+      Call("GetControlMaximum", "Ammeter", 0) == 1500
+   then
+      if not DisablePopup then DisplayPopup("SD70M detected") end
+      return 1
+   end
+end
+
 function DetectES44AC(DisablePopup) -- Sherman Hill, Norfolk Southern
-   if Call("GetControlMinimum", "DynamicBrake", 0) == 0 and
+   if Call("ControlExists", "MAIN_hundreds", 0) == 1 and
+      Call("ControlExists", "MAIN_tens", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "GlarePanels", 0) == 1 and
       Call("ControlExists", "UnitNumber", 0) == 1 and
       Call("ControlExists", "G_Speedo", 0) == 1 and
       Call("ControlExists", "SPEED_units", 0) == 1 and
@@ -1536,7 +1626,10 @@ function DetectES44AC(DisablePopup) -- Sherman Hill, Norfolk Southern
       Call("ControlExists", "BC_units", 0) == 1 and
       Call("ControlExists", "G_MAIN", 0) == 1 and
       Call("ControlExists", "MAIN_units", 0) == 1 and
-      Call("ControlExists", "ThrottleAndBrake", 0) == 0
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "AWS", 0) == 0 and
+      Call("GetControlMinimum", "DynamicBrake", 0) == 0 and
+      Call("GetControlMaximum", "UnitNumber", 0) == 8000
    then
       if not DisablePopup then DisplayPopup("ES44AC detected") end
       return 1
@@ -1544,37 +1637,17 @@ function DetectES44AC(DisablePopup) -- Sherman Hill, Norfolk Southern
 end
 
 function DetectC449W(DisablePopup) -- Donner Pass
-   if Call("GetControlMaximum", "Ammeter", 0) == 1800 and
+   if Call("ControlExists", "Ammeter", 0) == 1 and
       Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
       Call("ControlExists", "AWS", 0) == 1 and
       Call("ControlExists", "AWSReset", 0) == 1 and
       Call("ControlExists", "GlarePanels", 0) == 1 and
       Call("ControlExists", "TrackDetect1", 0) == 1 and
-      Call("ControlExists", "TrackDetect2", 0) == 1
+      Call("ControlExists", "TrackDetect2", 0) == 1 and
+      Call("GetControlMaximum", "Ammeter", 0) == 1800
    then
       if not DisablePopup then DisplayPopup("C44-9W detected") end
-      return 1
-   end
-end
-
-function DetectF45(DisablePopup) -- Marias Pass
-   if Call("GetControlMaximum", "RPM", 0) == 1050 and
-      Call("ControlExists", "Strobe", 0) == 1 and
-      Call("ControlExists", "RPM", 0) == 1 and
-      Call("ControlExists", "Ammeter", 0) == 1 and
-      Call("ControlExists", "CompressorState", 0) == 1 and
-      Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 and
-      Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 and
-      Call("ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 and
-      Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 and
-      Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 and
-      Call("ControlExists", "EngineStart", 0) == 1 and
-      Call("ControlExists", "EngineStop", 0) == 1 and
-      Call("ControlExists", "Sander", 0) == 1 and
-      Call("ControlExists", "ThrottleAndBrake", 0) == 0
-   then
-      if not DisablePopup then DisplayPopup("F45 detected") end
       return 1
    end
 end
