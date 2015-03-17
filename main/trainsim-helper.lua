@@ -1568,8 +1568,11 @@ function DetectGenericUS(DisablePopup)
    if Call("ControlExists", "RPM", 0) == 1 and
       Call("ControlExists", "Ammeter", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
-      Call("ControlExists", "DynamicBrake", 0) == 1 and
       Call("ControlExists", "Sander", 0) == 1 and
+      (
+         Call("ControlExists", "DynamicBrake", 0) == 1 or
+         Call("ControlExists", "StepsLight", 0) == 1
+      ) and
       (
          Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 or
          Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1
