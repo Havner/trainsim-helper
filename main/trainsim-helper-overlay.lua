@@ -20,12 +20,12 @@ function ConfigureOverlay()
    -- Set UK gradient format. Can be set per loco.
    --GradientUK = 1
 
-   if DetectGenericGerman(true) then
+   if DetectInterfaceGerman() then
       TextAlarm = "PZB"
       TextVigilAlarm = "Sifa"
    end
    
-   if DetectGenericUK(true) then
+   if DetectInterfaceUK() then
       GradientUK = 1
    end
 
@@ -890,6 +890,38 @@ function GetOverlayData()
 
    -- Write data to file
    WriteFile("trainsim-helper-overlay.txt", data)
+end
+
+-----------------------------------------------------------
+------------  Detections used for Interface  --------------
+-----------------------------------------------------------
+
+function DetectInterfaceGerman(DisablePopup) -- Used for Warnings
+   if Call("ControlExists", "AFB", 0) == 1 or
+      Call("ControlExists", "AFBTargetSpeed", 0) == 1 or
+      Call("ControlExists", "PZBFrei", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("German Interface") end
+      return 1
+   end
+end
+
+function DetectInterfaceUK(DisablePopup) -- MPH and BAR, should be UK, hopefully, used for Gradient
+   if Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      (
+         Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 or
+         Call("ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 or
+         Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 or
+         Call("ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 or
+         Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 or
+         Call("ControlExists", "aAirBrakePipePressureBAR", 0) == 1 or
+         Call("ControlExists", "BrakePipePressureBAR", 0) == 1 or
+         Call("ControlExists", "aBrakePipePressureBAR", 0) == 1
+      )
+   then
+      if not DisablePopup then DisplayPopup("UK Interface") end
+      return 1
+   end
 end
 
 -----------------------------------------------------------

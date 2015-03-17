@@ -1579,7 +1579,7 @@ function DetectF45(DisablePopup) -- Marias Pass
    end
 end
 
--- some general detections
+-- some generic detections
 
 function DetectGenericSteam(DisablePopup)
    if Call("GetFireboxMass") then
@@ -1617,40 +1617,12 @@ function DetectGenericUSDiesel(DisablePopup)
    end
 end
 
-function DetectGenericGerman(DisablePopup) -- Used for alerter texts
-   if Call("ControlExists", "AFB", 0) == 1 or
-      Call("ControlExists", "AFBTargetSpeed", 0) == 1 or
-      Call("ControlExists", "PZBFrei", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("German detected") end
-      return 1
-   end
-end
-
-function DetectGenericUK(DisablePopup) -- MPH and BAR, should be UK, hopefully, used for Gradient
-   if Call("ControlExists", "SpeedometerMPH", 0) == 1 and
-      (
-         Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 or
-         Call("ControlExists", "aAirBrakePipePressureBAR", 0) == 1 or
-         Call("ControlExists", "BrakePipePressureBAR", 0) == 1 or
-         Call("ControlExists", "aBrakePipePressureBAR", 0) == 1
-      )
-   then
-      if not DisablePopup then DisplayPopup("UK detected") end
-      return 1
-   end
-end
-
 -----------------------------------------------------------
 -------------------  Helper functions  --------------------
 -----------------------------------------------------------
 
 function DisplayPopup(text, time)
-   time = time or 3
+   time = time or 5
    SysCall("ScenarioManager:ShowAlertMessageExt", "TrainSim Helper", text, time, 0)
 end
 
