@@ -1006,53 +1006,6 @@ function DetectDABpbzkfa(DisablePopup) -- Cologne - Koblenz
    end
 end
 
-function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
-   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
-      Call("ControlExists", "VSoll", 0) == 0 and
-      Call("ControlExists", "LZBEnable", 0) == 0 and
-      Call("ControlExists", "PZBEnable", 0) == 1 and
-      Call("ControlExists", "PZB_1000", 0) == 1 and
-      Call("ControlExists", "DummyAmmeter", 0) == 1 and
-      Call("ControlExists", "DummyVoltmeter", 0) == 1 and
-      Call("ControlExists", "DummyOilPressure", 0) == 1 and
-      Call("ControlExists", "DummyCoolantTemperature", 0) == 1 and
-      Call("ControlExists", "DummyOilTemperature", 0) == 1 and
-      Call("ControlExists", "DummyEnginePressure", 0) == 1 and
-      Call("ControlExists", "DummyTransmissionPressure", 0) == 1 and
-      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
-      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
-      Call("ControlExists", "DoorsOpenCloseRight", 0) == 0 and
-      Call("ControlExists", "DoorsOpenClose", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("BR294 detected") end
-      return 1
-   end
-end
-
-function DetectBR101(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
-   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
-      Call("ControlExists", "VSoll", 0) == 1 and
-      Call("GetControlMaximum", "VSoll", 0) == 250 and
-      Call("ControlExists", "PZBEnable", 0) == 1 and
-      Call("ControlExists", "PZB_1000", 0) == 1 and
-      Call("ControlExists", "LZBEnable", 0) == 1 and
-      Call("ControlExists", "LZB_End", 0) == 1 and
-      Call("ControlExists", "VigilEnable", 0) == 1 and
-      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
-      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
-      Call("ControlExists", "DoorsOpenCloseRight", 0) == 0 and
-      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
-      Call("ControlExists", "RolloL", 0) == 0 and
-      Call("ControlExists", "RolloR", 0) == 0 and
-      Call("ControlExists", "Amp", 0) == 0 and
-      Call("ControlExists", "HandBrake", 0) == 1 and
-      Call("ControlExists", "Tilt", 0) == 0
-   then
-      if not DisablePopup then DisplayPopup("BR101 detected") end
-      return 1
-   end
-end
-
 function DetectBR426(DisablePopup) -- Munich - Garmisch
    if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("ControlExists", "VSoll", 0) == 1 and
@@ -1196,6 +1149,53 @@ function DetectBR189(DisablePopup) -- Academy
       Call("ControlExists", "PowerBar", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR189 detected") end
+      return 1
+   end
+end
+
+function DetectBR101(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 1 and
+      Call("GetControlMaximum", "VSoll", 0) == 250 and
+      Call("ControlExists", "PZBEnable", 0) == 1 and
+      Call("ControlExists", "PZB_1000", 0) == 1 and
+      Call("ControlExists", "LZBEnable", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "VigilEnable", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 0 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("ControlExists", "RolloL", 0) == 0 and
+      Call("ControlExists", "RolloR", 0) == 0 and
+      Call("ControlExists", "Amp", 0) == 0 and
+      Call("ControlExists", "HandBrake", 0) == 1 and
+      Call("ControlExists", "Tilt", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("BR101 detected") end
+      return 1
+   end
+end
+
+function DetectBR294(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 0 and
+      Call("ControlExists", "LZBEnable", 0) == 0 and
+      Call("ControlExists", "PZBEnable", 0) == 1 and
+      Call("ControlExists", "PZB_1000", 0) == 1 and
+      Call("ControlExists", "DummyAmmeter", 0) == 1 and
+      Call("ControlExists", "DummyVoltmeter", 0) == 1 and
+      Call("ControlExists", "DummyOilPressure", 0) == 1 and
+      Call("ControlExists", "DummyCoolantTemperature", 0) == 1 and
+      Call("ControlExists", "DummyOilTemperature", 0) == 1 and
+      Call("ControlExists", "DummyEnginePressure", 0) == 1 and
+      Call("ControlExists", "DummyTransmissionPressure", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 0 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR294 detected") end
       return 1
    end
 end

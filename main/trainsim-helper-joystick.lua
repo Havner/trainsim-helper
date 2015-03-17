@@ -422,16 +422,6 @@ function ConfigureJoystick()
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
 
-   elseif DetectBR294() then
-      -- Makes it easier to center, it's not notched
-      CombinedThrottleCenterDetent = 0.05
-
-   elseif DetectBR101() then
-      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      CruiseControlNotches = GenerateEqualNotches(26, CruiseControlRange) -- (0,1)
-      -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
-
    elseif DetectBR426() then
       -- Makes it easier to center, it's not notched
       CombinedThrottleCenterDetent = 0.05
@@ -454,6 +444,16 @@ function ConfigureJoystick()
       CruiseControlNotches = GenerateEqualNotches(29, CruiseControlRange) -- (0,0.466666)
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+
+   elseif DetectBR101() then
+      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      CruiseControlNotches = GenerateEqualNotches(26, CruiseControlRange) -- (0,1)
+      -- Havner's config
+      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+
+   elseif DetectBR294() then
+      -- Makes it easier to center, it's not notched
+      CombinedThrottleCenterDetent = 0.05
 
    elseif DetectBR101_Old() then
       TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
