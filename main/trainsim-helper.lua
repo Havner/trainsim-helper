@@ -1483,6 +1483,30 @@ function DetectSD70M(DisablePopup) -- Sherman Hill
    end
 end
 
+function DetectC409W(DisablePopup) -- Norfolk Southern
+   if Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "RPMDelta", 0) == 1 and
+      Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "EngineStop", 0) == 1 and
+      Call("ControlExists", "EngineStart", 0) == 1 and
+      Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("ControlExists", "AWSReset", 0) == 1 and
+      Call("ControlExists", "GlarePanels", 0) == 1 and
+      Call("ControlExists", "CabLight", 0) == 1 and
+      Call("GetControlMaximum", "RPM", 0) == 1050 and
+      Call("GetControlMinimum", "Ammeter", 0) == -1200 and
+      Call("GetControlMaximum", "Ammeter", 0) == 1800 and
+      Call("GetControlMaximum", "AirBrakePipePressurePSI", 0) == 160 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 80
+   then
+      if not DisablePopup then DisplayPopup("C40-9W detected") end
+      return 1
+   end
+end
+
 function DetectES44DC(DisablePopup) -- Stevens Pass, Marias Pass
    if Call("GetControlMinimum", "DynamicBrake", 0) == -0.125 and
       Call("ControlExists", "UnitNumber", 0) == 1 and
@@ -1501,21 +1525,6 @@ function DetectES44DC(DisablePopup) -- Stevens Pass, Marias Pass
    end
 end
 
-function DetectC449W(DisablePopup) -- Donner Pass
-   if Call("GetControlMaximum", "Ammeter", 0) == 1800 and
-      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
-      Call("ControlExists", "CompressorState", 0) == 1 and
-      Call("ControlExists", "AWS", 0) == 1 and
-      Call("ControlExists", "AWSReset", 0) == 1 and
-      Call("ControlExists", "GlarePanels", 0) == 1 and
-      Call("ControlExists", "TrackDetect1", 0) == 1 and
-      Call("ControlExists", "TrackDetect2", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("C44-9W detected") end
-      return 1
-   end
-end
-
 function DetectES44AC(DisablePopup) -- Sherman Hill, Norfolk Southern
    if Call("GetControlMinimum", "DynamicBrake", 0) == 0 and
       Call("ControlExists", "UnitNumber", 0) == 1 and
@@ -1530,6 +1539,21 @@ function DetectES44AC(DisablePopup) -- Sherman Hill, Norfolk Southern
       Call("ControlExists", "ThrottleAndBrake", 0) == 0
    then
       if not DisablePopup then DisplayPopup("ES44AC detected") end
+      return 1
+   end
+end
+
+function DetectC449W(DisablePopup) -- Donner Pass
+   if Call("GetControlMaximum", "Ammeter", 0) == 1800 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 1 and
+      Call("ControlExists", "AWSReset", 0) == 1 and
+      Call("ControlExists", "GlarePanels", 0) == 1 and
+      Call("ControlExists", "TrackDetect1", 0) == 1 and
+      Call("ControlExists", "TrackDetect2", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("C44-9W detected") end
       return 1
    end
 end
@@ -1564,15 +1588,11 @@ function DetectGenericSteam(DisablePopup)
    end
 end
 
-function DetectGenericUS(DisablePopup)
+function DetectGenericUSDiesel(DisablePopup)
    if Call("ControlExists", "RPM", 0) == 1 and
       Call("ControlExists", "Ammeter", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
       Call("ControlExists", "Sander", 0) == 1 and
-      (
-         Call("ControlExists", "DynamicBrake", 0) == 1 or
-         Call("ControlExists", "StepsLight", 0) == 1
-      ) and
       (
          Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 or
          Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1
@@ -1589,9 +1609,10 @@ function DetectGenericUS(DisablePopup)
          Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 or
          Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1
       ) and
+      Call("ControlExists", "AWS", 0) == 0 and
       Call("ControlExists", "ThrottleAndBrake", 0) == 0
    then
-      if not DisablePopup then DisplayPopup("US detected") end
+      if not DisablePopup then DisplayPopup("US Diesel detected") end
       return 1
    end
 end

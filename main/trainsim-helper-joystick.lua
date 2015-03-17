@@ -533,13 +533,9 @@ function ConfigureJoystick()
       -- Dynamic brake should not be used directly
       DynamicBrakeLine = nil
 
-   elseif DetectC449W() then
-      CombinedThrottleNotches = GenerateEqualNotches(19, CombinedThrottleRange) -- (0,1)
-      -- This loco has CombinedThrottle combined with DynamicBrake
-      -- Make use of TrainBrake then, the control has not been found previously
-      TrainBrakeControl = FindTrainBrake()
-      -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+   elseif DetectC409W() then
+      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      DynamicBrakeNotches = GenerateEqualNotches(19, DynamicBrakeRange) -- (0, 1)
 
    elseif DetectES44DC() then
       ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
@@ -547,6 +543,14 @@ function ConfigureJoystick()
 
    elseif DetectES44AC() then
       ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+
+   elseif DetectC449W() then
+      CombinedThrottleNotches = GenerateEqualNotches(19, CombinedThrottleRange) -- (0,1)
+      -- This loco has CombinedThrottle combined with DynamicBrake
+      -- Make use of TrainBrake then, the control has not been found previously
+      TrainBrakeControl = FindTrainBrake()
+      -- Dynamic brake should not be used directly
+      DynamicBrakeLine = nil
 
    elseif DetectF45() then
       ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
@@ -558,7 +562,7 @@ function ConfigureJoystick()
       -- Havner's config
       ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
 
-   elseif DetectGenericUS() then
+   elseif DetectGenericUSDiesel() then
       -- Simple US diesels usually have notched throttle
       ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
 
