@@ -1,8 +1,12 @@
 0.9
  - WARNING: Default for "change direction" changed to "D"
+ - WARNING: Configuration syntax changed a little, now tables
+            are used everywhere.
+	    ThrottleInvert became Invert["Throttle"], etc.
  - Removed *: from scripts calls as per dev documents
  - Added warning if Simple controls are detected
  - Added an option "S" to switch to speed limit only
+ - Added an option to sync controls on start of the sim
 
 0.8
  - WARNING: Havner's configs changed (I got more physical throttles now)

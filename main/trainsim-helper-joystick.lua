@@ -604,23 +604,10 @@ function ConfigureJoystick()
    if not SyncOnStart or SyncOnStart == 0 then
       -- Set real values at the start to avoid uncontrolled changing the state after game loads
       local lines = ReadFile("trainsim-helper-joystick.txt")
-      Previous["Reverser"] =         GetLinValue(lines, Line["Reverser"], Invert["Reverser"])
-      Previous["Gear"] =             GetLinValue(lines, Line["Gear"], Invert["Gear"])
-      Previous["CruiseCtl"] =        GetLinValue(lines, Line["CruiseCtl"], Invert["CruiseCtl"])
-      Previous["CombinedThrottle"] = GetLinValue(lines, Line["CombinedThrottle"], Invert["CombinedThrottle"])
-      Previous["Throttle"] =         GetLinValue(lines, Line["Throttle"], Invert["Throttle"])
-      Previous["TrainBrake"] =       GetLinValue(lines, Line["TrainBrake"], Invert["TrainBrake"])
-      Previous["LocoBrake"] =        GetLinValue(lines, Line["LocoBrake"], Invert["LocoBrake"])
-      Previous["DynamicBrake"] =     GetLinValue(lines, Line["DynamicBrake"], Invert["DynamicBrake"])
-      Previous["HandBrake"] =        GetLinValue(lines, Line["HandBrake"], Invert["HandBrake"])
-      Previous["SmallEjector"] =     GetLinValue(lines, Line["SmallEjector"], Invert["SmallEjector"])
-      Previous["Blower"] =           GetLinValue(lines, Line["Blower"], Invert["Blower"])
-      Previous["FireboxDoor"] =      GetLinValue(lines, Line["FireboxDoor"], Invert["FireboxDoor"])
-      Previous["Stoking"] =          GetLinValue(lines, Line["Stoking"], Invert["Stoking"])
-      Previous["ExhaustSteam"] =     GetLinValue(lines, Line["ExhaustSteam"], Invert["ExhaustSteam"])
-      Previous["ExhaustWater"] =     GetLinValue(lines, Line["ExhaustWater"], Invert["ExhaustWater"])
-      Previous["LiveSteam"] =        GetLinValue(lines, Line["LiveSteam"], Invert["LiveSteam"])
-      Previous["LiveWater"] =        GetLinValue(lines, Line["LiveWater"], Invert["LiveWater"])
+
+      for key, l in pairs(Line) do
+         Previous[key] = GetLinValue(lines, l, Invert[key])
+      end
    end
 
    step = 0.04
@@ -817,43 +804,15 @@ function SetJoystickData()
    if SyncOnStart and SyncOnStart ~= 0 and Call("GetSimulationTime", 0) < SyncOnStart then return end
 
    local lines = ReadFile("trainsim-helper-joystick.txt")
+   local value = {}
 
-   local Reverser =         GetLinValue(lines, Line["Reverser"], Invert["Reverser"])
-   local Gear =             GetLinValue(lines, Line["Gear"], Invert["Gear"])
-   local CruiseCtl =        GetLinValue(lines, Line["CruiseCtl"], Invert["CruiseCtl"])
-   local CombinedThrottle = GetLinValue(lines, Line["CombinedThrottle"], Invert["CombinedThrottle"])
-   local Throttle =         GetLinValue(lines, Line["Throttle"], Invert["Throttle"])
-   local TrainBrake =       GetLinValue(lines, Line["TrainBrake"], Invert["TrainBrake"])
-   local LocoBrake =        GetLinValue(lines, Line["LocoBrake"], Invert["LocoBrake"])
-   local DynamicBrake =     GetLinValue(lines, Line["DynamicBrake"], Invert["DynamicBrake"])
-   local HandBrake =        GetLinValue(lines, Line["HandBrake"], Invert["HandBrake"])
-   local SmallEjector =     GetLinValue(lines, Line["SmallEjector"], Invert["SmallEjector"])
-   local Blower =           GetLinValue(lines, Line["Blower"], Invert["Blower"])
-   local FireboxDoor =      GetLinValue(lines, Line["FireboxDoor"], Invert["FireboxDoor"])
-   local Stoking =          GetLinValue(lines, Line["Stoking"], Invert["Stoking"])
-   local ExhaustSteam =     GetLinValue(lines, Line["ExhaustSteam"], Invert["ExhaustSteam"])
-   local ExhaustWater =     GetLinValue(lines, Line["ExhaustWater"], Invert["ExhaustWater"])
-   local LiveSteam =        GetLinValue(lines, Line["LiveSteam"], Invert["LiveSteam"])
-   local LiveWater =        GetLinValue(lines, Line["LiveWater"], Invert["LiveWater"])
+   for key, l in pairs(Line) do
+      value[key] = GetLinValue(lines, l, Invert[key])
+   end
 
-   -- Feed with data
-   Previous["Reverser"] =         SetControl(Control["Reverser"],         Previous["Reverser"],         Reverser,         Range["Reverser"],         Notches["Reverser"],         CenterDetent["Reverser"])
-   Previous["Gear"] =             SetControl(Control["Gear"],             Previous["Gear"],             Gear,             Range["Gear"],             Notches["Gear"])
-   Previous["CruiseCtl"] =        SetControl(Control["CruiseCtl"],        Previous["CruiseCtl"],        CruiseCtl,        Range["CruiseCtl"],        Notches["CruiseCtl"])
-   Previous["CombinedThrottle"] = SetControl(Control["CombinedThrottle"], Previous["CombinedThrottle"], CombinedThrottle, Range["CombinedThrottle"], Notches["CombinedThrottle"], CenterDetent["CombinedThrottle"])
-   Previous["Throttle"] =         SetControl(Control["Throttle"],         Previous["Throttle"],         Throttle,         Range["Throttle"],         Notches["Throttle"])
-   Previous["TrainBrake"] =       SetControl(Control["TrainBrake"],       Previous["TrainBrake"],       TrainBrake,       Range["TrainBrake"],       Notches["TrainBrake"])
-   Previous["LocoBrake"] =        SetControl(Control["LocoBrake"],        Previous["LocoBrake"],        LocoBrake,        Range["LocoBrake"],        Notches["LocoBrake"])
-   Previous["DynamicBrake"] =     SetControl(Control["DynamicBrake"],     Previous["DynamicBrake"],     DynamicBrake,     Range["DynamicBrake"],     Notches["DynamicBrake"])
-   Previous["HandBrake"] =        SetControl(Control["HandBrake"],        Previous["HandBrake"],        HandBrake,        Range["HandBrake"],        Notches["HandBrake"])
-   Previous["SmallEjector"] =     SetControl(Control["SmallEjector"],     Previous["SmallEjector"],     SmallEjector,     Range["SmallEjector"],     Notches["SmallEjector"])
-   Previous["Blower"] =           SetControl(Control["Blower"],           Previous["Blower"],           Blower,           Range["Blower"],           Notches["Blower"])
-   Previous["FireboxDoor"] =      SetControl(Control["FireboxDoor"],      Previous["FireboxDoor"],      FireboxDoor,      Range["FireboxDoor"],      Notches["FireboxDoor"])
-   Previous["Stoking"] =          SetControl(Control["Stoking"],          Previous["Stoking"],          Stoking,          Range["Stoking"],          Notches["Stoking"])
-   Previous["ExhaustSteam"] =     SetControl(Control["ExhaustSteam"],     Previous["ExhaustSteam"],     ExhaustSteam,     Range["ExhaustSteam"],     Notches["ExhaustSteam"])
-   Previous["ExhaustWater"] =     SetControl(Control["ExhaustWater"],     Previous["ExhaustWater"],     ExhaustWater,     Range["ExhaustWater"],     Notches["ExhaustWater"])
-   Previous["LiveSteam"] =        SetControl(Control["LiveSteam"],        Previous["LiveSteam"],        LiveSteam,        Range["LiveSteam"],        Notches["LiveSteam"])
-   Previous["LiveWater"] =        SetControl(Control["LiveWater"],        Previous["LiveWater"],        LiveWater,        Range["LiveWater"],        Notches["LiveWater"])
+   for key, v in pairs(value) do
+      Previous[key] = SetControl(Control[key], Previous[key], v, Range[key], Notches[key], CenterDetent[key])
+   end
 
    -- For those configured to be set over time, set them step by step
    if target then
