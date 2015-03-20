@@ -13,6 +13,8 @@
  - New option for Axes, Step: set the control over time,
    not immediately. Now even using Notches the ControlValue
    will go through immediate values before reaching the setting.
+ - Thanks to this option TrainBrake and DynamicBrake work
+   together on vRailroads locos as they should.
  - Added an option to disable all "Havner's config" mods.
 
 0.8

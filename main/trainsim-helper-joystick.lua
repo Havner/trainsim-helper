@@ -381,23 +381,24 @@ function ConfigureJoystick()
    elseif DetectBR103TEE_vRailroads_Expert() then
       Notches["Reverser"] = {-1, 0, 0.5, 1}
       GenerateEqualNotches(40, "Throttle") -- (0,39)
-      -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
-      Notches["TrainBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      Notches["DynamicBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
+      Step["TrainBrake"] = 0.02
+      Notches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["DynamicBrake"] = {0, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
    elseif DetectBR103TEE_vRailroads() then
       GenerateEqualNotches(40, "Throttle") -- (0,39)
-      -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
+      -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
       Step["TrainBrake"] = 0.02
-      Notches["TrainBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      Notches["DynamicBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["DynamicBrake"] = {0, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       -- Self lapped, it's continuous above 0.1
       Notches["LocoBrake"] = {-1, 0.1}
 
    elseif DetectBR111_vRailroads() or DetectDBbzf_vRailroads() then
-      -- Brake levers desynchronize if using correct notches
-      --Notches["TrainBrake"] = {0, 0.14, 0.35, 0.42, 0.48, 0.61, 0.74, 0.87, 1}
-      GenerateEqualNotches(10, "TrainBrake")
+      -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
+      Step["TrainBrake"] = 0.02
+      Notches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
    elseif DetectBR420_Influenzo() then
       -- Throttle used as CombinedThrottle
