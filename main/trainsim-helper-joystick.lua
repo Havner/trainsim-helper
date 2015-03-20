@@ -373,6 +373,13 @@ function ConfigureJoystick()
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
+   elseif DetectBR103TEE_vRailroads_Expert() then
+      ReverserNotches = {-1, 0, 0.5, 1}
+      ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
+      -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
+      TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+
    elseif DetectBR103TEE_vRailroads() then
       ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
       -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
@@ -415,7 +422,7 @@ function ConfigureJoystick()
       CruiseControlNotches = {-1, 0, 1}
       -- Havner's config
       CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
-      
+
    elseif DetectBR1460() or DetectBR1462() or DetectDABpbzkfa() then
       TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,1)

@@ -811,6 +811,28 @@ end
 
 -- German
 
+function DetectBR103TEE_vRailroads_Expert(DisablePopup) -- Expert Line
+   if Call("ControlExists", "InstrBelTaster", 0) == 1 and
+      Call("ControlExists", "ZZAauf", 0) == 1 and
+      Call("ControlExists", "Fahrstufe", 0) == 1 and
+      Call("ControlExists", "FahrschalterAuf", 0) == 1 and
+      Call("ControlExists", "vAccelerometer", 0) == 1 and
+      Call("ControlExists", "Wischer1", 0) == 1 and
+      Call("ControlExists", "Hauptschalter", 0) == 1 and
+      Call("ControlExists", "Fahrdrahtspannung", 0) == 1 and
+      Call("ControlExists", "Trennschuetz", 0) == 1 and
+      Call("ControlExists", "ConsistTotalMass", 0) == 1 and
+      Call("ControlExists", "HauptLichtRegler", 0) == 1 and
+      Call("ControlExists", "HelpNeedle", 0) == 1 and
+      Call("ControlExists", "FMLSchalter", 0) == 1 and
+      Call("ControlExists", "BatterieSchalter", 0) == 1 and
+      Call("ControlExists", "PantoAufAb", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR103 TEE (vRailroads, Expert) detected") end
+      return 1
+   end
+end
+
 function DetectBR103TEE_vRailroads(DisablePopup) -- Hamburg - Hannover addon
    if Call("ControlExists", "InstrBelTaster", 0) == 1 and
       Call("ControlExists", "ZZAauf", 0) == 1 and
@@ -823,7 +845,10 @@ function DetectBR103TEE_vRailroads(DisablePopup) -- Hamburg - Hannover addon
       Call("ControlExists", "Trennschuetz", 0) == 1 and
       Call("ControlExists", "ConsistTotalMass", 0) == 1 and
       Call("ControlExists", "HauptLichtRegler", 0) == 1 and
-      Call("ControlExists", "HelpNeedle", 0) == 1
+      Call("ControlExists", "HelpNeedle", 0) == 1 and
+      Call("ControlExists", "FMLSchalter", 0) == 0 and
+      Call("ControlExists", "BatterieSchalter", 0) == 0 and
+      Call("ControlExists", "PantoAufAb", 0) == 0
    then
       if not DisablePopup then DisplayPopup("BR103 TEE (vRailroads) detected") end
       return 1

@@ -253,7 +253,10 @@ function ConfigureOverlay()
       StaticValues["AirBrakePipeUnits"] = "PSI"
    end
 
-   if Call("ControlExists", "MRPSI", 0) == 1 then  -- FEF-3
+   if Call("ControlExists", "HLB", 0) == 1 then  -- vR103
+      ControlValues["MainReservoirPressure"] = "HLB"
+      StaticValues["MainReservoirUnits"] = "BAR"
+   elseif Call("ControlExists", "MRPSI", 0) == 1 then  -- FEF-3
       ControlValues["MainReservoirPressure"] = "MRPSI"
       StaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 then
@@ -777,6 +780,12 @@ function ConfigureOverlay()
       ControlValues["Throttle"] = "VirtualThrottle"
 
    -- German
+
+   elseif DetectBR103TEE_vRailroads_Expert(true) then
+	   -- Throttle is delayed significantly, show lever
+	   ControlValues["Throttle"] = "VirtualThrottle"
+	   -- Scale values to (0,1)
+	   ControlValuesFunctions["Throttle"] = function(value) return value / 39 end
 
    elseif DetectBR103TEE_vRailroads(true) then
 	   -- Throttle is delayed significantly, show lever
