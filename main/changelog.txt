@@ -7,6 +7,10 @@
  - Added warning if Simple controls are detected
  - Added an option "S" to switch to speed limit only
  - Added an option to sync controls on start of the sim
+ - New option for Axes, Step: set the control over time,
+   not immediately. Now even using Notches the ControlValue
+   will go through immediate values before reaching the setting.
+ - Added an option to disable all "Havner's config" mods.
 
 0.8
  - WARNING: Havner's configs changed (I got more physical throttles now)
