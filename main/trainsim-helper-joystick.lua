@@ -7,15 +7,6 @@
 -----------------------------------------------------------
 
 function ConfigureJoystick()
-   Line = {}
-   Control = {}
-   Range = {}
-   Invert = {}
-   CenterDetent = {}
-   Notches = {}
-   Step = {}
-   Previous = {}
-
    -- Lines count from 1, not 0 to make easier for non programmers. Line["CombinedThrottle"] and
    -- Line["Throttle"] can have the same value, they are mutually exclusive and never used together.
    -- Per loco configurations are further down in the function.
@@ -606,11 +597,9 @@ function ConfigureJoystick()
       local lines = ReadFile("trainsim-helper-joystick.txt")
 
       for key, l in pairs(Line) do
-         Previous[key] = GetLinValue(lines, l, Invert[key])
+         PreviousInput[key] = GetLinValue(key, lines)
       end
    end
-
-   step = 0.04
 
    -- Set at the very end to be a mark whether the configuration has been successful.
    JoystickConfigured = 1
@@ -807,25 +796,16 @@ function SetJoystickData()
    local value = {}
 
    for key, l in pairs(Line) do
-      value[key] = GetLinValue(lines, l, Invert[key])
+      value[key] = GetLinValue(key, lines)
    end
 
    for key, v in pairs(value) do
-      Previous[key] = SetControl(Control[key], Previous[key], v, Range[key], Notches[key], CenterDetent[key])
+      SetControl(key, v)
    end
 
    -- For those configured to be set over time, set them step by step
-   if target then
-      if math.abs(target - current) < step then
-         current = target
-         target = nil
-      elseif current < target then
-         current = current + step
-      else
-         current = current - step
-      end
-      
-      SetControlValue(TrainBrakeControl, current)
+   for key, s in pairs(Step) do
+      SetControlDelayed(key)
    end
 end
 
@@ -834,6 +814,18 @@ end
 -----------------------------------------------------------
 -----  Here be dragons, careful with modifications  -------
 -----------------------------------------------------------
+
+-- Don't touch those lines
+Line = {}
+Control = {}
+Range = {}
+Invert = {}
+CenterDetent = {}
+Notches = {}
+Step = {}
+PreviousInput = {}
+CurrentSim = {}
+TargetSim = {}
 
 function ReadFile(name)
    local lines = {}
@@ -854,7 +846,10 @@ function ReadFile(name)
    return lines
 end
 
-function GetLinValue(lines, line, invert)
+function GetLinValue(key, lines)
+   local line = Line[key]
+   local invert = Invert[key]
+
    if line and line > 0 then
       local value = lines[line]
       if not value or value < 0.0 or value > 1.0 then
@@ -913,7 +908,14 @@ function GenerateEqualNotch(count, range)
    end
 end
 
-function SetControl(control, previous, value, range, notches, detent)
+function SetControl(key, value)
+   local control = Control[key]
+   local previous = PreviousInput[key]
+   local range = Range[key]
+   local notches = Notches[key]
+   local detent = CenterDetent[key]
+   local step = Step[key]
+
    if control and value >= 0.0 and value <= 1.0 and ValueChanged(previous, value) then
       local saved_value = value
 
@@ -936,22 +938,39 @@ function SetControl(control, previous, value, range, notches, detent)
       end
 
       -- If Steps are defined we don't want to set the ControlValue immediately
-      -- We want to set the Target we achieve over time
-      if TEST then
-         if value ~= target then
-            target = value
-            if not current then
-               current = GetControlValue(TrainBrakeControl)
-            end
+      -- We want to set the TargetSim to achieve over time
+      if step then
+         if value ~= TargetSim[key] then
+            TargetSim[key] = value
+            -- Set current in case it has been moved by some other means (keys, script)
+            CurrentSim[key] = GetControlValue(control)
          end
       else
          SetControlValue(control, value)
       end
-      return saved_value
+      PreviousInput[key] = saved_value
    end
-
-   return previous
 end
+
+function SetControlDelayed(key)
+   local step = Step[key]
+   local control = Control[key]
+
+   if step and TargetSim[key] and CurrentSim[key] then
+      if math.abs(TargetSim[key] - CurrentSim[key]) < step then
+         -- Make sure we match the target perfectly and stop delayed set
+         CurrentSim[key] = TargetSim[key]
+         TargetSim[key] = nil
+      elseif CurrentSim[key] < TargetSim[key] then
+         CurrentSim[key] = CurrentSim[key] + step
+      else
+         CurrentSim[key] = CurrentSim[key] - step
+      end
+      
+      SetControlValue(control, CurrentSim[key])
+   end
+end
+
 
 function ValueChanged(previous, value)
    if not previous or
