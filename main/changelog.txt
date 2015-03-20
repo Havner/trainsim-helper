@@ -3,6 +3,9 @@
  - WARNING: Configuration syntax changed a little, now tables
             are used everywhere.
 	    ThrottleInvert became Invert["Throttle"], etc.
+ - WARNING: Config functions changed due to the above as well.
+            ReplaceLines, GenerateEquakNotches, InvInvert, they
+	    all get the key in params and don't return anything
  - Removed *: from scripts calls as per dev documents
  - Added warning if Simple controls are detected
  - Added an option "S" to switch to speed limit only
