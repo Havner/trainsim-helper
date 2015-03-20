@@ -614,6 +614,8 @@ function ConfigureJoystick()
       PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
    end
 
+   step = 0.04
+
    -- Set at the very end to be a mark whether the configuration has been successful.
    JoystickConfigured = 1
 end
@@ -831,7 +833,7 @@ function SetJoystickData()
    PreviousCruiseControl =    SetControl(CruiseControlControl,    PreviousCruiseControl,    CruiseControl,    CruiseControlRange,    CruiseControlNotches)
    PreviousCombinedThrottle = SetControl(CombinedThrottleControl, PreviousCombinedThrottle, CombinedThrottle, CombinedThrottleRange, CombinedThrottleNotches, CombinedThrottleCenterDetent)
    PreviousThrottle =         SetControl(ThrottleControl,         PreviousThrottle,         Throttle,         ThrottleRange,         ThrottleNotches)
-   PreviousTrainBrake =       SetControl(TrainBrakeControl,       PreviousTrainBrake,       TrainBrake,       TrainBrakeRange,       TrainBrakeNotches)
+   PreviousTrainBrake =       SetControl(TrainBrakeControl,       PreviousTrainBrake,       TrainBrake,       TrainBrakeRange,       TrainBrakeNotches, nil, 1)
    PreviousLocoBrake =        SetControl(LocoBrakeControl,        PreviousLocoBrake,        LocoBrake,        LocoBrakeRange,        LocoBrakeNotches)
    PreviousDynamicBrake =     SetControl(DynamicBrakeControl,     PreviousDynamicBrake,     DynamicBrake,     DynamicBrakeRange,     DynamicBrakeNotches)
    PreviousHandBrake =        SetControl(HandBrakeControl,        PreviousHandBrake,        HandBrake,        HandBrakeRange,        HandBrakeNotches)
@@ -843,6 +845,20 @@ function SetJoystickData()
    PreviousExhaustWater =     SetControl(ExhaustWaterControl,     PreviousExhaustWater,     ExhaustWater,     ExhaustWaterRange,     ExhaustWaterNotches)
    PreviousLiveSteam =        SetControl(LiveSteamControl,        PreviousLiveSteam,        LiveSteam,        LiveSteamRange,        LiveSteamNotches)
    PreviousLiveWater =        SetControl(LiveWaterControl,        PreviousLiveWater,        LiveWater,        LiveWaterRange,        LiveWaterNotches)
+
+   -- For those configured to be set over time, set them step by step
+   if target then
+      if math.abs(target - current) < step then
+         current = target
+         target = nil
+      elseif current < target then
+         current = current + step
+      else
+         current = current - step
+      end
+      
+      SetControlValue(TrainBrakeControl, current)
+   end
 end
 
 -----------------------------------------------------------
@@ -929,7 +945,7 @@ function GenerateEqualNotches(count, range)
    end
 end
 
-function SetControl(control, previous, value, range, notches, detent)
+function SetControl(control, previous, value, range, notches, detent, TEST)
    if control and value >= 0.0 and value <= 1.0 and ValueChanged(previous, value) then
       local saved_value = value
 
@@ -951,7 +967,18 @@ function SetControl(control, previous, value, range, notches, detent)
          end
       end
 
-      SetControlValue(control, value)
+      -- If Steps are defined we don't want to set the ControlValue immediately
+      -- We want to set the Target we achieve over time
+      if TEST then
+         if value ~= target then
+            target = value
+            if not current then
+               current = GetControlValue(TrainBrakeControl)
+            end
+         end
+      else
+         SetControlValue(control, value)
+      end
       return saved_value
    end
 
@@ -976,4 +1003,10 @@ function SetControlValue(control, value)
          Call("SetControlValue", control, 0, value)
       --end
    end
+end
+
+function GetControlValue(control)
+   --if Call("ControlExists", control, 0) == 1 then
+      return Call("GetControlValue", control, 0)
+   --end
 end
