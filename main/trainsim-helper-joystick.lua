@@ -7,51 +7,60 @@
 -----------------------------------------------------------
 
 function ConfigureJoystick()
-   -- Lines count from 1, not 0 to make easier for non programmers. CombinedThrottleLine and
-   -- ThrottleLine can have the same value, they are mutually exclusive and never used together.
+   Line = {}
+   Control = {}
+   Range = {}
+   Invert = {}
+   CenterDetent = {}
+   Notches = {}
+   Step = {}
+   Previous = {}
+
+   -- Lines count from 1, not 0 to make easier for non programmers. Line["CombinedThrottle"] and
+   -- Line["Throttle"] can have the same value, they are mutually exclusive and never used together.
    -- Per loco configurations are further down in the function.
    -- Some controls might be used to control other things (based on a loco), but only
    --   if you have not setup those controls explicitly. See "Havner's config" sections.
    -- To disable a control or an invert set it to 0 or comment out.
 
-   --ReverserLine = 7
-   --GearLine = 7
-   --CruiseControlLine = 7
-   CombinedThrottleLine = 3
-   ThrottleLine = 3
-   TrainBrakeLine = 6
-   LocoBrakeLine = 10      -- might also be used for HandBrake if it's not explicitly set
-   DynamicBrakeLine = 7    -- might also be used for Reverser, Gear or CruiseControl if they're not explicitly set
-   --HandBrakeLine = 10
-   SmallEjectorLine = 12
-   BlowerLine = 14
-   FireboxDoorLine = 18    -- FEF-3: Atomizer
-   StokingLine = 19        -- FEF-3: Oil Regulator
-   ExhaustSteamLine = 20   -- FEF-3: Damper
-   ExhaustWaterLine = 15   -- FEF-3: Feedwater Pump
-   LiveSteamLine = 16
-   LiveWaterLine = 17
+   --Line["Reverser"] = 7
+   --Line["Gear"] = 7
+   --Line["CruiseCtl"] = 7
+   Line["CombinedThrottle"] = 3
+   Line["Throttle"] = 3
+   Line["TrainBrake"] = 6
+   Line["LocoBrake"] = 10      -- might also be used for HandBrake if it's not explicitly set
+   Line["DynamicBrake"] = 7    -- might also be used for Reverser, Gear or CruiseCtl if they're not explicitly set
+   --Line["HandBrake"] = 10
+   Line["SmallEjector"] = 12
+   Line["Blower"] = 14
+   Line["FireboxDoor"] = 18    -- FEF-3: Atomizer
+   Line["Stoking"] = 19        -- FEF-3: Oil Regulator
+   Line["ExhaustSteam"] = 20   -- FEF-3: Damper
+   Line["ExhaustWater"] = 15   -- FEF-3: Feedwater Pump
+   Line["LiveSteam"] = 16
+   Line["LiveWater"] = 17
 
-   ReverserInvert = 1
-   GearInvert = 1
-   CruiseControlInvert = 1
-   CombinedThrottleInvert = 1
-   ThrottleInvert = 1
-   --TrainBrakeInvert = 1
-   --LocoBrakeInvert = 1
-   --DynamicBrakeInvert = 1
-   --HandBrakeInvert = 1
-   SmallEjectorInvert = 1
-   --BlowerInvert = 1
-   FireboxDoorInvert = 1
-   StokingInvert = 1
-   ExhaustSteamInvert = 1
-   ExhaustWaterInvert = 1
-   LiveSteamInvert = 1
-   LiveWaterInvert = 1
+   Invert["Reverser"] = 1
+   Invert["Gear"] = 1
+   Invert["CruiseCtl"] = 1
+   Invert["CombinedThrottle"] = 1
+   Invert["Throttle"] = 1
+   --Invert["TrainBrake"] = 1
+   --Invert["LocoBrake"] = 1
+   --Invert["DynamicBrake"] = 1
+   --Invert["HandBrake"] = 1
+   Invert["SmallEjector"] = 1
+   --Invert["Blower"] = 1
+   Invert["FireboxDoor"] = 1
+   Invert["Stoking"] = 1
+   Invert["ExhaustSteam"] = 1
+   Invert["ExhaustWater"] = 1
+   Invert["LiveSteam"] = 1
+   Invert["LiveWater"] = 1
 
-   --ReverserCenterDetent = 0.05
-   --CombinedThrottleCenterDetent = 0.05
+   --CenterDetent["Reverser"] = 0.05
+   --CenterDetent["CombinedThrottle"] = 0.05
 
    -- Sync virtual values with physical ones on start of the sim
    -- after that many seconds. Set to 0 or comment out to disable.
@@ -67,47 +76,47 @@ function ConfigureJoystick()
    -- Find ControlValues a loco has and detect what to use.
    -- If combined doesn't exist configure separate throttle and train brake.
    -- If combined is with dynamic brake we'll deal with that per loco below.
-   ReverserControl =          FindReverser()
-   GearControl =              FindGear()
-   CruiseControlControl =     FindCruiseControl()
-   CombinedThrottleControl =  FindCombinedThrottle()
-   if not CombinedThrottleControl then
-      ThrottleControl =       FindThrottle()
-      TrainBrakeControl =     FindTrainBrake()
+   Control["Reverser"] =          FindReverser()
+   Control["Gear"] =              FindGear()
+   Control["CruiseCtl"] =         FindCruiseCtl()
+   Control["CombinedThrottle"] =  FindCombinedThrottle()
+   if not Control["CombinedThrottle"] then
+      Control["Throttle"] =       FindThrottle()
+      Control["TrainBrake"] =     FindTrainBrake()
    end
-   LocoBrakeControl =         FindLocoBrake()
-   DynamicBrakeControl =      FindDynamicBrake()
-   HandBrakeControl =         FindHandBrake()
-   SmallEjectorControl =      FindSmallEjector()
-   BlowerControl =            FindBlower()
-   FireboxDoorControl =       FindFireboxDoor()
-   StokingControl =           FindStoking()
-   ExhaustSteamControl =      FindExhaustSteam()
-   ExhaustWaterControl =      FindExhaustWater()
-   LiveSteamControl =         FindLiveSteam()
-   LiveWaterControl =         FindLiveWater()
+   Control["LocoBrake"] =         FindLocoBrake()
+   Control["DynamicBrake"] =      FindDynamicBrake()
+   Control["HandBrake"] =         FindHandBrake()
+   Control["SmallEjector"] =      FindSmallEjector()
+   Control["Blower"] =            FindBlower()
+   Control["FireboxDoor"] =       FindFireboxDoor()
+   Control["Stoking"] =           FindStoking()
+   Control["ExhaustSteam"] =      FindExhaustSteam()
+   Control["ExhaustWater"] =      FindExhaustWater()
+   Control["LiveSteam"] =         FindLiveSteam()
+   Control["LiveWater"] =         FindLiveWater()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later.
-   ReverserRange =         GetControlRange(FindReverser())
-   GearRange =             GetControlRange(FindGear())
-   CruiseControlRange =    GetControlRange(FindCruiseControl())
-   CombinedThrottleRange = GetControlRange(FindCombinedThrottle())
-   ThrottleRange =         GetControlRange(FindThrottle())
-   TrainBrakeRange =       GetControlRange(FindTrainBrake())
-   LocoBrakeRange =        GetControlRange(FindLocoBrake())
-   DynamicBrakeRange =     GetControlRange(FindDynamicBrake())
-   HandBrakeRange =        GetControlRange(FindHandBrake())
-   SmallEjectorRange =     GetControlRange(FindSmallEjector())
-   BlowerRange =           GetControlRange(FindBlower())
-   FireboxDoorRange =      GetControlRange(FindFireboxDoor())
-   StokingRange =          GetControlRange(FindStoking())
-   ExhaustSteamRange =     GetControlRange(FindExhaustSteam())
-   ExhaustWaterRange =     GetControlRange(FindExhaustWater())
-   LiveSteamRange =        GetControlRange(FindLiveSteam())
-   LiveWaterRange =        GetControlRange(FindLiveWater())
+   Range["Reverser"] =         GetControlRange(FindReverser())
+   Range["Gear"] =             GetControlRange(FindGear())
+   Range["CruiseCtl"] =        GetControlRange(FindCruiseCtl())
+   Range["CombinedThrottle"] = GetControlRange(FindCombinedThrottle())
+   Range["Throttle"] =         GetControlRange(FindThrottle())
+   Range["TrainBrake"] =       GetControlRange(FindTrainBrake())
+   Range["LocoBrake"] =        GetControlRange(FindLocoBrake())
+   Range["DynamicBrake"] =     GetControlRange(FindDynamicBrake())
+   Range["HandBrake"] =        GetControlRange(FindHandBrake())
+   Range["SmallEjector"] =     GetControlRange(FindSmallEjector())
+   Range["Blower"] =           GetControlRange(FindBlower())
+   Range["FireboxDoor"] =      GetControlRange(FindFireboxDoor())
+   Range["Stoking"] =          GetControlRange(FindStoking())
+   Range["ExhaustSteam"] =     GetControlRange(FindExhaustSteam())
+   Range["ExhaustWater"] =     GetControlRange(FindExhaustWater())
+   Range["LiveSteam"] =        GetControlRange(FindLiveSteam())
+   Range["LiveWater"] =        GetControlRange(FindLiveWater())
 
    -- Override defaults for custom locos. Detect functions are in the main script.
-   -- In my case (3 throttle axes) I often make use of the DynamicLine in
+   -- In my case (3 throttle axes) I often make use of the Line["DynamicBrake"] in
    -- case where a loco doesn't have DynamicBrake or some other control is
    -- more important. If you have more then 3 throttle axes you could assign
    -- all of them without having to make compromises.
@@ -116,467 +125,467 @@ function ConfigureJoystick()
 
    if DetectFEF3_ADV_Smokebox() then
       -- Ignore emergency values (0.85, 1)
-      TrainBrakeRange = {0, 0.85}
+      Range["TrainBrake"] = {0, 0.85}
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectFEF3_HUD_Smokebox() then
       -- Ignore emergency values (0.85, 1)
-      TrainBrakeRange = {0, 0.85}
+      Range["TrainBrake"] = {0, 0.85}
       -- Use regular controls instead of My* versions, they exist, but don't work in the HUD version
-      ReverserControl = "Reverser"
-      LocoBrakeControl = "EngineBrakeControl"
+      Control["Reverser"] = "Reverser"
+      Control["LocoBrake"] = "EngineBrakeControl"
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif Detect2FDockTank_ADV_MeshTools() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif DetectJ50_ADV_MeshTools() then
-      TrainBrakeNotches = {0.04, 0.15, 0.25}
+      Notches["TrainBrake"] = {0.04, 0.15, 0.25}
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif Detect3FJintyTrain_ADV_MeshTools() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
       -- Steam brake internal should not be used directly, only push/pull
-      LocoBrakeLine = nil
+      Line["LocoBrake"] = nil
 
    elseif Detect3FJintySteam_ADV_MeshTools() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
       -- Steam brake internal should not be used directly
-      LocoBrakeLine = nil
+      Line["LocoBrake"] = nil
 
    elseif DetectJ94Train_ADV_MeshTools() then
-      -- Notches for the Vacuum or Air brakes (the latter are not keyboard-notched due to a bug)
-      TrainBrakeNotches = {0.04, 0.15, 0.25}
+      -- Notches[""] for the Vacuum or Air brakes (the latter are not keyboard-notched due to a bug)
+      Notches["TrainBrake"] = {0.04, 0.15, 0.25}
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectJ94Steam_ADV_MeshTools() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
       -- There is no TrainBrake here, use the steam brake as one
-      LocoBrakeLine = TrainBrakeLine
-      TrainBrakeLine = nil
+      Line["LocoBrake"] = Line["TrainBrake"]
+      Line["TrainBrake"] = nil
       -- Add notches as it's otherwise very hard to control the steam brake (the only one)
-      LocoBrakeNotches = {0.30, 0.40, 0.50}
+      Notches["LocoBrake"] = {0.30, 0.40, 0.50}
 
    elseif DetectSmallPrairies_VictoryWorks() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif Detect14xx_VictoryWorks() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif DetectAutocoachA31_VictoryWorks() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif DetectBulleidQ1_VictoryWorks() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif Detect56xx_VictoryWorks() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    elseif DetectCastle() then
       -- This loco has VirtualReverser but it doesn't work, override
-      ReverserControl = "Reverser"
+      Control["Reverser"] = "Reverser"
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectBlack5_KeithRoss() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
-      HandBrakeLine, LocoBrakeLine = ReplaceLines(HandBrakeLine, LocoBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
+      Line["HandBrake"], Line["LocoBrake"] = Replace(Line["HandBrake"], Line["LocoBrake"])
 
    -- UK
 
    elseif DetectClass365() then
       -- Ignore emergency values on CombinedThrottle (0, 0.1)
-      CombinedThrottleRange = {0.1, 1}
-      CombinedThrottleNotches = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
-      CruiseControlNotches = GenerateEqualNotches(25, CruiseControlRange) -- (0,1)
+      Range["CombinedThrottle"] = {0.1, 1}
+      Notches["CombinedThrottle"] = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
+      Notches["CruiseCtl"] = GenerateEqualNotch(25, Range["CruiseCtl"]) -- (0,1)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectHST() then
-      ThrottleNotches = GenerateEqualNotches(6, ThrottleRange) -- (0,1)
-      TrainBrakeNotches = GenerateEqualNotches(8, TrainBrakeRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(6, Range["Throttle"]) -- (0,1)
+      Notches["TrainBrake"] = GenerateEqualNotch(8, Range["TrainBrake"]) -- (0,1)
 
    elseif DetectClass801() then
       -- Ignore emergency values on CombinedThrottle (-1.5, -1)
-      CombinedThrottleRange = {-1, 1}
+      Range["CombinedThrottle"] = {-1, 1}
       -- Set custom notches for the CombinedThrottle, it's continuous below min brake
-      CombinedThrottleNotches = {-0.25, 0, 0.25, 0.5, 0.75, 1}
+      Notches["CombinedThrottle"] = {-0.25, 0, 0.25, 0.5, 0.75, 1}
 
    elseif DetectClass375Class377() then
-      CombinedThrottleNotches = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
-      CruiseControlNotches = GenerateEqualNotches(21, CruiseControlRange) -- (0,100)
+      Notches["CombinedThrottle"] = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
+      Notches["CruiseCtl"] = GenerateEqualNotch(21, Range["CruiseCtl"]) -- (0,100)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectClass450() then
       -- Set custom notches for the CombinedThrottle, lower half based on sounds, not .bin
-      CombinedThrottleNotches = {-1, -0.81, -0.68, -0.56, -0.44, -0.31, -0.18, 0, 0.2, 0.4, 0.6, 0.8, 1}
+      Notches["CombinedThrottle"] = {-1, -0.81, -0.68, -0.56, -0.44, -0.31, -0.18, 0, 0.2, 0.4, 0.6, 0.8, 1}
 
    elseif DetectClass395() then
       -- Ignore emergency values on CombinedThrottle (-1.5, -1)
-      CombinedThrottleRange = {-1, 1}
+      Range["CombinedThrottle"] = {-1, 1}
       -- Set custom notches for the CombinedThrottle, it's continuous below min brake
-      CombinedThrottleNotches = {-0.25, 0, 0.25, 0.5, 0.75, 1}
+      Notches["CombinedThrottle"] = {-0.25, 0, 0.25, 0.5, 0.75, 1}
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
       -- Invert the invert, as this Virtual is inverted compared to the simple one
-      ReverserInvert = InvertBool(ReverserInvert)
+      Invert["Reverser"] = InvBool(Invert["Reverser"])
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectClass360() then
       -- Ignore emergency values on CombinedThrottle (-1.5, -1)
-      CombinedThrottleRange = {-1, 1}
+      Range["CombinedThrottle"] = {-1, 1}
       -- Set custom notches for the CombinedThrottle, it's continuous below min brake
-      CombinedThrottleNotches = {-0.25, 0, 0.2, 0.4, 0.6, 0.8, 1}
+      Notches["CombinedThrottle"] = {-0.25, 0, 0.2, 0.4, 0.6, 0.8, 1}
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
       -- Invert the invert, as this Virtual is inverted compared to the simple one
-      ReverserInvert = InvertBool(ReverserInvert)
+      Invert["Reverser"] = InvBool(Invert["Reverser"])
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectClass90_ADV_AP() then
       -- Ignore emergency and useless release border values
-      TrainBrakeRange = {0.125, 0.875}
-      TrainBrakeNotches = GenerateEqualNotches(7, TrainBrakeRange) -- not defined as equal in .bin but they are
+      Range["TrainBrake"] = {0.125, 0.875}
+      Notches["TrainBrake"] = GenerateEqualNotch(7, Range["TrainBrake"]) -- not defined as equal in .bin but they are
       -- LocoBrake is self lapped
-      LocoBrakeNotches = {-1, 0, 1}
+      Notches["LocoBrake"] = {-1, 0, 1}
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
-      CruiseControlNotches = GenerateEqualNotches(23, CruiseControlRange) -- (0,110)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
+      Notches["CruiseCtl"] = GenerateEqualNotch(23, Range["CruiseCtl"]) -- (0,110)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectMK3DVT_ADV_AP() then
       -- Ignore emergency values (0.852, 1)
-      TrainBrakeRange = {0, 0.852}
-      TrainBrakeNotches = {0, 0.142, 0.284, 0.426, 0.568, 0.71, 0.852}
+      Range["TrainBrake"] = {0, 0.852}
+      Notches["TrainBrake"] = {0, 0.142, 0.284, 0.426, 0.568, 0.71, 0.852}
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
-      CruiseControlNotches = GenerateEqualNotches(23, CruiseControlRange) -- (0,110)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
+      Notches["CruiseCtl"] = GenerateEqualNotch(23, Range["CruiseCtl"]) -- (0,110)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectClass158() then
-      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(8, Range["Throttle"]) -- (0,1)
       -- Ignore emergency values (0.75, 1)
-      TrainBrakeRange = {0, 0.75}
-      TrainBrakeNotches = GenerateEqualNotches(4, TrainBrakeRange)
+      Range["TrainBrake"] = {0, 0.75}
+      Notches["TrainBrake"] = GenerateEqualNotch(4, Range["TrainBrake"])
 
    elseif DetectClass101() then
-      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
-      GearNotches = GenerateEqualNotches(5, GearRange) -- (0,4)
+      Notches["Throttle"] = GenerateEqualNotch(5, Range["Throttle"]) -- (0,1)
+      Notches["Gear"] = GenerateEqualNotch(5, Range["Gear"]) -- (0,4)
       -- Havner's config
-      GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
+      Line["Gear"], Line["DynamicBrake"] = Replace(Line["Gear"], Line["DynamicBrake"])
 
    elseif DetectClass143() then
-      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(8, Range["Throttle"]) -- (0,1)
       -- Ignore emergency values (0.75, 1)
-      TrainBrakeRange = {0, 0.75}
-      TrainBrakeNotches = GenerateEqualNotches(4, TrainBrakeRange) -- not defined as equal in .bin but they are
+      Range["TrainBrake"] = {0, 0.75}
+      Notches["TrainBrake"] = GenerateEqualNotch(4, Range["TrainBrake"]) -- not defined as equal in .bin but they are
 
    elseif DetectClass35() then
-      ThrottleNotches = GenerateEqualNotches(10, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(10, Range["Throttle"]) -- (0,1)
       -- Ignore emergency values (0.9, 1)
-      TrainBrakeRange = {0, 0.9}
-      TrainBrakeNotches = {0, 0.1, 0.2, 0.235, 0.27, 0.305, 0.34, 0.375, 0.41, 0.445, 0.48, 0.515, 0.55, 0.585, 0.62, 0.655, 0.69, 0.725, 0.76, 0.795, 0.83, 0.865, 0.9}
+      Range["TrainBrake"] = {0, 0.9}
+      Notches["TrainBrake"] = {0, 0.1, 0.2, 0.235, 0.27, 0.305, 0.34, 0.375, 0.41, 0.445, 0.48, 0.515, 0.55, 0.585, 0.62, 0.655, 0.69, 0.725, 0.76, 0.795, 0.83, 0.865, 0.9}
 
    elseif DetectClass03() then
-      GearNotches = GenerateEqualNotches(6, GearRange) -- (0,5)
+      Notches["Gear"] = GenerateEqualNotch(6, Range["Gear"]) -- (0,5)
       -- Havner's config
-      GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
+      Line["Gear"], Line["DynamicBrake"] = Replace(Line["Gear"], Line["DynamicBrake"])
 
    elseif DetectClass47() then
-      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(5, Range["Throttle"]) -- (0,1)
 
    elseif DetectClass117() then
-      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
-      GearNotches = GenerateEqualNotches(5, GearRange) -- (0,4)
+      Notches["Throttle"] = GenerateEqualNotch(5, Range["Throttle"]) -- (0,1)
+      Notches["Gear"] = GenerateEqualNotch(5, Range["Gear"]) -- (0,4)
       -- Havner's config
-      GearLine, DynamicBrakeLine = ReplaceLines(GearLine, DynamicBrakeLine)
+      Line["Gear"], Line["DynamicBrake"] = Replace(Line["Gear"], Line["DynamicBrake"])
 
    elseif DetectClass170() then
       -- Set custom notches for the CombinedThrottle, it's continuous below center
-      CombinedThrottleNotches = {0.5, 0.5713, 0.6427, 0.7142, 0.7857, 0.8571, 0.9285, 1}
+      Notches["CombinedThrottle"] = {0.5, 0.5713, 0.6427, 0.7142, 0.7857, 0.8571, 0.9285, 1}
 
    elseif DetectClass321_AP() then
-      ThrottleNotches = GenerateEqualNotches(5, ThrottleRange) -- (0,1)
-      TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(5, Range["Throttle"]) -- (0,1)
+      Notches["TrainBrake"] = GenerateEqualNotch(5, Range["TrainBrake"]) -- (0,1)
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectClass156_Oovee() then
-      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,7)
-      TrainBrakeNotches = GenerateEqualNotches(5, TrainBrakeRange) -- (0,4)
+      Notches["Throttle"] = GenerateEqualNotch(8, Range["Throttle"]) -- (0,7)
+      Notches["TrainBrake"] = GenerateEqualNotch(5, Range["TrainBrake"]) -- (0,4)
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectClass37_Thomson() then
-      ThrottleNotches = {0, 0.2, 0.25, 0.27, 0.3, 0.32, 0.35, 0.37, 0.4, 0.42, 0.45, 0.47, 0.5, 0.52, 0.55, 0.57, 0.6, 0.62, 0.65, 0.67, 0.7, 0.72, 0.75, 0.77, 0.8, 0.82, 0.85, 0.87, 0.9, 0.92, 0.95, 1}
+      Notches["Throttle"] = {0, 0.2, 0.25, 0.27, 0.3, 0.32, 0.35, 0.37, 0.4, 0.42, 0.45, 0.47, 0.5, 0.52, 0.55, 0.57, 0.6, 0.62, 0.65, 0.67, 0.7, 0.72, 0.75, 0.77, 0.8, 0.82, 0.85, 0.87, 0.9, 0.92, 0.95, 1}
       -- Ignore emergency values (0.7857, 1)
-      TrainBrakeRange = {0, 0.7857}
-      TrainBrakeNotches = {0, 0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7, 0.73, 0.7857}
+      Range["TrainBrake"] = {0, 0.7857}
+      Notches["TrainBrake"] = {0, 0.2, 0.4, 0.43, 0.46, 0.49, 0.52, 0.55, 0.58, 0.61, 0.64, 0.67, 0.7, 0.73, 0.7857}
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectClass50_MeshTools() then
-      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(8, Range["Throttle"]) -- (0,1)
       -- Reverser is 4 state Virtual
-      ReverserNotches = GenerateEqualNotches(4, ReverserRange) -- (0,3)
+      Notches["Reverser"] = GenerateEqualNotch(4, Range["Reverser"]) -- (0,3)
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectClass158_Old() then
-      ThrottleNotches = GenerateEqualNotches(8, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(8, Range["Throttle"]) -- (0,1)
 
    elseif DetectClass66() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
 
    elseif DetectClass166() then
-      CombinedThrottleNotches = {0, 0.08, 0.18, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9, 1}
+      Notches["CombinedThrottle"] = {0, 0.08, 0.18, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9, 1}
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectBR103TEE_vRailroads_Expert() then
-      ReverserNotches = {-1, 0, 0.5, 1}
-      ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
+      Notches["Reverser"] = {-1, 0, 0.5, 1}
+      Notches["Throttle"] = GenerateEqualNotch(40, Range["Throttle"]) -- (0,39)
       -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
-      TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["TrainBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["DynamicBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
    elseif DetectBR103TEE_vRailroads() then
-      ThrottleNotches = GenerateEqualNotches(40, ThrottleRange) -- (0,39)
+      Notches["Throttle"] = GenerateEqualNotch(40, Range["Throttle"]) -- (0,39)
       -- Additional notch at 0.07, otherwise DynamicBrake desynchronizes
-      TrainBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      DynamicBrakeNotches = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["TrainBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["DynamicBrake"] = {0, 0.07, 0.14, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       -- Self lapped, it's continuous above 0.1
-      LocoBrakeNotches = {-1, 0.1}
+      Notches["LocoBrake"] = {-1, 0.1}
 
    elseif DetectBR111_vRailroads() or DetectDBbzf_vRailroads() then
       -- Brake levers desynchronize if using correct notches
-      --TrainBrakeNotches = {0, 0.14, 0.35, 0.42, 0.48, 0.61, 0.74, 0.87, 1}
-      TrainBrakeNotches = GenerateEqualNotches(10, TrainBrakeRange)
+      --Notches["TrainBrake"] = {0, 0.14, 0.35, 0.42, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["TrainBrake"] = GenerateEqualNotch(10, Range["TrainBrake"])
 
    elseif DetectBR420_Influenzo() then
       -- Throttle used as CombinedThrottle
-      ThrottleNotches = GenerateEqualNotches(20, ThrottleRange) -- (-10, 9)
-      TrainBrakeNotches = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
+      Notches["Throttle"] = GenerateEqualNotch(20, Range["Throttle"]) -- (-10, 9)
+      Notches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectBR442Talent2() then
-      CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,180)
+      Notches["CruiseCtl"] = GenerateEqualNotch(19, Range["CruiseCtl"]) -- (0,180)
       -- Ignore emergency values (-1, -0.9)
-      CombinedThrottleRange = {-0.9, 1}
-      CombinedThrottleNotches = {-0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
+      Range["CombinedThrottle"] = {-0.9, 1}
+      Notches["CombinedThrottle"] = {-0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
       -- TrainBrake is controlled with LocoBrake here, reflect that
-      LocoBrakeLine = TrainBrakeLine
-      TrainBrakeLine = nil
+      Line["LocoBrake"] = Line["TrainBrake"]
+      Line["TrainBrake"] = nil
       -- TrainBrake is self lapped here, add some notches to help
-      LocoBrakeNotches = {-1, -0.2, 0, 0.2, 1}
+      Notches["LocoBrake"] = {-1, -0.2, 0, 0.2, 1}
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectBR266() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
-      CruiseControlNotches = GenerateEqualNotches(21, CruiseControlRange) -- (0,200)
-      -- TrainBrake, LocoBrake and CruiseControl are self lapped here, add some notches to help
-      TrainBrakeNotches = {-1, 0, 1}
-      LocoBrakeNotches = {-1, 0, 1}
-      CruiseControlNotches = {-1, 0, 1}
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
+      Notches["CruiseCtl"] = GenerateEqualNotch(21, Range["CruiseCtl"]) -- (0,200)
+      -- TrainBrake, LocoBrake and CruiseCtl are self lapped here, add some notches to help
+      Notches["TrainBrake"] = {-1, 0, 1}
+      Notches["LocoBrake"] = {-1, 0, 1}
+      Notches["CruiseCtl"] = {-1, 0, 1}
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectBR1460() or DetectBR1462() or DetectDABpbzkfa() then
-      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      CruiseControlNotches = GenerateEqualNotches(19, CruiseControlRange) -- (0,1)
+      Notches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["CruiseCtl"] = GenerateEqualNotch(19, Range["CruiseCtl"]) -- (0,1)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectBR426() then
       -- Makes it easier to center, it's not notched
-      CombinedThrottleCenterDetent = 0.05
-      CruiseControlNotches = GenerateEqualNotches(31, CruiseControlRange) -- (0,1)
+      CenterDetent["CombinedThrottle"] = 0.05
+      Notches["CruiseCtl"] = GenerateEqualNotch(31, Range["CruiseCtl"]) -- (0,1)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectICE2() or DetectICE2Cab() or DetectICE3() or DetectICET() then
-      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      CruiseControlNotches = GenerateEqualNotches(31, CruiseControlRange) -- (0,1)
+      Notches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["CruiseCtl"] = GenerateEqualNotch(31, Range["CruiseCtl"]) -- (0,1)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectBR189() then
-      TrainBrakeNotches = GenerateEqualNotches(11, TrainBrakeRange) -- (0,1)
-      CruiseControlNotches = GenerateEqualNotches(29, CruiseControlRange) -- (0,0.466666)
+      Notches["TrainBrake"] = GenerateEqualNotch(11, Range["TrainBrake"]) -- (0,1)
+      Notches["CruiseCtl"] = GenerateEqualNotch(29, Range["CruiseCtl"]) -- (0,0.466666)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectBR101() then
-      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
-      CruiseControlNotches = GenerateEqualNotches(26, CruiseControlRange) -- (0,1)
+      Notches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["CruiseCtl"] = GenerateEqualNotch(26, Range["CruiseCtl"]) -- (0,1)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectBR294() then
       -- Makes it easier to center, it's not notched
-      CombinedThrottleCenterDetent = 0.05
+      CenterDetent["CombinedThrottle"] = 0.05
 
    elseif DetectBR101_Old() then
-      TrainBrakeNotches = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      Notches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
    elseif DetectBR294_Old() then
-      CombinedThrottleCenterDetent = 0.05
+      CenterDetent["CombinedThrottle"] = 0.05
 
    elseif DetectV200() then
-      ThrottleNotches = GenerateEqualNotches(7, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(7, Range["Throttle"]) -- (0,1)
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 
    elseif DetectGP20_ADV_Reppo() then
       -- Ignore stop value (-2, 0)
-      ThrottleRange = {0, 8}
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange)
+      Range["Throttle"] = {0, 8}
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"])
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectSD45_DTM() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectGE44_DTM() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
 
    elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       -- Not a simple case as the implementation merges two controls with different notches
-      CombinedThrottleNotches = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
+      Notches["CombinedThrottle"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      TrainBrakeControl = FindTrainBrake()
+      Control["TrainBrake"] = FindTrainBrake()
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectM8() then
-      CombinedThrottleNotches = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
+      Notches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
       -- DynamicBrake kinda exists here but is useless
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectAcela() then
-      ThrottleNotches = GenerateEqualNotches(7, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(7, Range["Throttle"]) -- (0,1)
       -- Following the .bin file
-      TrainBrakeRange = {0, 0.99}
-      TrainBrakeNotches = {0, 0.2, 0.4, 0.6, 0.8, 0.99}
-      CruiseControlNotches = GenerateEqualNotches(33, CruiseControlRange) -- (0,160)
+      Range["TrainBrake"] = {0, 0.99}
+      Notches["TrainBrake"] = {0, 0.2, 0.4, 0.6, 0.8, 0.99}
+      Notches["CruiseCtl"] = GenerateEqualNotch(33, Range["CruiseCtl"]) -- (0,160)
       -- Havner's config
-      CruiseControlLine, DynamicBrakeLine = ReplaceLines(CruiseControlLine, DynamicBrakeLine)
+      Line["CruiseCtl"], Line["DynamicBrake"] = Replace(Line["CruiseCtl"], Line["DynamicBrake"])
 
    elseif DetectACS64() then
       -- Makes it easier to center, it's not notched
-      CombinedThrottleCenterDetent = 0.05
+      CenterDetent["CombinedThrottle"] = 0.05
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      TrainBrakeControl = FindTrainBrake()
-      TrainBrakeNotches = {0, 0.1, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.75, 0.85, 1}
+      Control["TrainBrake"] = FindTrainBrake()
+      Notches["TrainBrake"] = {0, 0.1, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.75, 0.85, 1}
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectSD402() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
       -- Ignore emergency values
-      TrainBrakeRange = {0, 0.9}
+      Range["TrainBrake"] = {0, 0.9}
 
    elseif DetectSD70MAC_ATC() then
       -- Not a simple case as the implementation merges two controls with different notches
-      CombinedThrottleNotches = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
+      Notches["CombinedThrottle"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      TrainBrakeControl = FindTrainBrake()
+      Control["TrainBrake"] = FindTrainBrake()
       -- Ignore emergency values
-      TrainBrakeRange = {0, 0.9}
+      Range["TrainBrake"] = {0, 0.9}
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectF45() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
-      DynamicBrakeNotches = GenerateEqualNotches(9, DynamicBrakeRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
+      Notches["DynamicBrake"] = GenerateEqualNotch(9, Range["DynamicBrake"]) -- (0,1)
 
    elseif DetectC409W() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
-      DynamicBrakeNotches = GenerateEqualNotches(19, DynamicBrakeRange) -- (0, 1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
+      Notches["DynamicBrake"] = GenerateEqualNotch(19, Range["DynamicBrake"]) -- (0, 1)
 
    elseif DetectES44DC() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
-      DynamicBrakeNotches = GenerateEqualNotches(10, DynamicBrakeRange) -- (-0.125, 1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
+      Notches["DynamicBrake"] = GenerateEqualNotch(10, Range["DynamicBrake"]) -- (-0.125, 1)
 
    elseif DetectSD70M() then
-      CombinedThrottleNotches = GenerateEqualNotches(19, CombinedThrottleRange) -- (0,1)
+      Notches["CombinedThrottle"] = GenerateEqualNotch(19, Range["CombinedThrottle"]) -- (0,1)
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      TrainBrakeControl = FindTrainBrake()
+      Control["TrainBrake"] = FindTrainBrake()
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    elseif DetectES44AC() then
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
 
    elseif DetectC449W() then
-      CombinedThrottleNotches = GenerateEqualNotches(19, CombinedThrottleRange) -- (0,1)
+      Notches["CombinedThrottle"] = GenerateEqualNotch(19, Range["CombinedThrottle"]) -- (0,1)
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      TrainBrakeControl = FindTrainBrake()
+      Control["TrainBrake"] = FindTrainBrake()
       -- Dynamic brake should not be used directly
-      DynamicBrakeLine = nil
+      Line["DynamicBrake"] = nil
 
    -- Generic detections, don't put any specific locos below, they might get caught by those
 
    elseif DetectGenericSteam() then
       -- Havner's config
-      ReverserLine, DynamicBrakeLine = ReplaceLines(ReverserLine, DynamicBrakeLine)
+      Line["Reverser"], Line["DynamicBrake"] = Replace(Line["Reverser"], Line["DynamicBrake"])
 
    elseif DetectGenericUSDiesel() then
       -- Simple US diesels usually have notched throttle
-      ThrottleNotches = GenerateEqualNotches(9, ThrottleRange) -- (0,1)
+      Notches["Throttle"] = GenerateEqualNotch(9, Range["Throttle"]) -- (0,1)
 
    else
       DisplayPopup("No custom configuration for this loco")
@@ -584,9 +593,9 @@ function ConfigureJoystick()
    end
 
    -- Past this point the following global values should be set if they exist and are set to be used
-   -- *Line, *Control, *Range
+   -- Line[], Control[], Range[]
    -- and optionally:
-   -- *Invert, *Notches, *CenterDetent
+   -- Invert[], Notches[], CenterDetent[], Step[]
 
    -----------------------------------------------------------
    ---------------  End of user configuration  ---------------
@@ -595,23 +604,23 @@ function ConfigureJoystick()
    if not SyncOnStart or SyncOnStart == 0 then
       -- Set real values at the start to avoid uncontrolled changing the state after game loads
       local lines = ReadFile("trainsim-helper-joystick.txt")
-      PreviousReverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
-      PreviousGear =             GetLineValue(lines, GearLine, GearInvert)
-      PreviousCruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
-      PreviousCombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
-      PreviousThrottle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
-      PreviousTrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
-      PreviousLocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
-      PreviousDynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-      PreviousHandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
-      PreviousSmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
-      PreviousBlower =           GetLineValue(lines, BlowerLine, BlowerInvert)
-      PreviousFireboxDoor =      GetLineValue(lines, FireboxDoorLine, FireboxDoorInvert)
-      PreviousStoking =          GetLineValue(lines, StokingLine, StokingInvert)
-      PreviousExhaustSteam =     GetLineValue(lines, ExhaustSteamLine, ExhaustSteamInvert)
-      PreviousExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
-      PreviousLiveSteam =        GetLineValue(lines, LiveSteamLine, LiveSteamInvert)
-      PreviousLiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
+      Previous["Reverser"] =         GetLinValue(lines, Line["Reverser"], Invert["Reverser"])
+      Previous["Gear"] =             GetLinValue(lines, Line["Gear"], Invert["Gear"])
+      Previous["CruiseCtl"] =        GetLinValue(lines, Line["CruiseCtl"], Invert["CruiseCtl"])
+      Previous["CombinedThrottle"] = GetLinValue(lines, Line["CombinedThrottle"], Invert["CombinedThrottle"])
+      Previous["Throttle"] =         GetLinValue(lines, Line["Throttle"], Invert["Throttle"])
+      Previous["TrainBrake"] =       GetLinValue(lines, Line["TrainBrake"], Invert["TrainBrake"])
+      Previous["LocoBrake"] =        GetLinValue(lines, Line["LocoBrake"], Invert["LocoBrake"])
+      Previous["DynamicBrake"] =     GetLinValue(lines, Line["DynamicBrake"], Invert["DynamicBrake"])
+      Previous["HandBrake"] =        GetLinValue(lines, Line["HandBrake"], Invert["HandBrake"])
+      Previous["SmallEjector"] =     GetLinValue(lines, Line["SmallEjector"], Invert["SmallEjector"])
+      Previous["Blower"] =           GetLinValue(lines, Line["Blower"], Invert["Blower"])
+      Previous["FireboxDoor"] =      GetLinValue(lines, Line["FireboxDoor"], Invert["FireboxDoor"])
+      Previous["Stoking"] =          GetLinValue(lines, Line["Stoking"], Invert["Stoking"])
+      Previous["ExhaustSteam"] =     GetLinValue(lines, Line["ExhaustSteam"], Invert["ExhaustSteam"])
+      Previous["ExhaustWater"] =     GetLinValue(lines, Line["ExhaustWater"], Invert["ExhaustWater"])
+      Previous["LiveSteam"] =        GetLinValue(lines, Line["LiveSteam"], Invert["LiveSteam"])
+      Previous["LiveWater"] =        GetLinValue(lines, Line["LiveWater"], Invert["LiveWater"])
    end
 
    step = 0.04
@@ -642,7 +651,7 @@ function FindGear()
    end
 end
 
-function FindCruiseControl()
+function FindCruiseCtl()
    if Call("ControlExists", "SpeedControlTarget", 0) == 1 then     -- BR266
       return "SpeedControlTarget"
    elseif Call("ControlExists", "AFBTargetSpeed", 0) == 1 then     -- BR442 Talent 2
@@ -809,42 +818,42 @@ function SetJoystickData()
 
    local lines = ReadFile("trainsim-helper-joystick.txt")
 
-   local Reverser =         GetLineValue(lines, ReverserLine, ReverserInvert)
-   local Gear =             GetLineValue(lines, GearLine, GearInvert)
-   local CruiseControl =    GetLineValue(lines, CruiseControlLine, CruiseControlInvert)
-   local CombinedThrottle = GetLineValue(lines, CombinedThrottleLine, CombinedThrottleInvert)
-   local Throttle =         GetLineValue(lines, ThrottleLine, ThrottleInvert)
-   local TrainBrake =       GetLineValue(lines, TrainBrakeLine, TrainBrakeInvert)
-   local LocoBrake =        GetLineValue(lines, LocoBrakeLine, LocoBrakeInvert)
-   local DynamicBrake =     GetLineValue(lines, DynamicBrakeLine, DynamicBrakeInvert)
-   local HandBrake =        GetLineValue(lines, HandBrakeLine, HandBrakeInvert)
-   local SmallEjector =     GetLineValue(lines, SmallEjectorLine, SmallEjectorInvert)
-   local Blower =           GetLineValue(lines, BlowerLine, BlowerInvert)
-   local FireboxDoor =      GetLineValue(lines, FireboxDoorLine, FireboxDoorInvert)
-   local Stoking =          GetLineValue(lines, StokingLine, StokingInvert)
-   local ExhaustSteam =     GetLineValue(lines, ExhaustSteamLine, ExhaustSteamInvert)
-   local ExhaustWater =     GetLineValue(lines, ExhaustWaterLine, ExhaustWaterInvert)
-   local LiveSteam =        GetLineValue(lines, LiveSteamLine, LiveSteamInvert)
-   local LiveWater =        GetLineValue(lines, LiveWaterLine, LiveWaterInvert)
+   local Reverser =         GetLinValue(lines, Line["Reverser"], Invert["Reverser"])
+   local Gear =             GetLinValue(lines, Line["Gear"], Invert["Gear"])
+   local CruiseCtl =        GetLinValue(lines, Line["CruiseCtl"], Invert["CruiseCtl"])
+   local CombinedThrottle = GetLinValue(lines, Line["CombinedThrottle"], Invert["CombinedThrottle"])
+   local Throttle =         GetLinValue(lines, Line["Throttle"], Invert["Throttle"])
+   local TrainBrake =       GetLinValue(lines, Line["TrainBrake"], Invert["TrainBrake"])
+   local LocoBrake =        GetLinValue(lines, Line["LocoBrake"], Invert["LocoBrake"])
+   local DynamicBrake =     GetLinValue(lines, Line["DynamicBrake"], Invert["DynamicBrake"])
+   local HandBrake =        GetLinValue(lines, Line["HandBrake"], Invert["HandBrake"])
+   local SmallEjector =     GetLinValue(lines, Line["SmallEjector"], Invert["SmallEjector"])
+   local Blower =           GetLinValue(lines, Line["Blower"], Invert["Blower"])
+   local FireboxDoor =      GetLinValue(lines, Line["FireboxDoor"], Invert["FireboxDoor"])
+   local Stoking =          GetLinValue(lines, Line["Stoking"], Invert["Stoking"])
+   local ExhaustSteam =     GetLinValue(lines, Line["ExhaustSteam"], Invert["ExhaustSteam"])
+   local ExhaustWater =     GetLinValue(lines, Line["ExhaustWater"], Invert["ExhaustWater"])
+   local LiveSteam =        GetLinValue(lines, Line["LiveSteam"], Invert["LiveSteam"])
+   local LiveWater =        GetLinValue(lines, Line["LiveWater"], Invert["LiveWater"])
 
    -- Feed with data
-   PreviousReverser =         SetControl(ReverserControl,         PreviousReverser,         Reverser,         ReverserRange,         ReverserNotches,         ReverserCenterDetent)
-   PreviousGear =             SetControl(GearControl,             PreviousGear,             Gear,             GearRange,             GearNotches)
-   PreviousCruiseControl =    SetControl(CruiseControlControl,    PreviousCruiseControl,    CruiseControl,    CruiseControlRange,    CruiseControlNotches)
-   PreviousCombinedThrottle = SetControl(CombinedThrottleControl, PreviousCombinedThrottle, CombinedThrottle, CombinedThrottleRange, CombinedThrottleNotches, CombinedThrottleCenterDetent)
-   PreviousThrottle =         SetControl(ThrottleControl,         PreviousThrottle,         Throttle,         ThrottleRange,         ThrottleNotches)
-   PreviousTrainBrake =       SetControl(TrainBrakeControl,       PreviousTrainBrake,       TrainBrake,       TrainBrakeRange,       TrainBrakeNotches, nil, 1)
-   PreviousLocoBrake =        SetControl(LocoBrakeControl,        PreviousLocoBrake,        LocoBrake,        LocoBrakeRange,        LocoBrakeNotches)
-   PreviousDynamicBrake =     SetControl(DynamicBrakeControl,     PreviousDynamicBrake,     DynamicBrake,     DynamicBrakeRange,     DynamicBrakeNotches)
-   PreviousHandBrake =        SetControl(HandBrakeControl,        PreviousHandBrake,        HandBrake,        HandBrakeRange,        HandBrakeNotches)
-   PreviousSmallEjector =     SetControl(SmallEjectorControl,     PreviousSmallEjector,     SmallEjector,     SmallEjectorRange,     SmallEjectorNotches)
-   PreviousBlower =           SetControl(BlowerControl,           PreviousBlower,           Blower,           BlowerRange,           BlowerNotches)
-   PreviousFireboxDoor =      SetControl(FireboxDoorControl,      PreviousFireboxDoor,      FireboxDoor,      FireboxDoorRange,      FireboxDoorNotches)
-   PreviousStoking =          SetControl(StokingControl,          PreviousStoking,          Stoking,          StokingRange,          StokingNotches)
-   PreviousExhaustSteam =     SetControl(ExhaustSteamControl,     PreviousExhaustSteam,     ExhaustSteam,     ExhaustSteamRange,     ExhaustSteamNotches)
-   PreviousExhaustWater =     SetControl(ExhaustWaterControl,     PreviousExhaustWater,     ExhaustWater,     ExhaustWaterRange,     ExhaustWaterNotches)
-   PreviousLiveSteam =        SetControl(LiveSteamControl,        PreviousLiveSteam,        LiveSteam,        LiveSteamRange,        LiveSteamNotches)
-   PreviousLiveWater =        SetControl(LiveWaterControl,        PreviousLiveWater,        LiveWater,        LiveWaterRange,        LiveWaterNotches)
+   Previous["Reverser"] =         SetControl(Control["Reverser"],         Previous["Reverser"],         Reverser,         Range["Reverser"],         Notches["Reverser"],         CenterDetent["Reverser"])
+   Previous["Gear"] =             SetControl(Control["Gear"],             Previous["Gear"],             Gear,             Range["Gear"],             Notches["Gear"])
+   Previous["CruiseCtl"] =        SetControl(Control["CruiseCtl"],        Previous["CruiseCtl"],        CruiseCtl,        Range["CruiseCtl"],        Notches["CruiseCtl"])
+   Previous["CombinedThrottle"] = SetControl(Control["CombinedThrottle"], Previous["CombinedThrottle"], CombinedThrottle, Range["CombinedThrottle"], Notches["CombinedThrottle"], CenterDetent["CombinedThrottle"])
+   Previous["Throttle"] =         SetControl(Control["Throttle"],         Previous["Throttle"],         Throttle,         Range["Throttle"],         Notches["Throttle"])
+   Previous["TrainBrake"] =       SetControl(Control["TrainBrake"],       Previous["TrainBrake"],       TrainBrake,       Range["TrainBrake"],       Notches["TrainBrake"])
+   Previous["LocoBrake"] =        SetControl(Control["LocoBrake"],        Previous["LocoBrake"],        LocoBrake,        Range["LocoBrake"],        Notches["LocoBrake"])
+   Previous["DynamicBrake"] =     SetControl(Control["DynamicBrake"],     Previous["DynamicBrake"],     DynamicBrake,     Range["DynamicBrake"],     Notches["DynamicBrake"])
+   Previous["HandBrake"] =        SetControl(Control["HandBrake"],        Previous["HandBrake"],        HandBrake,        Range["HandBrake"],        Notches["HandBrake"])
+   Previous["SmallEjector"] =     SetControl(Control["SmallEjector"],     Previous["SmallEjector"],     SmallEjector,     Range["SmallEjector"],     Notches["SmallEjector"])
+   Previous["Blower"] =           SetControl(Control["Blower"],           Previous["Blower"],           Blower,           Range["Blower"],           Notches["Blower"])
+   Previous["FireboxDoor"] =      SetControl(Control["FireboxDoor"],      Previous["FireboxDoor"],      FireboxDoor,      Range["FireboxDoor"],      Notches["FireboxDoor"])
+   Previous["Stoking"] =          SetControl(Control["Stoking"],          Previous["Stoking"],          Stoking,          Range["Stoking"],          Notches["Stoking"])
+   Previous["ExhaustSteam"] =     SetControl(Control["ExhaustSteam"],     Previous["ExhaustSteam"],     ExhaustSteam,     Range["ExhaustSteam"],     Notches["ExhaustSteam"])
+   Previous["ExhaustWater"] =     SetControl(Control["ExhaustWater"],     Previous["ExhaustWater"],     ExhaustWater,     Range["ExhaustWater"],     Notches["ExhaustWater"])
+   Previous["LiveSteam"] =        SetControl(Control["LiveSteam"],        Previous["LiveSteam"],        LiveSteam,        Range["LiveSteam"],        Notches["LiveSteam"])
+   Previous["LiveWater"] =        SetControl(Control["LiveWater"],        Previous["LiveWater"],        LiveWater,        Range["LiveWater"],        Notches["LiveWater"])
 
    -- For those configured to be set over time, set them step by step
    if target then
@@ -886,7 +895,7 @@ function ReadFile(name)
    return lines
 end
 
-function GetLineValue(lines, line, invert)
+function GetLinValue(lines, line, invert)
    if line and line > 0 then
       local value = lines[line]
       if not value or value < 0.0 or value > 1.0 then
@@ -900,7 +909,7 @@ function GetLineValue(lines, line, invert)
    return -99999
 end
 
-function InvertBool(b)
+function InvBool(b)
    if b and b ~= 0 then
       return nil
    else
@@ -909,7 +918,7 @@ function InvertBool(b)
 end
 
 -- Replace control lines, but only if you have not setup the newLine explicitly.
-function ReplaceLines(newLine, prevLine)
+function Replace(newLine, prevLine)
    if not newLine or newLine == 0 then
       return prevLine, nil
    else
@@ -930,7 +939,7 @@ function GetControlRange(control)
    end
 end
 
-function GenerateEqualNotches(count, range)
+function GenerateEqualNotch(count, range)
    if count and count >= 2 then
       local notches = {0}
       for x = 2, count do
@@ -945,7 +954,7 @@ function GenerateEqualNotches(count, range)
    end
 end
 
-function SetControl(control, previous, value, range, notches, detent, TEST)
+function SetControl(control, previous, value, range, notches, detent)
    if control and value >= 0.0 and value <= 1.0 and ValueChanged(previous, value) then
       local saved_value = value
 
