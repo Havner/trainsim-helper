@@ -35,581 +35,576 @@ function ConfigureOverlay()
 
    -- Find ControlValues to display
    
-   StaticValues = {}
-   ControlValues = {}
-   DoorsValues = {}
-   ControlValuesFunctions = {}
-
    -- Units
 
    if Call("ControlExists", "SpeedometerMPH", 0) == 1 then
-      StaticValues["Units"] = "M"
+      tshStaticValues["Units"] = "M"
    elseif Call("ControlExists", "SpeedometerKPH", 0) == 1 then
-      StaticValues["Units"] = "K"
+      tshStaticValues["Units"] = "K"
    end
 
    -- Loco's controls, those are mostly low-level values so one can see what is happening
    -- under the hood. They can be overriden with high-level ones per loco when needed.
 
    if Call("ControlExists", "SpeedControlSpeed", 0) == 1 then         -- BR266
-      ControlValues["TargetSpeed"] = "SpeedControlSpeed"
+      tshControlValues["TargetSpeed"] = "SpeedControlSpeed"
    elseif Call("ControlExists", "AFBTargetSpeed", 0) == 1 then        -- BR442 Talent 2
-      ControlValues["TargetSpeed"] = "AFBTargetSpeed"
+      tshControlValues["TargetSpeed"] = "AFBTargetSpeed"
    elseif Call("ControlExists", "SpeedSet", 0) == 1 then             -- Class 90 AP
-      ControlValues["TargetSpeed"] = "SpeedSet"
+      tshControlValues["TargetSpeed"] = "SpeedSet"
    elseif Call("ControlExists", "CruiseControlSpeed", 0) == 1 then   -- Acela
-      ControlValues["TargetSpeed"] = "CruiseControlSpeed"
+      tshControlValues["TargetSpeed"] = "CruiseControlSpeed"
    elseif Call("ControlExists", "VSoll", 0) == 1 then                -- German
-      ControlValues["TargetSpeed"] = "VSoll"
+      tshControlValues["TargetSpeed"] = "VSoll"
    elseif Call("ControlExists", "TargetSpeed", 0) == 1 then          -- Class 375/377
-      ControlValues["TargetSpeed"] = "TargetSpeed"
+      tshControlValues["TargetSpeed"] = "TargetSpeed"
    end
 
    if Call("ControlExists", "Reverser", 0) == 1 then
-      ControlValues["Reverser"] = "Reverser"
+      tshControlValues["Reverser"] = "Reverser"
    end
 
    if Call("ControlExists", "GearLever",0) == 1 then
-      ControlValues["GearLever"] = "GearLever"
+      tshControlValues["GearLever"] = "GearLever"
    end
    
    if Call("ControlExists", "Regulator", 0) == 1 then
-      ControlValues["Throttle"] = "Regulator"
+      tshControlValues["Throttle"] = "Regulator"
    end
    
    if Call("ControlExists", "TrainBrakeControl", 0) == 1 then
-      ControlValues["TrainBrake"] = "TrainBrakeControl"
+      tshControlValues["TrainBrake"] = "TrainBrakeControl"
    end
 
    if Call("ControlExists", "EngineBrakeControl", 0) == 1 then
-      ControlValues["LocoBrake"] = "EngineBrakeControl"
+      tshControlValues["LocoBrake"] = "EngineBrakeControl"
    end
 
    if Call("ControlExists", "DynamicBrake", 0) == 1 then
-      ControlValues["DynamicBrake"] = "DynamicBrake"
+      tshControlValues["DynamicBrake"] = "DynamicBrake"
    end
 
    if Call("ControlExists", "HandBrake", 0) == 1 then
-      ControlValues["HandBrake"] = "HandBrake"
+      tshControlValues["HandBrake"] = "HandBrake"
    elseif Call("ControlExists", "Handbrake", 0) == 1 then
-      ControlValues["HandBrake"] = "Handbrake"
+      tshControlValues["HandBrake"] = "Handbrake"
    end
 
    -- Loco's indicators
 
    if Call("ControlExists", "BoilerPressureGaugePSI",0) == 1 then
-      ControlValues["BoilerPressure"] = "BoilerPressureGaugePSI"
+      tshControlValues["BoilerPressure"] = "BoilerPressureGaugePSI"
    elseif Call("ControlExists", "BoilerPressureGauge", 0) == 1 then
-      ControlValues["BoilerPressure"] = "BoilerPressureGauge"
+      tshControlValues["BoilerPressure"] = "BoilerPressureGauge"
    end
 
    if Call("ControlExists", "BackPressure", 0) == 1 then  -- FEF-3
-      ControlValues["BackPressure"] = "BackPressure"
+      tshControlValues["BackPressure"] = "BackPressure"
    end
 
    if Call("ControlExists", "SteamChestGaugePSI", 0) == 1 then
-      ControlValues["SteamChestPressure"] = "SteamChestGaugePSI"
+      tshControlValues["SteamChestPressure"] = "SteamChestGaugePSI"
    elseif Call("ControlExists", "SteamChestGauge", 0) == 1 then
-      ControlValues["SteamChestPressure"] = "SteamChestGauge"
+      tshControlValues["SteamChestPressure"] = "SteamChestGauge"
    elseif Call("ControlExists", "SteamChestPressureGaugePSI", 0) == 1 then
-      ControlValues["SteamChestPressure"] = "SteamChestPressureGaugePSI"
+      tshControlValues["SteamChestPressure"] = "SteamChestPressureGaugePSI"
    elseif Call("ControlExists", "SteamChestPressureGauge", 0) == 1 then
-      ControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
+      tshControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
    end
 
    if Call("ControlExists", "Steam Heat Gauge", 0) == 1 then  -- J50
-      ControlValues["SteamHeatingPressure"] = "Steam Heat Gauge"
+      tshControlValues["SteamHeatingPressure"] = "Steam Heat Gauge"
    elseif Call("ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 then
-      ControlValues["SteamHeatingPressure"] = "SteamHeatingPressureGaugePSI"
+      tshControlValues["SteamHeatingPressure"] = "SteamHeatingPressureGaugePSI"
    elseif Call("ControlExists", "SteamHeatGauge", 0) == 1 then
-      ControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
+      tshControlValues["SteamHeatingPressure"] = "SteamHeatGauge"
    end
 
    if Call("ControlExists", "FrontSandBox", 0) == 1 then  -- 2F
-      ControlValues["Sandbox"] = "FrontSandBox"
+      tshControlValues["Sandbox"] = "FrontSandBox"
    elseif Call("ControlExists", "SandLevel", 0) == 1 then  -- Q1
-      ControlValues["Sandbox"] = "SandLevel"
+      tshControlValues["Sandbox"] = "SandLevel"
    end
 
    if Call("ControlExists", "RearSandBox", 0) == 1 then  -- 2F
-      ControlValues["SandboxRear"] = "RearSandBox"
+      tshControlValues["SandboxRear"] = "RearSandBox"
    end
 
    if Call("ControlExists", "Voltage", 0) == 1 then  -- FEF-3
-      ControlValues["Voltage"] = "Voltage"
+      tshControlValues["Voltage"] = "Voltage"
    end
 
    if Call("ControlExists", "RPM", 0) == 1 then
-      ControlValues["RPM"] = "RPM"
+      tshControlValues["RPM"] = "RPM"
    end
 
    if Call("ControlExists", "Ammeter", 0) == 1 then
-      ControlValues["Ammeter"] = "Ammeter"
+      tshControlValues["Ammeter"] = "Ammeter"
    end
 
    -- Brake's indicators
 
    if Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 then
-      ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureINCHES"
-      StaticValues["VacuumBrakePipeUnits"] = "Inches"
+      tshControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureINCHES"
+      tshStaticValues["VacuumBrakePipeUnits"] = "Inches"
    elseif Call("ControlExists", "VacuumBrakePipePressureBAR", 0) == 1 then
-      ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureBAR"
-      StaticValues["VacuumBrakePipeUnits"] = "BAR"
+      tshControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureBAR"
+      tshStaticValues["VacuumBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "VacuumBrakePipePressurePSI", 0) == 1 then
-      ControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressurePSI"
-      StaticValues["VacuumBrakePipeUnits"] = "PSI"
+      tshControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressurePSI"
+      tshStaticValues["VacuumBrakePipeUnits"] = "PSI"
    end
 
    -- Do not add VacuumBrakeChamberPressureINCHES here, it's mostly useless
    if Call("ControlExists", "Vacuum Chamber Side", 0) == 1 then  -- J50
-      ControlValues["VacuumBrakeChamberPressure"] = "Vacuum Chamber Side"
-      StaticValues["VacuumBrakeChamberUnits"] = "Inches"
+      tshControlValues["VacuumBrakeChamberPressure"] = "Vacuum Chamber Side"
+      tshStaticValues["VacuumBrakeChamberUnits"] = "Inches"
    end
 
    if Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then
-      ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressureBAR"
-      StaticValues["TrainBrakeCylinderUnits"] = "BAR"
+      tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressureBAR"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 then
-      ControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressureBAR"
-      StaticValues["TrainBrakeCylinderUnits"] = "BAR"
+      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressureBAR"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 then
-      ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressurePSI"
-      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+      tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressurePSI"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "aTrainBrakeCylinderPressurePSI", 0) == 1 then
-      ControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressurePSI"
-      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressurePSI"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "TrainBrakeCylinderPressure", 0) == 1 then
-      ControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressure"
-      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+      tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressure"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "aTrainBrakeCylinderPressure", 0) == 1 then
-      ControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressure"
-      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressure"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    end
 
    if Call("ControlExists", "MyLocoBrakeCylinderPressurePSI", 0) == 1 then  -- FEF-3
-      ControlValues["LocoBrakeCylinderPressure"] = "MyLocoBrakeCylinderPressurePSI"
-      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshControlValues["LocoBrakeCylinderPressure"] = "MyLocoBrakeCylinderPressurePSI"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "BrakeCylinderDial1", 0) == 1 then  -- Class 50
-      ControlValues["TrainBrakeCylinderPressure"] = "BrakeCylinderDial1"
-      StaticValues["TrainBrakeCylinderUnits"] = "PSI"
+      tshControlValues["TrainBrakeCylinderPressure"] = "BrakeCylinderDial1"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "LocoBrakeNeedle", 0) == 1 then  -- Duchess of Sutherland community patch
-      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeNeedle"
-      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeNeedle"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 then
-      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressureBAR"
-      StaticValues["LocoBrakeCylinderUnits"] = "BAR"
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressureBAR"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 then
-      ControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressureBAR"
-      StaticValues["LocoBrakeCylinderUnits"] = "BAR"
+      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressureBAR"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 then
-      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressurePSI"
-      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressurePSI"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "aLocoBrakeCylinderPressurePSI", 0) == 1 then
-      ControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressurePSI"
-      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressurePSI"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "LocoBrakeCylinderPressure", 0) == 1 then
-      ControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressure"
-      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressure"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "aLocoBrakeCylinderPressure", 0) == 1 then
-      ControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressure"
-      StaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressure"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    end
 
    if Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "AirBrakePipePressureBAR"
-      StaticValues["AirBrakePipeUnits"] = "BAR"
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressureBAR"
+      tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "aAirBrakePipePressureBAR", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "aAirBrakePipePressureBAR"
-      StaticValues["AirBrakePipeUnits"] = "BAR"
+      tshControlValues["AirBrakePipePressure"] = "aAirBrakePipePressureBAR"
+      tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "BrakePipePressureBAR", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "BrakePipePressureBAR"
-      StaticValues["AirBrakePipeUnits"] = "BAR"
+      tshControlValues["AirBrakePipePressure"] = "BrakePipePressureBAR"
+      tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "aBrakePipePressureBAR", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "aBrakePipePressureBAR"
-      StaticValues["AirBrakePipeUnits"] = "BAR"
+      tshControlValues["AirBrakePipePressure"] = "aBrakePipePressureBAR"
+      tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSI"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSI"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aAirBrakePipePressurePSI", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "aAirBrakePipePressurePSI"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "aAirBrakePipePressurePSI"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "BrakePipePressurePSI", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "BrakePipePressurePSI"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "BrakePipePressurePSI"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aBrakePipePressurePSI", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "aBrakePipePressurePSI"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "aBrakePipePressurePSI"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "AirBrakePipePressure", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "AirBrakePipePressure"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressure"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aAirBrakePipePressure", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "aAirBrakePipePressure"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "aAirBrakePipePressure"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "BrakePipePressure", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "BrakePipePressure"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "BrakePipePressure"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aBrakePipePressure", 0) == 1 then
-      ControlValues["AirBrakePipePressure"] = "aBrakePipePressure"
-      StaticValues["AirBrakePipeUnits"] = "PSI"
+      tshControlValues["AirBrakePipePressure"] = "aBrakePipePressure"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    end
 
    if Call("ControlExists", "HLB", 0) == 1 then  -- vR103
-      ControlValues["MainReservoirPressure"] = "HLB"
-      StaticValues["MainReservoirUnits"] = "BAR"
+      tshControlValues["MainReservoirPressure"] = "HLB"
+      tshStaticValues["MainReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "MRPSI", 0) == 1 then  -- FEF-3
-      ControlValues["MainReservoirPressure"] = "MRPSI"
-      StaticValues["MainReservoirUnits"] = "PSI"
+      tshControlValues["MainReservoirPressure"] = "MRPSI"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 then
-      ControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
-      StaticValues["MainReservoirUnits"] = "BAR"
+      tshControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
+      tshStaticValues["MainReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "aMainReservoirPressureBAR", 0) == 1 then
-      ControlValues["MainReservoirPressure"] = "aMainReservoirPressureBAR"
-      StaticValues["MainReservoirUnits"] = "BAR"
+      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressureBAR"
+      tshStaticValues["MainReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 then
-      ControlValues["MainReservoirPressure"] = "MainReservoirPressurePSI"
-      StaticValues["MainReservoirUnits"] = "PSI"
+      tshControlValues["MainReservoirPressure"] = "MainReservoirPressurePSI"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1 then
-      ControlValues["MainReservoirPressure"] = "aMainReservoirPressurePSI"
-      StaticValues["MainReservoirUnits"] = "PSI"
+      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressurePSI"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "MainReservoirPressure", 0) == 1 then
-      ControlValues["MainReservoirPressure"] = "MainReservoirPressure"
-      StaticValues["MainReservoirUnits"] = "PSI"
+      tshControlValues["MainReservoirPressure"] = "MainReservoirPressure"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "aMainReservoirPressure", 0) == 1 then
-      ControlValues["MainReservoirPressure"] = "aMainReservoirPressure"
-      StaticValues["MainReservoirUnits"] = "PSI"
+      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressure"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
    end
 
    if Call("ControlExists", "MyEqReservoirPressurePSI", 0) == 1 then  -- FEF-3
-      ControlValues["EqReservoirPressure"] = "MyEqReservoirPressurePSI"
-      StaticValues["EqReservoirUnits"] = "PSI"
+      tshControlValues["EqReservoirPressure"] = "MyEqReservoirPressurePSI"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "EqReservoirPressureBAR", 0) == 1 then
-      ControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
-      StaticValues["EqReservoirUnits"] = "BAR"
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
+      tshStaticValues["EqReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "aEqReservoirPressureBAR", 0) == 1 then
-      ControlValues["EqReservoirPressure"] = "aEqReservoirPressureBAR"
-      StaticValues["EqReservoirUnits"] = "BAR"
+      tshControlValues["EqReservoirPressure"] = "aEqReservoirPressureBAR"
+      tshStaticValues["EqReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 then
-      ControlValues["EqReservoirPressure"] = "EqReservoirPressurePSI"
-      StaticValues["EqReservoirUnits"] = "PSI"
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressurePSI"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1 then
-      ControlValues["EqReservoirPressure"] = "aEqReservoirPressurePSI"
-      StaticValues["EqReservoirUnits"] = "PSI"
+      tshControlValues["EqReservoirPressure"] = "aEqReservoirPressurePSI"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "EqReservoirPressure", 0) == 1 then
-      ControlValues["EqReservoirPressure"] = "EqReservoirPressure"
-      StaticValues["EqReservoirUnits"] = "PSI"
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressure"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "aEqReservoirPressure", 0) == 1 then
-      ControlValues["EqReservoirPressure"] = "aEqReservoirPressure"
-      StaticValues["EqReservoirUnits"] = "PSI"
+      tshControlValues["EqReservoirPressure"] = "aEqReservoirPressure"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    end
 
    -- Steamers (driver)
    
    if Call("ControlExists", "BlowOffCockShutOffR", 0) == 1 then  -- FEF-3
-      ControlValues["BlowOffCockShutOffRight"] = "BlowOffCockShutOffR"
+      tshControlValues["BlowOffCockShutOffRight"] = "BlowOffCockShutOffR"
    end
 
    if Call("ControlExists", "Dynamo", 0) == 1 then  -- FEF-3
-      ControlValues["Dynamo"] = "Dynamo"
+      tshControlValues["Dynamo"] = "Dynamo"
    end
    
    if Call("ControlExists", "CompressorThrottle", 0) == 1 then  -- FEF-3
-      ControlValues["AirPump"] = "CompressorThrottle"
+      tshControlValues["AirPump"] = "CompressorThrottle"
    elseif Call("ControlExists", "SteamShutOffL", 0) == 1 then  -- Q1
-      ControlValues["AirPump"] = "SteamShutOffL"
+      tshControlValues["AirPump"] = "SteamShutOffL"
    elseif Call("ControlExists", "AirPumpOnOff", 0) == 1 then
-      ControlValues["AirPump"] = "AirPumpOnOff"
+      tshControlValues["AirPump"] = "AirPumpOnOff"
    end
 
    if Call("ControlExists", "SteamHeatShutOff", 0) == 1 then  -- Q1
-      ControlValues["SteamHeatingShutOff"] = "SteamHeatShutOff"
+      tshControlValues["SteamHeatingShutOff"] = "SteamHeatShutOff"
    end
 
    if Call("ControlExists", "Steam Heat Valve", 0) == 1 then  -- J50
-      ControlValues["SteamHeating"] = "Steam Heat Valve"
+      tshControlValues["SteamHeating"] = "Steam Heat Valve"
    elseif Call("ControlExists", "SteamHeatingValve", 0) == 1 then
-      ControlValues["SteamHeating"] = "SteamHeatingValve"
+      tshControlValues["SteamHeating"] = "SteamHeatingValve"
    elseif Call("ControlExists", "SteamHeat", 0) == 1 then
-      ControlValues["SteamHeating"] = "SteamHeat"
+      tshControlValues["SteamHeating"] = "SteamHeat"
    end
 
    if Call("ControlExists", "MasonsValve", 0) == 1 then
-      ControlValues["MasonsValve"] = "MasonsValve"
+      tshControlValues["MasonsValve"] = "MasonsValve"
    end
 
    if Call("ControlExists", "Steam Manifold", 0) == 1 then  -- 2F
-      ControlValues["SteamManifold"] = "Steam Manifold"
+      tshControlValues["SteamManifold"] = "Steam Manifold"
    end
 
    if Call("ControlExists", "LubricatorSteamValve", 0) == 1 then  -- 2F
-      ControlValues["LubricatorSteam"] = "LubricatorSteamValve"
+      tshControlValues["LubricatorSteam"] = "LubricatorSteamValve"
    end
 
    if Call("ControlExists", "LubricatorOilValve", 0) == 1 then  -- 2F
-      ControlValues["Lubricator"] = "LubricatorOilValve"
+      tshControlValues["Lubricator"] = "LubricatorOilValve"
    elseif Call("ControlExists", "SteamShutOffR", 0) == 1 then  -- Q1
-      ControlValues["Lubricator"] = "SteamShutOffR"
+      tshControlValues["Lubricator"] = "SteamShutOffR"
    elseif Call("ControlExists", "Lubricator", 0) == 1 then
-      ControlValues["Lubricator"] = "Lubricator"
+      tshControlValues["Lubricator"] = "Lubricator"
    end
 
    if Call("ControlExists", "LubricatorWarming", 0) == 1 then
-      ControlValues["LubricatorWarming"] = "LubricatorWarming"
+      tshControlValues["LubricatorWarming"] = "LubricatorWarming"
    end
 
    if Call("ControlExists", "SmallEjectorOnOff", 0) == 1 then
-      ControlValues["SmallEjector"] = "SmallEjectorOnOff"
+      tshControlValues["SmallEjector"] = "SmallEjectorOnOff"
    elseif Call("ControlExists", "SmallCompressorOnOff", 0) == 1 then
-      ControlValues["SmallEjector"] = "SmallCompressorOnOff"
+      tshControlValues["SmallEjector"] = "SmallCompressorOnOff"
    end
 
    if Call("ControlExists", "LargeEjector", 0) == 1 then  -- 3F
-      ControlValues["LargeEjector"] = "LargeEjector"
+      tshControlValues["LargeEjector"] = "LargeEjector"
    elseif Call("ControlExists", "LargeEjectorOnOff", 0) == 1 then
-      ControlValues["LargeEjector"] = "LargeEjectorOnOff"
+      tshControlValues["LargeEjector"] = "LargeEjectorOnOff"
    end
    
    if Call("ControlExists", "SteamBrakeHook", 0) == 1 then  -- 3F
-      ControlValues["BrakeHook"] = "SteamBrakeHook"
+      tshControlValues["BrakeHook"] = "SteamBrakeHook"
    end
 
    if Call("ControlExists", "SanderSteam", 0) == 1 then  -- Q1
-      ControlValues["SanderSteam"] = "SanderSteam"
+      tshControlValues["SanderSteam"] = "SanderSteam"
    end
 
    if Call("ControlExists", "FrontSander", 0) == 1 then  -- J50
-      ControlValues["Sander"] = "FrontSander"
+      tshControlValues["Sander"] = "FrontSander"
    elseif Call("ControlExists", "VirtualSander", 0) == 1 then  -- 2F
-      ControlValues["Sander"] = "VirtualSander"
+      tshControlValues["Sander"] = "VirtualSander"
    elseif Call("ControlExists", "Sander", 0) == 1 then
-      ControlValues["Sander"] = "Sander"
+      tshControlValues["Sander"] = "Sander"
    end
 
    if Call("ControlExists", "Sander2", 0) == 1 then  -- FEF-3
-      ControlValues["SanderRear"] = "Sander2"
+      tshControlValues["SanderRear"] = "Sander2"
    elseif Call("ControlExists", "RearSander", 0) == 1 then  -- J50
-      ControlValues["SanderRear"] = "RearSander"
+      tshControlValues["SanderRear"] = "RearSander"
    end
 
    if Call("ControlExists", "SandCaps", 0) == 1 then  -- Q1
-      ControlValues["SanderCaps"] = "SandCaps"
+      tshControlValues["SanderCaps"] = "SandCaps"
    end
 
    if Call("ControlExists", "SandFill", 0) == 1 then  -- Q1
-      ControlValues["SanderFill"] = "SandFill"
+      tshControlValues["SanderFill"] = "SandFill"
    end
 
    if Call("ControlExists", "AshpanSprinkler", 0) == 1 then
-      ControlValues["AshpanSprinkler"] = "AshpanSprinkler"
+      tshControlValues["AshpanSprinkler"] = "AshpanSprinkler"
    end
 
    if Call("ControlExists", "CylinderCockMaster", 0) == 1 then  -- FEF-3
-      ControlValues["CylinderCockMaster"] = "CylinderCockMaster"
+      tshControlValues["CylinderCockMaster"] = "CylinderCockMaster"
    end
 
    if Call("ControlExists", "CylinderCock", 0) == 1 then
-      ControlValues["CylinderCock"] = "CylinderCock"
+      tshControlValues["CylinderCock"] = "CylinderCock"
    end
 
    if Call("ControlExists", "WaterScoopRaiseLower", 0) == 1 then
-      ControlValues["WaterScoopRaiseLower"] = "WaterScoopRaiseLower"
+      tshControlValues["WaterScoopRaiseLower"] = "WaterScoopRaiseLower"
    end
 
    -- Steamers (fireman)
 
    if Call("ControlExists", "BlowOffCockShutOffL", 0) == 1 then  -- FEF-3
-      ControlValues["BlowOffCockShutOffLeft"] = "BlowOffCockShutOffL"
+      tshControlValues["BlowOffCockShutOffLeft"] = "BlowOffCockShutOffL"
    end
 
    if Call("ControlExists", "FWPumpShutOff", 0) == 1 then  -- FEF-3
-      ControlValues["FeedWaterPumpShutOff"] = "FWPumpShutOff"
+      tshControlValues["FeedWaterPumpShutOff"] = "FWPumpShutOff"
    end
 
    if Call("ControlExists", "ControlValve", 0) == 1 then  -- FEF-3
-      ControlValues["ControlValve"] = "ControlValve"
+      tshControlValues["ControlValve"] = "ControlValve"
    end
    
    if Call("ControlExists", "Tender_WaterLeverR", 0) == 1 then  -- Q1
-      ControlValues["ExhaustInjectorShutOff"] = "Tender_WaterLeverR"
+      tshControlValues["ExhaustInjectorShutOff"] = "Tender_WaterLeverR"
    end
 
    if Call("ControlExists", "Tender_WaterLeverL", 0) == 1 then  -- Q1
-      ControlValues["LiveInjectorShutOff"] = "Tender_WaterLeverL"
+      tshControlValues["LiveInjectorShutOff"] = "Tender_WaterLeverL"
    end
 
    if Call("ControlExists", "Tender_WaterShutOff", 0) == 1 then  -- Q1
-      ControlValues["TenderWaterShutOff"] = "Tender_WaterShutOff"
+      tshControlValues["TenderWaterShutOff"] = "Tender_WaterShutOff"
    end
 
    -- FireboxMass from the functions
 
    if Call("ControlExists", "AtomizerPressure", 0) == 1 then  -- FEF-3
-      ControlValues["AtomizerPressure"] = "AtomizerPressure"
+      tshControlValues["AtomizerPressure"] = "AtomizerPressure"
    end
 
    if Call("ControlExists", "TankTemperature", 0) == 1 then  -- FEF-3
-      ControlValues["TankTemperature"] = "TankTemperature"
+      tshControlValues["TankTemperature"] = "TankTemperature"
    end   
 
    if Call("ControlExists", "FireboxDoor", 0) == 1 then
-      ControlValues["FireboxDoor"] = "FireboxDoor"
+      tshControlValues["FireboxDoor"] = "FireboxDoor"
    end
 
    if Call("ControlExists", "Stoking", 0) == 1 then
-      ControlValues["Stoking"] = "Stoking"
+      tshControlValues["Stoking"] = "Stoking"
    end
 
    if Call("ControlExists", "Firing", 0) == 1 then  -- FEF-3
-      ControlValues["OilRegulator"] = "Firing"
+      tshControlValues["OilRegulator"] = "Firing"
    end
 
    if Call("ControlExists", "Atomizer", 0) == 1 then  -- FEF-3
-      ControlValues["Atomizer"] = "Atomizer"
+      tshControlValues["Atomizer"] = "Atomizer"
    end
 
    if Call("ControlExists", "TankHeater", 0) == 1 then  -- FEF-3
-      ControlValues["TankHeater"] = "TankHeater"
+      tshControlValues["TankHeater"] = "TankHeater"
    end
 
    if Call("ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
-      ControlValues["Blower"] = "BlowerControlValve"
+      tshControlValues["Blower"] = "BlowerControlValve"
    elseif Call("ControlExists", "Blower", 0) == 1 then
-      ControlValues["Blower"] = "Blower"
+      tshControlValues["Blower"] = "Blower"
    end
 
    if Call("ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
-      ControlValues["Damper"] = "FiredoorDamper"
+      tshControlValues["Damper"] = "FiredoorDamper"
    elseif Call("ControlExists", "VWDamper", 0) == 1 then  -- Small Prairies
-      ControlValues["Damper"] = "VWDamper"
+      tshControlValues["Damper"] = "VWDamper"
    elseif Call("ControlExists", "Damper", 0) == 1 then
-      ControlValues["Damper"] = "Damper"
+      tshControlValues["Damper"] = "Damper"
    end
 
    if Call("ControlExists", "DamperLeft", 0) == 1 then  -- J94
-      ControlValues["DamperLeft"] = "DamperLeft"
+      tshControlValues["DamperLeft"] = "DamperLeft"
    end
 
    if Call("ControlExists", "DamperRight", 0) == 1 then  -- J94
-      ControlValues["DamperRight"] = "DamperRight"
+      tshControlValues["DamperRight"] = "DamperRight"
    end
 
    if Call("ControlExists", "DamperFront", 0) == 1 then  -- Q1
-      ControlValues["DamperFront"] = "DamperFront"
+      tshControlValues["DamperFront"] = "DamperFront"
    end
 
    if Call("ControlExists", "DamperRear", 0) == 1 then  -- Q1
-      ControlValues["DamperRear"] = "DamperRear"
+      tshControlValues["DamperRear"] = "DamperRear"
    end
 
    if Call("ControlExists", "WaterGauge", 0) == 1 then
-      ControlValues["WaterGauge"] = "WaterGauge"
+      tshControlValues["WaterGauge"] = "WaterGauge"
    end
 
    if Call("ControlExists", "FWHpressure", 0) == 1 then  -- FEF-3
-      ControlValues["FeedWaterPressure"] = "FWHpressure"
+      tshControlValues["FeedWaterPressure"] = "FWHpressure"
    end
 
    if Call("ControlExists", "FWPump", 0) == 1 then  -- FEF-3
-      ControlValues["FeedWaterPump"] = "FWPump"
+      tshControlValues["FeedWaterPump"] = "FWPump"
    end
 
    if Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
-      ControlValues["ExhaustInjectorSteam"] = "Left Steam"
+      tshControlValues["ExhaustInjectorSteam"] = "Left Steam"
    elseif Call("ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
-      ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamLever"
+      tshControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamLever"
    elseif Call("ControlExists", "ExhaustInjectorSteamOnOff", 0) == 1 then
-      ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
+      tshControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
    end
 
    if Call("ControlExists", "Left Water", 0) == 1 then  -- 2F, 3F
-      ControlValues["ExhaustInjectorWater"] = "Left Water"
+      tshControlValues["ExhaustInjectorWater"] = "Left Water"
    elseif Call("ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
-      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterLever"
+      tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterLever"
    elseif Call("ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
-      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterFineControl"
+      tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterFineControl"
    elseif Call("ControlExists", "ExhaustInjectorWater", 0) == 1 then
-      ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
+      tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
    end
 
    if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
-      ControlValues["LiveInjectorSteam"] = "InjectorLeverR"
+      tshControlValues["LiveInjectorSteam"] = "InjectorLeverR"
    elseif Call("ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
-      ControlValues["LiveInjectorSteam"] = "Right Steam"
+      tshControlValues["LiveInjectorSteam"] = "Right Steam"
    elseif Call("ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
-      ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamLever"
+      tshControlValues["LiveInjectorSteam"] = "LiveInjectorSteamLever"
    elseif Call("ControlExists", "LiveInjectorSteamOnOff", 0) == 1 then
-      ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
+      tshControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
    end
 
    if Call("ControlExists", "Right Water", 0) == 1 then  -- 2F
-      ControlValues["LiveInjectorWater"] = "Right Water"
+      tshControlValues["LiveInjectorWater"] = "Right Water"
    elseif Call("ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
-      ControlValues["LiveInjectorWater"] = "LiveInjectorWaterLever"
+      tshControlValues["LiveInjectorWater"] = "LiveInjectorWaterLever"
    elseif Call("ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
-      ControlValues["LiveInjectorWater"] = "LiveInjectorWaterFineControl"
+      tshControlValues["LiveInjectorWater"] = "LiveInjectorWaterFineControl"
    elseif Call("ControlExists", "LiveInjectorWater", 0) == 1 then
-      ControlValues["LiveInjectorWater"] = "LiveInjectorWater"
+      tshControlValues["LiveInjectorWater"] = "LiveInjectorWater"
    end
 
    if Call("ControlExists", "SafetyValveEngineer", 0) == 1 then  -- FEF-3
-      ControlValues["SafetyValve1"] = "SafetyValveEngineer"
+      tshControlValues["SafetyValve1"] = "SafetyValveEngineer"
    elseif Call("ControlExists", "SafetyValve1", 0) == 1 then
-      ControlValues["SafetyValve1"] = "SafetyValve1"
+      tshControlValues["SafetyValve1"] = "SafetyValve1"
    end
    
    if Call("ControlExists", "SafetyValveFireman", 0) == 1 then  -- FEF-3
-      ControlValues["SafetyValve2"] = "SafetyValveFireman"
+      tshControlValues["SafetyValve2"] = "SafetyValveFireman"
    elseif Call("ControlExists", "SafetyValve2", 0) == 1 then
-      ControlValues["SafetyValve2"] = "SafetyValve2"
+      tshControlValues["SafetyValve2"] = "SafetyValve2"
    end
 
    if Call("ControlExists", "SafetyValveUnmuffled", 0) == 1 then  -- FEF-3
-      ControlValues["SafetyValve3"] = "SafetyValveUnmuffled"
+      tshControlValues["SafetyValve3"] = "SafetyValveUnmuffled"
    end
 
    -- Warning values
    
    if Call("ControlExists", "AlerterCountdown", 0) == 1 then
-      ControlValues["Alarm"] = "AlerterCountdown"
+      tshControlValues["Alarm"] = "AlerterCountdown"
    elseif Call("ControlExists", "AWSWarnCount", 0) == 1 then
-      ControlValues["Alarm"] = "AWSWarnCount"
+      tshControlValues["Alarm"] = "AWSWarnCount"
    end
 
    if Call("ControlExists", "SifaWarnung", 0) == 1 then  -- BR420, BR103, BR111
-      ControlValues["VigilAlarm"] = "SifaWarnung"
+      tshControlValues["VigilAlarm"] = "SifaWarnung"
    elseif Call("ControlExists", "SiFaWarning", 0) == 1 then  -- BR442
-      ControlValues["VigilAlarm"] = "SiFaWarning"
+      tshControlValues["VigilAlarm"] = "SiFaWarning"
    elseif Call("ControlExists", "DSDAlarm", 0) == 1 then
-      ControlValues["VigilAlarm"] = "DSDAlarm"
+      tshControlValues["VigilAlarm"] = "DSDAlarm"
    elseif Call("ControlExists", "VigilAlarm", 0) == 1 then
-      ControlValues["VigilAlarm"] = "VigilAlarm"
+      tshControlValues["VigilAlarm"] = "VigilAlarm"
    elseif Call("ControlExists", "DSD", 0) == 1 then
-      ControlValues["VigilAlarm"] = "DSD"
+      tshControlValues["VigilAlarm"] = "DSD"
    end
 
    if Call("ControlExists", "BrakeDemandLamp", 0) == 1 then  -- CLass 37/4
-      ControlValues["EmergencyBrake"] = "BrakeDemandLamp"
+      tshControlValues["EmergencyBrake"] = "BrakeDemandLamp"
    elseif Call("ControlExists", "EmergencyAlarm", 0) == 1 then
-      ControlValues["EmergencyBrake"] = "EmergencyAlarm"
+      tshControlValues["EmergencyBrake"] = "EmergencyAlarm"
    elseif Call("ControlExists", "EmergencyBrake", 0) == 1 then
-      ControlValues["EmergencyBrake"] = "EmergencyBrake"
+      tshControlValues["EmergencyBrake"] = "EmergencyBrake"
    end
 
    if Call("ControlExists", "Startup", 0) == 1 then
-      ControlValues["Startup"] = "Startup"
+      tshControlValues["Startup"] = "Startup"
    end
 
    -- Doors Values
 
    if Call("ControlExists", "DoorsOpenClose", 0) == 1 then
-      DoorsValues["Doors"] = "DoorsOpenClose"
+      tshDoorsValues["Doors"] = "DoorsOpenClose"
    end
 
    if Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 then
-      DoorsValues["DoorsLeft"] = "DoorsOpenCloseLeft"
+      tshDoorsValues["DoorsLeft"] = "DoorsOpenCloseLeft"
    end
 
    if Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 then
-      DoorsValues["DoorsRight"] = "DoorsOpenCloseRight"
+      tshDoorsValues["DoorsRight"] = "DoorsOpenCloseRight"
    end
 
    -- Override defaults for custom locos. Detect functions are in the main script.
@@ -622,32 +617,32 @@ function ConfigureOverlay()
    -- Some steamers use regulator for steam chest pressure, display lever
    if DetectGenericSteam(true) then
       if Call("ControlExists", "VirtualThrottle", 0) == 1 then
-         ControlValues["Throttle"] = "VirtualThrottle"
+         tshControlValues["Throttle"] = "VirtualThrottle"
       end
    end
 
    -- Things common for the ADV and HUD versions of FEF-3
    if DetectFEF3_ADV_Smokebox(true) or DetectFEF3_HUD_Smokebox(true) then
       -- Hide the internal values
-      ControlValues["SteamChestPressure"] = nil
-      ControlValues["TrainBrakeCylinderPressure"] = nil
-      ControlValues["FireboxDoor"] = nil
-      ControlValues["Stoking"] = nil
-      ControlValues["ExhaustInjectorSteam"] = nil
-      ControlValues["ExhaustInjectorWater"] = nil
+      tshControlValues["SteamChestPressure"] = nil
+      tshControlValues["TrainBrakeCylinderPressure"] = nil
+      tshControlValues["FireboxDoor"] = nil
+      tshControlValues["Stoking"] = nil
+      tshControlValues["ExhaustInjectorSteam"] = nil
+      tshControlValues["ExhaustInjectorWater"] = nil
 
       -- If you want safety valves comment out the following 3 lines
-      ControlValues["SafetyValve1"] = nil
-      ControlValues["SafetyValve2"] = nil
-      ControlValues["SafetyValve3"] = nil
+      tshControlValues["SafetyValve1"] = nil
+      tshControlValues["SafetyValve2"] = nil
+      tshControlValues["SafetyValve3"] = nil
 
       -- Firebox is 0-5%, make it full range (0-100%)
-      ControlValuesFunctions["FireboxMass"] =
+      tshControlValuesFunctions["FireboxMass"] =
          function(value)
             return value * 20
          end
       -- BackPressure needs to be converted
-      ControlValuesFunctions["BackPressure"] =
+      tshControlValuesFunctions["BackPressure"] =
          function(value)
             value = value - 0.3
             if (value < 0) then
@@ -662,154 +657,154 @@ function ConfigureOverlay()
    if DetectFEF3_ADV_Smokebox(true) then
       -- Show levers values instead of internal, they make little sense here
       -- This is only for the ADV version, not the HUD.
-      ControlValues["Reverser"] = "MyReverser"
-      ControlValues["Throttle"] = "RegulatorLever"
-      ControlValues["TrainBrake"] = "TrainBrakeHandle"
-      ControlValues["LocoBrake"] = "MyEngineBrakeControl"
+      tshControlValues["Reverser"] = "MyReverser"
+      tshControlValues["Throttle"] = "RegulatorLever"
+      tshControlValues["TrainBrake"] = "TrainBrakeHandle"
+      tshControlValues["LocoBrake"] = "MyEngineBrakeControl"
 
    elseif Detect2FDockTank_ADV_MeshTools(true) then
       -- Lever for Train/Steam brake
-      ControlValues["TrainBrake"] = "VirtualBrake"
+      tshControlValues["TrainBrake"] = "VirtualBrake"
       -- Internal for steam brake should be hidden
-      ControlValues["LocoBrake"] = nil
+      tshControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
-      ControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
-      ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
-      ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
+      tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif DetectJ50_ADV_MeshTools(true) then
       -- Vacuum Brake lever, internal should be hidden
-      ControlValues["TrainBrake"] = "VirtualBrake"
-      ControlValues["LocoBrake"] = nil
+      tshControlValues["TrainBrake"] = "VirtualBrake"
+      tshControlValues["LocoBrake"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
+      tshControlValues["Damper"] = nil
 
    elseif Detect3FJintyTrain_ADV_MeshTools(true) then
       -- Correct levers for Train and Steam (push/pull) brakes
-      ControlValues["TrainBrake"] = "VirtualBrake"
-      ControlValues["LocoBrake"] = "SteamBrakeSpindle"
+      tshControlValues["TrainBrake"] = "VirtualBrake"
+      tshControlValues["LocoBrake"] = "SteamBrakeSpindle"
       -- Make the Sander {-1, 1}
-      ControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
-      ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
-      ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
+      tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif Detect3FJintySteam_ADV_MeshTools(true) then
       -- Steam brake lever
-      ControlValues["TrainBrake"] = "VirtualBrake"
+      tshControlValues["TrainBrake"] = "VirtualBrake"
       -- Internal should be hidden
-      ControlValues["LocoBrake"] = nil
+      tshControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
-      ControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
-      ControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
-      ControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
+      tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
       -- It doesn't have vacuum brakes, hide
-      ControlValues["VacuumBrakePipePressure"] = nil
-      StaticValues["VacuumBrakePipeUnits"] = nil
+      tshControlValues["VacuumBrakePipePressure"] = nil
+      tshStaticValues["VacuumBrakePipeUnits"] = nil
 
    elseif DetectJ94Train_ADV_MeshTools(true) then
       -- Loco/Steam Brake lever, internal should be hidden
-      ControlValues["LocoBrake"] = "VirtualLocoBrake"
+      tshControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
+      tshControlValues["Damper"] = nil
 
    elseif DetectJ94Steam_ADV_MeshTools(true) then
       -- There is no TrainBrake here, use steam brake as one
-      ControlValues["TrainBrake"] = "VirtualLocoBrake"
+      tshControlValues["TrainBrake"] = "VirtualLocoBrake"
       -- Internal should be hidden
-      ControlValues["LocoBrake"] = nil
+      tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
-      ControlValues["SmallEjector"] = nil
+      tshControlValues["SmallEjector"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
+      tshControlValues["Damper"] = nil
 
    elseif DetectSmallPrairies_VictoryWorks(true) then
       -- Correct lever for TrainBrake
-      ControlValues["TrainBrake"] = "VirtualBrake"
+      tshControlValues["TrainBrake"] = "VirtualBrake"
 
    elseif Detect14xx_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
+      tshControlValues["Damper"] = nil
 
    elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
-      ControlValues["Damper"] = nil
+      tshControlValues["Damper"] = nil
       -- Not functional, hide
-      ControlValues["WaterScoopRaiseLower"] = nil
+      tshControlValues["WaterScoopRaiseLower"] = nil
 
       -- Uncomment all if you want to display simple water controls
-      --ControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
-      --ControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
-      --ControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
-      --ControlValues["LiveInjectorWater"] = "LiveInjectorWater"
-      --ControlValues["ExhaustInjectorShutOff"] = nil
-      --ControlValues["LiveInjectorShutOff"] = nil
-      --ControlValues["TenderWaterShutOff"] = nil
+      --tshControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
+      --tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
+      --tshControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
+      --tshControlValues["LiveInjectorWater"] = "LiveInjectorWater"
+      --tshControlValues["ExhaustInjectorShutOff"] = nil
+      --tshControlValues["LiveInjectorShutOff"] = nil
+      --tshControlValues["TenderWaterShutOff"] = nil
 
       -- Make the sander {0,1}
-      ControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
 
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
-      ControlValues["SmallEjector"] = nil
+      tshControlValues["SmallEjector"] = nil
 
    elseif DetectBlack5_KeithRoss(true) then
       -- Not functional, hide
-      ControlValues["WaterScoopRaiseLower"] = nil
+      tshControlValues["WaterScoopRaiseLower"] = nil
 
    -- UK
 
    elseif DetectClass90_ADV_AP(true) then
       -- Throttle is delayed significantly, show lever
-      ControlValues["Throttle"] = "VirtualThrottle"
+      tshControlValues["Throttle"] = "VirtualThrottle"
       -- LocoBrake lever, internal should be hidden
-      ControlValues["LocoBrake"] = "VirtualEngineBrakeControl"
+      tshControlValues["LocoBrake"] = "VirtualEngineBrakeControl"
 
    elseif DetectMK3DVT_ADV_AP() then
       -- Throttle is delayed significantly, show lever
-      ControlValues["Throttle"] = "VirtualThrottle"
+      tshControlValues["Throttle"] = "VirtualThrottle"
 
    elseif DetectClass37_Thomson(true) then
       -- Throttle is delayed significantly, show lever
-      ControlValues["Throttle"] = "VirtualThrottle"
+      tshControlValues["Throttle"] = "VirtualThrottle"
 
    elseif DetectClass50_MeshTools(true) then
       -- Throttle is delayed significantly, show lever
-      ControlValues["Throttle"] = "VirtualThrottle"
+      tshControlValues["Throttle"] = "VirtualThrottle"
 
    -- German
 
    elseif DetectBR103TEE_vRailroads_Expert(true) then
 	   -- Throttle is delayed significantly, show lever
-	   ControlValues["Throttle"] = "VirtualThrottle"
+	   tshControlValues["Throttle"] = "VirtualThrottle"
 	   -- Scale values to (0,1)
-	   ControlValuesFunctions["Throttle"] = function(value) return value / 39 end
+	   tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
 
    elseif DetectBR103TEE_vRailroads(true) then
 	   -- Throttle is delayed significantly, show lever
-	   ControlValues["Throttle"] = "VirtualThrottle"
+	   tshControlValues["Throttle"] = "VirtualThrottle"
 	   -- Scale values to (0,1)
-	   ControlValuesFunctions["Throttle"] = function(value) return value / 39 end
-	   ControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
+	   tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
+	   tshControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
 	   -- Not functional, hide
-	   ControlValues["TargetSpeed"] = nil
+	   tshControlValues["TargetSpeed"] = nil
 
    elseif DetectBR111_vRailroads(true) or DetectDBbzf_vRailroads(true) then
 	   -- Throttle is delayed significantly, show lever
-	   ControlValues["Throttle"] = "VirtualThrottle"
+	   tshControlValues["Throttle"] = "VirtualThrottle"
 
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that
-      ControlValues["TrainBrake"] = ControlValues["LocoBrake"]
-      ControlValues["LocoBrake"] = nil
+      tshControlValues["TrainBrake"] = tshControlValues["LocoBrake"]
+      tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
-      ControlValues["LocoBrakeCylinderPressure"] = nil
+      tshControlValues["LocoBrakeCylinderPressure"] = nil
 
    elseif DetectBR266(true) then
       -- TrainBrake lever, internal should be hidden
-      ControlValues["TrainBrake"] = "VirtualBrake"
+      tshControlValues["TrainBrake"] = "VirtualBrake"
 
    end
 
@@ -854,26 +849,26 @@ function GetOverlayData()
    if Gradient then data = data.."Gradient: "..Gradient.."\n" end
 
    local FireboxMass = Call("GetFireboxMass")
-   if FireboxMass and ControlValuesFunctions["FireboxMass"] then FireboxMass = ControlValuesFunctions["FireboxMass"](FireboxMass) end
+   if FireboxMass and tshControlValuesFunctions["FireboxMass"] then FireboxMass = tshControlValuesFunctions["FireboxMass"](FireboxMass) end
    if FireboxMass then data = data.."FireboxMass: "..FireboxMass.."\n" end
 
    -- Static Values loop
-   for key, value in pairs(StaticValues) do
+   for key, value in pairs(tshStaticValues) do
       data = data..key..": "..value.."\n"
    end
 
    -- Control Values loop
-   for key, name in pairs(ControlValues) do
+   for key, name in pairs(tshControlValues) do
       local value = Call("GetControlValue", name, 0)
-      if ControlValuesFunctions[key] then
-         value = ControlValuesFunctions[key](value)
+      if tshControlValuesFunctions[key] then
+         value = tshControlValuesFunctions[key](value)
       end
       data = data..key..": "..value.."\n"
    end
 
    -- Doors Values loop, doesn't matter which
    local doors = 0
-   for key, name in pairs(DoorsValues) do
+   for key, name in pairs(tshDoorsValues) do
       local value = Call("GetControlValue", name, 0)
       if value ~= 0 then
          doors = value

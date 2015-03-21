@@ -1741,11 +1741,29 @@ function UpdateHelper(time)
       return nil
    end
 
-   if not ExpertWarningReceived then
+   if not UpdateHelperConfigured then
+      -- global tables for the joystick
+      tshLine = {}
+      tshControl = {}
+      tshRange = {}
+      tshInvert = {}
+      tshCenterDetent = {}
+      tshNotches = {}
+      tshStep = {}
+      tshPreviousInput = {}
+      tshCurrentSim = {}
+      tshTargetSim = {}
+
+      -- global tables for the overlay
+      tshStaticValues = {}
+      tshControlValues = {}
+      tshControlValuesFunctions = {}
+      tshDoorsValues = {}
+
       if Call("IsExpertMode") ~= 1 then
          DisplayPopup("SIMPLE MODE DETECTED!\n\nTrainSim Helper won't work properly.", 30)
       end
-      ExpertWarningReceived = 1
+      UpdateHelperConfigured = 1
    end
 
    if not OverlayConfigured then

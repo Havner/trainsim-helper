@@ -2,17 +2,17 @@
  - WARNING: Default for "change direction" changed to "D"
  - WARNING: Configuration syntax changed a little, now tables
             are used everywhere.
-	    ThrottleInvert became Invert["Throttle"], etc.
+            ThrottleInvert became tshInvert["Throttle"], etc.
  - WARNING: Config functions changed due to the above as well.
             ReplaceLines, GenerateEquakNotches, InvInvert, they
-	    all get the key in params and don't return anything
+            all get the key in params and don't return anything
  - Removed *: from scripts calls as per dev documents
  - Added warning if Simple controls are detected
  - Added an option "S" to switch to speed limit only
  - Added an option to sync controls on start of the sim
  - New option for Axes, Step: set the control over time,
    not immediately. Now even using Notches the ControlValue
-   will go through immediate values before reaching the setting.
+   will go through intermediate values before reaching the setting.
  - Thanks to this option TrainBrake and DynamicBrake work
    together on vRailroads locos as they should.
  - Added an option to disable all "Havner's config" mods.
