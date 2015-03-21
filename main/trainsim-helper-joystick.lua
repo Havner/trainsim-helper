@@ -836,12 +836,6 @@ function GetControlRange(control)
    end
 end
 
-function GetControlValue(control)
-   --if Call("ControlExists", control, 0) == 1 then
-      return Call("GetControlValue", control, 0)
-   --end
-end
-
 function SetControlValue(control, value)
    if OnControlValueChange then
       OnControlValueChange(control, 0, value)
@@ -970,7 +964,7 @@ function SetControl(key, value)
          if value ~= tshTargetSim[key] then
             tshTargetSim[key] = value
             -- Set CurrentSim in case it has been moved by some other means (keys, script)
-            tshCurrentSim[key] = GetControlValue(control)
+            tshCurrentSim[key] = Call("GetControlValue", control, 0)
          end
       else
          SetControlValue(control, value)
