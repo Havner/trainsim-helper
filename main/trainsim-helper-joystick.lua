@@ -72,25 +72,25 @@ function ConfigureJoystick()
    -- Find ControlValues a loco has and detect what to use.
    -- If combined doesn't exist configure separate throttle and train brake.
    -- If combined is with dynamic brake we'll deal with that per loco below.
-   Control["Reverser"] =          FindReverser()
-   Control["Gear"] =              FindGear()
-   Control["CruiseCtl"] =         FindCruiseCtl()
-   Control["CombinedThrottle"] =  FindCombinedThrottle()
-   if not Control["CombinedThrottle"] then
-      Control["Throttle"] =       FindThrottle()
-      Control["TrainBrake"] =     FindTrainBrake()
+   ControlValue["Reverser"] =          FindReverser()
+   ControlValue["Gear"] =              FindGear()
+   ControlValue["CruiseCtl"] =         FindCruiseCtl()
+   ControlValue["CombinedThrottle"] =  FindCombinedThrottle()
+   if not ControlValue["CombinedThrottle"] then
+      ControlValue["Throttle"] =       FindThrottle()
+      ControlValue["TrainBrake"] =     FindTrainBrake()
    end
-   Control["LocoBrake"] =         FindLocoBrake()
-   Control["DynamicBrake"] =      FindDynamicBrake()
-   Control["HandBrake"] =         FindHandBrake()
-   Control["SmallEjector"] =      FindSmallEjector()
-   Control["Blower"] =            FindBlower()
-   Control["FireboxDoor"] =       FindFireboxDoor()
-   Control["Stoking"] =           FindStoking()
-   Control["ExhaustSteam"] =      FindExhaustSteam()
-   Control["ExhaustWater"] =      FindExhaustWater()
-   Control["LiveSteam"] =         FindLiveSteam()
-   Control["LiveWater"] =         FindLiveWater()
+   ControlValue["LocoBrake"] =         FindLocoBrake()
+   ControlValue["DynamicBrake"] =      FindDynamicBrake()
+   ControlValue["HandBrake"] =         FindHandBrake()
+   ControlValue["SmallEjector"] =      FindSmallEjector()
+   ControlValue["Blower"] =            FindBlower()
+   ControlValue["FireboxDoor"] =       FindFireboxDoor()
+   ControlValue["Stoking"] =           FindStoking()
+   ControlValue["ExhaustSteam"] =      FindExhaustSteam()
+   ControlValue["ExhaustWater"] =      FindExhaustWater()
+   ControlValue["LiveSteam"] =         FindLiveSteam()
+   ControlValue["LiveWater"] =         FindLiveWater()
 
    -- Get ranges for ALL controls, even unused ones, we might need them later.
    Range["Reverser"] =         GetControlRange(FindReverser())
@@ -129,8 +129,8 @@ function ConfigureJoystick()
       -- Ignore emergency values (0.85, 1)
       Range["TrainBrake"] = {0, 0.85}
       -- Use regular controls instead of My* versions, they exist, but don't work in the HUD version
-      Control["Reverser"] = "Reverser"
-      Control["LocoBrake"] = "EngineBrakeControl"
+      ControlValue["Reverser"] = "Reverser"
+      ControlValue["LocoBrake"] = "EngineBrakeControl"
       -- Havner's config
       ReplaceLines("Reverser", "DynamicBrake")
 
@@ -207,7 +207,7 @@ function ConfigureJoystick()
 
    elseif DetectCastle() then
       -- This loco has VirtualReverser but it doesn't work, override
-      Control["Reverser"] = "Reverser"
+      ControlValue["Reverser"] = "Reverser"
       -- Havner's config
       ReplaceLines("Reverser", "DynamicBrake")
 
@@ -500,7 +500,7 @@ function ConfigureJoystick()
       Notches["CombinedThrottle"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      Control["TrainBrake"] = FindTrainBrake()
+      ControlValue["TrainBrake"] = FindTrainBrake()
       -- Dynamic brake should not be used directly
       Line["DynamicBrake"] = nil
 
@@ -523,7 +523,7 @@ function ConfigureJoystick()
       CenterDetent["CombinedThrottle"] = 0.05
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      Control["TrainBrake"] = FindTrainBrake()
+      ControlValue["TrainBrake"] = FindTrainBrake()
       Notches["TrainBrake"] = {0, 0.1, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.75, 0.85, 1}
       -- Dynamic brake should not be used directly
       Line["DynamicBrake"] = nil
@@ -538,7 +538,7 @@ function ConfigureJoystick()
       Notches["CombinedThrottle"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      Control["TrainBrake"] = FindTrainBrake()
+      ControlValue["TrainBrake"] = FindTrainBrake()
       -- Ignore emergency values
       Range["TrainBrake"] = {0, 0.9}
       -- Dynamic brake should not be used directly
@@ -560,7 +560,7 @@ function ConfigureJoystick()
       GenerateEqualNotches(19, "CombinedThrottle") -- (0,1)
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      Control["TrainBrake"] = FindTrainBrake()
+      ControlValue["TrainBrake"] = FindTrainBrake()
       -- Dynamic brake should not be used directly
       Line["DynamicBrake"] = nil
 
@@ -571,7 +571,7 @@ function ConfigureJoystick()
       GenerateEqualNotches(19, "CombinedThrottle") -- (0,1)
       -- This loco has CombinedThrottle combined with DynamicBrake
       -- Make use of TrainBrake then, the control has not been found previously
-      Control["TrainBrake"] = FindTrainBrake()
+      ControlValue["TrainBrake"] = FindTrainBrake()
       -- Dynamic brake should not be used directly
       Line["DynamicBrake"] = nil
 
@@ -591,7 +591,7 @@ function ConfigureJoystick()
    end
 
    -- Past this point the following global values should be set if they exist and are set to be used
-   -- Line[], Control[], Range[]
+   -- Line[], ControlValue[], Range[]
    -- and optionally:
    -- Invert[], Notches[], CenterDetent[], Step[]
 
@@ -824,7 +824,7 @@ end
 
 -- Don't touch those lines
 Line = {}
-Control = {}
+ControlValue = {}
 Range = {}
 Invert = {}
 CenterDetent = {}
@@ -948,7 +948,7 @@ function GenerateEqualNotches(count, key)
 end
 
 function SetControl(key, value)
-   local control = Control[key]
+   local control = ControlValue[key]
    local previous = PreviousInput[key]
    local range = Range[key]
    local notches = Notches[key]
@@ -994,7 +994,7 @@ end
 
 function SetControlDelayed(key)
    local step = Step[key]
-   local control = Control[key]
+   local control = ControlValue[key]
 
    if step and TargetSim[key] and CurrentSim[key] then
       if math.abs(TargetSim[key] - CurrentSim[key]) < step then
