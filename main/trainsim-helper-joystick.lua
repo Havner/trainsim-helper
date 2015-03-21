@@ -222,12 +222,12 @@ function ConfigureJoystick()
       -- Ignore emergency values on CombinedThrottle (0, 0.1)
       tshRange["CombinedThrottle"] = {0.1, 1}
       tshNotches["CombinedThrottle"] = {0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
-      GenerateEqualNotch(25, "CruiseCtl") -- (0,1)
+      GenerateEqualNotches(25, "CruiseCtl") -- (0,1)
       -- Havner's config
       ReplaceLines("CruiseCtl", "DynamicBrake")
 
    elseif DetectHST() then
-      GenerateEqualNotch(6, "Throttle") -- (0,1)
+      GenerateEqualNotches(6, "Throttle") -- (0,1)
       GenerateEqualNotches(8, "TrainBrake") -- (0,1)
 
    elseif DetectClass801() then
