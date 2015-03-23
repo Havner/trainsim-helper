@@ -26,7 +26,7 @@ function ConfigureOverlay()
    end
    
    if DetectInterfaceUK() then
-      GradientUK = 1
+      --GradientUK = 1
    end
 
    -----------------------------------------------------------
