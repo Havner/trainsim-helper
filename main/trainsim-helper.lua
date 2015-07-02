@@ -936,6 +936,24 @@ function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
    end
 end
 
+function DetectBR232(DisablePopup) -- Munich - Augsburg addon
+   if Call("ControlExists", "SifaLampe", 0) == 1 and
+      Call("ControlExists", "SifaWarnung", 0) == 1 and
+      Call("ControlExists", "vAmmeter", 0) == 1 and
+      Call("ControlExists", "Kraftstoffpumpe", 0) == 1 and
+      Call("ControlExists", "FahrenOnOff", 0) == 1 and
+      Call("ControlExists", "VirtualDynamicBrake", 0) == 1 and
+      Call("ControlExists", "Wassertemperatur", 0) == 1 and
+      Call("ControlExists", "Treibstoffleitungsdruck", 0) == 1 and
+      Call("ControlExists", "Batterie", 0) == 1 and
+      Call("ControlExists", "Turbolader", 0) == 1 and
+      Call("ControlExists", "coolerFan1", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR232 detected") end
+      return 1
+   end
+end
+
 function DetectBR266(DisablePopup) -- Cologne - Koblenz addon
    if Call("ControlExists", "CabEQNeedle", 0) == 1 and
       Call("ControlExists", "CabTBNeedle", 0) == 1 and

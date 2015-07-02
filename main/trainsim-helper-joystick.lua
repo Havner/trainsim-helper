@@ -347,12 +347,18 @@ function ConfigureJoystick()
 
    elseif DetectBR442Talent2() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
-      GenerateEqualNotches(19, "CruiseCtl")                 -- (0,180)
+      tshNotches["CruiseCtl"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
+      InvInvert("CruiseCtl")                                -- Inverted compared to other CruiseCtls
       tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
       tshRange["CombinedThrottle"] = {-0.9, 1}              -- Ignore emergency values (-1, -0.9)
       tshLine["LocoBrake"] = tshLine["TrainBrake"]          -- TrainBrake is controlled with LocoBrake here, reflect that
       tshLine["TrainBrake"] = nil
-      tshNotches["LocoBrake"] = {-1, -0.2, 0, 0.2, 1}       -- TrainBrake is self lapped here, add some notches to help
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- TrainBrake is self lapped here, add some notches to help
+      tshStep["LocoBrake"] = 0.03                           -- Don't apply the lever fully on lever deflection
+
+   elseif DetectBR232() then
+      GenerateEqualNotches(16, "Throttle")                   -- (0,15)
+      tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
 
    elseif DetectBR266() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -533,8 +539,8 @@ end
 function FindCruiseCtl()
    if Call("ControlExists", "SpeedControlTarget", 0) == 1 then     -- BR266
       return "SpeedControlTarget"
-   elseif Call("ControlExists", "AFBTargetSpeed", 0) == 1 then     -- BR442 Talent 2
-      return "AFBTargetSpeed"
+   elseif Call("ControlExists", "AFBSet", 0) == 1 then             -- BR442 Talent 2
+      return "AFBSet"
    elseif Call("ControlExists", "SpeedSet", 0) == 1 then           -- Class 90 AP
       return "SpeedSet"
    elseif Call("ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela
