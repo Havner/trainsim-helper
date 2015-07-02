@@ -359,6 +359,7 @@ function ConfigureJoystick()
    elseif DetectBR232() then
       GenerateEqualNotches(16, "Throttle")                   -- (0,15)
       tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
+      tshStep["TrainBrake"] = 0.03                          -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
 
    elseif DetectBR266() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -709,7 +710,7 @@ function SetJoystickData()
    end
 
    for key, v in pairs(value) do
-      SetControl(key, v)
+      TrySetControl(key, v)
    end
 
    -- For those configured to be set over time, set them step by step
@@ -724,7 +725,7 @@ end
 -----  Here be dragons, careful with modifications  -------
 -----------------------------------------------------------
 
--- Raw function, unaware of global variables
+-- Raw functions, unaware of global variables
 function GetControlRange(control)
    if control then
       --if Call("ControlExists", control, 0) == 1 then
@@ -831,7 +832,7 @@ function GenerateEqualNotches(count, key)
    end
 end
 
-function SetControl(key, value)
+function TrySetControl(key, value)
    local control = tshControl[key]
    local previous = tshPreviousInput[key]
    local range = tshRange[key]
