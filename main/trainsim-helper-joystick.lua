@@ -377,7 +377,8 @@ function ConfigureJoystick()
    elseif DetectBR426() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
-      GenerateEqualNotches(31, "CruiseCtl")                 -- (0,1)
+      tshRange["CruiseCtl"] = {0, 19/31}                    -- By default it goes to 300 kph, this loco can do 180 kph
+      GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
       tshLine["DynamicBrake"] = nil                         -- Dynamic brake should not be used directly
 
    elseif DetectICE2() or DetectICE2Cab() or DetectICE3() or DetectICET() then
