@@ -46,9 +46,9 @@ function ConfigureOverlay()
    -- Loco's controls, those are mostly low-level values so one can see what is happening
    -- under the hood. They can be overriden with high-level ones per loco when needed.
 
-   if Call("ControlExists", "SpeedControlSpeed", 0) == 1 then         -- BR266
+   if Call("ControlExists", "SpeedControlSpeed", 0) == 1 then        -- BR266
       tshControlValues["TargetSpeed"] = "SpeedControlSpeed"
-   elseif Call("ControlExists", "AFBTargetSpeed", 0) == 1 then        -- BR442 Talent 2
+   elseif Call("ControlExists", "AFBTargetSpeed", 0) == 1 then       -- BR442 Talent 2
       tshControlValues["TargetSpeed"] = "AFBTargetSpeed"
    elseif Call("ControlExists", "SpeedSet", 0) == 1 then             -- Class 90 AP
       tshControlValues["TargetSpeed"] = "SpeedSet"
@@ -56,6 +56,9 @@ function ConfigureOverlay()
       tshControlValues["TargetSpeed"] = "CruiseControlSpeed"
    elseif Call("ControlExists", "VSoll", 0) == 1 then                -- German
       tshControlValues["TargetSpeed"] = "VSoll"
+   elseif Call("ControlExists", "SpeedTarget", 0) == 1 then          -- Class 365
+      tshControlValues["TargetSpeed"] = "SpeedTarget"
+      tshControlValuesFunctions["TargetSpeed"] = function(value) return value * 120 end
    elseif Call("ControlExists", "TargetSpeed", 0) == 1 then          -- Class 375/377
       tshControlValues["TargetSpeed"] = "TargetSpeed"
    end
@@ -762,7 +765,7 @@ function ConfigureOverlay()
       -- LocoBrake lever, internal should be hidden
       tshControlValues["LocoBrake"] = "VirtualEngineBrakeControl"
 
-   elseif DetectMK3DVT_ADV_AP() then
+   elseif DetectMK3DVT_ADV_AP(true) then
       -- Throttle is delayed significantly, show lever
       tshControlValues["Throttle"] = "VirtualThrottle"
 
