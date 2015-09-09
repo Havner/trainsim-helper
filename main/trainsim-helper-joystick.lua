@@ -212,6 +212,16 @@ function ConfigureJoystick()
       tshNotches["CombinedThrottle"] = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
       GenerateEqualNotches(21, "CruiseCtl")                 -- (0,100)
 
+      -- Throttle
+      --tshControl["CombinedThrottle"] = "ThrottleAndBrake"
+      --tshRange["CombinedThrottle"] = {0.5, 1}
+      --tshNotches["CombinedThrottle"] = {0.5, 0.6, 0.7, 0.81, 1}
+      -- TrainBrake
+      --tshControl["TrainBrake"] = "ThrottleAndBrake"
+      --tshRange["TrainBrake"] = {0, 0.5}
+      --tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.33, 0.5}
+      --InvInvert("TrainBrake")
+
    elseif DetectClass450() then
       tshNotches["CombinedThrottle"] = {-1, -0.81, -0.68, -0.56, -0.44, -0.31, -0.18, 0, 0.2, 0.4, 0.6, 0.8, 1}  -- Lower half based on sounds, not .bin
 
@@ -221,6 +231,16 @@ function ConfigureJoystick()
       tshRange["CombinedThrottle"] = {-1, 1}                -- Ignore emergency values on CombinedThrottle (-1.5, -1)
       GenerateEqualNotches(4, "Reverser")                   -- (0,3), 4 state Virtual
       InvInvert("Reverser")                                 -- Invert the invert, as this Virtual is inverted compared to the simple one
+
+      -- Throttle
+      --tshControl["CombinedThrottle"] = "ThrottleAndBrake"
+      --tshRange["CombinedThrottle"] = {0, 1}
+      --tshNotches["CombinedThrottle"] = {0, 0.25, 0.5, 0.75, 1}
+      -- TrainBrake
+      --tshControl["TrainBrake"] = "ThrottleAndBrake"
+      --tshRange["TrainBrake"] = {-1, 0}
+      --tshNotches["TrainBrake"] = {-1.5, -1, -0.938, -0.875, -0.812, -0.75, -0.688, -0.625, -0.562, -0.5, -0.438, -0.375, -0.312, -0.25, 0}
+      --InvInvert("TrainBrake")
 
    elseif DetectClass360() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
