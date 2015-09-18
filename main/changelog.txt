@@ -1,4 +1,10 @@
 0.9
+ - TS2016 (and '17, '18, '19) support.
+ - WARNING: Due to the fact that more and more locos are heavily
+   scripted the blue part of the overlay (controls) will now try
+   to exclusively show actual lever values, not the internal values
+   as original intended. The internals become more and more
+   convoluted and meaningless. No point in mantaining that.
  - WARNING: Default for "change direction" changed to "D"
  - WARNING: Configuration syntax changed a little, now tables
             are used everywhere.

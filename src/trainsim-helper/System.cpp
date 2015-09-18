@@ -9,6 +9,12 @@ HWND FindTSWindow()
 		ret = FindWindow(NULL, "Train Simulator 2015");
 	else if (!ret)
 		ret = FindWindow(NULL, "Train Simulator 2014");
+	else if (!ret)
+		ret = FindWindow(NULL, "Train Simulator 2017");
+	else if (!ret)
+		ret = FindWindow(NULL, "Train Simulator 2018");
+	else if (!ret)
+		ret = FindWindow(NULL, "Train Simulator 2019");
 
 	return ret;
 }
