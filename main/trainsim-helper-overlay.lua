@@ -45,7 +45,9 @@ function ConfigureOverlay()
 
    -- Loco's controls
 
-   if Call("ControlExists", "SpeedControlSpeed", 0) == 1 then        -- BR266
+   if Call("ControlExists", "AFB_Speed", 0) == 1 then                -- New PZB
+      tshControlValues["TargetSpeed"] = "AFB_Speed"
+   elseif Call("ControlExists", "SpeedControlSpeed", 0) == 1 then    -- BR266
       tshControlValues["TargetSpeed"] = "SpeedControlSpeed"
    elseif Call("ControlExists", "AFBTargetSpeed", 0) == 1 then       -- BR442 Talent 2
       tshControlValues["TargetSpeed"] = "AFBTargetSpeed"
@@ -149,23 +151,23 @@ function ConfigureOverlay()
       tshStaticValues["VacuumBrakeChamberUnits"] = "Inches"
    end
 
-   if Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then
-      tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressureBAR"
-      tshStaticValues["TrainBrakeCylinderUnits"] = "BAR"
-   elseif Call("ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 then
+   if Call("ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 then
       tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressureBAR"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "BAR"
+   elseif Call("ControlExists", "aTrainBrakeCylinderPressurePSI", 0) == 1 then
+      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressurePSI"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
+   elseif Call("ControlExists", "aTrainBrakeCylinderPressure", 0) == 1 then
+      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressure"
+      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
+   elseif Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 then
+      tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressureBAR"
       tshStaticValues["TrainBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "TrainBrakeCylinderPressurePSI", 0) == 1 then
       tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressurePSI"
       tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
-   elseif Call("ControlExists", "aTrainBrakeCylinderPressurePSI", 0) == 1 then
-      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressurePSI"
-      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "TrainBrakeCylinderPressure", 0) == 1 then
       tshControlValues["TrainBrakeCylinderPressure"] = "TrainBrakeCylinderPressure"
-      tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
-   elseif Call("ControlExists", "aTrainBrakeCylinderPressure", 0) == 1 then
-      tshControlValues["TrainBrakeCylinderPressure"] = "aTrainBrakeCylinderPressure"
       tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
    end
 
@@ -187,64 +189,64 @@ function ConfigureOverlay()
    elseif Call("ControlExists", "LocoBrakeNeedle", 0) == 1 then  -- Duchess of Sutherland community patch
       tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeNeedle"
       tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
-   elseif Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 then
-      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressureBAR"
-      tshStaticValues["LocoBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 then
       tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressureBAR"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "BAR"
+   elseif Call("ControlExists", "aLocoBrakeCylinderPressurePSI", 0) == 1 then
+      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressurePSI"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("ControlExists", "aLocoBrakeCylinderPressure", 0) == 1 then
+      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressure"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
+   elseif Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 then
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressureBAR"
       tshStaticValues["LocoBrakeCylinderUnits"] = "BAR"
    elseif Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 then
       tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressurePSI"
       tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
-   elseif Call("ControlExists", "aLocoBrakeCylinderPressurePSI", 0) == 1 then
-      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressurePSI"
-      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    elseif Call("ControlExists", "LocoBrakeCylinderPressure", 0) == 1 then
       tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressure"
-      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
-   elseif Call("ControlExists", "aLocoBrakeCylinderPressure", 0) == 1 then
-      tshControlValues["LocoBrakeCylinderPressure"] = "aLocoBrakeCylinderPressure"
       tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    end
 
    if Call("ControlExists", "AirBrakePipePressurePSIDisplayed", 0) == 1 then  -- US Advanced
       tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSIDisplayed"
       tshStaticValues["AirBrakePipeUnits"] = "PSI"
-   elseif Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 then
-      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressureBAR"
-      tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "aAirBrakePipePressureBAR", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "aAirBrakePipePressureBAR"
-      tshStaticValues["AirBrakePipeUnits"] = "BAR"
-   elseif Call("ControlExists", "BrakePipePressureBAR", 0) == 1 then
-      tshControlValues["AirBrakePipePressure"] = "BrakePipePressureBAR"
       tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "aBrakePipePressureBAR", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "aBrakePipePressureBAR"
       tshStaticValues["AirBrakePipeUnits"] = "BAR"
-   elseif Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 then
-      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSI"
-      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aAirBrakePipePressurePSI", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "aAirBrakePipePressurePSI"
-      tshStaticValues["AirBrakePipeUnits"] = "PSI"
-   elseif Call("ControlExists", "BrakePipePressurePSI", 0) == 1 then
-      tshControlValues["AirBrakePipePressure"] = "BrakePipePressurePSI"
       tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aBrakePipePressurePSI", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "aBrakePipePressurePSI"
       tshStaticValues["AirBrakePipeUnits"] = "PSI"
-   elseif Call("ControlExists", "AirBrakePipePressure", 0) == 1 then
-      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressure"
-      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aAirBrakePipePressure", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "aAirBrakePipePressure"
       tshStaticValues["AirBrakePipeUnits"] = "PSI"
-   elseif Call("ControlExists", "BrakePipePressure", 0) == 1 then
-      tshControlValues["AirBrakePipePressure"] = "BrakePipePressure"
-      tshStaticValues["AirBrakePipeUnits"] = "PSI"
    elseif Call("ControlExists", "aBrakePipePressure", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "aBrakePipePressure"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 then
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressureBAR"
+      tshStaticValues["AirBrakePipeUnits"] = "BAR"
+   elseif Call("ControlExists", "BrakePipePressureBAR", 0) == 1 then
+      tshControlValues["AirBrakePipePressure"] = "BrakePipePressureBAR"
+      tshStaticValues["AirBrakePipeUnits"] = "BAR"
+   elseif Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 then
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSI"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("ControlExists", "BrakePipePressurePSI", 0) == 1 then
+      tshControlValues["AirBrakePipePressure"] = "BrakePipePressurePSI"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("ControlExists", "AirBrakePipePressure", 0) == 1 then
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressure"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("ControlExists", "BrakePipePressure", 0) == 1 then
+      tshControlValues["AirBrakePipePressure"] = "BrakePipePressure"
       tshStaticValues["AirBrakePipeUnits"] = "PSI"
    end
 
@@ -257,23 +259,23 @@ function ConfigureOverlay()
    elseif Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1 then  -- US Advanced
       tshControlValues["MainReservoirPressure"] = "MainReservoirPressurePSIDisplayed"
       tshStaticValues["MainReservoirUnits"] = "PSI"
-   elseif Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 then
-      tshControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
-      tshStaticValues["MainReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "aMainReservoirPressureBAR", 0) == 1 then
       tshControlValues["MainReservoirPressure"] = "aMainReservoirPressureBAR"
+      tshStaticValues["MainReservoirUnits"] = "BAR"
+   elseif Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1 then
+      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressurePSI"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("ControlExists", "aMainReservoirPressure", 0) == 1 then
+      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressure"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 then
+      tshControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
       tshStaticValues["MainReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 then
       tshControlValues["MainReservoirPressure"] = "MainReservoirPressurePSI"
       tshStaticValues["MainReservoirUnits"] = "PSI"
-   elseif Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1 then
-      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressurePSI"
-      tshStaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "MainReservoirPressure", 0) == 1 then
       tshControlValues["MainReservoirPressure"] = "MainReservoirPressure"
-      tshStaticValues["MainReservoirUnits"] = "PSI"
-   elseif Call("ControlExists", "aMainReservoirPressure", 0) == 1 then
-      tshControlValues["MainReservoirPressure"] = "aMainReservoirPressure"
       tshStaticValues["MainReservoirUnits"] = "PSI"
    end
 
@@ -283,29 +285,24 @@ function ConfigureOverlay()
    elseif Call("ControlExists", "EqReservoirPressurePSIAdvanced", 0) == 1 then  -- US Advanced
       tshControlValues["EqReservoirPressure"] = "EqReservoirPressurePSIAdvanced"
       tshStaticValues["EqReservoirUnits"] = "PSI"
-   elseif Call("ControlExists", "EqReservoirPressureBAR", 0) == 1 then
-      tshControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
-      tshStaticValues["EqReservoirUnits"] = "BAR"
    elseif Call("ControlExists", "aEqReservoirPressureBAR", 0) == 1 then
       tshControlValues["EqReservoirPressure"] = "aEqReservoirPressureBAR"
       tshStaticValues["EqReservoirUnits"] = "BAR"
-   elseif Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 then
-      tshControlValues["EqReservoirPressure"] = "EqReservoirPressurePSI"
-      tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1 then
       tshControlValues["EqReservoirPressure"] = "aEqReservoirPressurePSI"
-      tshStaticValues["EqReservoirUnits"] = "PSI"
-   elseif Call("ControlExists", "EqReservoirPressure", 0) == 1 then
-      tshControlValues["EqReservoirPressure"] = "EqReservoirPressure"
       tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "aEqReservoirPressure", 0) == 1 then
       tshControlValues["EqReservoirPressure"] = "aEqReservoirPressure"
       tshStaticValues["EqReservoirUnits"] = "PSI"
-   end
-
-   if tshUSAdvancedBrakes then  -- FEF-3 and US Advanced
-      tshControlValues["TrainBrakeCylinderPressure"] = nil
-      tshStaticValues["TrainBrakeCylinderUnits"] = nil
+   elseif Call("ControlExists", "EqReservoirPressureBAR", 0) == 1 then
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
+      tshStaticValues["EqReservoirUnits"] = "BAR"
+   elseif Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 then
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressurePSI"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
+   elseif Call("ControlExists", "EqReservoirPressure", 0) == 1 then
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressure"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    end
 
    -- Steamers (driver)
@@ -618,6 +615,21 @@ function ConfigureOverlay()
       tshDoorsValues["DoorsRight"] = "DoorsOpenCloseRight"
    end
 
+   -- Do some automagic
+
+   if tshUSAdvancedBrakes then  -- FEF-3 and US Advanced
+      tshControlValues["TrainBrakeCylinderPressure"] = nil
+      tshStaticValues["TrainBrakeCylinderUnits"] = nil
+   end
+
+   if tshControlValues["CombinedThrottle"] then
+      range = GetControlRange(tshControlValues["CombinedThrottle"])
+      if not range then  -- Meaning it's (0,1)
+         -- Scale to (-1, 1)
+         tshControlValuesFunctions["CombinedThrottle"] = function(value) return value * 2 - 1 end
+      end
+   end
+
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- Sometimes I have to do this as a loco might have a control value that is
    -- detected but it should not be displayed. E.g. it's internal to the
@@ -739,8 +751,10 @@ function ConfigureOverlay()
    elseif DetectClass365(true) then
       -- Make the CruiseCtl {0, 120}
       tshControlValuesFunctions["TargetSpeed"] = function(value) return value * 120 end
-      -- Make CombinedThrottle {-1, 1}
-      tshControlValuesFunctions["CombinedThrottle"] = function(value) return value * 2 - 1 end
+
+   elseif DetectClass375Class377(true) then
+      -- Dynamic and Hand Brakes not controllable
+      tshControlValues["DynamicBrake"] = nil
 
    -- German
 
@@ -755,12 +769,57 @@ function ConfigureOverlay()
       -- Not functional, hide
       tshControlValues["TargetSpeed"] = nil
 
+   elseif DetectBR420_Influenzo(true) then
+      -- Throttle used as CombinedThrottle
+      tshControlValues["CombinedThrottle"] = tshControlValues["Throttle"]
+      tshControlValues["Throttle"] = nil
+      -- Dynamic brake should not be used directly
+      tshControlValues["DynamicBrake"] = nil
+
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that
       tshControlValues["TrainBrake"] = tshControlValues["LocoBrake"]
       tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
       tshControlValues["LocoBrakeCylinderPressure"] = nil
+      -- Dynamic brake not functional by itself
+      tshControlValues["DynamicBrake"] = nil
+
+   elseif DetectBR426(true) then
+      -- Dynamic brake should not be used directly
+      tshControlValues["DynamicBrake"] = nil
+
+   elseif DetectICE2(true) or DetectICE2Cab(true) or DetectICE3(true) or DetectICET(true) then
+      -- Dynamic brake should not be used directly
+      tshControlValues["DynamicBrake"] = nil
+
+   -- US
+
+   elseif DetectGP20_ADV_Reppo(true) then
+      -- Scale values to (0,1)
+      tshControlValuesFunctions["Throttle"] = function(value) return value / 8 end
+      -- DynamicBrake should not be used directly
+      tshControl["DynamicBrake"] = nil
+
+   elseif DetectSD45_DTM(true) then
+      -- DynamicBrake should not be used directly
+      tshControl["DynamicBrake"] = nil
+
+   elseif DetectM8(true) then
+      -- DynamicBrake kinda exists here but is useless
+      tshControlValues["DynamicBrake"] = nil
+
+   elseif
+      DetectF59PHI(true) or DetectF59PH(true) or DetectCabCar(true) or
+      DetectACS64(true) or
+      DetectSD70MAC_ATC(true) or
+      DetectSD70M(true) or
+      DetectC449W(true)
+   then
+      -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
+      tshControlValues["TrainBrake"] = FindTrainBrake()
+      -- DynamicBrake should not be used directly
+      tshControlValues["DynamicBrake"] = nil
 
    end
 

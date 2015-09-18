@@ -422,12 +422,12 @@ function ConfigureJoystick()
       GenerateEqualNotches(11, "TrainBrake")                -- (0,1)
       GenerateEqualNotches(29, "CruiseCtl")                 -- (0,0.466666)
 
-   elseif DetectBR101() then
+   elseif DetectBR101() or DetectBR101_New() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       GenerateEqualNotches(26, "CruiseCtl")                 -- (0,1)
 
-   elseif DetectBR294() then
+   elseif DetectBR294() or DetectBR294_New() then
       tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
 
    elseif DetectBR101_Old() then
@@ -453,6 +453,10 @@ function ConfigureJoystick()
    elseif DetectGE44_DTM() then
       GenerateEqualNotches(9, "Throttle")                   -- (0,1)
 
+   elseif DetectM8() then
+      tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
+      tshControl["DynamicBrake"] = nil                      -- DynamicBrake kinda exists here but is useless
+
    elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       tshNotches["CombinedThrottle"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}  -- Not a simple case as the implementation merges two controls with different notches
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
@@ -467,10 +471,6 @@ function ConfigureJoystick()
       --tshRange["DynamicBrake"] = {0, 0.5}
       --tshNotches["DynamicBrake"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5}
       --InvInvert("DynamicBrake")
-
-   elseif DetectM8() then
-      tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
-      tshControl["DynamicBrake"] = nil                      -- DynamicBrake kinda exists here but is useless
 
    elseif DetectAcela() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config

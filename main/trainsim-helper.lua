@@ -975,76 +975,70 @@ function DetectBR266(DisablePopup) -- Cologne - Koblenz addon
 end
 
 function DetectBR1460(DisablePopup) -- Cologne - Koblenz
-   if Call("ControlExists", "RawTargetDistance", 0) == 1 and
-      Call("ControlExists", "TargetDistanceDigits100", 0) == 1 and
+   if Call("ControlExists", "RawSpeedTarget", 0) == 1 and
       Call("ControlExists", "TractionBug", 0) == 1 and
-      Call("ControlExists", "VSoll", 0) == 1 and
-      Call("ControlExists", "TargetSpeed10", 0) == 1 and
-      Call("ControlExists", "Cmd_Free", 0) == 1 and
-      Call("ControlExists", "FrontPantographControl", 0) == 1 and
-      Call("ControlExists", "RearPantographControl", 0) == 1 and
-      Call("ControlExists", "LZBEnding", 0) == 1 and
-      Call("ControlExists", "PZB_500hz_Control", 0) == 1 and
+      Call("ControlExists", "AFB_Speed", 0) == 1 and
+      Call("ControlExists", "CMD_Free", 0) == 1 and
+      Call("ControlExists", "VirtualPantographControl", 0) == 1 and
+      Call("ControlExists", "PantographID", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "PZB_500Hz_Control", 0) == 1 and
       Call("ControlExists", "GlarePanel_L", 0) == 1 and
       Call("ControlExists", "LZB_Buzzer", 0) == 1 and
-      Call("ControlExists", "TrackLimit", 0) == 1 and
+      Call("ControlExists", "PZB_DistantPassed", 0) == 1 and
       Call("ControlExists", "DynamicBrakeFanSound", 0) == 1 and
       Call("ControlExists", "Destination", 0) == 1 and
       Call("ControlExists", "InstrumentLights", 0) == 1 and
       Call("ControlExists", "ForceBar", 0) == 0 and
       Call("ControlExists", "BrakeBar", 0) == 0
    then
-      if not DisablePopup then DisplayPopup("BR146.0 detected") end
+      if not DisablePopup then DisplayPopup("BR146.0 (New PZB) detected") end
       return 1
    end
 end
 
 function DetectBR1462(DisablePopup) -- Cologne - Koblenz
-   if Call("ControlExists", "RawTargetDistance", 0) == 1 and
-      Call("ControlExists", "TargetDistanceDigits100", 0) == 1 and
+   if Call("ControlExists", "RawSpeedTarget", 0) == 1 and
       Call("ControlExists", "TractionBug", 0) == 1 and
-      Call("ControlExists", "VSoll", 0) == 1 and
-      Call("ControlExists", "TargetSpeed10", 0) == 1 and
-      Call("ControlExists", "Cmd_Free", 0) == 1 and
-      Call("ControlExists", "FrontPantographControl", 0) == 1 and
-      Call("ControlExists", "RearPantographControl", 0) == 1 and
-      Call("ControlExists", "LZBEnding", 0) == 1 and
-      Call("ControlExists", "PZB_500hz_Control", 0) == 1 and
+      Call("ControlExists", "AFB_Speed", 0) == 1 and
+      Call("ControlExists", "CMD_Free", 0) == 1 and
+      Call("ControlExists", "VirtualPantographControl", 0) == 1 and
+      Call("ControlExists", "PantographID", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "PZB_500Hz_Control", 0) == 1 and
       Call("ControlExists", "GlarePanel_L", 0) == 1 and
       Call("ControlExists", "LZB_Buzzer", 0) == 1 and
-      Call("ControlExists", "TrackLimit", 0) == 1 and
+      Call("ControlExists", "PZB_DistantPassed", 0) == 1 and
       Call("ControlExists", "DynamicBrakeFanSound", 0) == 1 and
       Call("ControlExists", "Destination", 0) == 1 and
-      Call("ControlExists", "DeskLight", 0) == 1 and
+      Call("ControlExists", "InstrumentLights", 0) == 1 and
       Call("ControlExists", "ForceBar", 0) == 1 and
       Call("ControlExists", "BrakeBar", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("BR146.2 detected") end
+      if not DisablePopup then DisplayPopup("BR146.2 (New PZB) detected") end
       return 1
    end
 end
 
 function DetectDABpbzkfa(DisablePopup) -- Cologne - Koblenz
-   if Call("ControlExists", "RawTargetDistance", 0) == 1 and
-      Call("ControlExists", "TargetDistanceDigits100", 0) == 1 and
-      Call("ControlExists", "TractionBug", 0) == 0 and
-      Call("ControlExists", "VSoll", 0) == 1 and
-      Call("ControlExists", "TargetSpeed10", 0) == 1 and
-      Call("ControlExists", "Cmd_Free", 0) == 1 and
-      Call("ControlExists", "FrontPantographControl", 0) == 1 and
-      Call("ControlExists", "RearPantographControl", 0) == 1 and
-      Call("ControlExists", "LZBEnding", 0) == 1 and
-      Call("ControlExists", "PZB_500hz_Control", 0) == 1 and
+   if Call("ControlExists", "RawSpeedTarget", 0) == 1 and
+      Call("ControlExists", "TractionBug", 0) == 1 and
+      Call("ControlExists", "AFB_Speed", 0) == 1 and
+      Call("ControlExists", "CMD_Free", 0) == 1 and
+      Call("ControlExists", "VirtualPantographControl", 0) == 1 and
+      Call("ControlExists", "PantographID", 0) == 0 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "PZB_500Hz_Control", 0) == 1 and
       Call("ControlExists", "GlarePanel_L", 0) == 0 and
       Call("ControlExists", "LZB_Buzzer", 0) == 1 and
-      Call("ControlExists", "TrackLimit", 0) == 1 and
+      Call("ControlExists", "PZB_DistantPassed", 0) == 1 and
       Call("ControlExists", "DynamicBrakeFanSound", 0) == 0 and
-      Call("ControlExists", "Destination", 0) == 0 and
-      Call("ControlExists", "DeskLight", 0) == 1 and
-      Call("ControlExists", "Force", 0) == 1 and
-      Call("ControlExists", "Brake", 0) == 1
+      Call("ControlExists", "Destination", 0) == 1 and
+      Call("ControlExists", "InstrumentLights", 0) == 1 and
+      Call("ControlExists", "ForceBar", 0) == 1 and
+      Call("ControlExists", "ForceBar", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("DABpbzkfa detected") end
+      if not DisablePopup then DisplayPopup("DABpbzkfa (New PZB) detected") end
       return 1
    end
 end
@@ -1196,6 +1190,30 @@ function DetectBR189(DisablePopup) -- Academy
    end
 end
 
+function DetectBR101_New(DisablePopup) -- Cologne - Koblentz
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "AFB_Speed", 0) == 1 and
+      Call("GetControlMaximum", "AFB_Speed", 0) == 250 and
+      Call("ControlExists", "PZB", 0) == 1 and
+      Call("ControlExists", "PZB_1000Hz", 0) == 1 and
+      Call("ControlExists", "LZB", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "Sifa", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 0 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1 and
+      Call("ControlExists", "RolloL", 0) == 0 and
+      Call("ControlExists", "RolloR", 0) == 0 and
+      Call("ControlExists", "Amp", 0) == 0 and
+      Call("ControlExists", "HandBrake", 0) == 1 and
+      Call("ControlExists", "Tilt", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("BR101 (New PZB) detected") end
+      return 1
+   end
+end
+
 function DetectBR101(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
    if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("ControlExists", "VSoll", 0) == 1 and
@@ -1216,6 +1234,29 @@ function DetectBR101(DisablePopup) -- Munich - Augsburg, Hamburg - Hanover
       Call("ControlExists", "Tilt", 0) == 0
    then
       if not DisablePopup then DisplayPopup("BR101 detected") end
+      return 1
+   end
+end
+
+function DetectBR294_New(DisablePopup) -- Cologne - Koblentz
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 0 and
+      Call("ControlExists", "LZBEnable", 0) == 0 and
+      Call("ControlExists", "PZB", 0) == 1 and
+      Call("ControlExists", "PZB_1000Hz", 0) == 1 and
+      Call("ControlExists", "DummyAmmeter", 0) == 1 and
+      Call("ControlExists", "DummyVoltmeter", 0) == 1 and
+      Call("ControlExists", "DummyOilPressure", 0) == 1 and
+      Call("ControlExists", "DummyCoolantTemperature", 0) == 1 and
+      Call("ControlExists", "DummyOilTemperature", 0) == 1 and
+      Call("ControlExists", "DummyEnginePressure", 0) == 1 and
+      Call("ControlExists", "DummyTransmissionPressure", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 0 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR294 (New PZB) detected") end
       return 1
    end
 end
@@ -1634,7 +1675,6 @@ end
 
 function DetectSD70M(DisablePopup) -- Sherman Hill
    if Call("ControlExists", "RPM", 0) == 1 and
-      Call("ControlExists", "RPMDelta", 0) == 1 and
       Call("ControlExists", "CompressorState", 0) == 1 and
       Call("ControlExists", "Wheelslip", 0) == 1 and
       Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 and
@@ -1645,7 +1685,7 @@ function DetectSD70M(DisablePopup) -- Sherman Hill
       Call("ControlExists", "GlarePanels", 0) == 1 and
       Call("ControlExists", "UN_units", 0) == 1 and
       Call("ControlExists", "UN_thousands", 0) == 1 and
-      Call("ControlExists", "StepsLight", 0) == 1 and
+      Call("ControlExists", "StepLights", 0) == 1 and
       Call("GetControlMaximum", "RPM", 0) == 1050 and
       Call("GetControlMaximum", "EqReservoirPressurePSI", 0) == 160 and
       Call("GetControlMinimum", "Ammeter", 0) == -900 and
@@ -1714,7 +1754,8 @@ function DetectGenericUSDiesel(DisablePopup)
       Call("ControlExists", "Sander", 0) == 1 and
       (
          Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 or
-         Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1
+         Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1 or
+         Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1
       ) and
       (
          Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1 or
@@ -1728,7 +1769,11 @@ function DetectGenericUSDiesel(DisablePopup)
          Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 or
          Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1
       ) and
-      Call("ControlExists", "AWS", 0) == 0 and
+      (
+         Call("ControlExists", "AWS", 0) == 0 or
+         Call("ControlExists", "StepLights", 0) == 1 or
+         Call("ControlExists", "StepsLight", 0) == 1
+      ) and
       Call("ControlExists", "ThrottleAndBrake", 0) == 0
    then
       if not DisablePopup then DisplayPopup("US Diesel detected") end
