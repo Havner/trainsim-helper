@@ -24,7 +24,7 @@ function ConfigureOverlay()
       TextAlarm = "PZB"
       TextVigilAlarm = "Sifa"
    end
-   
+
    if DetectInterfaceUK() then
       --GradientUK = 1
    end
@@ -34,7 +34,7 @@ function ConfigureOverlay()
    -----------------------------------------------------------
 
    -- Find ControlValues to display
-   
+
    -- Units
 
    if Call("ControlExists", "SpeedometerMPH", 0) == 1 then
@@ -43,8 +43,7 @@ function ConfigureOverlay()
       tshStaticValues["Units"] = "K"
    end
 
-   -- Loco's controls, those are mostly low-level values so one can see what is happening
-   -- under the hood. They can be overriden with high-level ones per loco when needed.
+   -- Loco's controls
 
    if Call("ControlExists", "SpeedControlSpeed", 0) == 1 then        -- BR266
       tshControlValues["TargetSpeed"] = "SpeedControlSpeed"
@@ -58,7 +57,6 @@ function ConfigureOverlay()
       tshControlValues["TargetSpeed"] = "VSoll"
    elseif Call("ControlExists", "SpeedTarget", 0) == 1 then          -- Class 365
       tshControlValues["TargetSpeed"] = "SpeedTarget"
-      tshControlValuesFunctions["TargetSpeed"] = function(value) return value * 120 end
    elseif Call("ControlExists", "TargetSpeed", 0) == 1 then          -- Class 375/377
       tshControlValues["TargetSpeed"] = "TargetSpeed"
    end
@@ -70,28 +68,15 @@ function ConfigureOverlay()
    if Call("ControlExists", "GearLever",0) == 1 then
       tshControlValues["GearLever"] = "GearLever"
    end
-   
-   if Call("ControlExists", "Regulator", 0) == 1 then
-      tshControlValues["Throttle"] = "Regulator"
-   end
-   
-   if Call("ControlExists", "TrainBrakeControl", 0) == 1 then
-      tshControlValues["TrainBrake"] = "TrainBrakeControl"
-   end
 
-   if Call("ControlExists", "EngineBrakeControl", 0) == 1 then
-      tshControlValues["LocoBrake"] = "EngineBrakeControl"
+   tshControlValues["CombinedThrottle"] =  FindCombinedThrottle()
+   if not tshControlValues["CombinedThrottle"] then
+      tshControlValues["Throttle"] =       FindThrottle()
+      tshControlValues["TrainBrake"] =     FindTrainBrake()
    end
-
-   if Call("ControlExists", "DynamicBrake", 0) == 1 then
-      tshControlValues["DynamicBrake"] = "DynamicBrake"
-   end
-
-   if Call("ControlExists", "HandBrake", 0) == 1 then
-      tshControlValues["HandBrake"] = "HandBrake"
-   elseif Call("ControlExists", "Handbrake", 0) == 1 then
-      tshControlValues["HandBrake"] = "Handbrake"
-   end
+   tshControlValues["LocoBrake"] =         FindLocoBrake()
+   tshControlValues["DynamicBrake"] =      FindDynamicBrake()
+   tshControlValues["HandBrake"] =         FindHandBrake()
 
    -- Loco's indicators
 
@@ -187,6 +172,15 @@ function ConfigureOverlay()
    if Call("ControlExists", "MyLocoBrakeCylinderPressurePSI", 0) == 1 then  -- FEF-3
       tshControlValues["LocoBrakeCylinderPressure"] = "MyLocoBrakeCylinderPressurePSI"
       tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshUSAdvancedBrakes = true
+   elseif Call("ControlExists", "LocoBrakeCylinderPressurePSIDisplayed", 0) == 1 then  -- US Advanced
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressurePSIDisplayed"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshUSAdvancedBrakes = true
+   elseif Call("ControlExists", "LocoBrakeCylinderPressurePSIAdvanced", 0) == 1 then  -- US Advanced
+      tshControlValues["LocoBrakeCylinderPressure"] = "LocoBrakeCylinderPressurePSIAdvanced"
+      tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
+      tshUSAdvancedBrakes = true
    elseif Call("ControlExists", "BrakeCylinderDial1", 0) == 1 then  -- Class 50
       tshControlValues["TrainBrakeCylinderPressure"] = "BrakeCylinderDial1"
       tshStaticValues["TrainBrakeCylinderUnits"] = "PSI"
@@ -213,7 +207,10 @@ function ConfigureOverlay()
       tshStaticValues["LocoBrakeCylinderUnits"] = "PSI"
    end
 
-   if Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 then
+   if Call("ControlExists", "AirBrakePipePressurePSIDisplayed", 0) == 1 then  -- US Advanced
+      tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressurePSIDisplayed"
+      tshStaticValues["AirBrakePipeUnits"] = "PSI"
+   elseif Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 then
       tshControlValues["AirBrakePipePressure"] = "AirBrakePipePressureBAR"
       tshStaticValues["AirBrakePipeUnits"] = "BAR"
    elseif Call("ControlExists", "aAirBrakePipePressureBAR", 0) == 1 then
@@ -257,6 +254,9 @@ function ConfigureOverlay()
    elseif Call("ControlExists", "MRPSI", 0) == 1 then  -- FEF-3
       tshControlValues["MainReservoirPressure"] = "MRPSI"
       tshStaticValues["MainReservoirUnits"] = "PSI"
+   elseif Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1 then  -- US Advanced
+      tshControlValues["MainReservoirPressure"] = "MainReservoirPressurePSIDisplayed"
+      tshStaticValues["MainReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 then
       tshControlValues["MainReservoirPressure"] = "MainReservoirPressureBAR"
       tshStaticValues["MainReservoirUnits"] = "BAR"
@@ -280,6 +280,9 @@ function ConfigureOverlay()
    if Call("ControlExists", "MyEqReservoirPressurePSI", 0) == 1 then  -- FEF-3
       tshControlValues["EqReservoirPressure"] = "MyEqReservoirPressurePSI"
       tshStaticValues["EqReservoirUnits"] = "PSI"
+   elseif Call("ControlExists", "EqReservoirPressurePSIAdvanced", 0) == 1 then  -- US Advanced
+      tshControlValues["EqReservoirPressure"] = "EqReservoirPressurePSIAdvanced"
+      tshStaticValues["EqReservoirUnits"] = "PSI"
    elseif Call("ControlExists", "EqReservoirPressureBAR", 0) == 1 then
       tshControlValues["EqReservoirPressure"] = "EqReservoirPressureBAR"
       tshStaticValues["EqReservoirUnits"] = "BAR"
@@ -300,8 +303,13 @@ function ConfigureOverlay()
       tshStaticValues["EqReservoirUnits"] = "PSI"
    end
 
+   if tshUSAdvancedBrakes then  -- FEF-3 and US Advanced
+      tshControlValues["TrainBrakeCylinderPressure"] = nil
+      tshStaticValues["TrainBrakeCylinderUnits"] = nil
+   end
+
    -- Steamers (driver)
-   
+
    if Call("ControlExists", "BlowOffCockShutOffR", 0) == 1 then  -- FEF-3
       tshControlValues["BlowOffCockShutOffRight"] = "BlowOffCockShutOffR"
    end
@@ -309,7 +317,7 @@ function ConfigureOverlay()
    if Call("ControlExists", "Dynamo", 0) == 1 then  -- FEF-3
       tshControlValues["Dynamo"] = "Dynamo"
    end
-   
+
    if Call("ControlExists", "CompressorThrottle", 0) == 1 then  -- FEF-3
       tshControlValues["AirPump"] = "CompressorThrottle"
    elseif Call("ControlExists", "SteamShutOffL", 0) == 1 then  -- Q1
@@ -365,7 +373,7 @@ function ConfigureOverlay()
    elseif Call("ControlExists", "LargeEjectorOnOff", 0) == 1 then
       tshControlValues["LargeEjector"] = "LargeEjectorOnOff"
    end
-   
+
    if Call("ControlExists", "SteamBrakeHook", 0) == 1 then  -- 3F
       tshControlValues["BrakeHook"] = "SteamBrakeHook"
    end
@@ -425,7 +433,7 @@ function ConfigureOverlay()
    if Call("ControlExists", "ControlValve", 0) == 1 then  -- FEF-3
       tshControlValues["ControlValve"] = "ControlValve"
    end
-   
+
    if Call("ControlExists", "Tender_WaterLeverR", 0) == 1 then  -- Q1
       tshControlValues["ExhaustInjectorShutOff"] = "Tender_WaterLeverR"
    end
@@ -446,7 +454,7 @@ function ConfigureOverlay()
 
    if Call("ControlExists", "TankTemperature", 0) == 1 then  -- FEF-3
       tshControlValues["TankTemperature"] = "TankTemperature"
-   end   
+   end
 
    if Call("ControlExists", "FireboxDoor", 0) == 1 then
       tshControlValues["FireboxDoor"] = "FireboxDoor"
@@ -553,7 +561,7 @@ function ConfigureOverlay()
    elseif Call("ControlExists", "SafetyValve1", 0) == 1 then
       tshControlValues["SafetyValve1"] = "SafetyValve1"
    end
-   
+
    if Call("ControlExists", "SafetyValveFireman", 0) == 1 then  -- FEF-3
       tshControlValues["SafetyValve2"] = "SafetyValveFireman"
    elseif Call("ControlExists", "SafetyValve2", 0) == 1 then
@@ -565,7 +573,7 @@ function ConfigureOverlay()
    end
 
    -- Warning values
-   
+
    if Call("ControlExists", "AlerterCountdown", 0) == 1 then
       tshControlValues["Alarm"] = "AlerterCountdown"
    elseif Call("ControlExists", "AWSWarnCount", 0) == 1 then
@@ -584,7 +592,7 @@ function ConfigureOverlay()
       tshControlValues["VigilAlarm"] = "DSD"
    end
 
-   if Call("ControlExists", "BrakeDemandLamp", 0) == 1 then  -- CLass 37/4
+   if Call("ControlExists", "BrakeDemandLamp", 0) == 1 then  -- Class 37/4
       tshControlValues["EmergencyBrake"] = "BrakeDemandLamp"
    elseif Call("ControlExists", "EmergencyAlarm", 0) == 1 then
       tshControlValues["EmergencyBrake"] = "EmergencyAlarm"
@@ -617,18 +625,10 @@ function ConfigureOverlay()
 
    -- Steamers
 
-   -- Some steamers use regulator for steam chest pressure, display lever
-   if DetectGenericSteam(true) then
-      if Call("ControlExists", "VirtualThrottle", 0) == 1 then
-         tshControlValues["Throttle"] = "VirtualThrottle"
-      end
-   end
-
    -- Things common for the ADV and HUD versions of FEF-3
    if DetectFEF3_ADV_Smokebox(true) or DetectFEF3_HUD_Smokebox(true) then
       -- Hide the internal values
       tshControlValues["SteamChestPressure"] = nil
-      tshControlValues["TrainBrakeCylinderPressure"] = nil
       tshControlValues["FireboxDoor"] = nil
       tshControlValues["Stoking"] = nil
       tshControlValues["ExhaustInjectorSteam"] = nil
@@ -657,13 +657,9 @@ function ConfigureOverlay()
          end
    end
 
-   if DetectFEF3_ADV_Smokebox(true) then
-      -- Show levers values instead of internal, they make little sense here
-      -- This is only for the ADV version, not the HUD.
-      tshControlValues["Reverser"] = "MyReverser"
-      tshControlValues["Throttle"] = "RegulatorLever"
-      tshControlValues["TrainBrake"] = "TrainBrakeHandle"
-      tshControlValues["LocoBrake"] = "MyEngineBrakeControl"
+   if DetectFEF3_HUD_Smokebox(true) then
+      tshControlValues["Reverser"] = "Reverser"              -- Use regular controls instead of My* versions,
+      tshControlValues["LocoBrake"] = "EngineBrakeControl"   -- they exist, but don't work in the HUD version
 
    elseif Detect2FDockTank_ADV_MeshTools(true) then
       -- Lever for Train/Steam brake
@@ -734,8 +730,6 @@ function ConfigureOverlay()
    elseif DetectBulleidQ1_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
       tshControlValues["Damper"] = nil
-      -- Not functional, hide
-      tshControlValues["WaterScoopRaiseLower"] = nil
 
       -- Uncomment all if you want to display simple water controls
       --tshControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
@@ -752,10 +746,6 @@ function ConfigureOverlay()
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
       tshControlValues["SmallEjector"] = nil
-
-   elseif DetectBlack5_KeithRoss(true) then
-      -- Not functional, hide
-      tshControlValues["WaterScoopRaiseLower"] = nil
 
    -- UK
 
@@ -776,6 +766,12 @@ function ConfigureOverlay()
    elseif DetectClass50_MeshTools(true) then
       -- Throttle is delayed significantly, show lever
       tshControlValues["Throttle"] = "VirtualThrottle"
+
+   elseif DetectClass365(true) then
+      -- Make the CruiseCtl {0, 120}
+      tshControlValuesFunctions["TargetSpeed"] = function(value) return value * 120 end
+      -- Make CombinedThrottle {-1, 1}
+      tshControlValuesFunctions["CombinedThrottle"] = function(value) return value * 2 - 1 end
 
    -- German
 
@@ -888,7 +884,7 @@ function GetOverlayData()
    if TextStartup then data = data.."TextStartup: "..TextStartup.."\n" end
    if TextDoors then data = data.."TextDoors: "..TextDoors.."\n" end
    if GradientUK then data = data.."GradientUK: "..GradientUK.."\n" end
-   
+
    -- SimulationTime is used to show script is running as clock updates in real time
    local SimulationTime = Call("GetSimulationTime", 0)
    if SimulationTime then data = data.."SimulationTime: "..SimulationTime.."\n" end
