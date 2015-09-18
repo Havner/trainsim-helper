@@ -662,8 +662,6 @@ function ConfigureOverlay()
       tshControlValues["LocoBrake"] = "EngineBrakeControl"   -- they exist, but don't work in the HUD version
 
    elseif Detect2FDockTank_ADV_MeshTools(true) then
-      -- Lever for Train/Steam brake
-      tshControlValues["TrainBrake"] = "VirtualBrake"
       -- Internal for steam brake should be hidden
       tshControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
@@ -673,15 +671,13 @@ function ConfigureOverlay()
       tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif DetectJ50_ADV_MeshTools(true) then
-      -- Vacuum Brake lever, internal should be hidden
-      tshControlValues["TrainBrake"] = "VirtualBrake"
+      -- Internal for vacuum brake should be hidden
       tshControlValues["LocoBrake"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
       tshControlValues["Damper"] = nil
 
    elseif Detect3FJintyTrain_ADV_MeshTools(true) then
-      -- Correct levers for Train and Steam (push/pull) brakes
-      tshControlValues["TrainBrake"] = "VirtualBrake"
+      -- Correct levers for steam (push/pull) brake
       tshControlValues["LocoBrake"] = "SteamBrakeSpindle"
       -- Make the Sander {-1, 1}
       tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
@@ -690,9 +686,7 @@ function ConfigureOverlay()
       tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif Detect3FJintySteam_ADV_MeshTools(true) then
-      -- Steam brake lever
-      tshControlValues["TrainBrake"] = "VirtualBrake"
-      -- Internal should be hidden
+      -- Internal for steam brake should be hidden
       tshControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
       tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
@@ -704,24 +698,17 @@ function ConfigureOverlay()
       tshStaticValues["VacuumBrakePipeUnits"] = nil
 
    elseif DetectJ94Train_ADV_MeshTools(true) then
-      -- Loco/Steam Brake lever, internal should be hidden
-      tshControlValues["LocoBrake"] = "VirtualLocoBrake"
       -- It has left and right dampers, if you want to see effective damper comment out
       tshControlValues["Damper"] = nil
 
    elseif DetectJ94Steam_ADV_MeshTools(true) then
       -- There is no TrainBrake here, use steam brake as one
-      tshControlValues["TrainBrake"] = "VirtualLocoBrake"
-      -- Internal should be hidden
+      tshControlValues["TrainBrake"] = tshControlValues["LocoBrake"]
       tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
       tshControlValues["SmallEjector"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
       tshControlValues["Damper"] = nil
-
-   elseif DetectSmallPrairies_VictoryWorks(true) then
-      -- Correct lever for TrainBrake
-      tshControlValues["TrainBrake"] = "VirtualBrake"
 
    elseif Detect14xx_VictoryWorks(true) then
       -- It has front and rear dampers, if you want to see effective damper comment out
@@ -749,24 +736,6 @@ function ConfigureOverlay()
 
    -- UK
 
-   elseif DetectClass90_ADV_AP(true) then
-      -- Throttle is delayed significantly, show lever
-      tshControlValues["Throttle"] = "VirtualThrottle"
-      -- LocoBrake lever, internal should be hidden
-      tshControlValues["LocoBrake"] = "VirtualEngineBrakeControl"
-
-   elseif DetectMK3DVT_ADV_AP(true) then
-      -- Throttle is delayed significantly, show lever
-      tshControlValues["Throttle"] = "VirtualThrottle"
-
-   elseif DetectClass37_Thomson(true) then
-      -- Throttle is delayed significantly, show lever
-      tshControlValues["Throttle"] = "VirtualThrottle"
-
-   elseif DetectClass50_MeshTools(true) then
-      -- Throttle is delayed significantly, show lever
-      tshControlValues["Throttle"] = "VirtualThrottle"
-
    elseif DetectClass365(true) then
       -- Make the CruiseCtl {0, 120}
       tshControlValuesFunctions["TargetSpeed"] = function(value) return value * 120 end
@@ -776,23 +745,15 @@ function ConfigureOverlay()
    -- German
 
    elseif DetectBR103TEE_vRailroads_Expert(true) then
-	   -- Throttle is delayed significantly, show lever
-	   tshControlValues["Throttle"] = "VirtualThrottle"
-	   -- Scale values to (0,1)
-	   tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
+      -- Scale values to (0,1)
+      tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
 
    elseif DetectBR103TEE_vRailroads(true) then
-	   -- Throttle is delayed significantly, show lever
-	   tshControlValues["Throttle"] = "VirtualThrottle"
-	   -- Scale values to (0,1)
-	   tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
-	   tshControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
-	   -- Not functional, hide
-	   tshControlValues["TargetSpeed"] = nil
-
-   elseif DetectBR111_vRailroads(true) or DetectDBbzf_vRailroads(true) then
-	   -- Throttle is delayed significantly, show lever
-	   tshControlValues["Throttle"] = "VirtualThrottle"
+      -- Scale values to (0,1)
+      tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
+      tshControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
+      -- Not functional, hide
+      tshControlValues["TargetSpeed"] = nil
 
    elseif DetectBR442Talent2(true) then
       -- LocoBrake is actually a TrainBrake, reflect that
@@ -800,10 +761,6 @@ function ConfigureOverlay()
       tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
       tshControlValues["LocoBrakeCylinderPressure"] = nil
-
-   elseif DetectBR266(true) then
-      -- TrainBrake lever, internal should be hidden
-      tshControlValues["TrainBrake"] = "VirtualBrake"
 
    end
 
