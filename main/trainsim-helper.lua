@@ -1385,7 +1385,10 @@ function DetectCabCar(DisablePopup) -- Pacific Surfliner and its addons
       Call("ControlExists", "Flash", 0) == 1 and
       Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
       Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 and
-      Call("ControlExists", "EqReservoirPressurePSI", 0) == 1
+      (
+         Call("ControlExists", "EqReservoirPressurePSI", 0) == 1 or
+         Call("ControlExists", "AirBrakePipePressurePSI", 0) == 1
+      )
    then
       if not DisablePopup then DisplayPopup("CabCar detected") end
       return 1
