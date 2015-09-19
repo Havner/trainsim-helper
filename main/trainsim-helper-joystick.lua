@@ -132,11 +132,13 @@ function ConfigureJoystick()
    elseif Detect2FDockTank_ADV_MeshTools() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
+      tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
 
    elseif DetectJ50_ADV_MeshTools() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["TrainBrake"] = {0.04, 0.15, 0.25}
+      tshControl["LocoBrake"] = nil                         -- Vacuum brake internal should not be used directly
 
    elseif Detect3FJintyTrain_ADV_MeshTools() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
@@ -155,9 +157,8 @@ function ConfigureJoystick()
    elseif DetectJ94Steam_ADV_MeshTools() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-      tshLine["LocoBrake"] = tshLine["TrainBrake"]          -- There is no TrainBrake here, use the steam brake as one
-      tshControl["TrainBrake"] = nil
-      tshNotches["LocoBrake"] = {0.30, 0.40, 0.50}          -- Add notches as it's otherwise very hard to control the steam brake (the only one)
+      ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
+      tshNotches["TrainBrake"] = {0.30, 0.40, 0.50}         -- Add notches as it's otherwise very hard to control the steam brake (the only one)
 
    elseif DetectSmallPrairies_VictoryWorks() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
@@ -211,13 +212,13 @@ function ConfigureJoystick()
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshNotches["CombinedThrottle"] = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
       GenerateEqualNotches(21, "CruiseCtl")                 -- (0,100)
+      tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
 
       -- Throttle
-      --tshControl["CombinedThrottle"] = "ThrottleAndBrake"
       --tshRange["CombinedThrottle"] = {0.5, 1}
       --tshNotches["CombinedThrottle"] = {0.5, 0.6, 0.7, 0.81, 1}
       -- TrainBrake
-      --tshControl["TrainBrake"] = "ThrottleAndBrake"
+      --tshControl["TrainBrake"] = tshControl["CombinedThrottle"]
       --tshRange["TrainBrake"] = {0, 0.5}
       --tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.33, 0.5}
       --InvInvert("TrainBrake")
@@ -233,11 +234,10 @@ function ConfigureJoystick()
       InvInvert("Reverser")                                 -- Invert the invert, as this Virtual is inverted compared to the simple one
 
       -- Throttle
-      --tshControl["CombinedThrottle"] = "ThrottleAndBrake"
       --tshRange["CombinedThrottle"] = {0, 1}
       --tshNotches["CombinedThrottle"] = {0, 0.25, 0.5, 0.75, 1}
       -- TrainBrake
-      --tshControl["TrainBrake"] = "ThrottleAndBrake"
+      --tshControl["TrainBrake"] = tshControl["CombinedThrottle"]
       --tshRange["TrainBrake"] = {-1, 0}
       --tshNotches["TrainBrake"] = {-1.5, -1, -0.938, -0.875, -0.812, -0.75, -0.688, -0.625, -0.562, -0.5, -0.438, -0.375, -0.312, -0.25, 0}
       --InvInvert("TrainBrake")
@@ -250,11 +250,10 @@ function ConfigureJoystick()
       InvInvert("Reverser")                                 -- Invert the invert, as this Virtual is inverted compared to the simple one
 
       -- Throttle
-      --tshControl["CombinedThrottle"] = "ThrottleAndBrake"
       --tshRange["CombinedThrottle"] = {0, 1}
       --tshNotches["CombinedThrottle"] = {0, 0.2, 0.4, 0.6, 0.8, 1}
       -- TrainBrake
-      --tshControl["TrainBrake"] = "ThrottleAndBrake"
+      --tshControl["TrainBrake"] = tshControl["CombinedThrottle"]
       --tshRange["TrainBrake"] = {-1, 0}
       --tshNotches["TrainBrake"] = {-1.5, -1, -0.95, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, 0}
       --InvInvert("TrainBrake")
@@ -371,9 +370,19 @@ function ConfigureJoystick()
       tshStep["TrainBrake"] = 0.03                          -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
 
    elseif DetectBR420_Influenzo() then
-      GenerateEqualNotches(20, "Throttle")                  -- (-10, 9), Throttle used as CombinedThrottle
+      ReplaceControls("CombinedThrottle", "Throttle")       -- CombinedThrottle is controlled with Throttle here, reflect that
+      GenerateEqualNotches(20, "CombinedThrottle")          -- (-9, 10)
       tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
       tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
+
+      -- Throttle
+      --tshRange["CombinedThrottle"] = {0, 10}
+      --GenerateEqualNotches(11, "CombinedThrottle")
+      -- DynamicBrake
+      --tshControl["DynamicBrake"] = tshControl["CombinedThrottle"]
+      --tshRange["DynamicBrake"] = {-9, 0}
+      --GenerateEqualNotches(10, "DynamicBrake")
+      --InvInvert("DynamicBrake")
 
    elseif DetectBR442Talent2() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -381,13 +390,13 @@ function ConfigureJoystick()
       InvInvert("CruiseCtl")                                -- Inverted compared to other CruiseCtls
       tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
       tshRange["CombinedThrottle"] = {-0.9, 1}              -- Ignore emergency values (-1, -0.9)
-      tshLine["LocoBrake"] = tshLine["TrainBrake"]          -- TrainBrake is controlled with LocoBrake here, reflect that
-      tshControl["TrainBrake"] = nil
-      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- TrainBrake is self lapped here, add some notches to help
-      tshStep["LocoBrake"] = 0.03                           -- Don't apply the lever fully on lever deflection
+      ReplaceControls("TrainBrake", "LocoBrake")            -- TrainBrake is controlled with LocoBrake here, reflect that
+      tshNotches["TrainBrake"] = {-1, 0, 1}                 -- TrainBrake is self lapped here, add some notches to help
+      tshStep["TrainBrake"] = 0.03                          -- Don't apply the lever fully on lever deflection
+      tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
 
    elseif DetectBR232() then
-      GenerateEqualNotches(16, "Throttle")                   -- (0,15)
+      GenerateEqualNotches(16, "Throttle")                  -- (0,15)
       tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
       tshStep["TrainBrake"] = 0.03                          -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
 
@@ -463,11 +472,10 @@ function ConfigureJoystick()
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
 
       -- Throttle
-      --tshControl["CombinedThrottle"] = "ThrottleAndBrake"
       --tshRange["CombinedThrottle"] = {0.5, 1}
       --tshNotches["CombinedThrottle"] = {0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
       -- DynamicBrake
-      --tshControl["DynamicBrake"] = "ThrottleAndBrake"
+      --tshControl["DynamicBrake"] = tshControl["CombinedThrottle"]
       --tshRange["DynamicBrake"] = {0, 0.5}
       --tshNotches["DynamicBrake"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5}
       --InvInvert("DynamicBrake")
@@ -523,7 +531,6 @@ function ConfigureJoystick()
    -- Generic detections, don't put any specific locos below, they might get caught by those
 
    elseif DetectGenericSteam() then
-      
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
 
    elseif DetectGenericUSDiesel() then
@@ -854,6 +861,22 @@ function ReplaceLines(newKey, prevKey)
    
    tshLine[newKey] = tshLine[prevKey]
    tshLine[prevKey] = nil
+end
+
+function ReplaceControls(newKey, prevKey)
+   tshControl[newKey]       = tshControl[prevKey]
+   tshRange[newKey]         = tshRange[prevKey]
+   tshInvert[newKey]        = tshInvert[prevKey]
+   tshCenterDetent[newKey]  = tshCenterDetent[prevKey]
+   tshNotches[newKey]       = tshNotches[prevKey]
+   tshStep[newKey]          = tshStep[prevKey]
+   
+   tshControl[prevKey]      = nil
+   tshRange[prevKey]        = nil
+   tshInvert[prevKey]       = nil
+   tshCenterDetent[prevKey] = nil
+   tshNotches[prevKey]      = nil
+   tshStep[prevKey]         = nil
 end
 
 function GenerateEqualNotches(count, key)

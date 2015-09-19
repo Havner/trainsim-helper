@@ -1832,13 +1832,14 @@ function UpdateHelper(time)
       UpdateHelperConfigured = 1
    end
 
-   if not OverlayConfigured then
-      ConfigureOverlay()
-   end
-   GetOverlayData()
-
+   -- Joystick has to be configured first
    if not JoystickConfigured then
       ConfigureJoystick()
    end
+   if not OverlayConfigured then
+      ConfigureOverlay()
+   end
+
    SetJoystickData()
+   GetOverlayData()
 end

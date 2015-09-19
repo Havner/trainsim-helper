@@ -71,14 +71,13 @@ function ConfigureOverlay()
       tshControlValues["GearLever"] = "GearLever"
    end
 
-   tshControlValues["CombinedThrottle"] =  FindCombinedThrottle()
-   if not tshControlValues["CombinedThrottle"] then
-      tshControlValues["Throttle"] =       FindThrottle()
-      tshControlValues["TrainBrake"] =     FindTrainBrake()
-   end
-   tshControlValues["LocoBrake"] =         FindLocoBrake()
-   tshControlValues["DynamicBrake"] =      FindDynamicBrake()
-   tshControlValues["HandBrake"] =         FindHandBrake()
+   -- Shamelessly use Joystick configuration, it should be adapted per loco already
+   tshControlValues["CombinedThrottle"] = tshControl["CombinedThrottle"]
+   tshControlValues["Throttle"]         = tshControl["Throttle"]
+   tshControlValues["TrainBrake"]       = tshControl["TrainBrake"]
+   tshControlValues["LocoBrake"]        = tshControl["LocoBrake"]
+   tshControlValues["DynamicBrake"]     = tshControl["DynamicBrake"]
+   tshControlValues["HandBrake"]        = tshControl["HandBrake"]
 
    -- Loco's indicators
 
@@ -667,15 +666,8 @@ function ConfigureOverlay()
             end
             return value
          end
-   end
-
-   if DetectFEF3_HUD_Smokebox(true) then
-      tshControlValues["Reverser"] = "Reverser"              -- Use regular controls instead of My* versions,
-      tshControlValues["LocoBrake"] = "EngineBrakeControl"   -- they exist, but don't work in the HUD version
 
    elseif Detect2FDockTank_ADV_MeshTools(true) then
-      -- Internal for steam brake should be hidden
-      tshControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
       tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
@@ -683,8 +675,6 @@ function ConfigureOverlay()
       tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif DetectJ50_ADV_MeshTools(true) then
-      -- Internal for vacuum brake should be hidden
-      tshControlValues["LocoBrake"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
       tshControlValues["Damper"] = nil
 
@@ -698,8 +688,6 @@ function ConfigureOverlay()
       tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
    elseif Detect3FJintySteam_ADV_MeshTools(true) then
-      -- Internal for steam brake should be hidden
-      tshControlValues["LocoBrake"] = nil
       -- Make the Sander {-1, 1}
       tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
       -- Make the Sanboxes {0, 1}
@@ -714,9 +702,6 @@ function ConfigureOverlay()
       tshControlValues["Damper"] = nil
 
    elseif DetectJ94Steam_ADV_MeshTools(true) then
-      -- There is no TrainBrake here, use steam brake as one
-      tshControlValues["TrainBrake"] = tshControlValues["LocoBrake"]
-      tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
       tshControlValues["SmallEjector"] = nil
       -- It has left and right dampers, if you want to see effective damper comment out
@@ -752,10 +737,6 @@ function ConfigureOverlay()
       -- Make the CruiseCtl {0, 120}
       tshControlValuesFunctions["TargetSpeed"] = function(value) return value * 120 end
 
-   elseif DetectClass375Class377(true) then
-      -- Dynamic and Hand Brakes not controllable
-      tshControlValues["DynamicBrake"] = nil
-
    -- German
 
    elseif DetectBR103TEE_vRailroads_Expert(true) then
@@ -770,56 +751,18 @@ function ConfigureOverlay()
       tshControlValues["TargetSpeed"] = nil
 
    elseif DetectBR420_Influenzo(true) then
-      -- Throttle used as CombinedThrottle
-      tshControlValues["CombinedThrottle"] = tshControlValues["Throttle"]
-      tshControlValues["Throttle"] = nil
-      -- Dynamic brake should not be used directly
-      tshControlValues["DynamicBrake"] = nil
+      -- Scale values to (-0.9,1)
+      tshControlValuesFunctions["CombinedThrottle"] = function(value) return value / 10 end
 
    elseif DetectBR442Talent2(true) then
-      -- LocoBrake is actually a TrainBrake, reflect that
-      tshControlValues["TrainBrake"] = tshControlValues["LocoBrake"]
-      tshControlValues["LocoBrake"] = nil
       -- Not functional, hide
       tshControlValues["LocoBrakeCylinderPressure"] = nil
-      -- Dynamic brake not functional by itself
-      tshControlValues["DynamicBrake"] = nil
-
-   elseif DetectBR426(true) then
-      -- Dynamic brake should not be used directly
-      tshControlValues["DynamicBrake"] = nil
-
-   elseif DetectICE2(true) or DetectICE2Cab(true) or DetectICE3(true) or DetectICET(true) then
-      -- Dynamic brake should not be used directly
-      tshControlValues["DynamicBrake"] = nil
 
    -- US
 
    elseif DetectGP20_ADV_Reppo(true) then
       -- Scale values to (0,1)
       tshControlValuesFunctions["Throttle"] = function(value) return value / 8 end
-      -- DynamicBrake should not be used directly
-      tshControl["DynamicBrake"] = nil
-
-   elseif DetectSD45_DTM(true) then
-      -- DynamicBrake should not be used directly
-      tshControl["DynamicBrake"] = nil
-
-   elseif DetectM8(true) then
-      -- DynamicBrake kinda exists here but is useless
-      tshControlValues["DynamicBrake"] = nil
-
-   elseif
-      DetectF59PHI(true) or DetectF59PH(true) or DetectCabCar(true) or
-      DetectACS64(true) or
-      DetectSD70MAC_ATC(true) or
-      DetectSD70M(true) or
-      DetectC449W(true)
-   then
-      -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
-      tshControlValues["TrainBrake"] = FindTrainBrake()
-      -- DynamicBrake should not be used directly
-      tshControlValues["DynamicBrake"] = nil
 
    end
 
