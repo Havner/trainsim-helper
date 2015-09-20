@@ -397,7 +397,6 @@ function ConfigureJoystick()
       --InvInvert("DynamicBrake")
 
    elseif DetectBR155() then
-      ReplaceLines("Gear", "DynamicBrake")                  -- Havner's config
       GenerateEqualNotches(3, "Reverser")                   -- (-1,1), Virtual
       GenerateEqualNotches(17, "Gear")                      -- (-0.5,1.3)
       GenerateEqualNotches(34, "Throttle")                  -- (-3,30)
