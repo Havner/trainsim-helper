@@ -397,6 +397,7 @@ function ConfigureJoystick()
       --InvInvert("DynamicBrake")
 
    elseif DetectBR155() then
+      ReplaceLines("Gear", "DynamicBrake")                  -- Havner's config
       GenerateEqualNotches(3, "Reverser")                   -- (-1,1), Virtual
       GenerateEqualNotches(17, "Gear")                      -- (-0.5,1.3)
       GenerateEqualNotches(34, "Throttle")                  -- (-3,30)
@@ -429,10 +430,16 @@ function ConfigureJoystick()
       tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
       tshNotches["CruiseCtl"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
 
-   elseif DetectBR1460() or DetectBR1462() or DetectDABpbzkfa() then
+   elseif DetectBR1460() or DetectBR1462() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
-      tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
+      tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
+
+   elseif DetectDABpbzkfa() then
+      ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
+      GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
+      tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
    elseif DetectBR426() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
