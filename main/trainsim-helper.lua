@@ -1403,6 +1403,27 @@ end
 
 -- US
 
+function DetectUPGasTurbune(DisablePopup) -- Sherman Hill addon
+   if Call("ControlExists", "RealWheelslip", 0) == 1 and
+      Call("ControlExists", "AuxReservoirPressure", 0) == 1 and
+      Call("ControlExists", "AuxDieselRPMDelta", 0) == 1 and
+      Call("ControlExists", "TurbineRPM", 0) == 1 and
+      Call("ControlExists", "WheelskidDuration", 0) == 1 and
+      Call("ControlExists", "TurbineCombustion", 0) == 1 and
+      Call("ControlExists", "TurbineMisStart", 0) == 1 and
+      Call("ControlExists", "No1TruckPower", 0) == 1 and
+      Call("ControlExists", "FlameoutTimer", 0) == 1 and
+      Call("ControlExists", "TurbineHeavyFuelInjected", 0) == 1 and
+      Call("ControlExists", "VirtualStartUpEnabled", 0) == 1 and
+      Call("ControlExists", "BurningStartFuel", 0) == 1 and
+      Call("ControlExists", "TVibrationBCabReset", 0) == 1 and
+      Call("ControlExists", "FaultyFlameDetector", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("UP Gas Turbine detected") end
+      return 1
+   end
+end
+
 function DetectGP20_ADV_Reppo(DisablePopup) -- Donner Pass addon
    if Call("ControlExists", "Pitch", 0) == 1 and
       Call("ControlExists", "PositionIndicatorSW", 0) == 1 and

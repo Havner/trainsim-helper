@@ -476,6 +476,23 @@ function ConfigureJoystick()
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 
+   elseif DetectUPGasTurbune() then
+      GenerateEqualNotches(21, "Throttle")                  -- (0,1)
+      GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
+
+      local WarningText = "THIS LOCO IS BUGGED\n"
+      WarningText = WarningText .. "Please read this as you can help:\n\n"
+      WarningText = WarningText .. "This loco has some poorly done scripting that prevents it\n"
+      WarningText = WarningText .. "from controlling Throttle and DynamicBrake with a mouse.\n"
+      WarningText = WarningText .. "Try this yourself. Probably for this very reason the joystick\n"
+      WarningText = WarningText .. "control doesn't work as well for those levers. There is nothing\n"
+      WarningText = WarningText .. "I can do, believe me, I tried. But you can report the mouse issue\n"
+      WarningText = WarningText .. "to DTG (as I did, the more people the better), maybe they'll fix\n"
+      WarningText = WarningText .. "it one day and the joystick will start to work properly.\n\n"
+      WarningText = WarningText .. "Please report here: http://dovetailgames.kayako.com/"
+
+      SysCall("ScenarioManager:ShowInfoMessageExt", "TrainSim Helper WARNING", WarningText, 0, 2, 1, 1)
+
    elseif DetectGP20_ADV_Reppo() then
       tshNotches["Throttle"] = {-2, 0, 1, 2, 3, 4, 5, 6, 7, 8}
       tshRange["Throttle"] = {0, 8}                         -- Ignore stop values (-2, 0)
@@ -603,7 +620,7 @@ end
 function FindReverser()
    if Call("ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
       return "MyReverser"
-   elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155
+   elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
       return "UserVirtualReverser"
    elseif Call("ControlExists", "VirtualReverser", 0) == 1 then
       return "VirtualReverser"
@@ -903,7 +920,7 @@ end
 function ReplaceLines(newKey, prevKey)
    if DisableReplace and DisableReplace ~= 0 then return end
    if tshLine[newKey] and tshLine[newKey] ~= 0 then return end
-   
+
    tshLine[newKey] = tshLine[prevKey]
    tshLine[prevKey] = nil
 end
@@ -915,7 +932,7 @@ function ReplaceControls(newKey, prevKey)
    tshCenterDetent[newKey]  = tshCenterDetent[prevKey]
    tshNotches[newKey]       = tshNotches[prevKey]
    tshStep[newKey]          = tshStep[prevKey]
-   
+
    tshControl[prevKey]      = nil
    tshRange[prevKey]        = nil
    tshInvert[prevKey]       = nil
@@ -1000,7 +1017,7 @@ function SetControlDelayed(key)
       else
          tshCurrentSim[key] = tshCurrentSim[key] - step
       end
-      
+
       SetControlValue(control, tshCurrentSim[key])
    end
 end

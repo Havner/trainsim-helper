@@ -63,7 +63,9 @@ function ConfigureOverlay()
       tshControlValues["TargetSpeed"] = "TargetSpeed"
    end
 
-   if Call("ControlExists", "Reverser", 0) == 1 then
+   if Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
+      tshControlValues["Reverser"] = "UserVirtualReverser"
+   elseif Call("ControlExists", "Reverser", 0) == 1 then
       tshControlValues["Reverser"] = "Reverser"
    end
 
