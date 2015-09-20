@@ -188,6 +188,14 @@ function ConfigureJoystick()
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
 
+   elseif Detect5700Pannier() then
+      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
+      tshNotches["Reverser"] = {-0.75, -0.65, -0.55, -0.45, -0.35, -0.25, -0.15, 0, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75}
+      tshNotches["TrainBrake"] = {0, 0.5}                   -- (0,1), It's continous above 0.5
+      tshControl["LocoBrake"] = nil                         -- Vacuum brake internal should not be used directly
+      tshControl["SmallEjector"] = nil                      -- Internal, not used directly
+
    elseif DetectCastle() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       tshControl["Reverser"] = "Reverser"                   -- This loco has VirtualReverser but it doesn't work, override
@@ -377,7 +385,7 @@ function ConfigureJoystick()
       ReplaceControls("CombinedThrottle", "Throttle")       -- CombinedThrottle is controlled with Throttle here, reflect that
       GenerateEqualNotches(20, "CombinedThrottle")          -- (-9, 10)
       tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
-      tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
+      tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
 
       -- Throttle
       --tshRange["CombinedThrottle"] = {0, 10}

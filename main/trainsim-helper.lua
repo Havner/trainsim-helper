@@ -325,6 +325,23 @@ function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    end
 end
 
+function Detect5700Pannier(DisablePopup) -- Riviera Line addon
+   if Call("ControlExists", "FireboxDoor", 0) == 1 and
+      Call("ControlExists", "VacuumChamberSide", 0) == 1 and
+      Call("ControlExists", "VacuumTest", 0) == 1 and
+      Call("ControlExists", "InFlow", 0) == 1 and
+      Call("ControlExists", "VolumeEvacuated", 0) == 1 and
+      Call("ControlExists", "VacuumResRelease", 0) == 1 and
+      Call("ControlExists", "Whistle_2", 0) == 1 and
+      Call("ControlExists", "SideShutter2", 0) == 1 and
+      Call("ControlExists", "Pasty", 0) == 1 and
+      Call("ControlExists", "SafetyValve2", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("5700 Pannier (DA) detected") end
+      return 1
+   end
+end      
+
 function DetectCastle(DisablePopup) -- Riviera Line addon
    if Call("ControlExists", "FireboxDoor", 0) == 1 and
       Call("ControlExists", "Stoking", 0) == 1 and

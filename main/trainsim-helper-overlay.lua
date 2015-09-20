@@ -133,7 +133,10 @@ function ConfigureOverlay()
 
    -- Brake's indicators
 
-   if Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 then
+   if Call("ControlExists", "VacuumTest", 0) == 1 then  -- 5700 Pannier DA
+      tshControlValues["VacuumBrakePipePressure"] = "VacuumTest"
+      tshStaticValues["VacuumBrakePipeUnits"] = "Inches"
+   elseif Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 then
       tshControlValues["VacuumBrakePipePressure"] = "VacuumBrakePipePressureINCHES"
       tshStaticValues["VacuumBrakePipeUnits"] = "Inches"
    elseif Call("ControlExists", "VacuumBrakePipePressureBAR", 0) == 1 then
@@ -145,7 +148,10 @@ function ConfigureOverlay()
    end
 
    -- Do not add VacuumBrakeChamberPressureINCHES here, it's mostly useless
-   if Call("ControlExists", "Vacuum Chamber Side", 0) == 1 then  -- J50
+   if Call("ControlExists", "VacuumChamberSide", 0) == 1 then  -- 5700 Pannier DA
+      tshControlValues["VacuumBrakeChamberPressure"] = "VacuumChamberSide"
+      tshStaticValues["VacuumBrakeChamberUnits"] = "Inches"
+   elseif Call("ControlExists", "Vacuum Chamber Side", 0) == 1 then  -- J50
       tshControlValues["VacuumBrakeChamberPressure"] = "Vacuum Chamber Side"
       tshStaticValues["VacuumBrakeChamberUnits"] = "Inches"
    end
