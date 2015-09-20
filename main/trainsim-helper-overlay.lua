@@ -614,20 +614,39 @@ function ConfigureOverlay()
       tshDoorsValues["DoorsRight"] = "DoorsOpenCloseRight"
    end
 
-   -- Do some automagic
+   -- Do some common automagic, this way we don't need to do that per loco
 
-   if tshUSAdvancedBrakes then  -- FEF-3 and US Advanced
+   -- For SmokeBox brakes (FEF-3 and US Advanced), TrainBrake pressures are internal
+   if tshUSAdvancedBrakes then
       tshControlValues["TrainBrakeCylinderPressure"] = nil
       tshStaticValues["TrainBrakeCylinderUnits"] = nil
    end
 
+   -- Rescale CombinedThrottle to (-1,1) if it's (0,1) or to (-x/y,1) if it's (-x,y)
    if tshControlValues["CombinedThrottle"] then
-      range = GetControlRange(tshControlValues["CombinedThrottle"])
-      if not range then  -- Meaning it's (0,1)
-         -- Scale to (-1, 1)
+      tshRescaleCombinedThrottle = GetControlRange(tshControlValues["CombinedThrottle"])
+      if not tshRescaleCombinedThrottle then  -- Meaning it's (0,1)
          tshControlValuesFunctions["CombinedThrottle"] = function(value) return value * 2 - 1 end
+      elseif tshRescaleCombinedThrottle[1] < 0 and tshRescaleCombinedThrottle[2] >= 2 then
+         tshControlValuesFunctions["CombinedThrottle"] = function(value) return value / tshRescaleCombinedThrottle[2] end
       end
    end
+
+   -- Rescale Throttle to (x,1)
+   if tshControlValues["Throttle"] then
+      tshRescaleThrottle = GetControlRange(tshControlValues["Throttle"])
+      if tshRescaleThrottle and tshRescaleThrottle[2] >= 2 then
+         tshControlValuesFunctions["Throttle"] = function(value) return value / tshRescaleThrottle[2] end
+      end
+   end
+
+   -- For CombinedThrottle split hide the other element
+   if tshControlValues["TrainBrake"] == tshControlValues["CombinedThrottle"] then
+      tshControlValues["TrainBrake"] = nil
+   end
+   if tshControlValues["DynamicBrake"] == tshControlValues["CombinedThrottle"] then
+      tshControlValues["DynamicBrake"] = nil
+   end   
 
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- Sometimes I have to do this as a loco might have a control value that is
@@ -724,7 +743,7 @@ function ConfigureOverlay()
       --tshControlValues["LiveInjectorShutOff"] = nil
       --tshControlValues["TenderWaterShutOff"] = nil
 
-      -- Make the sander {0,1}
+      -- Make the sandbox {0,1}
       tshControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
 
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
@@ -739,20 +758,9 @@ function ConfigureOverlay()
 
    -- German
 
-   elseif DetectBR103TEE_vRailroads_Expert(true) then
-      -- Scale values to (0,1)
-      tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
-
    elseif DetectBR103TEE_vRailroads(true) then
-      -- Scale values to (0,1)
-      tshControlValuesFunctions["Throttle"] = function(value) return value / 39 end
-      tshControlValuesFunctions["LocoBrake"] = function(value) return (value + 1) / 2 end
       -- Not functional, hide
       tshControlValues["TargetSpeed"] = nil
-
-   elseif DetectBR420_Influenzo(true) then
-      -- Scale values to (-0.9,1)
-      tshControlValuesFunctions["CombinedThrottle"] = function(value) return value / 10 end
 
    elseif DetectBR442Talent2(true) then
       -- Not functional, hide
@@ -760,9 +768,6 @@ function ConfigureOverlay()
 
    -- US
 
-   elseif DetectGP20_ADV_Reppo(true) then
-      -- Scale values to (0,1)
-      tshControlValuesFunctions["Throttle"] = function(value) return value / 8 end
 
    end
 
