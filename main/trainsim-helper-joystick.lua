@@ -396,6 +396,14 @@ function ConfigureJoystick()
       --GenerateEqualNotches(10, "DynamicBrake")
       --InvInvert("DynamicBrake")
 
+   elseif DetectBR155() then
+      GenerateEqualNotches(3, "Reverser")                  -- (-1,1), Virtual
+      GenerateEqualNotches(34, "Throttle")                 -- (-3,30)
+      tshRange["Throttle"] = {0, 30}                       -- Disable negative TapChanger positions, they make little sense on fast Throttle
+      tshNotches["TrainBrake"] = {0, 0.1, 0.22, 0.34, 0.44, 0.54, 0.66, 0.75, 0.85, 0.9, 1}
+      tshNotches["LocoBrake"] = {-1, 0, 1}                 -- Self lapped here, add some notches to help
+      GenerateEqualNotches(20, "DynamicBrake")             -- (0,1)
+
    elseif DetectBR442Talent2() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshNotches["CruiseCtl"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
@@ -595,6 +603,8 @@ end
 function FindReverser()
    if Call("ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
       return "MyReverser"
+   elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155
+      return "UserVirtualReverser"
    elseif Call("ControlExists", "VirtualReverser", 0) == 1 then
       return "VirtualReverser"
    elseif Call("ControlExists", "Reverser", 0) == 1 then

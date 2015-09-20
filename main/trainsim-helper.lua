@@ -935,6 +935,26 @@ function DetectBR420_Influenzo(DisablePopup) -- Munich - Augsburg addon
    end
 end
 
+function DetectBR155(DisablePopup) -- Cologne - Koblenz addon
+   if Call("ControlExists", "TractionSelect", 0) == 1 and
+      Call("ControlExists", "TractionBlowerSwitch", 0) == 1 and
+      Call("ControlExists", "PowerSelector", 0) == 1 and
+      Call("ControlExists", "TapChangerT", 0) == 1 and
+      Call("ControlExists", "TapChangerFault", 0) == 1 and
+      Call("ControlExists", "UserVirtualReverser", 0) == 1 and
+      Call("ControlExists", "AxleClearance", 0) == 1 and
+      Call("ControlExists", "MainBatterySwitch", 0) == 1 and
+      Call("ControlExists", "VirtualStartup", 0) == 1 and
+      Call("ControlExists", "WipersLever", 0) == 1 and
+      Call("ControlExists", "TestLED", 0) == 1 and
+      Call("ControlExists", "GSMRButtonsLit", 0) == 1 and
+      Call("ControlExists", "SunVisorRearLeft", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR155 detected") end
+      return 1
+   end
+end
+
 function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
    if Call("ControlExists", "CabEQNeedle", 0) == 1 and
       Call("ControlExists", "CabTBNeedle", 0) == 1 and
