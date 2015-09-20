@@ -358,17 +358,8 @@ function ConfigureOverlay()
       tshControlValues["LubricatorWarming"] = "LubricatorWarming"
    end
 
-   if Call("ControlExists", "SmallEjectorOnOff", 0) == 1 then
-      tshControlValues["SmallEjector"] = "SmallEjectorOnOff"
-   elseif Call("ControlExists", "SmallCompressorOnOff", 0) == 1 then
-      tshControlValues["SmallEjector"] = "SmallCompressorOnOff"
-   end
-
-   if Call("ControlExists", "LargeEjector", 0) == 1 then  -- 3F
-      tshControlValues["LargeEjector"] = "LargeEjector"
-   elseif Call("ControlExists", "LargeEjectorOnOff", 0) == 1 then
-      tshControlValues["LargeEjector"] = "LargeEjectorOnOff"
-   end
+   tshControlValues["SmallEjector"] = tshControl["SmallEjector"]
+   tshControlValues["LargeEjector"] = tshControl["LargeEjector"]
 
    if Call("ControlExists", "SteamBrakeHook", 0) == 1 then  -- 3F
       tshControlValues["BrakeHook"] = "SteamBrakeHook"
@@ -412,8 +403,10 @@ function ConfigureOverlay()
       tshControlValues["CylinderCock"] = "CylinderCock"
    end
 
-   if Call("ControlExists", "WaterScoopRaiseLower", 0) == 1 then
-      tshControlValues["WaterScoopRaiseLower"] = "WaterScoopRaiseLower"
+   if Call("ControlExists", "WaterScoop", 0) == 1 then
+      tshControlValues["WaterScoop"] = "WaterScoop"
+   elseif Call("ControlExists", "WaterScoopRaiseLower", 0) == 1 then  -- I think this one was never functional
+      tshControlValues["WaterScoop"] = "WaterScoopRaiseLower"
    end
 
    -- Steamers (fireman)
@@ -472,11 +465,7 @@ function ConfigureOverlay()
       tshControlValues["TankHeater"] = "TankHeater"
    end
 
-   if Call("ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
-      tshControlValues["Blower"] = "BlowerControlValve"
-   elseif Call("ControlExists", "Blower", 0) == 1 then
-      tshControlValues["Blower"] = "Blower"
-   end
+   tshControlValues["Blower"] = tshControl["Blower"]
 
    if Call("ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
       tshControlValues["Damper"] = "FiredoorDamper"

@@ -24,7 +24,8 @@ function ConfigureJoystick()
    tshLine["LocoBrake"] = 10      -- might also be used for HandBrake if it's not explicitly set
    tshLine["DynamicBrake"] = 7    -- might also be used for Reverser, Gear or CruiseCtl if they're not explicitly set
    --tshLine["HandBrake"] = 10
-   tshLine["SmallEjector"] = 12
+   tshLine["SmallEjector"] = 11
+   tshLine["LargeEjector"] = 12
    tshLine["Blower"] = 14
    tshLine["FireboxDoor"] = 18    -- FEF-3: Atomizer
    tshLine["Stoking"] = 19        -- FEF-3: Oil Regulator
@@ -42,7 +43,8 @@ function ConfigureJoystick()
    --tshInvert["LocoBrake"] = 1
    --tshInvert["DynamicBrake"] = 1
    --tshInvert["HandBrake"] = 1
-   tshInvert["SmallEjector"] = 1
+   --tshInvert["SmallEjector"] = 1
+   tshInvert["LargeEjector"] = 1
    --tshInvert["Blower"] = 1
    tshInvert["FireboxDoor"] = 1
    tshInvert["Stoking"] = 1
@@ -84,6 +86,7 @@ function ConfigureJoystick()
    tshControl["DynamicBrake"] =      FindDynamicBrake()
    tshControl["HandBrake"] =         FindHandBrake()
    tshControl["SmallEjector"] =      FindSmallEjector()
+   tshControl["LargeEjector"] =      FindLargeEjector()
    tshControl["Blower"] =            FindBlower()
    tshControl["FireboxDoor"] =       FindFireboxDoor()
    tshControl["Stoking"] =           FindStoking()
@@ -103,6 +106,7 @@ function ConfigureJoystick()
    tshRange["DynamicBrake"] =     GetControlRange(FindDynamicBrake())
    tshRange["HandBrake"] =        GetControlRange(FindHandBrake())
    tshRange["SmallEjector"] =     GetControlRange(FindSmallEjector())
+   tshRange["LargeEjector"] =     GetControlRange(FindLargeEjector())
    tshRange["Blower"] =           GetControlRange(FindBlower())
    tshRange["FireboxDoor"] =      GetControlRange(FindFireboxDoor())
    tshRange["Stoking"] =          GetControlRange(FindStoking())
@@ -675,10 +679,20 @@ function FindHandBrake()
 end
 
 function FindSmallEjector()
-   if Call("ControlExists", "SmallEjectorOnOff", 0) == 1 then
+   if Call("ControlExists", "VirtualSmallCompressorOnOff", 0) == 1 then  -- Fifties Steamers
+      return "VirtualSmallCompressorOnOff"
+   elseif Call("ControlExists", "SmallEjectorOnOff", 0) == 1 then
       return "SmallEjectorOnOff"
    elseif Call("ControlExists", "SmallCompressorOnOff", 0) == 1 then
       return "SmallCompressorOnOff"
+   end
+end
+
+function FindLargeEjector()
+   if Call("ControlExists", "LargeEjector", 0) == 1 then  -- 3F
+      return "LargeEjector"
+   elseif Call("ControlExists", "LargeEjectorOnOff", 0) == 1 then
+      return "LargeEjectorOnOff"
    end
 end
 

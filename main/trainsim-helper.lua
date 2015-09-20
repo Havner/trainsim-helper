@@ -343,9 +343,11 @@ function DetectCastle(DisablePopup) -- Riviera Line addon
       Call("ControlExists", "AshpanSprinkler", 0) == 1 and
       Call("ControlExists", "SeatDriver", 0) == 1 and
       Call("ControlExists", "SeatFireman", 0) == 1 and
-      Call("ControlExists", "CastleThunder", 0) == 1
+      Call("ControlExists", "CastleThunder", 0) == 1 and
+      Call("ControlExists", "LargeEjector", 0) == 0 and
+      Call("ControlExists", "VirtualSmallCompressorOnOff", 0) == 0      
    then
-      if not DisablePopup then DisplayPopup("Castle detected") end
+      if not DisablePopup then DisplayPopup("Castle (Old) detected") end
       return 1
    end
 end

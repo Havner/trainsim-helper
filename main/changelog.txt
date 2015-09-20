@@ -1,3 +1,8 @@
+0.10
+ - Fixes some minor issues for Fifties Steamers.
+ - LargeEjector added to the list of joystick controllable axes.
+   (it's usable in the Fifties Steamers)
+
 0.9
  - TS2016 (and '17, '18, '19) support.
  - Updated configs and detection for Locos from Sherman Hill,

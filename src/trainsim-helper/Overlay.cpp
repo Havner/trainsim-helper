@@ -141,7 +141,7 @@ struct SimData {
 	Value<float>		fAshpanSprinkler;
 	Value<float>		fCylinderCock;
 	Value<float>		fCylinderCockMaster;
-	Value<float>		fWaterScoopRaiseLower;
+	Value<float>		fWaterScoop;
 
 	// Steamers (fireman, displayed on the right side)
 	Value<float>		fBlowOffCockShutOffLeft;
@@ -418,7 +418,7 @@ int FillData(SimData* data)
 		else if (!strcmp("AshpanSprinkler:", param))			data->fAshpanSprinkler = value;
 		else if (!strcmp("CylinderCock:", param))				data->fCylinderCock = value;
 		else if (!strcmp("CylinderCockMaster:", param))			data->fCylinderCockMaster = value;
-		else if (!strcmp("WaterScoopRaiseLower:", param))		data->fWaterScoopRaiseLower = value;
+		else if (!strcmp("WaterScoop:", param))					data->fWaterScoop = value;
 
 		// Steamers (fireman, displayed on the right side)
 		else if (!strcmp("BlowOffCockShutOffLeft:", param))		data->fBlowOffCockShutOffLeft = value;
@@ -787,7 +787,7 @@ void RenderOverlay()
 	y = g_nHeight - yD;
 	yP = y;
 
-	y = DrawString(eSteamDriverSecondary,	data.fWaterScoopRaiseLower,			x+61,	y, white, pSmallFont, "Water Scoop: %d %%", (int)(data.fWaterScoopRaiseLower()*100));
+	y = DrawString(eSteamDriverPrimary,		data.fWaterScoop,					x+61,	y, white, pSmallFont, "Water Scoop: %d %%", (int)(data.fWaterScoop()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fCylinderCockMaster,			x+5,	y, white, pSmallFont, "Master Cylinder Cocks: %d %%", (int)(data.fCylinderCockMaster()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fCylinderCock,					x+49,	y, white, pSmallFont, "Cylinder Cocks: %d %%", (int)(data.fCylinderCock()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fAshpanSprinkler,				x+39,	y, white, pSmallFont, "Ashpan Sprinkler: %d %%", (int)(data.fAshpanSprinkler()*100));
