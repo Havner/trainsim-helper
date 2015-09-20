@@ -1,5 +1,9 @@
-0.10
+0.9.1
+ - Tried to do UP Gas Turbine config, but the loco is bugged.
+ - BR155 config.
+ - PowerSelected added to Overlay and as a lever to Gear.
  - Fixes some minor issues for Fifties Steamers.
+ - GWR Pannier config.
  - LargeEjector added to the list of joystick controllable axes.
    (it's usable in the Fifties Steamers)
 

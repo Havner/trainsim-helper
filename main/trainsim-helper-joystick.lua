@@ -15,9 +15,9 @@ function ConfigureJoystick()
    --   and ReplaceLines() calls. This can be disabled with DisableReplace below.
    -- To disable a control or an invert set it to 0 or comment out.
 
-   --tshLine["Reverser"] = 7
-   --tshLine["Gear"] = 7
    --tshLine["CruiseCtl"] = 7
+   --tshLine["Reverser"] = 7
+   --tshLine["Gear"] = 7          -- BR155: Power Selector
    tshLine["CombinedThrottle"] = 3
    tshLine["Throttle"] = 3
    tshLine["TrainBrake"] = 6
@@ -397,12 +397,14 @@ function ConfigureJoystick()
       --InvInvert("DynamicBrake")
 
    elseif DetectBR155() then
-      GenerateEqualNotches(3, "Reverser")                  -- (-1,1), Virtual
-      GenerateEqualNotches(34, "Throttle")                 -- (-3,30)
-      tshRange["Throttle"] = {0, 30}                       -- Disable negative TapChanger positions, they make little sense on fast Throttle
+      ReplaceLines("Gear", "DynamicBrake")                  -- Havner's config
+      GenerateEqualNotches(3, "Reverser")                   -- (-1,1), Virtual
+      GenerateEqualNotches(17, "Gear")                      -- (-0.5,1.3)
+      GenerateEqualNotches(34, "Throttle")                  -- (-3,30)
+      tshRange["Throttle"] = {0, 30}                        -- Disable negative TapChanger positions, they make little sense on fast Throttle
       tshNotches["TrainBrake"] = {0, 0.1, 0.22, 0.34, 0.44, 0.54, 0.66, 0.75, 0.85, 0.9, 1}
-      tshNotches["LocoBrake"] = {-1, 0, 1}                 -- Self lapped here, add some notches to help
-      GenerateEqualNotches(20, "DynamicBrake")             -- (0,1)
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
+      GenerateEqualNotches(20, "DynamicBrake")              -- (0,1)
 
    elseif DetectBR442Talent2() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -617,26 +619,6 @@ end
 ------------  Control values finder functions  ------------
 -----------------------------------------------------------
 
-function FindReverser()
-   if Call("ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
-      return "MyReverser"
-   elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
-      return "UserVirtualReverser"
-   elseif Call("ControlExists", "VirtualReverser", 0) == 1 then
-      return "VirtualReverser"
-   elseif Call("ControlExists", "Reverser", 0) == 1 then
-      return "Reverser"
-   end
-end
-
-function FindGear()
-   if Call("ControlExists", "VirtualGearLever", 0) == 1 then
-      return "VirtualGearLever"
-   elseif Call("ControlExists", "GearLever", 0) == 1 then
-      return "GearLever"
-   end
-end
-
 function FindCruiseCtl()
    if Call("ControlExists", "SpeedControlTarget", 0) == 1 then     -- BR266
       return "SpeedControlTarget"
@@ -652,6 +634,28 @@ function FindCruiseCtl()
       return "SpeedTarget"
    elseif Call("ControlExists", "TargetSpeed", 0) == 1 then        -- Class 375/377
       return "TargetSpeed"
+   end
+end
+
+function FindReverser()
+   if Call("ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
+      return "MyReverser"
+   elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
+      return "UserVirtualReverser"
+   elseif Call("ControlExists", "VirtualReverser", 0) == 1 then
+      return "VirtualReverser"
+   elseif Call("ControlExists", "Reverser", 0) == 1 then
+      return "Reverser"
+   end
+end
+
+function FindGear()
+   if Call("ControlExists", "PowerSelector", 0) == 1 then  -- BR155
+      return "PowerSelector"
+   elseif Call("ControlExists", "VirtualGearLever", 0) == 1 then
+      return "VirtualGearLever"
+   elseif Call("ControlExists", "GearLever", 0) == 1 then
+      return "GearLever"
    end
 end
 

@@ -69,8 +69,12 @@ function ConfigureOverlay()
       tshControlValues["Reverser"] = "Reverser"
    end
 
-   if Call("ControlExists", "GearLever",0) == 1 then
+   if Call("ControlExists", "GearLever", 0) == 1 then
       tshControlValues["GearLever"] = "GearLever"
+   end
+
+   if Call("ControlExists", "PowerSelector", 0) == 1 then
+      tshControlValues["Power"] = "PowerSelector"
    end
 
    -- Shamelessly use Joystick configuration, it should be adapted per loco already
