@@ -793,7 +793,7 @@ void RenderOverlay()
 	y = DrawString(eSteamDriverPrimary,		data.fWaterScoop,					x+61,	y, white, pSmallFont, "Water Scoop: %d %%", (int)(data.fWaterScoop()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fCylinderCockMaster,			x+5,	y, white, pSmallFont, "Master Cylinder Cocks: %d %%", (int)(data.fCylinderCockMaster()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fCylinderCock,					x+49,	y, white, pSmallFont, "Cylinder Cocks: %d %%", (int)(data.fCylinderCock()*100));
-	y = DrawString(eSteamDriverSecondary,	data.fAshpanSprinkler,				x+39,	y, white, pSmallFont, "Ashpan Sprinkler: %d %%", (int)(data.fAshpanSprinkler()*100));
+	y = DrawString(eSteamDriverSecondary,	data.fAshpanSprinkler,				x+38,	y, white, pSmallFont, "Ashpan Sprinkler: %d %%", (int)(data.fAshpanSprinkler()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fSanderFill,					x+75,	y, white, pSmallFont, "Fill Sander: %d %%", (int)(data.fSanderFill()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fSanderCaps,					x+62,	y, white, pSmallFont, "Caps Sander: %d %%", (int)(data.fSanderCaps()*100));
 	y = DrawString(eSteamDriverPrimary,		data.fSanderRear,					x+65,	y, white, pSmallFont, "Rear Sander: %d %%", (int)(data.fSanderRear()*100));
