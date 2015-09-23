@@ -6,6 +6,7 @@
  - GWR Pannier config.
  - LargeEjector added to the list of joystick controllable axes.
    (it's usable in the Fifties Steamers)
+ - Havner's Cofig for steamers moved to one common place
 
 0.9
  - TS2016 (and '17, '18, '19) support.

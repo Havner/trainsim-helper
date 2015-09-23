@@ -193,6 +193,7 @@ function DetectJ94Steam_ADV_MeshTools(DisablePopup) -- Memories of Maerdy
    end
 end
 
+-- UNUSED
 function DetectSmallPrairies_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    if Call("ControlExists", "TestValue1", 0) == 1 and
       Call("ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
@@ -216,6 +217,7 @@ function DetectSmallPrairies_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    end
 end
 
+-- UNUSED
 function Detect14xx_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    if Call("ControlExists", "TractiveEffortSpeedCalculated", 0) == 1 and
       Call("ControlExists", "SpinExtra", 0) == 1 and
@@ -235,6 +237,7 @@ function Detect14xx_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    end
 end
 
+-- UNUSED
 function DetectAutocoachA31_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    if Call("ControlExists", "CabControlLock", 0) == 1 and
       Call("ControlExists", "HornAnimation", 0) == 1 and
@@ -251,6 +254,7 @@ function DetectAutocoachA31_VictoryWorks(DisablePopup) -- Falmouth Branch addon
    end
 end
 
+-- UNUSED
 function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addon
    if Call("ControlExists", "FireboxDoor", 0) == 1 and
       Call("ControlExists", "Stoking", 0) == 1 and
@@ -270,6 +274,7 @@ function DetectBulleidQ1_VictoryWorks(DisablePopup) -- Sommerset and Dorset addo
    end
 end
 
+-- UNUSED
 function DetectGWRRailmotor_VictoryWorks(DisablePopup) -- West Somerset Railway addon
    if Call("ControlExists", "AdvancedMode", 0) == 1 and
       Call("ControlExists", "CabControlLock", 0) == 1 and
@@ -290,6 +295,7 @@ function DetectGWRRailmotor_VictoryWorks(DisablePopup) -- West Somerset Railway 
    end
 end
 
+-- UNUSED
 function DetectGWRRailmotorBoogie_VictoryWorks(DisablePopup) -- West Somerset Railway addon
    if Call("ControlExists", "AdvancedMode", 0) == 1 and
       Call("ControlExists", "CabControlLock", 0) == 1 and
@@ -306,6 +312,7 @@ function DetectGWRRailmotorBoogie_VictoryWorks(DisablePopup) -- West Somerset Ra
    end
 end
 
+-- UNUSED
 function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    if Call("ControlExists", "FireboxDoor", 0) == 1 and
       Call("ControlExists", "Stoking", 0) == 1 and
@@ -369,6 +376,7 @@ function DetectCastle(DisablePopup) -- Riviera Line addon
    end
 end
 
+-- UNUSED
 function DetectBlack5_KeithRoss(DisablePopup) -- Western Lines of Scotland
    if Call("ControlExists", "CabLight", 0) == 1 and
       Call("ControlExists", "Headlamp4", 0) == 1 and
@@ -1876,6 +1884,7 @@ function UpdateHelper(time)
       tshCenterDetent = {}
       tshNotches = {}
       tshStep = {}
+      tshForceUpdate = {}
       tshPreviousInput = {}
       tshCurrentSim = {}
       tshTargetSim = {}

@@ -22,7 +22,7 @@ function ConfigureJoystick()
    tshLine["Throttle"] = 3
    tshLine["TrainBrake"] = 6
    tshLine["LocoBrake"] = 10      -- might also be used for HandBrake if it's not explicitly set
-   tshLine["DynamicBrake"] = 7    -- might also be used for Reverser, Gear or CruiseCtl if they're not explicitly set
+   tshLine["DynamicBrake"] = 7    -- might also be used for Reverser, Gear/Power or CruiseCtl if they're not explicitly set
    --tshLine["HandBrake"] = 10
    tshLine["SmallEjector"] = 11
    tshLine["LargeEjector"] = 12
@@ -124,85 +124,41 @@ function ConfigureJoystick()
    -- Steamers
 
    if DetectFEF3_ADV_Smokebox() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
 
    elseif DetectFEF3_HUD_Smokebox() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
       tshControl["Reverser"] = "Reverser"                   -- Use regular controls instead of My* versions,
       tshControl["LocoBrake"] = "EngineBrakeControl"        -- they exist, but don't work in the HUD version
 
    elseif Detect2FDockTank_ADV_MeshTools() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
 
    elseif DetectJ50_ADV_MeshTools() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["TrainBrake"] = {0.04, 0.15, 0.25}
       tshControl["LocoBrake"] = nil                         -- Vacuum brake internal should not be used directly
 
    elseif Detect3FJintyTrain_ADV_MeshTools() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly, only push/pull
 
    elseif Detect3FJintySteam_ADV_MeshTools() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
 
    elseif DetectJ94Train_ADV_MeshTools() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       tshNotches["TrainBrake"] = {0.04, 0.15, 0.25}         -- Notches for the Vacuum or Air brakes (the latter are not keyboard-notched due to a bug)
 
    elseif DetectJ94Steam_ADV_MeshTools() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
       tshNotches["TrainBrake"] = {0.30, 0.40, 0.50}         -- Add notches as it's otherwise very hard to control the steam brake (the only one)
 
-   elseif DetectSmallPrairies_VictoryWorks() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-
-   elseif Detect14xx_VictoryWorks() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-
-   elseif DetectAutocoachA31_VictoryWorks() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-
-   elseif DetectBulleidQ1_VictoryWorks() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-
-   elseif DetectGWRRailmotor_VictoryWorks() or DetectGWRRailmotorBoogie_VictoryWorks() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-
-   elseif Detect56xx_VictoryWorks() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
-
    elseif Detect5700Pannier() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["Reverser"] = {-0.75, -0.65, -0.55, -0.45, -0.35, -0.25, -0.15, 0, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75}
       tshNotches["TrainBrake"] = {0, 0.5}                   -- (0,1), It's continous above 0.5
       tshControl["LocoBrake"] = nil                         -- Vacuum brake internal should not be used directly
       tshControl["SmallEjector"] = nil                      -- Internal, not used directly
 
    elseif DetectCastle() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
       tshControl["Reverser"] = "Reverser"                   -- This loco has VirtualReverser but it doesn't work, override
-
-   elseif DetectBlack5_KeithRoss() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
-      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
 
    -- UK
 
@@ -487,16 +443,18 @@ function ConfigureJoystick()
    elseif DetectUPGasTurbune() then
       GenerateEqualNotches(21, "Throttle")                  -- (0,1)
       GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
+      tshForceUpdate["Throttle"] = true
+      tshForceUpdate["DynamicBrake"] = true
 
       local WarningText = "THIS LOCO IS BUGGED\n"
       WarningText = WarningText .. "Please read this as you can help:\n\n"
-      WarningText = WarningText .. "This loco has some poorly done scripting that prevents it\n"
+      WarningText = WarningText .. "This loco has some poorly done scripting that prevents it \n"
       WarningText = WarningText .. "from controlling Throttle and DynamicBrake with a mouse.\n"
-      WarningText = WarningText .. "Try this yourself. Probably for this very reason the joystick\n"
-      WarningText = WarningText .. "control doesn't work as well for those levers. There is nothing\n"
-      WarningText = WarningText .. "I can do, believe me, I tried. But you can report the mouse issue\n"
-      WarningText = WarningText .. "to DTG (as I did, the more people the better), maybe they'll fix\n"
-      WarningText = WarningText .. "it one day and the joystick will start to work properly.\n\n"
+      WarningText = WarningText .. "Probably for this very reason the joystick control doesn't\n"
+      WarningText = WarningText .. "normally work as well for those levers. I did a very ugly and\n"
+      WarningText = WarningText .. "unreliable workaround, but it's still not ok. But you can report the\n"
+      WarningText = WarningText .. "mouse issue to DTG (as I did, the more people the better), maybe\n"
+      WarningText = WarningText .. "they'll fix it one day and the joystick will start to work properly.\n\n"
       WarningText = WarningText .. "Please report here: http://dovetailgames.kayako.com/"
 
       SysCall("ScenarioManager:ShowInfoMessageExt", "TrainSim Helper WARNING", WarningText, 0, 2, 1, 1)
@@ -589,7 +547,7 @@ function ConfigureJoystick()
    -- Generic detections, don't put any specific locos below, they might get caught by those
 
    elseif DetectGenericSteam() then
-      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
+      -- Just note it's been detected
 
    elseif DetectGenericUSDiesel() then
       GenerateEqualNotches(9, "Throttle")                   -- (0,1), simple US diesels usually have notched throttle
@@ -598,6 +556,15 @@ function ConfigureJoystick()
       DisplayPopup("No custom configuration for this loco")
 
    end
+
+   -- Do this for all steamers, even already detected ones
+   if DetectGenericSteam(true) then
+      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
+      if tshControl["LocoBrake"] == nil then
+         ReplaceLines("HandBrake", "LocoBrake")             -- Havner's config
+      end
+   end
+
 
    -- Past this point the following global values should be set if they exist and are set to be used
    -- tshLine[], tshControl[], tshRange[]
@@ -975,8 +942,9 @@ function TrySetControl(key, value)
    local notches = tshNotches[key]
    local detent = tshCenterDetent[key]
    local step = tshStep[key]
+   local force = tshForceUpdate[key]
 
-   if control and value >= 0.0 and value <= 1.0 and ValueChanged(previous, value) then
+   if control and value >= 0.0 and value <= 1.0 and (force or ValueChanged(previous, value)) then
       local saved_value = value
 
       if not notches and detent and value > (0.5 - detent / 2) and value < (0.5 + detent / 2) then
