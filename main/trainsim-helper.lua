@@ -1083,9 +1083,88 @@ function DetectDABpbzkfa(DisablePopup) -- Cologne - Koblenz
       Call("ControlExists", "Destination", 0) == 1 and
       Call("ControlExists", "InstrumentLights", 0) == 1 and
       Call("ControlExists", "ForceBar", 0) == 1 and
-      Call("ControlExists", "ForceBar", 0) == 1
+      Call("ControlExists", "BrakeBar", 0) == 1
    then
       if not DisablePopup then DisplayPopup("DABpbzkfa (New PZB) detected") end
+      return 1
+   end
+end
+
+function DetectBR189_MK(DisablePopup) -- Mannheim - Karlruhe
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 1 and
+      Call("GetControlMaximum", "VSoll", 0) == 160 and
+      Call("ControlExists", "PZBEnable", 0) == 1 and
+      Call("ControlExists", "PZB_1000hz_Control", 0) == 1 and
+      Call("ControlExists", "LZBEnable", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "VigilEnable", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "GlarePanel_L", 0) == 1 and
+      Call("ControlExists", "CabAmmeter", 0) == 1 and
+      Call("ControlExists", "SpeedoGuide", 0) == 1 and
+      Call("ControlExists", "PantoMovement", 0) == 1 and
+      Call("ControlExists", "TrackLimit", 0) == 1 and
+      Call("ControlExists", "DynamicBrakeFanSound", 0) == 1 and
+      Call("ControlExists", "TrainBrakeOnly", 0) == 0 and
+      Call("ControlExists", "CamInCab", 0) == 1 and
+      Call("ControlExists", "PowerBar", 0) == 1 and
+      Call("ControlExists", "CircuitBreakerSwitch", 0) == 1 and
+      Call("ControlExists", "ForceBug", 0) == 1 and
+      Call("ControlExists", "DialLight", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR189 (MK) detected") end
+      return 1
+   end
+end
+
+function DetectBR425(DisablePopup) -- Mannheim - Karlsruhe
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 1 and
+      Call("GetControlMaximum", "VSoll", 0) == 180 and
+      Call("ControlExists", "PZBEnable", 0) == 1 and
+      Call("ControlExists", "PZB_1000hz_Control", 0) == 1 and
+      Call("ControlExists", "LZBEnable", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "VigilEnable", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 0 and
+      Call("ControlExists", "Effort", 0) == 1 and
+      Call("ControlExists", "ServiceBrake", 0) == 1 and
+      Call("ControlExists", "Amp", 0) == 1 and
+      Call("ControlExists", "HandBrake", 0) == 1 and
+      Call("ControlExists", "Tilt", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("BR425 detected") end
+      return 1
+   end
+end
+
+function DetectICE3M_MK(DisablePopup) -- Mannheim - Karlsruhe
+   if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 1 and
+      Call("GetControlMaximum", "VSoll", 0) == 350 and
+      Call("GetControlMaximum", "Headlights", 0) == 5 and
+      Call("ControlExists", "PZBEnable", 0) == 1 and
+      Call("ControlExists", "PZB_1000", 0) == 1 and
+      Call("ControlExists", "LZBEnable", 0) == 1 and
+      Call("ControlExists", "LZB_End", 0) == 1 and
+      Call("ControlExists", "VigilEnable", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 and
+      Call("ControlExists", "DoorsOpenClose", 0) == 0 and
+      Call("ControlExists", "RolloL", 0) == 0 and
+      Call("ControlExists", "RolloR", 0) == 0 and
+      Call("ControlExists", "Amp", 0) == 0 and
+      Call("ControlExists", "HandBrake", 0) == 0 and
+      Call("ControlExists", "Tilt", 0) == 0 and
+      Call("ControlExists", "CircuitBreakerSwitch", 0) == 1 and
+      Call("ControlExists", "WiperSwitch", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("ICE 3M (MK) detected") end
       return 1
    end
 end
@@ -1162,10 +1241,11 @@ function DetectICE2Cab(DisablePopup) -- Hamburg - Hanover
    end
 end
 
-function DetectICE3(DisablePopup) -- Hamburg - Hanover
+function DetectICE3M(DisablePopup) -- Hamburg - Hanover
    if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
       Call("ControlExists", "VSoll", 0) == 1 and
       Call("GetControlMaximum", "VSoll", 0) == 350 and
+      Call("GetControlMaximum", "Headlights", 0) == 2 and
       Call("ControlExists", "PZBEnable", 0) == 1 and
       Call("ControlExists", "PZB_1000", 0) == 1 and
       Call("ControlExists", "LZBEnable", 0) == 1 and
@@ -1179,9 +1259,11 @@ function DetectICE3(DisablePopup) -- Hamburg - Hanover
       Call("ControlExists", "RolloR", 0) == 0 and
       Call("ControlExists", "Amp", 0) == 0 and
       Call("ControlExists", "HandBrake", 0) == 0 and
-      Call("ControlExists", "Tilt", 0) == 0
+      Call("ControlExists", "Tilt", 0) == 0 and
+      Call("ControlExists", "CircuitBreakerSwitch", 0) == 0 and
+      Call("ControlExists", "WiperSwitch", 0) == 0
    then
-      if not DisablePopup then DisplayPopup("ICE 3 detected") end
+      if not DisablePopup then DisplayPopup("ICE 3M detected") end
       return 1
    end
 end
@@ -1230,7 +1312,9 @@ function DetectBR189(DisablePopup) -- Academy
       Call("ControlExists", "CamInCab", 0) == 1 and
       Call("ControlExists", "PowerBar", 0) == 1 and
       Call("ControlExists", "CabDirection", 0) == 1 and
-      Call("ControlExists", "PowerBar", 0) == 1
+      Call("ControlExists", "CircuitBreakerSwitch", 0) == 0 and
+      Call("ControlExists", "ForceBug", 0) == 0 and
+      Call("ControlExists", "Dial Light", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR189 detected") end
       return 1
@@ -1480,6 +1564,25 @@ function DetectGE44_DTM(DisablePopup) -- Donner Pass addon
       Call("ControlExists", "CabHeater", 0) == 1
    then
       if not DisablePopup then DisplayPopup("GE44 (DTM) detected") end
+      return 1
+   end
+end
+
+function DetectF40PH(DisablePopup) -- Soldier Summit
+   if Call("ControlExists", "StrobeLights", 0) == 1 and
+      Call("ControlExists", "NumberLights", 0) == 1 and
+      Call("ControlExists", "CabLight", 0) == 1 and
+      Call("ControlExists", "LeftArm", 0) == 1 and
+      Call("ControlExists", "LeftBlind", 0) == 1 and
+      Call("ControlExists", "RightArm", 0) == 1 and
+      Call("ControlExists", "RightBlind", 0) == 1 and
+      Call("ControlExists", "InstrumentLights", 0) == 1 and
+      Call("ControlExists", "UN_units", 0) == 1 and
+      Call("ControlExists", "ClassLights", 0) == 1 and
+      Call("ControlExists", "StepsLight", 0) == 0 and
+      Call("ControlExists", "StepLights", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("F40PH detected") end
       return 1
    end
 end

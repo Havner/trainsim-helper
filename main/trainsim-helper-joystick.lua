@@ -181,15 +181,7 @@ function ConfigureJoystick()
       tshNotches["CombinedThrottle"] = {0, 0.1, 0.2, 0.33, 0.5, 0.6, 0.7, 0.81, 1}
       GenerateEqualNotches(21, "CruiseCtl")                 -- (0,100)
       tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
-
-      -- Throttle
-      --tshRange["CombinedThrottle"] = {0.5, 1}
-      --tshNotches["CombinedThrottle"] = {0.5, 0.6, 0.7, 0.81, 1}
-      -- TrainBrake
-      --tshControl["TrainBrake"] = tshControl["CombinedThrottle"]
-      --tshRange["TrainBrake"] = {0, 0.5}
-      --tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.33, 0.5}
-      --InvInvert("TrainBrake")
+      --SplitCombinedWithAt("TrainBrake", 0.5)
 
    elseif DetectClass450() then
       tshNotches["CombinedThrottle"] = {-1, -0.81, -0.68, -0.56, -0.44, -0.31, -0.18, 0, 0.2, 0.4, 0.6, 0.8, 1}  -- Lower half based on sounds, not .bin
@@ -200,15 +192,7 @@ function ConfigureJoystick()
       tshRange["CombinedThrottle"] = {-1, 1}                -- Ignore emergency values on CombinedThrottle (-1.5, -1)
       GenerateEqualNotches(4, "Reverser")                   -- (0,3), 4 state Virtual
       InvInvert("Reverser")                                 -- Invert the invert, as this Virtual is inverted compared to the simple one
-
-      -- Throttle
-      --tshRange["CombinedThrottle"] = {0, 1}
-      --tshNotches["CombinedThrottle"] = {0, 0.25, 0.5, 0.75, 1}
-      -- TrainBrake
-      --tshControl["TrainBrake"] = tshControl["CombinedThrottle"]
-      --tshRange["TrainBrake"] = {-1, 0}
-      --tshNotches["TrainBrake"] = {-1.5, -1, -0.938, -0.875, -0.812, -0.75, -0.688, -0.625, -0.562, -0.5, -0.438, -0.375, -0.312, -0.25, 0}
-      --InvInvert("TrainBrake")
+      --SplitCombinedWithAt("TrainBrake", 0)
 
    elseif DetectClass360() then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
@@ -216,15 +200,7 @@ function ConfigureJoystick()
       tshRange["CombinedThrottle"] = {-1, 1}                -- Ignore emergency values (-1.5, -1)
       GenerateEqualNotches(4, "Reverser")                   -- (0,3), 4 state Virtual
       InvInvert("Reverser")                                 -- Invert the invert, as this Virtual is inverted compared to the simple one
-
-      -- Throttle
-      --tshRange["CombinedThrottle"] = {0, 1}
-      --tshNotches["CombinedThrottle"] = {0, 0.2, 0.4, 0.6, 0.8, 1}
-      -- TrainBrake
-      --tshControl["TrainBrake"] = tshControl["CombinedThrottle"]
-      --tshRange["TrainBrake"] = {-1, 0}
-      --tshNotches["TrainBrake"] = {-1.5, -1, -0.95, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, 0}
-      --InvInvert("TrainBrake")
+      --SplitCombinedWithAt("TrainBrake", 0)
 
    elseif DetectClass90_ADV_AP() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -342,15 +318,7 @@ function ConfigureJoystick()
       GenerateEqualNotches(20, "CombinedThrottle")          -- (-9, 10)
       tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
-
-      -- Throttle
-      --tshRange["CombinedThrottle"] = {0, 10}
-      --GenerateEqualNotches(11, "CombinedThrottle")
-      -- DynamicBrake
-      --tshControl["DynamicBrake"] = tshControl["CombinedThrottle"]
-      --tshRange["DynamicBrake"] = {-9, 0}
-      --GenerateEqualNotches(10, "DynamicBrake")
-      --InvInvert("DynamicBrake")
+      --SplitCombinedWithAt("DynamicBrake", 0)
 
    elseif DetectBR155() then
       ReplaceLines("Gear", "DynamicBrake")                  -- Havner's config
@@ -372,6 +340,7 @@ function ConfigureJoystick()
       tshNotches["TrainBrake"] = {-1, 0, 1}                 -- TrainBrake is self lapped here, add some notches to help
       tshStep["TrainBrake"] = 0.03                          -- Don't apply the lever fully on lever deflection
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
+      --SplitCombinedWithAt("DynamicBrake", 0)              -- Conflicts with ReplaceLines() here
 
    elseif DetectBR232() then
       GenerateEqualNotches(16, "Throttle")                  -- (0,15)
@@ -397,14 +366,32 @@ function ConfigureJoystick()
       GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
       tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
-   elseif DetectBR426() then
+   elseif DetectBR189_MK() then
+      ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
+      tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575, 0.65, 0.85, 1} -- (0,1)
+      GenerateEqualNotches(29, "CruiseCtl")                 -- (0,0.6)
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
+
+   elseif DetectBR425() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
-      tshRange["CruiseCtl"] = {0, 19/31}                    -- By default it goes to 300 kph, this loco can do 180 kph
       GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
       tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
 
-   elseif DetectICE2() or DetectICE2Cab() or DetectICE3() or DetectICET() then
+   elseif DetectICE3M_MK() then
+      ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
+      tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575, 0.65, 0.85, 1} -- (0,1)
+      GenerateEqualNotches(34, "CruiseCtl")                 -- (0,1)
+      tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
+
+   elseif DetectBR426() then
+      ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
+      tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
+      tshRange["CruiseCtl"] = {0, 18/30}                    -- By default it goes to 300 kph, this loco can do 180 kph
+      GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
+      tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
+
+   elseif DetectICE2() or DetectICE2Cab() or DetectICE3M() or DetectICET() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
       GenerateEqualNotches(31, "CruiseCtl")                 -- (0,1)
@@ -445,6 +432,7 @@ function ConfigureJoystick()
       GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
       tshForceUpdate["Throttle"] = true
       tshForceUpdate["DynamicBrake"] = true
+      HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
       local WarningText = "THIS LOCO IS BUGGED\n"
       WarningText = WarningText .. "Please read this as you can help:\n\n"
@@ -471,23 +459,19 @@ function ConfigureJoystick()
    elseif DetectGE44_DTM() then
       GenerateEqualNotches(9, "Throttle")                   -- (0,1)
 
-   elseif DetectM8() then
-      tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
-      tshControl["DynamicBrake"] = nil                      -- DynamicBrake kinda exists here but is useless
+   elseif DetectF40PH() then
+      GenerateEqualNotches(9, "Throttle")                   -- (0,1)
+      GenerateEqualNotches(9, "DynamicBrake")               -- (0,1)
 
    elseif DetectF59PHI() or DetectF59PH() or DetectCabCar() then
       tshNotches["CombinedThrottle"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}  -- Not a simple case as the implementation merges two controls with different notches
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
+      --SplitCombinedWithAt("DynamicBrake", 0.5)
 
-      -- Throttle
-      --tshRange["CombinedThrottle"] = {0.5, 1}
-      --tshNotches["CombinedThrottle"] = {0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1}
-      -- DynamicBrake
-      --tshControl["DynamicBrake"] = tshControl["CombinedThrottle"]
-      --tshRange["DynamicBrake"] = {0, 0.5}
-      --tshNotches["DynamicBrake"] = {0, 0.0555, 0.1111, 0.1666, 0.2222, 0.2777, 0.3333, 0.3888, 0.4444, 0.5}
-      --InvInvert("DynamicBrake")
+   elseif DetectM8() then
+      tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, -0.1, 0, 0.1, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
+      tshControl["DynamicBrake"] = nil                      -- DynamicBrake kinda exists here but is useless
 
    elseif DetectAcela() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -528,13 +512,7 @@ function ConfigureJoystick()
       tshNotches["CombinedThrottle"] = {0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1} -- (-1, 1), It's continous below 0 (DynamicBrake)
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
-
-      -- Throttle
-      --tshRange["CombinedThrottle"] = {0, 1}
-      -- DynamicBrake
-      --tshControl["DynamicBrake"] = tshControl["CombinedThrottle"]
-      --tshRange["DynamicBrake"] = {-1, 0}
-      --InvInvert("DynamicBrake")
+      --SplitCombinedWithAt("DynamicBrake", 0)
 
    elseif DetectES44AC() then
       GenerateEqualNotches(9, "Throttle")                   -- (0,1)
@@ -933,6 +911,17 @@ function GenerateEqualNotches(count, key)
       end
       tshNotches[key] = notches
    end
+end
+
+function SplitCombinedWithAt(brake, split)
+   local range = tshRange["CombinedThrottle"] or {0,1}
+   -- Throttle
+   tshRange["CombinedThrottle"] = {split, range[2]}
+   -- SomeBrake
+   tshControl[brake] = tshControl["CombinedThrottle"]
+   tshRange[brake] = {range[1], split}
+   tshNotches[brake] = tshNotches["CombinedThrottle"]
+   InvInvert(brake)
 end
 
 function TrySetControl(key, value)

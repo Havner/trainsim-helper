@@ -1,3 +1,11 @@
+0.10beta
+ - SplitCombinedWithAt(brake, value) function added. It can easily
+   be used to split combined throttle into two axes. First arg
+   defines with what brake (the second axis), second arg at what
+   value. This will usually be 0.5 for (0,1) or 0 for (-1,1).
+   I've added its usage (commented out by default) to most locos.
+ - Configs for Soldier Summit and Mannheim - Karlsruhe
+
 0.9.1
  - Tried to do UP Gas Turbine config, but the loco is bugged.
  - BR155 config.
