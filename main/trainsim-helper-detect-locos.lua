@@ -1040,6 +1040,33 @@ function DetectClass166(DisablePopup) -- EU Pack
    end
 end
 
+function DetectClass456(DisablePopup) -- South Eastern Line
+   if Call("ControlExists", "Active", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "Startup", 0) == 1 and
+      Call("ControlExists", "EngineStart", 0) == 1 and
+      Call("ControlExists", "EngineStop", 0) == 1 and
+      Call("ControlExists", "Regulator", 0) == 1 and
+      Call("ControlExists", "Interlock", 0) == 1 and
+      Call("ControlExists", "GuardSignal", 0) == 1 and
+      Call("ControlExists", "DriverSignal", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == 0 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 10000 and
+      Call("GetControlMinimum", "Current", 0) == 0 and
+      Call("GetControlMaximum", "Current", 0) == 100000 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 10 and
+      Call("GetControlMaximum", "TrainBrakeCylinderPressureBAR", 0) == 7 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 120
+   then
+      if not DisablePopup then DisplayPopup("Class 456 detected") end
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR103TEE_vRailroads_Expert(DisablePopup) -- Expert Line

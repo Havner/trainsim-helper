@@ -386,6 +386,11 @@ function ConfigureJoystick()
 
    elseif DetectClass166() then
       tshNotches["CombinedThrottle"] = {0, 0.08, 0.18, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9, 1}
+      
+   elseif DetectClass456() then
+      GenerateEqualNotches(5, "Throttle")                   -- (0,1)
+      GenerateEqualNotches(5, "TrainBrake")
+      tshRange["TrainBrake"] = {0, 0.75}                    -- ignore Emergency at 0.1 pos
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
