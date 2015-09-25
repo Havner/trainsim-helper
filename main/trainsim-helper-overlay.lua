@@ -97,7 +97,9 @@ function ConfigureOverlay()
       tshControlValues["BackPressure"] = "BackPressure"
    end
 
-   if Call("ControlExists", "SteamChestGaugePSI", 0) == 1 then
+   if Call("ControlExists", "RealSteamChestPressure", 0) == 1 then  -- Connie
+      tshControlValues["SteamChestPressure"] = "RealSteamChestPressure"
+   elseif Call("ControlExists", "SteamChestGaugePSI", 0) == 1 then
       tshControlValues["SteamChestPressure"] = "SteamChestGaugePSI"
    elseif Call("ControlExists", "SteamChestGauge", 0) == 1 then
       tshControlValues["SteamChestPressure"] = "SteamChestGauge"
@@ -326,6 +328,8 @@ function ConfigureOverlay()
 
    if Call("ControlExists", "Dynamo", 0) == 1 then  -- FEF-3
       tshControlValues["Dynamo"] = "Dynamo"
+   elseif Call("ControlExists", "GeneratorThrottle", 0) == 1 then  -- Connie
+      tshControlValues["Dynamo"] = "GeneratorThrottle"
    end
 
    if Call("ControlExists", "CompressorThrottle", 0) == 1 then  -- FEF-3
@@ -356,11 +360,19 @@ function ConfigureOverlay()
       tshControlValues["SteamManifold"] = "Steam Manifold"
    end
 
-   if Call("ControlExists", "LubricatorSteamValve", 0) == 1 then  -- 2F
+   if Call("ControlExists", "LubricatorSteamThrottle", 0) == 1 then  -- Connie
+      tshControlValues["LubricatorSteam"] = "LubricatorSteamThrottle"
+   elseif Call("ControlExists", "LubricatorSteamValve", 0) == 1 then  -- 2F
       tshControlValues["LubricatorSteam"] = "LubricatorSteamValve"
    end
 
-   if Call("ControlExists", "LubricatorOilValve", 0) == 1 then  -- 2F
+   if Call("ControlExists", "LubricatorMainValve", 0) == 1 then  -- Connie
+      tshControlValues["LubricatorValve"] = "LubricatorMainValve"
+   end
+
+   if Call("ControlExists", "LubricatorOpenClose", 0) == 1 then  -- Connie
+      tshControlValues["Lubricator"] = "LubricatorOpenClose"
+   elseif Call("ControlExists", "LubricatorOilValve", 0) == 1 then  -- 2F
       tshControlValues["Lubricator"] = "LubricatorOilValve"
    elseif Call("ControlExists", "SteamShutOffR", 0) == 1 then  -- Q1
       tshControlValues["Lubricator"] = "SteamShutOffR"
@@ -383,7 +395,9 @@ function ConfigureOverlay()
       tshControlValues["SanderSteam"] = "SanderSteam"
    end
 
-   if Call("ControlExists", "FrontSander", 0) == 1 then  -- J50
+   if Call("ControlExists", "SanderLever", 0) == 1 then  -- Connie
+      tshControlValues["Sander"] = "SanderLever"
+   elseif Call("ControlExists", "FrontSander", 0) == 1 then  -- J50
       tshControlValues["Sander"] = "FrontSander"
    elseif Call("ControlExists", "VirtualSander", 0) == 1 then  -- 2F
       tshControlValues["Sander"] = "VirtualSander"
@@ -437,11 +451,19 @@ function ConfigureOverlay()
       tshControlValues["ControlValve"] = "ControlValve"
    end
 
-   if Call("ControlExists", "Tender_WaterLeverR", 0) == 1 then  -- Q1
+   if Call("ControlExists", "BlowerSteamThrottle", 0) == 1 then  -- Connie
+      tshControlValues["BlowerSteam"] = "BlowerSteamThrottle"
+   end
+
+   if Call("ControlExists", "InjectorSteamThrottleL", 0) == 1 then  -- Connie
+      tshControlValues["ExhaustInjectorShutOff"] = "InjectorSteamThrottleL"
+   elseif Call("ControlExists", "Tender_WaterLeverR", 0) == 1 then  -- Q1
       tshControlValues["ExhaustInjectorShutOff"] = "Tender_WaterLeverR"
    end
 
-   if Call("ControlExists", "Tender_WaterLeverL", 0) == 1 then  -- Q1
+   if Call("ControlExists", "InjectorSteamThrottleR", 0) == 1 then  -- Connie
+      tshControlValues["LiveInjectorShutOff"] = "InjectorSteamThrottleR"
+   elseif Call("ControlExists", "Tender_WaterLeverL", 0) == 1 then  -- Q1
       tshControlValues["LiveInjectorShutOff"] = "Tender_WaterLeverL"
    end
 
@@ -517,7 +539,9 @@ function ConfigureOverlay()
       tshControlValues["FeedWaterPump"] = "FWPump"
    end
 
-   if Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
+   if Call("ControlExists", "InjectorLeverL", 0) == 1 then  -- Connie
+      tshControlValues["ExhaustInjectorSteam"] = "InjectorLeverL"
+   elseif Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
       tshControlValues["ExhaustInjectorSteam"] = "Left Steam"
    elseif Call("ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
       tshControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamLever"
@@ -537,7 +561,7 @@ function ConfigureOverlay()
       tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
    end
 
-   if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
+   if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3, Connie
       tshControlValues["LiveInjectorSteam"] = "InjectorLeverR"
    elseif Call("ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
       tshControlValues["LiveInjectorSteam"] = "Right Steam"
@@ -561,6 +585,8 @@ function ConfigureOverlay()
 
    if Call("ControlExists", "SafetyValveEngineer", 0) == 1 then  -- FEF-3
       tshControlValues["SafetyValve1"] = "SafetyValveEngineer"
+   elseif Call("ControlExists", "SafetyValveVolume", 0) == 1 then  -- Connie
+      tshControlValues["SafetyValve1"] = "SafetyValveVolume"
    elseif Call("ControlExists", "SafetyValve1", 0) == 1 then
       tshControlValues["SafetyValve1"] = "SafetyValve1"
    end
@@ -569,10 +595,6 @@ function ConfigureOverlay()
       tshControlValues["SafetyValve2"] = "SafetyValveFireman"
    elseif Call("ControlExists", "SafetyValve2", 0) == 1 then
       tshControlValues["SafetyValve2"] = "SafetyValve2"
-   end
-
-   if Call("ControlExists", "SafetyValveUnmuffled", 0) == 1 then  -- FEF-3
-      tshControlValues["SafetyValve3"] = "SafetyValveUnmuffled"
    end
 
    -- Warning values
@@ -623,7 +645,7 @@ function ConfigureOverlay()
 
    -- Do some common automagic, this way we don't need to do that per loco
 
-   -- For SmokeBox brakes (FEF-3 and US Advanced), TrainBrake pressures are internal
+   -- For SmokeBox brakes (FEF-3, Connie and US Advanced), TrainBrake pressures are internal
    if tshUSAdvancedBrakes then
       tshControlValues["TrainBrakeCylinderPressure"] = nil
       tshStaticValues["TrainBrakeCylinderUnits"] = nil
@@ -662,7 +684,6 @@ function ConfigureOverlay()
 
    -- Steamers
 
-   -- Things common for the ADV and HUD versions of FEF-3
    if DetectFEF3_ADV_Smokebox(true) or DetectFEF3_HUD_Smokebox(true) then
       -- Hide the internal values
       tshControlValues["SteamChestPressure"] = nil
@@ -670,28 +691,34 @@ function ConfigureOverlay()
       tshControlValues["Stoking"] = nil
       tshControlValues["ExhaustInjectorSteam"] = nil
       tshControlValues["ExhaustInjectorWater"] = nil
-
-      -- If you want safety valves comment out the following 3 lines
-      tshControlValues["SafetyValve1"] = nil
-      tshControlValues["SafetyValve2"] = nil
-      tshControlValues["SafetyValve3"] = nil
-
+      -- Fix the Sander
+      tshControlValues["Sander"] = "Sander"
       -- Firebox is 0-5%, make it full range (0-100%)
-      tshControlValuesFunctions["FireboxMass"] =
-         function(value)
-            return value * 20
-         end
+      tshControlValuesFunctions["FireboxMass"] = function(value) return value * 20 end
       -- BackPressure needs to be converted
-      tshControlValuesFunctions["BackPressure"] =
-         function(value)
-            value = value - 0.3
-            if (value < 0) then
-               value = value * 100
-            else
-               value = value * 50
-            end
-            return value
-         end
+      tshControlValuesFunctions["BackPressure"] = function(value)
+         value = value - 0.3
+         if (value < 0) then value = value * 100 else value = value * 50 end
+         return value
+      end
+
+   elseif DetectConnie_ADV_Smokebox(true) then
+      -- Make the Sander {-1, 1}
+      tshControlValuesFunctions["Sander"] = function(value) return value * 2 - 1 end
+      -- BackPressure needs to be converted
+      tshControlValuesFunctions["BackPressure"] = function(value)
+         value = value - 0.3332
+         if (value < 0) then value = value * 90 else value = value * 45 end
+         return value
+      end
+
+   elseif DetectConnie_HUD_Smokebox(true) then
+      -- BackPressure needs to be converted
+      tshControlValuesFunctions["BackPressure"] = function(value)
+         value = value - 0.3332
+         if (value < 0) then value = value * 90 else value = value * 45 end
+         return value
+      end
 
    elseif Detect2FDockTank_ADV_MeshTools(true) then
       -- Make the Sander {-1, 1}

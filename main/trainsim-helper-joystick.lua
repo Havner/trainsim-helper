@@ -131,6 +131,12 @@ function ConfigureJoystick()
       tshControl["Reverser"] = "Reverser"                   -- Use regular controls instead of My* versions,
       tshControl["LocoBrake"] = "EngineBrakeControl"        -- they exist, but don't work in the HUD version
 
+   elseif DetectConnie_ADV_Smokebox() then
+      tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
+
+   elseif DetectConnie_HUD_Smokebox() then
+      -- only overlay
+
    elseif Detect2FDockTank_ADV_MeshTools() then
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
 
@@ -534,6 +540,8 @@ function ConfigureJoystick()
 
    end
 
+   -- Do some common automagic, this way we don't need to do that per loco
+
    -- Do this for all steamers, even already detected ones
    if DetectGenericSteam(true) then
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
@@ -688,7 +696,7 @@ function FindLargeEjector()
 end
 
 function FindBlower()
-   if Call("ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3
+   if Call("ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3, Connie
       return "BlowerControlValve"
    elseif Call("ControlExists", "Blower", 0) == 1 then
       return "Blower"
@@ -714,6 +722,8 @@ end
 function FindExhaustSteam()
    if Call("ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
       return "FiredoorDamper"
+   elseif Call("ControlExists", "InjectorLeverL", 0) == 1 then  -- Connie
+      return "InjectorLeverL"
    elseif Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
       return "Left Steam"
    elseif Call("ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
@@ -740,7 +750,7 @@ function FindExhaustWater()
 end
 
 function FindLiveSteam()
-   if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3
+   if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3, Connie
       return "InjectorLeverR"
    elseif Call("ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
       return "Right Steam"

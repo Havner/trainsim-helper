@@ -62,6 +62,48 @@ function DetectFEF3_HUD_Smokebox(DisablePopup) -- Sherman Hill addon
    end
 end
 
+function DetectConnie_ADV_Smokebox(DisablePopup) -- Horseshoe Curve addon
+   if Call("ControlExists", "LubricatorMainValve", 0) == 1 and
+      Call("ControlExists", "LubricatorSteamThrottle", 0) == 1 and
+      Call("ControlExists", "CabLightOn", 0) == 1 and
+      Call("ControlExists", "Vent", 0) == 1 and
+      Call("ControlExists", "BellSound", 0) == 1 and
+      Call("ControlExists", "FireboxPedal", 0) == 1 and
+      Call("ControlExists", "TenderLight", 0) == 1 and
+      Call("ControlExists", "LocoHeadlight", 0) == 1 and
+      Call("ControlExists", "WaterSightGlass", 0) == 1 and
+      Call("ControlExists", "BlowerControlValve", 0) == 1 and
+      Call("ControlExists", "MaxCylCondensation", 0) == 1 and
+      Call("ControlExists", "Friction", 0) == 1 and
+      Call("ControlExists", "MRPSI", 0) == 1 and
+      Call("ControlExists", "SafetyValveVolume", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Consolidation (HUD, Smokebox) detected") end
+      return 1
+   end
+end
+
+function DetectConnie_HUD_Smokebox(DisablePopup) -- Horseshoe Curve addon
+   if Call("ControlExists", "LubricatorMainValve", 0) == 1 and
+      Call("ControlExists", "LubricatorSteamThrottle", 0) == 1 and
+      Call("ControlExists", "CabLightOn", 0) == 1 and
+      Call("ControlExists", "Vent", 0) == 1 and
+      Call("ControlExists", "BellSound", 0) == 1 and
+      Call("ControlExists", "FireboxPedal", 0) == 1 and
+      Call("ControlExists", "TenderLight", 0) == 1 and
+      Call("ControlExists", "LocoHeadlight", 0) == 1 and
+      Call("ControlExists", "WaterSightGlass", 0) == 0 and
+      Call("ControlExists", "BlowerControlValve", 0) == 0 and
+      Call("ControlExists", "MaxCylCondensation", 0) == 0 and
+      Call("ControlExists", "Friction", 0) == 0 and
+      Call("ControlExists", "MRPSI", 0) == 1 and
+      Call("ControlExists", "SafetyValveVolume", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Consolidation (HUD, Smokebox) detected") end
+      return 1
+   end
+end
+
 function Detect2FDockTank_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
    if Call("ControlExists", "Headcode1", 0) == 1 and
       Call("ControlExists", "MiddleLeftWindow", 0) == 1 and

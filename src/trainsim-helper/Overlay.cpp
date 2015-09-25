@@ -129,6 +129,7 @@ struct SimData {
 	Value<float>		fMasonsValve;
 	Value<float>		fSteamManifold;
 	Value<float>		fLubricatorSteam;
+	Value<float>		fLubricatorValve;
 	Value<float>		fLubricator;
 	Value<float>		fLubricatorWarming;
 	Value<float>		fSmallEjector;
@@ -148,6 +149,7 @@ struct SimData {
 	Value<float>		fBlowOffCockShutOffLeft;
 	Value<float>		fFeedWaterPumpShutOff;
 	Value<float>		fControlValve;
+	Value<float>		fBlowerSteam;
 	Value<float>		fExhaustInjectorShutOff;
 	Value<float>		fLiveInjectorShutOff;
 	Value<float>		fTenderWaterShutOff;
@@ -177,7 +179,6 @@ struct SimData {
 
 	Value<float>		fSafetyValve1;
 	Value<float>		fSafetyValve2;
-	Value<float>		fSafetyValve3;
 
 	// Warning values
 	Value<int>			nSunflower;
@@ -407,6 +408,7 @@ int FillData(SimData* data)
 		else if (!strcmp("MasonsValve:", param))				data->fMasonsValve = value;
 		else if (!strcmp("SteamManifold:", param))				data->fSteamManifold = value;
 		else if (!strcmp("LubricatorSteam:", param))			data->fLubricatorSteam = value;
+		else if (!strcmp("LubricatorValve:", param))			data->fLubricatorValve = value;
 		else if (!strcmp("Lubricator:", param))					data->fLubricator = value;
 		else if (!strcmp("LubricatorWarming:", param))			data->fLubricatorWarming = value;
 		else if (!strcmp("SmallEjector:", param))				data->fSmallEjector = value;
@@ -426,6 +428,7 @@ int FillData(SimData* data)
 		else if (!strcmp("BlowOffCockShutOffLeft:", param))		data->fBlowOffCockShutOffLeft = value;
 		else if (!strcmp("FeedWaterPumpShutOff:", param))		data->fFeedWaterPumpShutOff = value;
 		else if (!strcmp("ControlValve:", param))				data->fControlValve = value;
+		else if (!strcmp("BlowerSteam:", param))				data->fBlowerSteam = value;
 		else if (!strcmp("ExhaustInjectorShutOff:", param))		data->fExhaustInjectorShutOff = value;
 		else if (!strcmp("LiveInjectorShutOff:", param))		data->fLiveInjectorShutOff = value;
 		else if (!strcmp("TenderWaterShutOff:", param))			data->fTenderWaterShutOff = value;
@@ -455,7 +458,6 @@ int FillData(SimData* data)
 
 		else if (!strcmp("SafetyValve1:", param))				data->fSafetyValve1 = value;
 		else if (!strcmp("SafetyValve2:", param))				data->fSafetyValve2 = value;
-		else if (!strcmp("SafetyValve3:", param))				data->fSafetyValve3 = value;
 
 		// Warning values
 		else if (!strcmp("Sunflower:", param))					data->nSunflower = value;
@@ -804,6 +806,7 @@ void RenderOverlay()
 	y = DrawString(eSteamDriverPrimary,		data.fSmallEjector,					x+59,	y, white, pSmallFont, "Small Ejector: %d %%", (int)(data.fSmallEjector()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fLubricatorWarming,			x+24,	y, white, pSmallFont, "Warming Lubricator: %d %%", (int)(data.fLubricatorWarming()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fLubricator,					x+80,	y, white, pSmallFont, "Lubricator: %d %%", (int)(data.fLubricator()*100));
+	y = DrawString(eSteamDriverSecondary,	data.fLubricatorValve,				x+46,	y, white, pSmallFont, "Valve Lubricator: %d %%", (int)(data.fLubricatorValve()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fLubricatorSteam,				x+38,	y, white, pSmallFont, "Steam Lubricator: %d %%", (int)(data.fLubricatorSteam()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fSteamManifold,				x+47,	y, white, pSmallFont, "Steam Manifold: %d %%", (int)(data.fSteamManifold()*100));
 	y = DrawString(eSteamDriverSecondary,	data.fMasonsValve,					x+57,	y, white, pSmallFont, "Masons Valve: %d %%", (int)(data.fMasonsValve()*100));
@@ -821,6 +824,7 @@ void RenderOverlay()
 	y = DrawString(eSteamFiremanSecondary,	data.fTenderWaterShutOff,			x+21,	y, white, pSmallFont, "Tender Water Shut Off: %d %%", (int)(data.fTenderWaterShutOff()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fLiveInjectorShutOff,			x+30,	y, white, pSmallFont, "Live Injector Shut Off: %d %%", (int)(data.fLiveInjectorShutOff()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fExhaustInjectorShutOff,		x+4,	y, white, pSmallFont, "Exhaust Injector Shut Off: %d %%", (int)(data.fExhaustInjectorShutOff()*100));
+	y = DrawString(eSteamFiremanSecondary,	data.fBlowerSteam,					x+68,	y, white, pSmallFont, "Steam Blower: %d %%", (int)(data.fBlowerSteam()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fControlValve,					x+74,	y, white, pSmallFont, "Control Valve: %d %%", (int)(data.fControlValve()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fFeedWaterPumpShutOff,			x+0,	y, white, pSmallFont, "Feedwater Pump Shut Off: %d %%", (int)(data.fFeedWaterPumpShutOff()*100));
 	y = DrawString(eSteamFiremanSecondary,	data.fBlowOffCockShutOffLeft,		x+16,	y, white, pSmallFont, "Blow Off Cock Shut Off: %d %%", (int)(data.fBlowOffCockShutOffLeft()*100));
@@ -829,7 +833,6 @@ void RenderOverlay()
 	y = g_nHeight - yD;
 	yP = y;
 
-	y = DrawString(eSteamSafety,			data.fSafetyValve3,					x+76,	y, white, pSmallFont, "Safety Valve 3: %d %%", (int)(data.fSafetyValve3()*100));
 	y = DrawString(eSteamSafety,			data.fSafetyValve2,					x+76,	y, white, pSmallFont, "Safety Valve 2: %d %%", (int)(data.fSafetyValve2()*100));
 	y = DrawString(eSteamSafety,			data.fSafetyValve1,					x+76,	y, white, pSmallFont, "Safety Valve 1: %d %%", (int)(data.fSafetyValve1()*100));
 	y = NextSection(y, &yP, yD);

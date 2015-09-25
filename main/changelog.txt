@@ -8,6 +8,7 @@
  - made GT3 Gas Turbine work, requires repatching
  - Small fixes for A2 Peppercorn and GT3
  - Class 76 (Woodhead)
+ - Consolidation (SmokeBox)
 
 0.9.1
  - Tried to do UP Gas Turbine config, but the loco is bugged.
