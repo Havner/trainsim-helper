@@ -750,6 +750,24 @@ function DetectClass37_Thomson(DisablePopup) -- West Highland Line
    end
 end
 
+function DetectClass76(DisablePopup) -- Woodhead
+   if Call("ControlExists", "Prueba", 0) == 1 and
+      Call("ControlExists", "Prueba2", 0) == 1 and
+      Call("ControlExists", "RegBrake", 0) == 1 and
+      Call("ControlExists", "SelPanto", 0) == 1 and
+      Call("ControlExists", "MarkerLight04", 0) == 1 and
+      Call("ControlExists", "ShiftLights", 0) == 1 and
+      Call("ControlExists", "CabLightControl", 0) == 1 and
+      Call("ControlExists", "Gatillo", 0) == 1 and
+      Call("ControlExists", "FreighTransfer", 0) == 1 and
+      Call("ControlExists", "LineVoltimeter", 0) == 1 and
+      Call("ControlExists", "ArmatureAmp", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Class 76 detected") end
+      return 1
+   end
+end
+
 function DetectClass50_MeshTools(DisablePopup) -- Settle to Carlisle addon
    if Call("ControlExists", "rightvisor", 0) == 1 and
       Call("ControlExists", "LeftVisor", 0) == 1 and

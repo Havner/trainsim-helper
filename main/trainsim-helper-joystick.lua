@@ -275,6 +275,10 @@ function ConfigureJoystick()
       tshRange["Throttle"] = {0.2, 1}                       -- Ignore Off values (0, 0.2)
       tshRange["TrainBrake"] = {0.2, 0.7857}                -- Ignore Release (0, 0.2) and Emergency values (0.7857, 1)
 
+   elseif DetectClass76() then
+      GenerateEqualNotches(20, "Throttle")
+      GenerateEqualNotches(21, "DynamicBrake")
+
    elseif DetectClass50_MeshTools() then
       GenerateEqualNotches(8, "Throttle")                   -- (0,1)
       GenerateEqualNotches(4, "Reverser")                   -- (0,3), 4 state Virtual
@@ -648,7 +652,9 @@ function FindLocoBrake()
 end
 
 function FindDynamicBrake()
-   if Call("ControlExists", "VirtualDynamicBrake", 0) == 1 then
+   if Call("ControlExists", "RegBrake", 0) == 1 then  -- Class 76
+      return "RegBrake"
+   elseif Call("ControlExists", "VirtualDynamicBrake", 0) == 1 then
       return "VirtualDynamicBrake"
    elseif Call("ControlExists", "DynamicBrake", 0) == 1 then
       return "DynamicBrake"
