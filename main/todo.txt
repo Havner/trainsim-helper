@@ -8,7 +8,12 @@
 - Clean up the LUA code:
   - PZB warning for RSC German locos
 - Alternative script for locos with broken scripts
-- FEF-3 joy: set variables in FEF3 section?
+
+- tsh-detect-locos.lua
+- tsh-detect-values.lua
+- use detect values for overlay
+- tsh-functions.lua
+- UINT_MAX for VSoll in BR189?
 
 Things to consider for the very distant future:
 - Make the overlay display values in the data file it doesn't know about

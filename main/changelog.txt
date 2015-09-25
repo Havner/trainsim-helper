@@ -4,11 +4,24 @@
    defines with what brake (the second axis), second arg at what
    value. This will usually be 0.5 for (0,1) or 0 for (-1,1).
    I've added its usage (commented out by default) to most locos.
- - Configs for Soldier Summit and Mannheim - Karlsruhe
- - made GT3 Gas Turbine work, requires repatching
+ - This version does much more autodetection (notches, replaces)
+   than the previous ones (it actually started a little in 0.9.1).
+   The aim is to minimize the custom locos configs. Based on general
+   trends I grouped some common stuff in "automagic" sections in both
+   the joystick and the overlay configuration functions. This also
+   should cause the non configured locos (ones I don't have) to behave
+   better by default (hopefully). Tell me if I broke something.
+ - SPLIT INTO SEVERAL FILES
+ - Configs for Soldier Summit and Mannheim - Karlsruhe locos
+ - Made GT3 Gas Turbine work, requires repatching
  - Small fixes for A2 Peppercorn and GT3
  - Class 76 (Woodhead)
  - Consolidation (SmokeBox)
+ - WARNING: if you've previously seen a message box that some loco
+   has been detected and now you see "no custom configuration" it
+   doesn't mean it's bad. I've done some generic detections here
+   and there based on ControlValues and some custom configurations has
+   become redundant. Test the loco, if it works fine, it's fine.
 
 0.9.1
  - Tried to do UP Gas Turbine config, but the loco is bugged.

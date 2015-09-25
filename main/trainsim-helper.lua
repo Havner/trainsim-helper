@@ -663,6 +663,7 @@ function DetectClass35(DisablePopup) -- Riviera Line addon
    end
 end
 
+-- UNUSED
 function DetectClass03(DisablePopup) -- West Somerset Railway addon
    if Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
       Call("ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and

@@ -644,6 +644,8 @@ function ConfigureOverlay()
    end
 
    -- Do some common automagic, this way we don't need to do that per loco
+   -- This section tries to autodetect several commonly used things
+   -- based on the ControlValues detected above
 
    -- For SmokeBox brakes (FEF-3, Connie and US Advanced), TrainBrake pressures are internal
    if tshUSAdvancedBrakes then
@@ -654,7 +656,7 @@ function ConfigureOverlay()
    -- Rescale CombinedThrottle to (-1,1) if it's (0,1) or to (-x/y,1) if it's (-x,y)
    if tshControlValues["CombinedThrottle"] then
       tshRescaleCombinedThrottle = GetControlRange(tshControlValues["CombinedThrottle"])
-      if not tshRescaleCombinedThrottle then  -- Meaning it's (0,1)
+      if not tshRescaleCombinedThrottle[1] then  -- Meaning it's (0,1)
          tshControlValuesFunctions["CombinedThrottle"] = function(value) return value * 2 - 1 end
       elseif tshRescaleCombinedThrottle[1] < 0 and tshRescaleCombinedThrottle[2] >= 2 then
          tshControlValuesFunctions["CombinedThrottle"] = function(value) return value / tshRescaleCombinedThrottle[2] end
@@ -664,12 +666,17 @@ function ConfigureOverlay()
    -- Rescale Throttle to (x,1)
    if tshControlValues["Throttle"] then
       tshRescaleThrottle = GetControlRange(tshControlValues["Throttle"])
-      if tshRescaleThrottle and tshRescaleThrottle[2] >= 2 then
+      if tshRescaleThrottle[1] and tshRescaleThrottle[2] >= 2 then
          tshControlValuesFunctions["Throttle"] = function(value) return value / tshRescaleThrottle[2] end
       end
    end
 
-   -- For CombinedThrottle split hide the other element
+   -- Disable regular damper if it's split (l/r or f/r)
+   if tshControlValues["DamperLeft"] or tshControlValues["DamperRight"] or tshControlValues["DamperFront"] or tshControlValues["DamperRear"] then
+      tshControlValues["Damper"] = nil
+   end
+
+   -- For CombinedThrottleSplit hide the other element
    if tshControlValues["TrainBrake"] == tshControlValues["CombinedThrottle"] then
       tshControlValues["TrainBrake"] = nil
    end
@@ -727,10 +734,6 @@ function ConfigureOverlay()
       tshControlValuesFunctions["Sandbox"] = function(value) return value / 1200 end
       tshControlValuesFunctions["SandboxRear"] = function(value) return value / 900 end
 
-   elseif DetectJ50_ADV_MeshTools(true) then
-      -- It has left and right dampers, if you want to see effective damper comment out
-      tshControlValues["Damper"] = nil
-
    elseif Detect3FJintyTrain_ADV_MeshTools(true) then
       -- Correct levers for steam (push/pull) brake
       tshControlValues["LocoBrake"] = "SteamBrakeSpindle"
@@ -750,19 +753,12 @@ function ConfigureOverlay()
       tshControlValues["VacuumBrakePipePressure"] = nil
       tshStaticValues["VacuumBrakePipeUnits"] = nil
 
-   elseif DetectJ94Train_ADV_MeshTools(true) or DetectJ94Steam_ADV_MeshTools(true) then
-      -- It has left and right dampers, if you want to see effective damper comment out
-      tshControlValues["Damper"] = nil
-
-   elseif Detect14xx_VictoryWorks(true) then
-      -- It has front and rear dampers, if you want to see effective damper comment out
-      tshControlValues["Damper"] = nil
-
    elseif DetectBulleidQ1_VictoryWorks(true) then
-      -- It has front and rear dampers, if you want to see effective damper comment out
-      tshControlValues["Damper"] = nil
+      -- Make the sandbox {0,1}
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
 
       -- Uncomment all if you want to display simple water controls
+      -- Keyboard controls those, advanced are controlled from the cab
       --tshControlValues["ExhaustInjectorSteam"] = "ExhaustInjectorSteamOnOff"
       --tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
       --tshControlValues["LiveInjectorSteam"] = "LiveInjectorSteamOnOff"
@@ -770,9 +766,6 @@ function ConfigureOverlay()
       --tshControlValues["ExhaustInjectorShutOff"] = nil
       --tshControlValues["LiveInjectorShutOff"] = nil
       --tshControlValues["TenderWaterShutOff"] = nil
-
-      -- Make the sandbox {0,1}
-      tshControlValuesFunctions["Sandbox"] = function(value) return value / 900 end
 
    elseif DetectGWRRailmotor_VictoryWorks(true) or DetectGWRRailmotorBoogie_VictoryWorks(true) then
       -- Not functional, hide
