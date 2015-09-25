@@ -29,15 +29,15 @@ MainUpdateOrig = MainUpdate  -- VictoryWorks
 
 -- And define a new function that will get called by the game instead
 function Update(time)
+   UpdateHelper(time)
    if UpdateOrig then
       UpdateOrig(time)
    end
-   UpdateHelper(time)
 end
 
 function MainUpdate(time)
+   UpdateHelper(time)
    if MainUpdateOrig then
       MainUpdateOrig(time)
    end
-   UpdateHelper(time)
 end

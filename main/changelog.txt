@@ -5,6 +5,8 @@
    value. This will usually be 0.5 for (0,1) or 0 for (-1,1).
    I've added its usage (commented out by default) to most locos.
  - Configs for Soldier Summit and Mannheim - Karlsruhe
+ - made GT3 Gas Turbine work, requires repatching
+ - Small fixes for A2 Peppercorn and GT3
 
 0.9.1
  - Tried to do UP Gas Turbine config, but the loco is bugged.

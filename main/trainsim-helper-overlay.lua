@@ -129,7 +129,9 @@ function ConfigureOverlay()
       tshControlValues["Voltage"] = "Voltage"
    end
 
-   if Call("ControlExists", "RPM", 0) == 1 then
+   if Call("ControlExists", "VirtualRPM", 0) == 1 then  -- GT3
+      tshControlValues["RPM"] = "VirtualRPM"
+   elseif Call("ControlExists", "RPM", 0) == 1 then
       tshControlValues["RPM"] = "RPM"
    end
 
@@ -529,6 +531,8 @@ function ConfigureOverlay()
       tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterLever"
    elseif Call("ControlExists", "ExhaustInjectorWaterFineControl", 0) == 1 then  -- Q1
       tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWaterFineControl"
+   elseif Call("ControlExists", "VirtualExhaustInjectorWater", 0) == 1 then  -- A2
+      tshControlValues["ExhaustInjectorWater"] = "VirtualExhaustInjectorWater"
    elseif Call("ControlExists", "ExhaustInjectorWater", 0) == 1 then
       tshControlValues["ExhaustInjectorWater"] = "ExhaustInjectorWater"
    end
@@ -549,6 +553,8 @@ function ConfigureOverlay()
       tshControlValues["LiveInjectorWater"] = "LiveInjectorWaterLever"
    elseif Call("ControlExists", "LiveInjectorWaterFineControl", 0) == 1 then  -- Q1
       tshControlValues["LiveInjectorWater"] = "LiveInjectorWaterFineControl"
+   elseif Call("ControlExists", "VirtualLiveInjectorWater", 0) == 1 then  -- A2
+      tshControlValues["LiveInjectorWater"] = "VirtualLiveInjectorWater"
    elseif Call("ControlExists", "LiveInjectorWater", 0) == 1 then
       tshControlValues["LiveInjectorWater"] = "LiveInjectorWater"
    end
@@ -717,13 +723,7 @@ function ConfigureOverlay()
       tshControlValues["VacuumBrakePipePressure"] = nil
       tshStaticValues["VacuumBrakePipeUnits"] = nil
 
-   elseif DetectJ94Train_ADV_MeshTools(true) then
-      -- It has left and right dampers, if you want to see effective damper comment out
-      tshControlValues["Damper"] = nil
-
-   elseif DetectJ94Steam_ADV_MeshTools(true) then
-      -- Not functional, hide
-      tshControlValues["SmallEjector"] = nil
+   elseif DetectJ94Train_ADV_MeshTools(true) or DetectJ94Steam_ADV_MeshTools(true) then
       -- It has left and right dampers, if you want to see effective damper comment out
       tshControlValues["Damper"] = nil
 
