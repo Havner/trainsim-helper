@@ -143,12 +143,12 @@ function ConfigureJoystick()
 
    -- Use HandBrake instead of LocoBrake if the latter doesn't exist
    if tshControl["HandBrake"] and not tshControl["LocoBrake"] then
-      ReplaceLines("HandBrake", "LocoBrake")                 -- Havner's config
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
    end
 
    -- For Steamers use Reverser instead of DynamicBrake
    if DetectGenericSteam(true) then
-      ReplaceLines("Reverser", "DynamicBrake")               -- Havner's config
+      ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
    end
 
    -- Override defaults for custom locos. Detect functions are in the main script.
@@ -174,16 +174,20 @@ function ConfigureJoystick()
       -- only overlay
 
    elseif Detect2FDockTank_ADV_MeshTools() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
 
    elseif DetectJ50_ADV_MeshTools() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["TrainBrake"] = {0.04, 0.15, 0.25}
       tshControl["LocoBrake"] = nil                         -- Vacuum brake internal should not be used directly
 
    elseif Detect3FJintyTrain_ADV_MeshTools() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly, only push/pull
 
    elseif Detect3FJintySteam_ADV_MeshTools() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
 
    elseif DetectJ94Train_ADV_MeshTools() then
@@ -191,12 +195,14 @@ function ConfigureJoystick()
       tshNotches["LocoBrake"] = {0.30, 0.40, 0.50}          -- Add notches as it's otherwise very hard to control the steam brake (the only one)
 
    elseif DetectJ94Steam_ADV_MeshTools() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["LocoBrake"] = {0.30, 0.40, 0.50}          -- Add notches as it's otherwise very hard to control the steam brake (the only one)
       tshControl["TrainBrake"] = nil                        -- Not functional
       tshControl["SmallEjector"] = nil                      -- Not functional
       ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
 
    elseif Detect5700Pannier() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["Reverser"] = {-0.75, -0.65, -0.55, -0.45, -0.35, -0.25, -0.15, 0, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75}
       tshNotches["TrainBrake"] = {0, 0.5}                   -- (0,1), It's continous above 0.5
       tshControl["LocoBrake"] = nil                         -- Vacuum brake internal should not be used directly
