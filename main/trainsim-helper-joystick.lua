@@ -192,9 +192,9 @@ function ConfigureJoystick()
 
    elseif DetectJ94Steam_ADV_MeshTools() then
       tshNotches["LocoBrake"] = {0.30, 0.40, 0.50}          -- Add notches as it's otherwise very hard to control the steam brake (the only one)
-      ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
-      --tshControl["TrainBrake"] = nil                      -- Not functional, but replaced above
+      tshControl["TrainBrake"] = nil                        -- Not functional
       tshControl["SmallEjector"] = nil                      -- Not functional
+      ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
 
    elseif Detect5700Pannier() then
       tshNotches["Reverser"] = {-0.75, -0.65, -0.55, -0.45, -0.35, -0.25, -0.15, 0, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75}
