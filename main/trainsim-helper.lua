@@ -607,7 +607,41 @@ function DetectClass158(DisablePopup) -- Liverpool - Manchester
    end
 end   
 
-function DetectClass101(DisablePopup) -- Liverpool - Manchester addon
+function DetectClass08(DisablePopup) -- Weardale - Teesdale
+   if Call("ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
+      Call("ControlExists", "GearLever", 0) == 0 and
+      Call("ControlExists", "CompessorState", 0) == 1 and
+      Call("ControlExists", "DummyWaterPressure", 0) == 1 and
+      Call("ControlExists", "DummyBatteryAmps", 0) == 1 and
+      Call("ControlExists", "DummyOilPressure", 0) == 1 and
+      Call("ControlExists", "DummyFuelGauge", 0) == 1 and
+      Call("ControlExists", "CabLight", 0) == 1 and
+      Call("ControlExists", "Bell", 0) == 1 and
+      Call("ControlExists", "AWS", 0) == 0
+   then
+      if not DisablePopup then DisplayPopup("Class 08 detected") end
+      return 1
+   end
+end
+
+function DetectClass105(DisablePopup) -- Weardale - Teesdale addon
+   if Call("ControlExists", "VacuumChamberPressureINCHES", 0) == 1 and
+      Call("ControlExists", "GearLever", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
+      Call("ControlExists", "Bell", 0) == 1 and
+      Call("ControlExists", "Instruments", 0) == 1 and
+      Call("ControlExists", "RouteNumberLight", 0) == 1 and
+      Call("ControlExists", "DestinationsLight", 0) == 1 and
+      Call("ControlExists", "Destination", 0) == 1 and
+      Call("ControlExists", "DestinationK", 0) == 1 and
+      Call("ControlExists", "DestinationH", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Class 105 detected") end
+      return 1
+   end
+end
+
+function DetectClass101(DisablePopup) -- Liverpool - Manchester addon, Weardale - Teesdale
    if Call("ControlExists", "RPMDelta", 0) == 1 and
       Call("ControlExists", "ReservoirPressurePSI", 0) == 1 and
       Call("ControlExists", "VacuumChamberPressureINCHES", 0) == 1 and

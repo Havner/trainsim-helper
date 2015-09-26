@@ -13,6 +13,7 @@
    better by default (hopefully). Tell me if I broke something.
  - SPLIT INTO SEVERAL FILES
  - Configs for Soldier Summit and Mannheim - Karlsruhe locos
+ - Configs for Weardale and Teesdale locos + Class 105
  - Made GT3 Gas Turbine work, requires repatching
  - Small fixes for A2 Peppercorn and GT3
  - Class 76 (Woodhead)

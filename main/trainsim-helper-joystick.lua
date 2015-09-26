@@ -16,13 +16,13 @@ function ConfigureJoystick()
    -- To disable a control or an invert set it to 0 or comment out.
 
    --tshLine["CruiseCtl"] = 7
-   tshLine["Reverser"] = 7
+   --tshLine["Reverser"] = 7
    --tshLine["Gear"] = 7          -- BR155: Power Selector
    tshLine["CombinedThrottle"] = 3
    tshLine["Throttle"] = 3
    tshLine["TrainBrake"] = 6
    tshLine["LocoBrake"] = 10      -- might also be used for HandBrake if it's not explicitly set
-   --tshLine["DynamicBrake"] = 7    -- might also be used for Reverser, Gear/Power or CruiseCtl if they're not explicitly set
+   tshLine["DynamicBrake"] = 7    -- might also be used for Reverser, Gear/Power or CruiseCtl if they're not explicitly set
    --tshLine["HandBrake"] = 10
    tshLine["SmallEjector"] = 11
    tshLine["LargeEjector"] = 12
@@ -260,6 +260,12 @@ function ConfigureJoystick()
       GenerateEqualNotches(8, "Throttle")                   -- (0,1)
       GenerateEqualNotches(5, "TrainBrake")                 -- (0,1)
       tshRange["TrainBrake"] = {0, 0.75}                    -- Ignore emergency values (0.75, 1)
+
+   elseif DetectClass08() then
+      tshNotches["Throttle"] = {0, 0.3, 0.9, 1}             -- (0,1)
+
+   elseif DetectClass105() then
+      GenerateEqualNotches(5, "Throttle")                   -- (0,1)
 
    elseif DetectClass101() then
       GenerateEqualNotches(5, "Throttle")                   -- (0,1)
