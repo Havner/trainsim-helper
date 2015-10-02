@@ -25,7 +25,7 @@ end
 
 -- Save the original function under a different name
 UpdateOrig = Update
-MainUpdateOrig = MainUpdate  -- VictoryWorks
+MainUpdateOrig = MainUpdate  -- GT3
 
 -- And define a new function that will get called by the game instead
 function Update(time)
