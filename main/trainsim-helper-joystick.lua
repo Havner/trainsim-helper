@@ -468,22 +468,10 @@ function ConfigureJoystick()
    elseif DetectUPGasTurbune() then
       GenerateEqualNotches(21, "Throttle")                  -- (0,1)
       GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
-      tshForceUpdate["Throttle"] = true
-      tshForceUpdate["DynamicBrake"] = true
+      tshSetControlTargetValue["Throttle"] = true
+      tshSetControlTargetValue["DynamicBrake"] = true
+      tshSetControlTargetValue["Reverser"] = true
       HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
-
-      local WarningText = "THIS LOCO IS BUGGED\n"
-      WarningText = WarningText .. "Please read this as you can help:\n\n"
-      WarningText = WarningText .. "This loco has some poorly done scripting that prevents it \n"
-      WarningText = WarningText .. "from controlling Throttle and DynamicBrake with a mouse.\n"
-      WarningText = WarningText .. "Probably for this very reason the joystick control doesn't\n"
-      WarningText = WarningText .. "normally work as well for those levers. I did a very ugly and\n"
-      WarningText = WarningText .. "unreliable workaround, but it's still not ok. But you can report the\n"
-      WarningText = WarningText .. "mouse issue to DTG (as I did, the more people the better), maybe\n"
-      WarningText = WarningText .. "they'll fix it one day and the joystick will start to work properly.\n\n"
-      WarningText = WarningText .. "Please report here: http://dovetailgames.kayako.com/"
-
-      SysCall("ScenarioManager:ShowInfoMessageExt", "TrainSim Helper WARNING", WarningText, 0, 2, 1, 1)
 
    elseif DetectGP20_ADV_Reppo() then
       tshNotches["Throttle"] = {-2, 0, 1, 2, 3, 4, 5, 6, 7, 8}
@@ -842,13 +830,16 @@ function GetControlRange(control)
    return {}
 end
 
-function SetControlValue(control, value)
+function SetControlValue(control, value, setTarget)
    if OnControlValueChange then
       OnControlValueChange(control, 0, value)
    else
       --if Call("ControlExists", control, 0) == 1 then
          Call("SetControlValue", control, 0, value)
       --end
+   end
+   if setTarget then
+      Call("SetControlTargetValue", control, 0, value)
    end
 end
 
@@ -970,9 +961,9 @@ function TrySetControl(key, value)
    local notches = tshNotches[key]
    local detent = tshCenterDetent[key]
    local step = tshStep[key]
-   local force = tshForceUpdate[key]
+   local setTarget = tshSetControlTargetValue[key]
 
-   if control and value >= 0.0 and value <= 1.0 and (force or ValueChanged(previous, value)) then
+   if control and value >= 0.0 and value <= 1.0 and ValueChanged(previous, value) then
       local saved_value = value
 
       if not notches and detent and value > (0.5 - detent / 2) and value < (0.5 + detent / 2) then
@@ -1002,7 +993,7 @@ function TrySetControl(key, value)
             tshCurrentSim[key] = Call("GetControlValue", control, 0)
          end
       else
-         SetControlValue(control, value)
+         SetControlValue(control, value, setTarget)
       end
 
       tshPreviousInput[key] = saved_value
@@ -1012,6 +1003,7 @@ end
 function SetControlDelayed(key)
    local step = tshStep[key]
    local control = tshControl[key]
+   local setTarget = tshSetControlTargetValue[key]
 
    if step and tshTargetSim[key] and tshCurrentSim[key] then
       if math.abs(tshTargetSim[key] - tshCurrentSim[key]) < step then
@@ -1024,6 +1016,6 @@ function SetControlDelayed(key)
          tshCurrentSim[key] = tshCurrentSim[key] - step
       end
 
-      SetControlValue(control, tshCurrentSim[key])
+      SetControlValue(control, tshCurrentSim[key], setTarget)
    end
 end

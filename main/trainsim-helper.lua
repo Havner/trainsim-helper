@@ -2082,7 +2082,7 @@ function UpdateHelper(time)
       tshCenterDetent = {}
       tshNotches = {}
       tshStep = {}
-      tshForceUpdate = {}
+      tshSetControlTargetValue = {}
       tshPreviousInput = {}
       tshCurrentSim = {}
       tshTargetSim = {}
