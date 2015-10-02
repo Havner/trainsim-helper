@@ -99,6 +99,8 @@ function ConfigureOverlay()
 
    if Call("ControlExists", "RealSteamChestPressure", 0) == 1 then  -- Connie
       tshControlValues["SteamChestPressure"] = "RealSteamChestPressure"
+   elseif Call("ControlExists", "VWSteamChestPressureGauge", 0) == 1 then  -- K1
+      tshControlValues["SteamChestPressure"] = "VWSteamChestPressureGauge"
    elseif Call("ControlExists", "SteamChestGaugePSI", 0) == 1 then
       tshControlValues["SteamChestPressure"] = "SteamChestGaugePSI"
    elseif Call("ControlExists", "SteamChestGauge", 0) == 1 then
@@ -109,7 +111,9 @@ function ConfigureOverlay()
       tshControlValues["SteamChestPressure"] = "SteamChestPressureGauge"
    end
 
-   if Call("ControlExists", "Steam Heat Gauge", 0) == 1 then  -- J50
+   if Call("ControlExists", "VWSteamHeatingPressureGauge", 0) == 1 then  -- K1
+      tshControlValues["SteamHeatingPressure"] = "VWSteamHeatingPressureGauge"
+   elseif Call("ControlExists", "Steam Heat Gauge", 0) == 1 then  -- J50
       tshControlValues["SteamHeatingPressure"] = "Steam Heat Gauge"
    elseif Call("ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 then
       tshControlValues["SteamHeatingPressure"] = "SteamHeatingPressureGaugePSI"
