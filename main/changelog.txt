@@ -19,6 +19,7 @@
  - Small fixes for A2 Peppercorn and GT3
  - Class 76 (Woodhead)
  - Consolidation (SmokeBox)
+ - SD60M
  - WARNING: if you've previously seen a message box that some loco
    has been detected and now you see "no custom configuration" it
    doesn't mean it's bad. I've done some generic detections here

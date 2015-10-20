@@ -534,6 +534,12 @@ function ConfigureJoystick()
       GenerateEqualNotches(9, "Throttle")                   -- (0,1)
       GenerateEqualNotches(10, "DynamicBrake")              -- (-0.125, 1)
 
+   elseif DetectSD60M() then
+      tshNotches["CombinedThrottle"] = {0.5, 0.571, 0.642, 0.714, 0.785, 0.857, 0.928, 1}  -- (0, 1), It's continous below 0.5 (DynamicBrake), notches from cab sounds
+      tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
+      tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
+      --SplitCombinedWithAt("DynamicBrake", 0.5)
+      
    elseif DetectSD70M() then
       tshNotches["CombinedThrottle"] = {0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1} -- (-1, 1), It's continous below 0 (DynamicBrake)
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever

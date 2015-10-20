@@ -1825,7 +1825,6 @@ function DetectSD402(DisablePopup) -- New York - New Haven
    end
 end
 
-
 function DetectSD70MAC_ATC(DisablePopup) -- Academy
    if Call("ControlExists", "aMainReservoirPressurePSI", 0) == 1 and
       Call("ControlExists", "aEqReservoirPressurePSI", 0) == 1 and
@@ -1935,6 +1934,23 @@ function DetectES44DC(DisablePopup) -- Marias Pass, Stevens Pass
       Call("GetControlMaximum", "UnitNumber", 0) == 8000
    then
       if not DisablePopup then DisplayPopup("ES44DC detected") end
+      return 1
+   end
+end
+
+function DetectSD60M(DisablePopup) -- Sherman Hill addon
+   if Call("ControlExists", "Driven", 0) == 1 and
+      Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
+      Call("ControlExists", "DynamicBrakeNeedle", 0) == 1 and
+      Call("ControlExists", "FrontLights", 0) == 1 and
+      Call("ControlExists", "RearLights", 0) == 1 and
+      Call("ControlExists", "Mirrors_Front", 0) == 1 and
+      Call("ControlExists", "Window04_Control", 0) == 1 and
+      Call("ControlExists", "Door01_Control", 0) == 1 and
+      Call("ControlExists", "SunBlock04_Control", 0) == 1 and
+      Call("ControlExists", "Numberboards", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("SD60M detected") end
       return 1
    end
 end
