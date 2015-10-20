@@ -468,9 +468,6 @@ function ConfigureJoystick()
    elseif DetectUPGasTurbune() then
       GenerateEqualNotches(21, "Throttle")                  -- (0,1)
       GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
-      tshSetControlTargetValue["Throttle"] = true
-      tshSetControlTargetValue["DynamicBrake"] = true
-      tshSetControlTargetValue["Reverser"] = true
       HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectGP20_ADV_Reppo() then
