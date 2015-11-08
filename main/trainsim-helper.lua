@@ -16,6 +16,7 @@ end
 -----------------------------------------------------------
 
 require("plugins/trainsim-helper-detect-locos")
+require("plugins/trainsim-helper-detect-values")
 require("plugins/trainsim-helper-joystick")
 require("plugins/trainsim-helper-overlay")
 
