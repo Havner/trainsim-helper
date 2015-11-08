@@ -91,7 +91,7 @@ struct SimData {
 	// Loco's controls
 	Value<float>		fTargetSpeed;
 	Value<float>		fReverser;
-	Value<float>		fGearLever;
+	Value<float>		fGear;
 	Value<float>		fPower;
 	Value<float>		fCombinedThrottle;
 	Value<float>		fThrottle;
@@ -370,7 +370,7 @@ int FillData(SimData* data)
 		// Loco's controls
 		else if (!strcmp("TargetSpeed:", param))				data->fTargetSpeed = value;
 		else if (!strcmp("Reverser:", param))					data->fReverser = value;
-		else if (!strcmp("GearLever:", param))					data->fGearLever = value;
+		else if (!strcmp("Gear:", param))						data->fGear = value;
 		else if (!strcmp("Power:", param))						data->fPower = value;
 		else if (!strcmp("CombinedThrottle:", param))			data->fCombinedThrottle = value;
 		else if (!strcmp("Throttle:", param))					data->fThrottle = value;
@@ -754,7 +754,7 @@ void RenderOverlay()
 	y = DrawString(eMainControls,			data.fThrottle,						x+66,	y, whiteblue, pSmallFont, "Throttle: %d %%", (int)(data.fThrottle()*100));
 	y = DrawString(eMainControls,			data.fCombinedThrottle,				x+51,	y, whiteblue, pSmallFont, "Combined: %d %%", (int)(data.fCombinedThrottle()*100));
 	y = DrawString(eMainControls,			data.fPower,						x+73,	y, whiteblue, pSmallFont, "Power: %d %%", (int)(data.fPower()*100));
-	y = DrawString(eMainControls,			data.fGearLever,					x+81,	y, whiteblue, pSmallFont, "Gear: %d", (int)data.fGearLever());
+	y = DrawString(eMainControls,			data.fGear,							x+81,	y, whiteblue, pSmallFont, "Gear: %d", (int)data.fGear());
 	y = DrawString(eMainControls,			data.fReverser,						x+59,	y, whiteblue, pSmallFont, "Reverser: %d %%", (int)(data.fReverser()*100));
 	y = DrawString(eMainControls,			data.fTargetSpeed,					x+34,	y, whiteblue, pSmallFont, "Target Speed: %.1f %s", data.fTargetSpeed(), sUnitsSpeed);
 
