@@ -618,7 +618,97 @@ end
 -----  Here be dragons, careful with modifications  -------
 -----------------------------------------------------------
 
--- Raw functions, unaware of global variables
+-----------------------------------------------------------
+----------------  Configuration helpers  ------------------
+-----------------------------------------------------------
+
+function InvInvert(key)
+   if tshInvert[key] and tshInvert[key] ~= 0 then
+      tshInvert[key] = nil
+   else
+      tshInvert[key] = 1
+   end
+end
+
+function GenerateEqualNotches(count, key)
+   local range = tshRange[key]
+
+   if count and count >= 2 then
+      local notches = {0}
+      for x = 2, count do
+         notches[x] = (x-1) / (count-1)
+      end
+      if range[1] then
+         for x = 1, count do
+            notches[x] = notches[x] * (range[2] - range[1]) + range[1]
+         end
+      end
+      tshNotches[key] = notches
+   end
+end
+
+function SplitCombinedWithAt(brake, split)
+   local range = tshRange["CombinedThrottle"]
+   if not range[1] then range = {0,1} end
+   -- Throttle
+   tshRange["CombinedThrottle"] = {split, range[2]}
+   -- SomeBrake
+   tshControl[brake] = tshControl["CombinedThrottle"]
+   tshRange[brake] = {range[1], split}
+   tshNotches[brake] = tshNotches["CombinedThrottle"]
+   InvInvert(brake)
+end
+
+-- Replace control lines, but don't do this if:
+--   * DisableReplace is set
+--   * tshLine[newKey] is already set
+function ReplaceLines(newKey, prevKey)
+   if DisableReplace and DisableReplace ~= 0 then return end
+   if tshLine[newKey] and tshLine[newKey] ~= 0 then return end
+
+   tshLine[newKey] = tshLine[prevKey]
+   tshLine[prevKey] = nil
+end
+
+function ReplaceControls(newKey, prevKey)
+   tshControl[newKey]       = tshControl[prevKey]
+   tshRange[newKey]         = tshRange[prevKey]
+   tshInvert[newKey]        = tshInvert[prevKey]
+   tshCenterDetent[newKey]  = tshCenterDetent[prevKey]
+   tshNotches[newKey]       = tshNotches[prevKey]
+   tshStep[newKey]          = tshStep[prevKey]
+
+   tshControl[prevKey]      = nil
+   tshRange[prevKey]        = {}
+   tshInvert[prevKey]       = nil
+   tshCenterDetent[prevKey] = nil
+   tshNotches[prevKey]      = nil
+   tshStep[prevKey]         = nil
+end
+
+-----------------------------------------------------------
+-------  Raw functions, unaware of global variables  ------
+-----------------------------------------------------------
+
+function ReadFile(name)
+   local lines = {}
+   local file = io.open("plugins/"..name, "r")
+   if not file then return lines end
+   local i = 1  -- for some reason # operator doesn't work here
+   for line in file:lines() do
+      -- ugly, but couldn't get match to work, too old LUA?
+      local cut = line
+      local space = string.find(cut, "%s")
+      if space then
+         cut = string.sub(cut, 1, string.find(cut, "%s") - 1)
+      end
+      lines[i] = tonumber(cut)
+      i=i+1
+   end
+   file:close()
+   return lines
+end
+
 function GetControlRange(control)
    if control then
       --if Call("ControlExists", control, 0) == 1 then
@@ -656,26 +746,10 @@ function ValueChanged(previous, value)
    end
 end
 
-function ReadFile(name)
-   local lines = {}
-   local file = io.open("plugins/"..name, "r")
-   if not file then return lines end
-   local i = 1  -- for some reason # operator doesn't work here
-   for line in file:lines() do
-      -- ugly, but couldn't get match to work, too old LUA?
-      local cut = line
-      local space = string.find(cut, "%s")
-      if space then
-         cut = string.sub(cut, 1, string.find(cut, "%s") - 1)
-      end
-      lines[i] = tonumber(cut)
-      i=i+1
-   end
-   file:close()
-   return lines
-end
+-----------------------------------------------------------
+-----  Specialized functions, aware of global values  -----
+-----------------------------------------------------------
 
--- Specialized functions, aware of global values
 function GetLineValue(key, lines)
    local line = tshLine[key]
    local invert = tshInvert[key]
@@ -691,70 +765,6 @@ function GetLineValue(key, lines)
       return value
    end
    return -99999
-end
-
-function InvInvert(key)
-   if tshInvert[key] and tshInvert[key] ~= 0 then
-      tshInvert[key] = nil
-   else
-      tshInvert[key] = 1
-   end
-end
-
--- Replace control lines, but don't do this if:
---   * DisableReplace is set
---   * tshLine[newKey] is already set
-function ReplaceLines(newKey, prevKey)
-   if DisableReplace and DisableReplace ~= 0 then return end
-   if tshLine[newKey] and tshLine[newKey] ~= 0 then return end
-
-   tshLine[newKey] = tshLine[prevKey]
-   tshLine[prevKey] = nil
-end
-
-function ReplaceControls(newKey, prevKey)
-   tshControl[newKey]       = tshControl[prevKey]
-   tshRange[newKey]         = tshRange[prevKey]
-   tshInvert[newKey]        = tshInvert[prevKey]
-   tshCenterDetent[newKey]  = tshCenterDetent[prevKey]
-   tshNotches[newKey]       = tshNotches[prevKey]
-   tshStep[newKey]          = tshStep[prevKey]
-
-   tshControl[prevKey]      = nil
-   tshRange[prevKey]        = {}
-   tshInvert[prevKey]       = nil
-   tshCenterDetent[prevKey] = nil
-   tshNotches[prevKey]      = nil
-   tshStep[prevKey]         = nil
-end
-
-function GenerateEqualNotches(count, key)
-   local range = tshRange[key]
-
-   if count and count >= 2 then
-      local notches = {0}
-      for x = 2, count do
-         notches[x] = (x-1) / (count-1)
-      end
-      if range[1] then
-         for x = 1, count do
-            notches[x] = notches[x] * (range[2] - range[1]) + range[1]
-         end
-      end
-      tshNotches[key] = notches
-   end
-end
-
-function SplitCombinedWithAt(brake, split)
-   local range = tshRange["CombinedThrottle"]
-   if not range[1] then range = {0,1} end
-   -- Throttle
-   tshRange["CombinedThrottle"] = {split, range[2]}
-   -- SomeBrake
-   tshControl[brake] = tshControl["CombinedThrottle"]
-   tshRange[brake] = {range[1], split}
-   tshNotches[brake] = tshNotches["CombinedThrottle"]
-   InvInvert(brake)
 end
 
 function TrySetControl(key, value)
