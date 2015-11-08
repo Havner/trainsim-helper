@@ -13,7 +13,8 @@
    the joystick and the overlay configuration functions. This also
    should cause the non configured locos (ones I don't have) to behave
    better by default (hopefully). Tell me if I broke something.
- - SPLIT INTO SEVERAL FILES
+ - LUA files has been split into more files, locos detections
+   and find control values received their own dedicated files
  - Configs for Soldier Summit and Mannheim - Karlsruhe locos
  - Configs for Weardale and Teesdale locos + Class 105
  - Made GT3 Gas Turbine work, requires repatching

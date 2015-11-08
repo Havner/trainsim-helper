@@ -21,7 +21,7 @@ B. Licence
 
 1. Quick introduction
 
-  This is a little helper for Train Simulator 2014/2015 that I wrote for my
+  This is a little helper for Train Simulator 2015/2016 that I wrote for my
   own needs to improve on the limitations of the game. The first is the poor
   in-game interface. The F3/F4 views show too much and obscure the view
   killing the immersion. The F5 view on the other hand lacks few things. The
@@ -38,8 +38,8 @@ B. Licence
   Logitech, Saitek) to assign keyboard shortcuts. This software handles
   axes only. Supported are: Reverser, Gear, CruiseControl,
   CombinedThrottle, Throttle, TrainBrake, LocoBrake, DynamicBrake,
-  HandBrake, SmallEjector, Blower, FireboxDoor, Stoking, ExhaustSteam,
-  ExhaustWater, LiveSteam, LiveWater.
+  HandBrake, SmallEjector, LargeEjector, Blower, FireboxDoor, Stoking,
+  ExhaustSteam, ExhaustWater, LiveSteam, LiveWater.
 
   I wrote a guide on how to customize loco controls:
   http://forums.uktrainsim.com/viewtopic.php?f=361&t=139086
@@ -73,8 +73,10 @@ B. Licence
 
   \plugins\transim-helper.exe
   \plugins\transim-helper.lua
-  \plugins\transim-helper-overlay.lua
+  \plugins\transim-helper-detect-locos.lua
+  \plugins\transim-helper-find-values.lua
   \plugins\transim-helper-joystick.lua
+  \plugins\transim-helper-overlay.lua
 
   The trainsim-helper-tools directory you can put wherever you want.
   I put it in the plugins dir as well.
@@ -165,12 +167,12 @@ B. Licence
   Now open the trainsim-helper-joystick.lua. This has to be done in a
   good text editor. At the top of the file, below the
   "function ConfigureJoystick()"
-  line you have few variables (CombinedThrottleLine = 3, etc). Assign
-  line numbers of the axes you want to use to the controls you want to
-  use. Comment out rest of them. Further below you have variables for
-  invert. I think this is self explanatory (of course you will know
-  whether you need an invert after first run, so don't change anything
-  now). Save the file.
+  line you have few variables (tshLine["CombinedThrottle"] = 3, etc).
+  Assign line numbers of the axes you want to use to the controls you
+  want to use. Comment out rest of them. Further below you have
+  variables for invert. I think this is self explanatory (of course you
+  will know whether you need an invert after first run, so don't change
+  anything now). Save the file.
 
   Run the scenario again using your patched loco and see whether the
   axes do anything. Remember that for some scripted locos the axes might
@@ -181,7 +183,7 @@ B. Licence
   help you there.
 
   Additional variables in the config section are:
-  - *CenterDetent - to make it easier with centering
+  - tshCenterDetent[] - to make it easier with centering
   - SyncOnStart - set virtual values to your physical ones on start
                   (this requires to move one of your throttles per
 		  physical device once per trainsim-helper.exe
@@ -343,14 +345,15 @@ B. Licence
 
   From version 0.5 the steamers received additional support. For the
   controlling not much has changed changed. You have Regulator
-  (Throttle), Reverser and Brakes as usual. The SmallEjector, Blower,
-  FireboxDoor, Stoking, ExhaustSteam, ExhaustWater, LiveSteam,
-  LiveWater are steamer specific axes you can asign.
+  (Throttle), Reverser and Brakes as usual. The SmallEjector,
+  LargeEjector, Blower, FireboxDoor, Stoking, ExhaustSteam,
+  ExhaustWater, LiveSteam, LiveWater are steamer specific axes you can
+  asign.
 
   - Boiler pressure got added with color indicators depending on
     whether the pressure is increasing (green), constant (grey) and
     decreasing (red).
-  - Steam chest pressure and s team heating in the indicators
+  - Steam chest pressure and steam heating in the indicators
     section. Some steamers have those.
   - Additional section for the driver's controls. This is something I
     have not done for non-steamers as there is no need. You can usualy
@@ -376,18 +379,11 @@ B. Licence
   realistic 3rd party steamers but I don't own all of them.
 
   Right now those have been checked and are fully supported:
-  - FEF-3 (Smokebox)
-  - J50 (MeshTools)
-  - 2F Dock Tank (MeshTools)
-  - 3F Jinty (MeshTools)
-  - J94 Memories of Maerdy (MeshTools)
-  - 56xx (VictoryWorks)
-  - GWR Steam Motor (VictoryWorks)
-  - Bulleid Q1 (VictoryWorks)
-  - 14xx/48xx/58xx (VictoryWorks)
-  - GWR Small Prairies (VictoryWorks)
+  - all by VictoryWorks
+  - all by Smokebox
+  - all by MeshTools
 
-  ad. Bulleid Q1:
+  ad. Bulleid Q1 (VictoryWorks):
   By default it shows advanced controls for the water. Contrary to
   what the manual says they are NOT controlled with keyboard. The
   simple ones are. You have several options:
@@ -398,7 +394,7 @@ B. Licence
     uncomment several lines that I provided so the overlay will show the
     simple controls.
 
-  ad. 14xx/48xx/58xx:
+  ad. 14xx/48xx/58xx (VictoryWorks):
   Due to a bug in TS the overlay will not always show all the values
   properly when driving with Autocoach attached (this doesn't always
   happen). Things like: Boiler Pressure (always dropping), Water Gauge
@@ -532,7 +528,7 @@ B. Licence
   know about it. Secondly you can try to fix/add/customize this
   yourself.
 
-  In the trainsim-helper-joystick.lua there are functions to find
+  In the trainsim-helper-find-values.lua there are functions to find
   correct ControlValues names for a specific control:
 
   function FindCombinedThrottle()
@@ -556,7 +552,7 @@ B. Licence
   It is possible to customize controls/olverlay per loco. There is no
   simple way to detect a loco you are driving though. I use a unique set
   of ControlValues a loco has to recognize it. See the example functions
-  in the trainsim-helper.lua script:
+  in the trainsim-helper-detect-locos.lua script:
 
   function DetectClass365()
   function DetectClass395()
@@ -576,16 +572,16 @@ B. Licence
 
   Worth noting is that for a control to work it has to have those
   values set:
-  *Line         (to know where to take the joystick data from)
-  *Control      (to know which variable in the sim to control)
-  *Range        (will be autodetected, you can override it though)
+  tshLine[]         (to know where to take the joystick data from)
+  tshControl[]      (to know which variable in the sim to control)
+  tshRange[]        (will be autodetected, you can override it though)
 
   Those are optional:
-  *Invert       (self explanatory)
-  *Notches      (sets a nothed lever)
-  *CenterDetent (works only for Reverser and CombinedThrottle)
+  tshInvert[]       (self explanatory)
+  tshNotches[]      (sets a nothed lever)
+  tshCenterDetent[] (makes it easier to center)
 
-  *Notches has to be a table with values between
+  tshNotches[] has to be a table with values between
   <MinControlValue, MaxControlValue>.
   It defines values the axis will clamp to. They are applied _AFTER_
   the range rescaling. The easiest way to set them properly is to have a
@@ -599,16 +595,23 @@ B. Licence
   To make it fully notched make sure border values (-1 and 1 in this
   case) are on the list.
 
-  Notches take precedence over CenterDetent if both are defined.
+  tshNotches[] take precedence over tshCenterDetent[] if both are
+  defined.
 
   There is also a helper function to create a nothed lever with N
-  equal notches. See the examples. Also if the range is not within <0,1>
-  you need to pass it as a parameter.
+  equal notches. See the examples. It uses previously defined range
+  for a name.
 
-  GenerateEqualNotches(5) will give:
+  GenerateEqualNotches(5, name) with tshRange[name] = {0,1} will give:
   {0, 0.25, 0.5, 0.75, 1}
-  GenerateEqualNotches(5,r) for r = {-1,1} will give:
+  GenerateEqualNotches(5, name) with tshRange[name] = {-1,1} will give:
   {-1, -0.5, 0, 0.5, 1}
+
+  There are other helper functions that can be used for configuration:
+  InvInvert()
+  SplitCombinedWithAt()
+  ReplaceLines()
+  ReplaceControls()
 
   c) Overlay configuration
 
@@ -643,8 +646,10 @@ B. Licence
   d) In summary:
 
   - trainsim-helper.lua: loco detections and main frame update function.
-  - trainsim-helper-overlay.lua: Overlay configuration and implementation.
+  - trainsim-helper-detect-locos.lua: detection functions for locos.
+  - trainsim-helper-find-values.lua: find functions for control values.
   - trainsim-helper-joystick.lua: Joystick configuration and implementation.
+  - trainsim-helper-overlay.lua: Overlay configuration and implementation.
 
 14. HELP! It doesn't work
 
@@ -710,7 +715,7 @@ B. Licence
 15. Modifications of the C++ code
 
   I'll just note for now that the C++ code is not very nicely written
-  yet (conrary to the LUA) as I just patched all of this together to
+  yet (contrary to the LUA) as I just patched all of this together to
   work. I'll get to cleaning this at some point.
 
   The things you can do with it:
