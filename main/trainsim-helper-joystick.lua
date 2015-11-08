@@ -407,7 +407,7 @@ function ConfigureJoystick()
    elseif DetectBR189_MK() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
       tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.275, 0.35, 0.425, 0.5, 0.575, 0.65, 0.85, 1} -- (0,1)
-      GenerateEqualNotches(29, "CruiseCtl")                 -- (0,0.6)
+      GenerateEqualNotches(37, "CruiseCtl")                 -- (0,0.6)
       tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
 
    elseif DetectBR425() then
@@ -415,6 +415,7 @@ function ConfigureJoystick()
       tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
       GenerateEqualNotches(19, "CruiseCtl")                 -- (0,1)
       tshControl["DynamicBrake"] = nil                      -- Dynamic brake should not be used directly
+      --SplitCombinedWithAt("TrainBrake", 0.5)
 
    elseif DetectICE3M_MK() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
