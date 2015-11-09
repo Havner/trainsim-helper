@@ -1,6 +1,6 @@
-0.10beta
+0.10
  - UP Gas Turbine fixed! Thanks to CobraOne for the initial
-   solution. The loco has been fixed now on DTG side.
+   solution. The loco has been (mostly) fixed now on DTG side.
  - SplitCombinedWithAt(brake, value) function added. It can easily
    be used to split combined throttle into two axes. First arg
    defines with what brake (the second axis), second arg at what
