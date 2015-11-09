@@ -111,9 +111,11 @@ function ConfigureJoystick()
    tshRange["LiveSteam"] =        GetControlRange(tshControl["LiveSteam"])
    tshRange["LiveWater"] =        GetControlRange(tshControl["LiveWater"])
 
+   -----------------------------------------------------------
    -- Do some common automagic, this way we don't need to do that per loco.
    -- This section tries to autodetect several commonly used things
    -- based on the ControlValues detected above.
+   -----------------------------------------------------------
 
    -- If CombinedThrottle exists, disable separate Throttle and TrainBrake.
    -- If CombinedThrottle is with DynamicBrake we'll deal with that per loco below.
@@ -151,11 +153,13 @@ function ConfigureJoystick()
       ReplaceLines("Reverser", "DynamicBrake")              -- Havner's config
    end
 
+   -----------------------------------------------------------
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- In my case (3 throttle axes) I often make use of the tshLine["DynamicBrake"] in
    -- case where a loco doesn't have DynamicBrake or some other control is
    -- more important. If you have more then 3 throttle axes you could assign
    -- all of them without having to make compromises.
+   -----------------------------------------------------------
 
    -- Steamers
 

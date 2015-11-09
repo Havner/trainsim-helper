@@ -580,6 +580,7 @@ B. Licence
   tshInvert[]       (self explanatory)
   tshNotches[]      (sets a nothed lever)
   tshCenterDetent[] (makes it easier to center)
+  tshStep[]         (makes the lever moves smoothly between notches
 
   tshNotches[] has to be a table with values between
   <MinControlValue, MaxControlValue>.

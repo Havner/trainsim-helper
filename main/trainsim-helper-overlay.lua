@@ -156,9 +156,11 @@ function ConfigureOverlay()
    tshDoorsValues["DoorsLeft"] = FindOverlayDoorsLeft()
    tshDoorsValues["DoorsRight"] = FindOverlayDoorsRight()
 
+   -----------------------------------------------------------
    -- Do some common automagic, this way we don't need to do that per loco
    -- This section tries to autodetect several commonly used things
    -- based on the ControlValues detected above
+   -----------------------------------------------------------
 
    -- For SmokeBox brakes (FEF-3, Connie and US Advanced), TrainBrake pressures are internal
    if tshUSAdvancedBrakes then  -- set by FindOverlayLocoBrakeCylinder()
@@ -197,10 +199,12 @@ function ConfigureOverlay()
       tshControlValues["DynamicBrake"] = nil
    end   
 
+   -----------------------------------------------------------
    -- Override defaults for custom locos. Detect functions are in the main script.
    -- Sometimes I have to do this as a loco might have a control value that is
    -- detected but it should not be displayed. E.g. it's internal to the
    -- implementation or is basically useless for this loco.
+   -----------------------------------------------------------
 
    -- Steamers
 
@@ -391,38 +395,6 @@ function GetOverlayData()
 
    -- Write data to file
    WriteFile("trainsim-helper-overlay.txt", data)
-end
-
------------------------------------------------------------
-------------  Detections used for Interface  --------------
------------------------------------------------------------
-
-function DetectInterfaceGerman(DisablePopup) -- Used for Warnings
-   if Call("ControlExists", "AFB", 0) == 1 or
-      Call("ControlExists", "AFBTargetSpeed", 0) == 1 or
-      Call("ControlExists", "PZBFrei", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("German Interface") end
-      return 1
-   end
-end
-
-function DetectInterfaceUK(DisablePopup) -- MPH and BAR, should be UK, hopefully, used for Gradient
-   if Call("ControlExists", "SpeedometerMPH", 0) == 1 and
-      (
-         Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "aTrainBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "aLocoBrakeCylinderPressureBAR", 0) == 1 or
-         Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 or
-         Call("ControlExists", "aAirBrakePipePressureBAR", 0) == 1 or
-         Call("ControlExists", "BrakePipePressureBAR", 0) == 1 or
-         Call("ControlExists", "aBrakePipePressureBAR", 0) == 1
-      )
-   then
-      if not DisablePopup then DisplayPopup("UK Interface") end
-      return 1
-   end
 end
 
 -----------------------------------------------------------
