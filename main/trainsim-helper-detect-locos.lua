@@ -75,7 +75,7 @@ function DetectConnie_ADV_Smokebox(DisablePopup) -- Horseshoe Curve addon
       Call("ControlExists", "BlowerControlValve", 0) == 1 and
       Call("ControlExists", "MaxCylCondensation", 0) == 1 and
       Call("ControlExists", "Friction", 0) == 1 and
-      Call("ControlExists", "MRPSI", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1 and
       Call("ControlExists", "SafetyValveVolume", 0) == 1
    then
       if not DisablePopup then DisplayPopup("Consolidation (HUD, Smokebox) detected") end
@@ -95,7 +95,7 @@ function DetectConnie_HUD_Smokebox(DisablePopup) -- Horseshoe Curve addon
       Call("ControlExists", "WaterSightGlass", 0) == 0 and
       Call("ControlExists", "BlowerControlValve", 0) == 0 and
       Call("ControlExists", "MaxCylCondensation", 0) == 0 and
-      Call("ControlExists", "Friction", 0) == 0 and
+      Call("ControlExists", "Friction", 0) == 1 and
       Call("ControlExists", "MRPSI", 0) == 1 and
       Call("ControlExists", "SafetyValveVolume", 0) == 1
    then
@@ -1590,7 +1590,7 @@ end
 
 -- US
 
-function DetectUPGasTurbune(DisablePopup) -- Sherman Hill addon
+function DetectUPGasTurbine(DisablePopup) -- Sherman Hill addon
    if Call("ControlExists", "RealWheelslip", 0) == 1 and
       Call("ControlExists", "AuxReservoirPressure", 0) == 1 and
       Call("ControlExists", "AuxDieselRPMDelta", 0) == 1 and

@@ -173,6 +173,7 @@ function ConfigureJoystick()
 
    elseif DetectConnie_ADV_Smokebox() then
       tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
+      HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectConnie_HUD_Smokebox() then
       -- only overlay
@@ -470,7 +471,7 @@ function ConfigureJoystick()
 
    -- US Locos here, detection might be flaky as they are very similar to eachother
 
-   elseif DetectUPGasTurbune() then
+   elseif DetectUPGasTurbine() then
       GenerateEqualNotches(21, "Throttle")                  -- (0,1)
       GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
       tshSetControlTargetValue["Reverser"] = true           -- A fix for the Reverser

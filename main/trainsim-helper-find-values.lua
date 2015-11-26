@@ -381,10 +381,10 @@ function FindOverlayLocoBrakeCylinder()
    if Call("ControlExists", "MyLocoBrakeCylinderPressurePSI", 0) == 1 then  -- FEF-3
       tshUSAdvancedBrakes = true
       return "MyLocoBrakeCylinderPressurePSI", "PSI"
-   elseif Call("ControlExists", "LocoBrakeCylinderPressurePSIDisplayed", 0) == 1 then  -- US Advanced
+   elseif Call("ControlExists", "LocoBrakeCylinderPressurePSIDisplayed", 0) == 1 then  -- US Advanced, Connie
       tshUSAdvancedBrakes = true
       return "LocoBrakeCylinderPressurePSIDisplayed", "PSI"
-   elseif Call("ControlExists", "LocoBrakeCylinderPressurePSIAdvanced", 0) == 1 then  -- US Advanced
+   elseif Call("ControlExists", "LocoBrakeCylinderPressurePSIAdvanced", 0) == 1 then  -- US Advanced, Connie
       tshUSAdvancedBrakes = true
       return "LocoBrakeCylinderPressurePSIAdvanced", "PSI"
    elseif Call("ControlExists", "BrakeCylinderDial1", 0) == 1 then  -- Class 50
