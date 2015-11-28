@@ -624,17 +624,22 @@ function DetectClass08(DisablePopup) -- Weardale - Teesdale
    end
 end
 
-function DetectClass105(DisablePopup) -- Weardale - Teesdale addon
+function DetectClass105(DisablePopup) -- Weardale - Teesdale addon, BR Blue
    if Call("ControlExists", "VacuumChamberPressureINCHES", 0) == 1 and
       Call("ControlExists", "GearLever", 0) == 1 and
       Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 and
       Call("ControlExists", "Bell", 0) == 1 and
-      Call("ControlExists", "Instruments", 0) == 1 and
+      (
+         Call("ControlExists", "Instruments", 0) == 1 or
+         Call("ControlExists", "InstrumentLights", 0) == 1
+      ) and
       Call("ControlExists", "RouteNumberLight", 0) == 1 and
       Call("ControlExists", "DestinationsLight", 0) == 1 and
       Call("ControlExists", "Destination", 0) == 1 and
-      Call("ControlExists", "DestinationK", 0) == 1 and
-      Call("ControlExists", "DestinationH", 0) == 1
+      (
+         Call("ControlExists", "DestinationH", 0) == 1 or
+         Call("ControlExists", "DestinationLever", 0) == 1
+      )
    then
       if not DisablePopup then DisplayPopup("Class 105 detected") end
       return 1
@@ -697,23 +702,6 @@ function DetectClass35(DisablePopup) -- Riviera Line addon
    end
 end
 
--- UNUSED
-function DetectClass03(DisablePopup) -- West Somerset Railway addon
-   if Call("ControlExists", "VacuumBrakePipePressureINCHES", 0) == 1 and
-      Call("ControlExists", "VacuumBrakeChamberPressureINCHES", 0) == 1 and
-      Call("ControlExists", "OilPressure", 0) == 1 and
-      Call("ControlExists", "FuelGauge", 0) == 1 and
-      Call("ControlExists", "WaterTemperatureGauge", 0) == 1 and
-      Call("ControlExists", "GearBoxPressure", 0) == 1 and
-      Call("ControlExists", "OldAirBrakePipePressurePSI", 0) == 1 and
-      Call("ControlExists", "GearLever", 0) == 1 and
-      Call("ControlExists", "CabLight", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("Class 03 detected") end
-      return 1
-   end
-end
-
 function DetectClass47(DisablePopup) -- West Somerset Railway addon only, older have no notches
    if Call("ControlExists", "TractiveEffort", 0) == 1 and
       Call("ControlExists", "RPMDelta", 0) == 1 and
@@ -726,7 +714,8 @@ function DetectClass47(DisablePopup) -- West Somerset Railway addon only, older 
       Call("ControlExists", "LocoBrakeCylinderPressurePSI", 0) == 1 and
       Call("ControlExists", "SteamHeatingPressureGaugePSI", 0) == 1 and
       Call("ControlExists", "DoorsOpenClose", 0) == 1 and
-      Call("ControlExists", "CabLight", 0) == 1
+      Call("ControlExists", "CabLight", 0) == 1 and
+      Call("ControlExists", "InstrumentLights", 0) == 0
    then
       if not DisablePopup then DisplayPopup("Class 47 detected") end
       return 1
@@ -2055,10 +2044,9 @@ function DetectGenericUSDiesel(DisablePopup)
       ) and
       (
          Call("ControlExists", "AWS", 0) == 0 or
-         Call("ControlExists", "Bell", 0) == 1 or
+         Call("ControlExists", "DynamicBrake", 0) == 1 or
          Call("ControlExists", "StepLights", 0) == 1 or
-         Call("ControlExists", "StepsLight", 0) == 1 or
-         Call("ControlExists", "TractiveEffort", 0) == 1
+         Call("ControlExists", "StepsLight", 0) == 1
       ) and
       Call("ControlExists", "ThrottleAndBrake", 0) == 0
    then
