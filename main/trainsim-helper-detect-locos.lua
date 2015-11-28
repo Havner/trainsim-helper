@@ -2055,8 +2055,10 @@ function DetectGenericUSDiesel(DisablePopup)
       ) and
       (
          Call("ControlExists", "AWS", 0) == 0 or
+         Call("ControlExists", "Bell", 0) == 1 or
          Call("ControlExists", "StepLights", 0) == 1 or
-         Call("ControlExists", "StepsLight", 0) == 1
+         Call("ControlExists", "StepsLight", 0) == 1 or
+         Call("ControlExists", "TractiveEffort", 0) == 1
       ) and
       Call("ControlExists", "ThrottleAndBrake", 0) == 0
    then
