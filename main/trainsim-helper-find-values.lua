@@ -245,7 +245,9 @@ function FindOverlayTargetSpeed()
 end
 
 function FindOverlayReverser()
-   if Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
+   if Call("ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
+      return "MyReverser"
+   elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
       return "UserVirtualReverser"
    elseif Call("ControlExists", "Reverser", 0) == 1 then
       return "Reverser"

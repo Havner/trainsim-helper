@@ -14,12 +14,12 @@ function DetectFEF3_ADV_Smokebox(DisablePopup) -- Sherman Hill addon
    if Call("ControlExists", "MarsLight", 0) == 1 and
       Call("ControlExists", "WhistlePull", 0) == 1 and
       Call("ControlExists", "RegulatorLever", 0) == 1 and
-      Call("ControlExists", "TrainBrakeHandle", 0) == 1 and
+      Call("ControlExists", "TrainBrakeControl", 0) == 1 and
       Call("ControlExists", "FWPump", 0) == 1 and
       Call("ControlExists", "RegulatorClutch", 0) == 1 and
       Call("ControlExists", "ReverserClutch", 0) == 1 and
-      Call("ControlExists", "MRPSI", 0) == 1 and
-      Call("ControlExists", "HideDetail", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1 and
+      Call("ControlExists", "HideDetail", 0) == 0 and
       Call("ControlExists", "Dynamo", 0) == 1 and
       Call("ControlExists", "WheelAngularSpeed", 0) == 1 and
       Call("ControlExists", "WheelslipDamage", 0) == 1 and
@@ -78,7 +78,7 @@ function DetectConnie_ADV_Smokebox(DisablePopup) -- Horseshoe Curve addon
       Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1 and
       Call("ControlExists", "SafetyValveVolume", 0) == 1
    then
-      if not DisablePopup then DisplayPopup("Consolidation (HUD, Smokebox) detected") end
+      if not DisablePopup then DisplayPopup("Consolidation (ADV, Smokebox) detected") end
       return 1
    end
 end

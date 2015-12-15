@@ -164,7 +164,10 @@ function ConfigureJoystick()
    -- Steamers
 
    if DetectFEF3_ADV_Smokebox() then
-      tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
+      tshRange["TrainBrake"] = {0.34, 0.74}                 -- Ignore release and emergency values
+      tshNotches["TrainBrake"] = {0.0, 0.34, 0.42, 0.62, 0.74, 1}
+      tshStep["TrainBrake"] = 0.03                          -- Not needed per se, cosmetics
+      HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectFEF3_HUD_Smokebox() then
       tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
@@ -172,7 +175,9 @@ function ConfigureJoystick()
       tshControl["LocoBrake"] = "EngineBrakeControl"        -- they exist, but don't work in the HUD version
 
    elseif DetectConnie_ADV_Smokebox() then
-      tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
+      tshRange["TrainBrake"] = {0.34, 0.74}                 -- Ignore release and emergency values
+      tshNotches["TrainBrake"] = {0.0, 0.34, 0.42, 0.62, 0.74, 1}
+      tshStep["TrainBrake"] = 0.03                          -- Not needed per se, cosmetics
       HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectConnie_HUD_Smokebox() then
@@ -223,6 +228,7 @@ function ConfigureJoystick()
       tshNotches["CombinedThrottle"] = {0, 0.1, 0.25, 0.38, 0.5, 0.62, 0.74, 0.86, 1}
       tshRange["CombinedThrottle"] = {0.1, 1}               -- Ignore emergency values on CombinedThrottle (0, 0.1)
       GenerateEqualNotches(25, "CruiseCtl")                 -- (0,1)
+      --SplitCombinedWithAt("TrainBrake", 0.5)
 
    elseif DetectHST() then
       GenerateEqualNotches(6, "Throttle")                   -- (0,1)
@@ -231,6 +237,7 @@ function ConfigureJoystick()
    elseif DetectClass801() then
       tshNotches["CombinedThrottle"] = {-1.5, -1, -0.938, -0.875, -0.812, -0.75, -0.688, -0.625, -0.562, -0.5, -0.438, -0.375, -0.312, -0.25, 0, 0.25, 0.5, 0.75, 1}
       tshRange["CombinedThrottle"] = {-1, 1}                -- Ignore emergency values on CombinedThrottle (-1.5, -1)
+      --SplitCombinedWithAt("TrainBrake", 0)
 
    elseif DetectClass375Class377() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
