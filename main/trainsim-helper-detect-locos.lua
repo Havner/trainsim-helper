@@ -1048,19 +1048,19 @@ function DetectBR155(DisablePopup) -- Cologne - Koblenz addon
 end
 
 function DetectBR442Talent2(DisablePopup) -- Munich - Garmisch addon
-   if Call("ControlExists", "CabEQNeedle", 0) == 1 and
-      Call("ControlExists", "CabTBNeedle", 0) == 1 and
-      Call("ControlExists", "HornLow", 0) == 1 and
+   if Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "VirtualEmergencyBrake", 0) == 1 and
+      Call("ControlExists", "HandBrakeOn", 0) == 1 and
       Call("ControlExists", "BellSoft", 0) == 1 and
       Call("ControlExists", "PassGoods", 0) == 1 and
       Call("ControlExists", "TEUnits", 0) == 1 and
-      Call("ControlExists", "PZB_85_2", 0) == 1 and
-      Call("ControlExists", "AFBTargetSpeed", 0) == 1 and
-      Call("ControlExists", "AFBSet", 0) == 1 and
-      Call("ControlExists", "SiFaAudioWarning", 0) == 1 and
-      Call("ControlExists", "MegaPhone", 0) == 1 and
+      Call("ControlExists", "PZB_B40", 0) == 1 and
+      Call("ControlExists", "AFB_Speed", 0) == 1 and
+      Call("ControlExists", "AFB_Set", 0) == 1 and
+      Call("ControlExists", "DoorsT", 0) == 1 and
+      Call("ControlExists", "SpeedometerNeedle", 0) == 1 and
       Call("ControlExists", "EffortGraphs", 0) == 1 and
-      Call("ControlExists", "BrakeGraphBar", 0) == 1
+      Call("ControlExists", "BrakeGraph", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR442 Talent 2 detected") end
       return 1

@@ -385,12 +385,14 @@ function ConfigureJoystick()
       tshNotches["CruiseCtl"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
       InvInvert("CruiseCtl")                                -- Inverted compared to other CruiseCtls
       tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
-      tshRange["CombinedThrottle"] = {-0.9, 1}              -- Ignore emergency values (-1, -0.9)
-      ReplaceControls("TrainBrake", "LocoBrake")            -- TrainBrake is controlled with LocoBrake here, reflect that
+      tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
       tshNotches["TrainBrake"] = {-1, 0, 1}                 -- TrainBrake is self lapped here, add some notches to help
       tshStep["TrainBrake"] = 0.03                          -- Don't apply the lever fully on lever deflection
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
-      --SplitCombinedWithAt("DynamicBrake", 0)              -- Conflicts with ReplaceLines() here
+      tshControl["HandBrake"] = nil                         -- HandBrake not functional by lever
+      --ReplaceLines("LocoBrake", "HandBrake")              -- Revert Havner's config for the SplitCombinedWithAt
+      --ReplaceControls("LocoBrake", "TrainBrake")          -- SplitCombinedWithAt() below overwrites TrainBrake
+      --SplitCombinedWithAt("TrainBrake", 0)                -- so let's first put TrainBrake on LocoBrake
 
    elseif DetectBR232() then
       GenerateEqualNotches(16, "Throttle")                  -- (0,15)

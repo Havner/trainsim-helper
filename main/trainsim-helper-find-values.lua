@@ -14,8 +14,8 @@
 function FindCruiseCtl()
    if Call("ControlExists", "SpeedControlTarget", 0) == 1 then     -- BR266
       return "SpeedControlTarget"
-   elseif Call("ControlExists", "AFBSet", 0) == 1 then             -- BR442 Talent 2
-      return "AFBSet"
+   elseif Call("ControlExists", "AFB_Set", 0) == 1 then             -- BR442 Talent 2
+      return "AFB_Set"
    elseif Call("ControlExists", "SpeedSet", 0) == 1 then           -- Class 90 AP
       return "SpeedSet"
    elseif Call("ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela

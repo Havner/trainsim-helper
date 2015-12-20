@@ -300,10 +300,6 @@ function ConfigureOverlay()
       -- Not functional, hide
       tshControlValues["TargetSpeed"] = nil
 
-   elseif DetectBR442Talent2(true) then
-      -- Not functional, hide
-      tshControlValues["LocoBrakeCylinderPressure"] = nil
-
    -- US
 
 
