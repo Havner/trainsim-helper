@@ -14,8 +14,6 @@
 function FindCruiseCtl()
    if Call("ControlExists", "SpeedControlTarget", 0) == 1 then     -- BR266
       return "SpeedControlTarget"
-   elseif Call("ControlExists", "AFB_Set", 0) == 1 then             -- BR442 Talent 2
-      return "AFB_Set"
    elseif Call("ControlExists", "SpeedSet", 0) == 1 then           -- Class 90 AP
       return "SpeedSet"
    elseif Call("ControlExists", "CruiseControlSpeed", 0) == 1 then -- Acela
@@ -186,6 +184,8 @@ end
 function FindLiveSteam()
    if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3, Connie
       return "InjectorLeverR"
+   elseif Call("ControlExists", "PneumaticBlowDown", 0) == 1 then  -- DR BR86
+      return "PneumaticBlowDown"
    elseif Call("ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
       return "Right Steam"
    elseif Call("ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
@@ -196,7 +196,9 @@ function FindLiveSteam()
 end
 
 function FindLiveWater()
-   if Call("ControlExists", "Right Water", 0) == 1 then  -- 2F, 3F
+   if Call("ControlExists", "FeedWaterPumpControl", 0) == 1 then  -- DR BR86
+      return "FeedWaterPumpControl"
+   elseif Call("ControlExists", "Right Water", 0) == 1 then  -- 2F, 3F
       return "Right Water"
    elseif Call("ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
       return "LiveInjectorWaterLever"
@@ -212,9 +214,6 @@ end
 -----------------------------------------------------------
 ----------  Those are used for overlay display  -----------
 -----------------------------------------------------------
-
-function FindOverlay()
-end
 
 function FindOverlayUnits()
    if Call("ControlExists", "SpeedometerMPH", 0) == 1 then
@@ -283,6 +282,8 @@ end
 function FindOverlaySteamChestPressure()
    if Call("ControlExists", "RealSteamChestPressure", 0) == 1 then  -- Connie
       return "RealSteamChestPressure"
+   elseif Call("ControlExists", "SteamChestPressGauge", 0) == 1 then  -- DR BR86
+      return "SteamChestPressGauge"
    elseif Call("ControlExists", "VWSteamChestPressureGauge", 0) == 1 then  -- K1
       return "VWSteamChestPressureGauge"
    elseif Call("ControlExists", "SteamChestGaugePSI", 0) == 1 then
@@ -443,6 +444,8 @@ function FindOverlayMainReservoir()
       return "HLB", "BAR"
    elseif Call("ControlExists", "MRPSI", 0) == 1 then  -- FEF-3
       return "MRPSI", "PSI"
+   elseif Call("ControlExists", "MainResGauge", 0) == 1 then  -- DR BR86
+      return "MainResGauge", "PSI"
    elseif Call("ControlExists", "MainReservoirPressurePSIDisplayed", 0) == 1 then  -- US Advanced
       return "MainReservoirPressurePSIDisplayed", "PSI"
    elseif Call("ControlExists", "aMainReservoirPressureBAR", 0) == 1 then
@@ -491,12 +494,16 @@ function FindOverlayDynamo()
       return "Dynamo"
    elseif Call("ControlExists", "GeneratorThrottle", 0) == 1 then  -- Connie
       return "GeneratorThrottle"
+   elseif Call("ControlExists", "TurboGenerator", 0) == 1 then  -- DR BR86
+      return "TurboGenerator"
    end
 end
 
 function FindOverlayAirPump()
    if Call("ControlExists", "CompressorThrottle", 0) == 1 then  -- FEF-3
       return "CompressorThrottle"
+   elseif Call("ControlExists", "Airpump", 0) == 1 then  -- DR BR86
+      return "Airpump"
    elseif Call("ControlExists", "SteamShutOffL", 0) == 1 then  -- Q1
       return "SteamShutOffL"
    elseif Call("ControlExists", "AirPumpOnOff", 0) == 1 then
@@ -511,7 +518,9 @@ function FindOverlaySteamHeatingShutOff()
 end
 
 function FindOverlaySteamHeating()
-   if Call("ControlExists", "Steam Heat Valve", 0) == 1 then  -- J50
+   if Call("ControlExists", "SteamHeatValve", 0) == 1 then  -- DR BR86
+      return "SteamHeatValve"
+   elseif Call("ControlExists", "Steam Heat Valve", 0) == 1 then  -- J50
       return "Steam Heat Valve"
    elseif Call("ControlExists", "SteamHeatingValve", 0) == 1 then
       return "SteamHeatingValve"
@@ -579,6 +588,8 @@ end
 function FindOverlaySander()
    if Call("ControlExists", "SanderLever", 0) == 1 then  -- Connie
       return "SanderLever"
+   elseif Call("ControlExists", "SanderValve", 0) == 1 then  -- DR BR86
+      return "SanderValve"
    elseif Call("ControlExists", "FrontSander", 0) == 1 then  -- J50
       return "FrontSander"
    elseif Call("ControlExists", "VirtualSander", 0) == 1 then  -- 2F
@@ -661,6 +672,8 @@ end
 function FindOverlayExhaustInjectorShutOff()
    if Call("ControlExists", "InjectorSteamThrottleL", 0) == 1 then  -- Connie
       return "InjectorSteamThrottleL"
+   elseif Call("ControlExists", "Injector Steam Supply", 0) == 1 then  -- DR BR86
+      return "Injector Steam Supply"
    elseif Call("ControlExists", "Tender_WaterLeverR", 0) == 1 then  -- Q1
       return "Tender_WaterLeverR"
    end
@@ -765,12 +778,16 @@ end
 function FindOverlayFeedWaterPressure()
    if Call("ControlExists", "FWHpressure", 0) == 1 then  -- FEF-3
       return "FWHpressure"
+   elseif Call("ControlExists", "FeedPumpPressureZ", 0) == 1 then  -- DR BR86
+      return "FeedPumpPressureZ"
    end
 end
 
 function FindOverlayFeedWaterPump()
    if Call("ControlExists", "FWPump", 0) == 1 then  -- FEF-3
       return "FWPump"
+   elseif Call("ControlExists", "FeedWaterPumpControl", 0) == 1 then  -- DR BR86
+      return "FeedWaterPumpControl"
    end
 end
 

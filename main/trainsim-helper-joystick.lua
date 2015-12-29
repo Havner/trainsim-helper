@@ -31,8 +31,8 @@ function ConfigureJoystick()
    tshLine["Stoking"] = 19        -- FEF-3: Oil Regulator
    tshLine["ExhaustSteam"] = 20   -- FEF-3: Damper
    tshLine["ExhaustWater"] = 15   -- FEF-3: Feedwater Pump
-   tshLine["LiveSteam"] = 16
-   tshLine["LiveWater"] = 17
+   tshLine["LiveSteam"] = 16      -- DR BR86: Pneumatic Blow Down
+   tshLine["LiveWater"] = 17      -- DR BR86: Feedwater Pump
 
    tshInvert["Reverser"] = 1
    tshInvert["Gear"] = 1
@@ -211,6 +211,13 @@ function ConfigureJoystick()
       tshControl["SmallEjector"] = nil                      -- Not functional
       ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
 
+   elseif DetectDRBR86() then
+      tshControl["SmallEjector"] = nil
+      tshControl["LargeEjector"] = nil
+      tshRange["TrainBrake"] = {0, 0.676}                   -- Ignore emergency application
+      tshNotches["TrainBrake"] = {0, 0.31, 0.448, 0.566, 0.676, 1}
+      tshNotches["LocoBrake"] = {0, 0.5, 1}
+
    elseif Detect5700Pannier() then
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshNotches["Reverser"] = {-0.75, -0.65, -0.55, -0.45, -0.35, -0.25, -0.15, 0, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75}
@@ -380,19 +387,25 @@ function ConfigureJoystick()
       tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
       GenerateEqualNotches(20, "DynamicBrake")              -- (0,1)
 
+   elseif DetectBR261() then
+      tshNotches["CombinedThrottle"] = {-1, -0.66, -0.33, 0, 0.33, 0.66, 1}
+      tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
+      tshRange["TrainBrake"] = {-1, 0.9}                    -- Ignore Emergency brake application, hard to use with spring loaded
+      tshNotches["TrainBrake"] = {-1, 0, 0.9, 1}            -- TrainBrake is self lapped here, add some notches to help
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- LocoBrake is self lapped here, add some notches to help
+      tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
+      tshControl["HandBrake"] = nil                         -- HandBrake not functional by lever
+      --SplitCombinedWithAt("DynamicBrake", 0)
+      --SwitchLines("TrainBrake", "DynamicBrake")           -- IMO better to have DynamicBrake on the "main" handle, subjective
+
    elseif DetectBR442Talent2() then
-      ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
-      tshNotches["CruiseCtl"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
-      InvInvert("CruiseCtl")                                -- Inverted compared to other CruiseCtls
       tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
       tshNotches["TrainBrake"] = {-1, 0, 1}                 -- TrainBrake is self lapped here, add some notches to help
-      tshStep["TrainBrake"] = 0.03                          -- Don't apply the lever fully on lever deflection
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
       tshControl["HandBrake"] = nil                         -- HandBrake not functional by lever
-      --ReplaceLines("LocoBrake", "HandBrake")              -- Revert Havner's config for the SplitCombinedWithAt
-      --ReplaceControls("LocoBrake", "TrainBrake")          -- SplitCombinedWithAt() below overwrites TrainBrake
-      --SplitCombinedWithAt("TrainBrake", 0)                -- so let's first put TrainBrake on LocoBrake
+      --SplitCombinedWithAt("DynamicBrake", 0)
+      --SwitchLines("TrainBrake", "DynamicBrake")           -- IMO better to have DynamicBrake on the "main" handle, subjective
 
    elseif DetectBR232() then
       GenerateEqualNotches(16, "Throttle")                  -- (0,15)
@@ -671,6 +684,14 @@ function SplitCombinedWithAt(brake, split)
    tshRange[brake] = {range[1], split}
    tshNotches[brake] = tshNotches["CombinedThrottle"]
    InvInvert(brake)
+end
+
+function SwitchLines(key_1, key_2)
+   if DisableReplace and DisableReplace ~= 0 then return end
+
+   local tmp = tshLine[key_1]
+   tshLine[key_1] = tshLine[key_2]
+   tshLine[key_2] = tmp
 end
 
 -- Replace control lines, but don't do this if:

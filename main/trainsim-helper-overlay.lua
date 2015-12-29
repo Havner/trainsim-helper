@@ -288,6 +288,18 @@ function ConfigureOverlay()
       -- Not functional, hide
       tshControlValues["SmallEjector"] = nil
 
+   elseif DetectDRBR86(true) then
+      -- Hide the internal values
+      tshControlValues["LiveInjectorSteam"] = nil
+      tshControlValues["LiveInjectorWater"] = nil
+      tshControlValues["TrainBrakeCylinderPressure"] = nil
+      tshControlValues["EqReservoirPressure"] = nil
+      -- Make the Sander {-1, 1}
+      tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      -- Make the Sanboxes {0, 1}
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 2700 end
+      tshControlValuesFunctions["SandboxRear"] = function(value) return value / 2700 end
+
    -- UK
 
    elseif DetectClass365(true) then
@@ -299,6 +311,10 @@ function ConfigureOverlay()
    elseif DetectBR103TEE_vRailroads(true) then
       -- Not functional, hide
       tshControlValues["TargetSpeed"] = nil
+
+   elseif DetectBR261(true) then
+      -- Hide the internal values
+      tshControlValues["EqReservoirPressure"] = nil
 
    -- US
 

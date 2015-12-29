@@ -374,6 +374,25 @@ function Detect56xx_VictoryWorks(DisablePopup) -- Memories of Maerdy addon
    end
 end
 
+function DetectDRBR86(DisablePopup) -- Cologne - Koblenz addon
+   if Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "gnLocoBrakePressure", 0) == 1 and
+      Call("ControlExists", "MainResGauge", 0) == 1 and
+      Call("ControlExists", "SandboxPrompt", 0) == 1 and
+      Call("ControlExists", "RearSandBoxOperation", 0) == 1 and
+      Call("ControlExists", "GaugeGlassReading", 0) == 1 and
+      Call("ControlExists", "RightEasingValve", 0) == 1 and
+      Call("ControlExists", "PneumaticBlowDown", 0) == 1 and
+      Call("ControlExists", "SteamFlow", 0) == 1 and
+      Call("ControlExists", "RainB", 0) == 1 and
+      Call("ControlExists", "MaxForcey", 0) == 1 and
+      Call("ControlExists", "gnFeedPumpPosition", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("DR BR86 (DA) detected") end
+      return 1
+   end
+end
+
 function Detect5700Pannier(DisablePopup) -- Riviera Line addon
    if Call("ControlExists", "FireboxDoor", 0) == 1 and
       Call("ControlExists", "VacuumChamberSide", 0) == 1 and
@@ -1043,6 +1062,25 @@ function DetectBR155(DisablePopup) -- Cologne - Koblenz addon
       Call("ControlExists", "SunVisorRearLeft", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR155 detected") end
+      return 1
+   end
+end
+
+function DetectBR261(DisablePopup) -- Mannheim - Karlsruhe addon
+   if Call("ControlExists", "Driver", 0) == 1 and
+      Call("ControlExists", "WipersCab", 0) == 1 and
+      Call("ControlExists", "EngineOnOff", 0) == 1 and
+      Call("ControlExists", "VirtualBrakeDifficulty", 0) == 1 and
+      Call("ControlExists", "HandBrakeOff", 0) == 1 and
+      Call("ControlExists", "VisorCab2", 0) == 1 and
+      Call("ControlExists", "VirtualDynamicBrake", 0) == 1 and
+      Call("ControlExists", "RearBlind", 0) == 1 and
+      Call("ControlExists", "RightWindow", 0) == 1 and
+      Call("ControlExists", "TemperatureRight", 0) == 1 and
+      Call("ControlExists", "Bunny", 0) == 1 and
+      Call("ControlExists", "Turtle", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("BR261 detected") end
       return 1
    end
 end
