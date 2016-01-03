@@ -67,6 +67,12 @@ function ConfigureJoystick()
    -- the axes you configure above, my own configs won't bother you.
    --DisableReplace = 1
 
+   -- Disable artificial notch blockers on SmokeBox brakes
+   -- This affects FEF-3, Connie and SmokeBox made brakes for DTG e.g. in:
+   -- UP Gas Turbine, SD40-T in Soldier Summit, all Sherman Hill locos.
+   -- Comment out if you don't use physical throttles.
+   HANDLE_PROTECTION_TIMEOUT_MAX = 0
+
    -----------------------------------------------------------
    -----  No need to go below for a basic configuration  -----
    -----------------------------------------------------------
@@ -167,7 +173,6 @@ function ConfigureJoystick()
       tshRange["TrainBrake"] = {0.34, 0.74}                 -- Ignore release and emergency values
       tshNotches["TrainBrake"] = {0.0, 0.34, 0.42, 0.62, 0.74, 1}
       tshStep["TrainBrake"] = 0.03                          -- Not needed per se, cosmetics
-      HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectFEF3_HUD_Smokebox() then
       tshRange["TrainBrake"] = {0, 0.85}                    -- Ignore emergency values (0.85, 1)
@@ -178,7 +183,6 @@ function ConfigureJoystick()
       tshRange["TrainBrake"] = {0.34, 0.74}                 -- Ignore release and emergency values
       tshNotches["TrainBrake"] = {0.0, 0.34, 0.42, 0.62, 0.74, 1}
       tshStep["TrainBrake"] = 0.03                          -- Not needed per se, cosmetics
-      HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectConnie_HUD_Smokebox() then
       -- only overlay
@@ -378,6 +382,7 @@ function ConfigureJoystick()
       tshNotches["TrainBrake"] = {0, 0.14, 0.35, 0.48, 0.6, 0.7, 0.8, 1}
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
       --SplitCombinedWithAt("DynamicBrake", 0)
+      --SwitchLines("TrainBrake", "DynamicBrake")           -- IMO better to have Dynamic/Combined Brake on the "main" handle
 
    elseif DetectBR155() then
       GenerateEqualNotches(17, "Gear")                      -- (-0.5,1.3)
@@ -390,13 +395,12 @@ function ConfigureJoystick()
    elseif DetectBR261() then
       tshNotches["CombinedThrottle"] = {-1, -0.66, -0.33, 0, 0.33, 0.66, 1}
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
-      tshRange["TrainBrake"] = {-1, 0.9}                    -- Ignore Emergency brake application, hard to use with spring loaded
-      tshNotches["TrainBrake"] = {-1, 0, 0.9, 1}            -- TrainBrake is self lapped here, add some notches to help
+      tshRange["TrainBrake"] = {-0.9, 0.9}                  -- Ignore Emergency and Full Release brake applications, hard to use with spring loaded
+      tshNotches["TrainBrake"] = {-1, -0.9, 0, 0.9, 1}      -- TrainBrake is self lapped here, add some notches to help
       tshNotches["LocoBrake"] = {-1, 0, 1}                  -- LocoBrake is self lapped here, add some notches to help
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
       tshControl["HandBrake"] = nil                         -- HandBrake not functional by lever
       --SplitCombinedWithAt("DynamicBrake", 0)
-      --SwitchLines("TrainBrake", "DynamicBrake")           -- IMO better to have DynamicBrake on the "main" handle, subjective
 
    elseif DetectBR442Talent2() then
       tshNotches["CombinedThrottle"] = {-1, -0.9, -0.85, -0.8, -0.75, -0.7, -0.65, -0.6, -0.55, -0.5, -0.45, -0.4, -0.35, -0.3, -0.25, -0.2, 0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1}
@@ -405,7 +409,7 @@ function ConfigureJoystick()
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake not functional by itself
       tshControl["HandBrake"] = nil                         -- HandBrake not functional by lever
       --SplitCombinedWithAt("DynamicBrake", 0)
-      --SwitchLines("TrainBrake", "DynamicBrake")           -- IMO better to have DynamicBrake on the "main" handle, subjective
+      --SwitchLines("TrainBrake", "DynamicBrake")           -- IMO better to have Dynamic/Combined Brake on the "main" handle
 
    elseif DetectBR232() then
       GenerateEqualNotches(16, "Throttle")                  -- (0,15)
@@ -497,7 +501,6 @@ function ConfigureJoystick()
       GenerateEqualNotches(21, "Throttle")                  -- (0,1)
       GenerateEqualNotches(21, "DynamicBrake")              -- (0,1)
       tshSetControlTargetValue["Reverser"] = true           -- A fix for the Reverser
-      HANDLE_PROTECTION_TIMEOUT_MAX = 0                     -- A hack to turn off brake notches
 
    elseif DetectGP20_ADV_Reppo() then
       tshNotches["Throttle"] = {-2, 0, 1, 2, 3, 4, 5, 6, 7, 8}
