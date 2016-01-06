@@ -104,6 +104,48 @@ function DetectConnie_HUD_Smokebox(DisablePopup) -- Horseshoe Curve addon
    end
 end
 
+function DetectEE3B_ADV_MeshTools(DisablePopup) -- Return to Maerdy
+   if Call("ControlExists", "Lamp8White", 0) == 1 and
+      Call("ControlExists", "Lamp8Red", 0) == 1 and
+      Call("ControlExists", "ShedCodeDistrict", 0) == 1 and
+      Call("ControlExists", "LampReservoir", 0) == 1 and
+      Call("ControlExists", "AmperesMeter", 0) == 1 and
+      Call("ControlExists", "SecondaryCircuitBreaker", 0) == 1 and
+      Call("ControlExists", "MotorIsolatingLever", 0) == 1 and
+      Call("ControlExists", "MotorIsolatingLeverTransform", 0) == 1 and
+      Call("ControlExists", "ReverserLeverTransform", 0) == 1 and
+      Call("ControlExists", "HandleControl2", 0) == 1 and
+      Call("ControlExists", "RearSandboxLids", 0) == 1 and
+      Call("ControlExists", "DifferenceInSpeeds", 0) == 1 and
+      Call("ControlExists", "MotorTemp2", 0) == 1 and
+      Call("ControlExists", "Digit3X", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("English Electric 3B (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
+function DetectAusterity_ADV_MeshTools(DisablePopup) -- Return to Maerdy
+   if Call("ControlExists", "Lamp8White", 0) == 1 and
+      Call("ControlExists", "Lamp8Red", 0) == 1 and
+      Call("ControlExists", "LampsUsed", 0) == 1 and
+      Call("ControlExists", "Lamp Hatch", 0) == 1 and
+      Call("ControlExists", "UserVirtualReverser", 0) == 1 and
+      Call("ControlExists", "SteamChestPress", 0) == 1 and
+      Call("ControlExists", "SlackingPipeToggle", 0) == 1 and
+      Call("ControlExists", "SteamHeatValveTransform", 0) == 1 and
+      Call("ControlExists", "MixtureE", 0) == 1 and
+      Call("ControlExists", "FiredoorPenalty", 0) == 1 and
+      Call("ControlExists", "gnShovelLoad", 0) == 1 and
+      Call("ControlExists", "RightTankLid", 0) == 1 and
+      Call("ControlExists", "InjectorRightBlowback", 0) == 1 and
+      Call("ControlExists", "DSVTest", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Austerity (ADV, MeshTools) detected") end
+      return 1
+   end
+end
+
 function Detect2FDockTank_ADV_MeshTools(DisablePopup) -- Falmouth Branch addon
    if Call("ControlExists", "Headcode1", 0) == 1 and
       Call("ControlExists", "MiddleLeftWindow", 0) == 1 and

@@ -244,6 +244,25 @@ function ConfigureOverlay()
          return value
       end
 
+   elseif DetectEE3B_ADV_MeshTools(true) then
+      -- Make the Sanboxes {0, 1}
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 720 end
+      tshControlValuesFunctions["SandboxRear"] = function(value) return value / 720 end
+
+   elseif DetectAusterity_ADV_MeshTools(true) then
+      -- Make the Sander {-1, 1}
+      tshControlValuesFunctions["Sander"] = function(value) return value - 1 end
+      -- Make the Sanboxes {0, 1}
+      tshControlValuesFunctions["Sandbox"] = function(value) return value / 2700 end
+      tshControlValuesFunctions["SandboxRear"] = function(value) return value / 2700 end
+      -- Blueprint garbage
+      tshControlValues["SteamHeatingPressure"] = nil
+      tshControlValues["VacuumBrakePipePressure"] = nil
+      tshControlValues["SteamHeating"] = nil
+      tshControlValues["SteamManifold"] = nil
+      tshControlValues["Lubricator"] = nil
+      tshControlValues["BrakeHook"] = nil
+
    elseif Detect2FDockTank_ADV_MeshTools(true) then
       -- Make the Sander {-1, 1}
       tshControlValuesFunctions["Sander"] = function(value) return value - 1 end

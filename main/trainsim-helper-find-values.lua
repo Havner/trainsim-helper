@@ -128,7 +128,9 @@ function FindLargeEjector()
 end
 
 function FindBlower()
-   if Call("ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3, Connie
+   if Call("ControlExists", "VirtualBlower", 0) == 1 then  -- Austerity
+      return "VirtualBlower"
+   elseif Call("ControlExists", "BlowerControlValve", 0) == 1 then  -- FEF-3, Connie
       return "BlowerControlValve"
    elseif Call("ControlExists", "Blower", 0) == 1 then
       return "Blower"
@@ -144,7 +146,9 @@ function FindFireboxDoor()
 end
 
 function FindStoking()
-   if Call("ControlExists", "Firing", 0) == 1 then  -- FEF-3
+   if Call("ControlExists", "FiringRound", 0) == 1 then  -- Austerity
+      return "FiringRound"
+   elseif Call("ControlExists", "Firing", 0) == 1 then  -- FEF-3
       return "Firing"
    elseif Call("ControlExists", "Stoking", 0) == 1 then
       return "Stoking"
@@ -338,7 +342,9 @@ function FindOverlayRPM()
 end
 
 function FindOverlayAmmeter()
-   if Call("ControlExists", "Ammeter", 0) == 1 then
+   if Call("ControlExists", "Amperes", 0) == 1 then  -- EE3B
+      return "Amperes"
+   elseif Call("ControlExists", "Ammeter", 0) == 1 then
       return "Ammeter"
    end
 end
@@ -712,7 +718,9 @@ function FindOverlayFireboxDoor()
 end
 
 function FindOverlayStoking()
-   if Call("ControlExists", "Stoking", 0) == 1 then
+   if Call("ControlExists", "FiringRound", 0) == 1 then  -- Austerity
+      return "FiringRound"
+   elseif Call("ControlExists", "Stoking", 0) == 1 then
       return "Stoking"
    end
 end
@@ -736,7 +744,9 @@ function FindOverlayTankHeater()
 end
 
 function FindOverlayDamper()
-   if Call("ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
+   if Call("ControlExists", "VirtualDamper", 0) == 1 then  -- Austerity
+      return "VirtualDamper"
+   elseif Call("ControlExists", "FiredoorDamper", 0) == 1 then  -- FEF-3
       return "FiredoorDamper"
    elseif Call("ControlExists", "VWDamper", 0) == 1 then  -- Small Prairies
       return "VWDamper"

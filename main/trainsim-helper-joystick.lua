@@ -187,6 +187,22 @@ function ConfigureJoystick()
    elseif DetectConnie_HUD_Smokebox() then
       -- only overlay
 
+   elseif DetectEE3B_ADV_MeshTools() then
+      ReplaceControls("CombinedThrottle", "Throttle")       -- CombinedThrottle is controlled with Throttle here, reflect that
+      tshNotches["CombinedThrottle"] = {0, 0.05, 0.09, 0.13, 0.18, 0.22, 0.26, 0.36, 0.5, 0.54, 0.58, 0.62, 0.67, 0.82, 0.87, 0.914, 0.957, 1}
+      tshControl["LocoBrake"] = nil                         -- internal brake should not be used directly
+      tshControl["HandBrake"] = nil                         -- internal brake should not be used directly
+      SplitCombinedWithAt("DynamicBrake", 0.36)
+
+   elseif DetectAusterity_ADV_MeshTools() then
+      ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
+      tshNotches["Reverser"] = {-0.75, -0.6, -0.45, 0, 0.45, 0.6, 0.75}
+      tshStep["Reverser"] = 0.03                            -- Not needed per se, cosmetics
+      tshNotches["TrainBrake"] = {0.10, 0.20, 0.30}         -- Add notches as it's otherwise very hard to control the steam brake (the only one)
+      tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
+      tshControl["SmallEjector"] = nil                      -- Blueprint garbage
+      tshControl["LargeEjector"] = nil                      -- Blueprint garbage
+
    elseif Detect2FDockTank_ADV_MeshTools() then
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
       tshControl["LocoBrake"] = nil                         -- Steam brake internal should not be used directly
@@ -216,8 +232,8 @@ function ConfigureJoystick()
       ReplaceControls("TrainBrake", "LocoBrake")            -- There is no TrainBrake here, use the steam brake as one
 
    elseif DetectDRBR86() then
-      tshControl["SmallEjector"] = nil
-      tshControl["LargeEjector"] = nil
+      tshControl["SmallEjector"] = nil                      -- Blueprint garbage
+      tshControl["LargeEjector"] = nil                      -- Blueprint garbage
       tshRange["TrainBrake"] = {0, 0.676}                   -- Ignore emergency application
       tshNotches["TrainBrake"] = {0, 0.31, 0.448, 0.566, 0.676, 1}
       tshNotches["LocoBrake"] = {0, 0.5, 1}

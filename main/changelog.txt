@@ -3,7 +3,8 @@
  - BR Blue pack
  - DR BR86 (TODO: Pressure Units!)
  - DB BR261 Voith Gravita
- - Horseshoe Curve
+ - Horseshoe Curve + Baldwin Centipede
+ - Return to Maerdy
 
 0.10
  - UP Gas Turbine fixed! Thanks to CobraOne for the initial
