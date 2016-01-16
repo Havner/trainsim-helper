@@ -1,10 +1,11 @@
 0.11:
  - Updates after TS patches: Connie, FEF-3, Talent 2
  - BR Blue pack
- - DR BR86 (TODO: Pressure Units!)
+ - DR BR86 (units might be incorrent on the overlay)
  - DB BR261 Voith Gravita
  - Horseshoe Curve + Baldwin Centipede
  - Return to Maerdy
+ - WCML Trent Valley locos
 
 0.10
  - UP Gas Turbine fixed! Thanks to CobraOne for the initial

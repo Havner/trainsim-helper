@@ -248,6 +248,10 @@ function ConfigureOverlay()
       -- Make the Sanboxes {0, 1}
       tshControlValuesFunctions["Sandbox"] = function(value) return value / 720 end
       tshControlValuesFunctions["SandboxRear"] = function(value) return value / 720 end
+      -- Blueprint garbage
+      tshControlValues["LocoBrakeCylinderPressure"] = nil
+      tshControlValues["AirBrakePipePressure"] = nil
+      tshControlValues["MainReservoirPressure"] = nil
 
    elseif DetectAusterity_ADV_MeshTools(true) then
       -- Make the Sander {-1, 1}

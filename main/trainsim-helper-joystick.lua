@@ -192,7 +192,7 @@ function ConfigureJoystick()
       tshNotches["CombinedThrottle"] = {0, 0.05, 0.09, 0.13, 0.18, 0.22, 0.26, 0.36, 0.5, 0.54, 0.58, 0.62, 0.67, 0.82, 0.87, 0.914, 0.957, 1}
       tshControl["LocoBrake"] = nil                         -- internal brake should not be used directly
       tshControl["HandBrake"] = nil                         -- internal brake should not be used directly
-      SplitCombinedWithAt("DynamicBrake", 0.36)
+      --SplitCombinedWithAt("DynamicBrake", 0.36)
 
    elseif DetectAusterity_ADV_MeshTools() then
       ReplaceLines("HandBrake", "LocoBrake")                -- Havner's config
@@ -355,6 +355,15 @@ function ConfigureJoystick()
       tshRange["Throttle"] = {0.2, 1}                       -- Ignore Off values (0, 0.2)
       tshRange["TrainBrake"] = {0.2, 0.7857}                -- Ignore Release (0, 0.2) and Emergency values (0.7857, 1)
 
+   elseif DetectClass350_Thomson() then
+      tshNotches["CombinedThrottle"] = {-1, -0.72, -0.68, -0.64, -0.6, -0.56, -0.52, -0.48, -0.44, -0.40, -0.36, -0.32, -0.28, -0.24, -0.2, -0.16, -0.12, -0.08, -0.04, 0, 0.2, 0.4, 0.6, 0.8, 1}
+      --SplitCombinedWithAt("TrainBrake", 0)
+
+   elseif DetectClass66_Thomson() then
+      GenerateEqualNotches(9, "Throttle")                   -- (0,1)
+      tshNotches["TrainBrake"] = {-1, 0, 1}                 -- Self lapped here, add some notches to help
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
+
    elseif DetectClass76() then
       GenerateEqualNotches(20, "Throttle")
       GenerateEqualNotches(21, "DynamicBrake")
@@ -501,12 +510,14 @@ function ConfigureJoystick()
 
    elseif DetectBR294() or DetectBR294_New() then
       tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
+      --SplitCombinedWithAt("TrainBrake", 0.5)
 
    elseif DetectBR101_Old() then
       tshNotches["TrainBrake"] = {0, 0.22, 0.35, 0.48, 0.61, 0.74, 0.87, 1}
 
    elseif DetectBR294_Old() then
       tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
+      --SplitCombinedWithAt("TrainBrake", 0.5)
 
    elseif DetectV200() then
       GenerateEqualNotches(7, "Throttle")                   -- (0,1)

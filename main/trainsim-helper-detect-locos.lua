@@ -860,7 +860,7 @@ function DetectClass156_Oovee(DisablePopup)
    end
 end
 
-function DetectClass37_Thomson(DisablePopup) -- West Highland Line 
+function DetectClass37_Thomson(DisablePopup) -- West Highland Line
    if Call("ControlExists", "ScenarioRunning", 0) == 1 and
       Call("ControlExists", "VirtualRPM", 0) == 1 and
       Call("ControlExists", "S1", 0) == 1 and
@@ -873,6 +873,44 @@ function DetectClass37_Thomson(DisablePopup) -- West Highland Line
       Call("ControlExists", "nextsectionclear", 0) == 1
    then
       if not DisablePopup then DisplayPopup("Class 37/4 (Thomson) detected") end
+      return 1
+   end
+end
+
+function DetectClass350_Thomson(DisablePopup) -- WCML Trent Valley
+   if Call("ControlExists", "AWSFirstTestDone", 0) == 1 and
+      Call("ControlExists", "CoachID", 0) == 1 and
+      Call("ControlExists", "BrakingDrivingPercentage", 0) == 1 and
+      Call("ControlExists", "RegenerativeSound", 0) == 1 and
+      Call("ControlExists", "MotorSound", 0) == 1 and
+      Call("ControlExists", "SignalBell3", 0) == 1 and
+      Call("ControlExists", "EnableRightWiper", 0) == 1 and
+      Call("ControlExists", "VestibuleDoors", 0) == 1 and
+      Call("ControlExists", "VisorRight", 0) == 1 and
+      Call("ControlExists", "LineVolts", 0) == 1 and
+      Call("ControlExists", "FaultPantoVCB", 0) == 1 and
+      Call("ControlExists", "PISmessage92", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Class 350 (Thomson) detected") end
+      return 1
+   end
+end
+
+function DetectClass66_Thomson(DisablePopup) -- WCML Trent Valley
+   if Call("ControlExists", "AWSFirstTestDone", 0) == 1 and
+      Call("ControlExists", "CabEQNeedle", 0) == 1 and
+      Call("ControlExists", "Wipers2", 0) == 1 and
+      Call("ControlExists", "PassGoods", 0) == 1 and
+      Call("ControlExists", "BrakeAirFlow", 0) == 1 and
+      Call("ControlExists", "TrainLength", 0) == 1 and
+      Call("ControlExists", "WindowLeft", 0) == 1 and
+      Call("ControlExists", "TEHundreds", 0) == 1 and
+      Call("ControlExists", "CalcTrainBrake", 0) == 1 and
+      Call("ControlExists", "gnEQ", 0) == 1 and
+      Call("ControlExists", "gnP_VBH", 0) == 1 and
+      Call("ControlExists", "lnVBH", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Class 66 (Thomson) detected") end
       return 1
    end
 end
