@@ -1,4 +1,6 @@
 0.11:
+ - WARNING: there are 5 scripts now in total now, make sure to
+   put them all in the plugins directory.
  - Updates after TS patches: Connie, FEF-3, Talent 2
  - BR Blue pack
  - DR BR86 (units might be incorrent on the overlay)

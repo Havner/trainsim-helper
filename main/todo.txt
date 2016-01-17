@@ -9,11 +9,6 @@
 - Clean up the LUA code:
   - PZB warning for RSC German locos
 - Alternative script for locos with broken scripts
-
-- tsh-detect-locos.lua
-- tsh-detect-values.lua
-- use detect values for overlay
-- tsh-functions.lua
 - UINT_MAX for VSoll in BR189?
 
 Things to consider for the very distant future:
