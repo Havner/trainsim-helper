@@ -871,15 +871,25 @@ function FindOverlaySafetyValve2()
    end
 end
 
-function FindOverlayAlarm()
-   if Call("ControlExists", "AlerterCountdown", 0) == 1 then
-      return "AlerterCountdown"
-   elseif Call("ControlExists", "AWSWarnCount", 0) == 1 then
-      return "AWSWarnCount"
+function FindOverlayDoors()
+   if Call("ControlExists", "DoorsOpenClose", 0) == 1 then
+      return "DoorsOpenClose"
    end
 end
 
-function FindOverlayVigilAlarm()
+function FindOverlayDoorsLeft()
+   if Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 then
+      return "DoorsOpenCloseLeft"
+   end
+end
+
+function FindOverlayDoorsRight()
+   if Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 then
+      return "DoorsOpenCloseRight"
+   end
+end
+
+function FindOverlayAlarm()
    if Call("ControlExists", "SifaWarnung", 0) == 1 then  -- BR420, BR103, BR111
       return "SifaWarnung"
    elseif Call("ControlExists", "SiFaWarning", 0) == 1 then  -- BR442
@@ -890,6 +900,10 @@ function FindOverlayVigilAlarm()
       return "VigilAlarm"
    elseif Call("ControlExists", "DSD", 0) == 1 then
       return "DSD"
+   elseif Call("ControlExists", "AlerterCountdown", 0) == 1 then
+      return "AlerterCountdown"
+   elseif Call("ControlExists", "AWSWarnCount", 0) == 1 then
+      return "AWSWarnCount"
    end
 end
 
@@ -906,23 +920,5 @@ end
 function FindOverlayStartup()
    if Call("ControlExists", "Startup", 0) == 1 then
       return "Startup"
-   end
-end
-
-function FindOverlayDoors()
-   if Call("ControlExists", "DoorsOpenClose", 0) == 1 then
-      return "DoorsOpenClose"
-   end
-end
-
-function FindOverlayDoorsLeft()
-   if Call("ControlExists", "DoorsOpenCloseLeft", 0) == 1 then
-      return "DoorsOpenCloseLeft"
-   end
-end
-
-function FindOverlayDoorsRight()
-   if Call("ControlExists", "DoorsOpenCloseRight", 0) == 1 then
-      return "DoorsOpenCloseRight"
    end
 end

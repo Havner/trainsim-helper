@@ -2177,16 +2177,6 @@ end
 -------------  Detections used for Overlay  ---------------
 -----------------------------------------------------------
 
-function DetectInterfaceGerman(DisablePopup) -- Used for Warnings
-   if Call("ControlExists", "AFB", 0) == 1 or
-      Call("ControlExists", "AFBTargetSpeed", 0) == 1 or
-      Call("ControlExists", "PZBFrei", 0) == 1
-   then
-      if not DisablePopup then DisplayPopup("German Interface") end
-      return 1
-   end
-end
-
 function DetectInterfaceUK(DisablePopup) -- MPH and BAR, should be UK, hopefully, used for Gradient
    if Call("ControlExists", "SpeedometerMPH", 0) == 1 and
       (

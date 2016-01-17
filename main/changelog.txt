@@ -6,6 +6,10 @@
  - Horseshoe Curve + Baldwin Centipede
  - Return to Maerdy
  - WCML Trent Valley locos
+ - Merge all the alerters into one "Alarm", color changed to yellow.
+   It's virtually impossible to be able to distnguish AWS/PZB from
+   DSD/Sifa reliably on all locos. In any case the 'Q' should always
+   fix the alarm. If you want to drive realistically look in the cab.
 
 0.10
  - UP Gas Turbine fixed! Thanks to CobraOne for the initial

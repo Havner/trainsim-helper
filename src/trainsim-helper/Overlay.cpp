@@ -181,19 +181,16 @@ struct SimData {
 	Value<float>		fSafetyValve2;
 
 	// Warning values
-	Value<int>			nSunflower;
+	Value<int>			nDoors;
 	Value<int>			nAlarm;
-	Value<int>			nVigilAlarm;
 	Value<int>			nEmergencyBrake;
 	Value<int>			nStartup;
-	Value<int>			nDoors;
 
 	// Config values
+	Value<std::string>  sTextDoors;
 	Value<std::string>  sTextAlarm;
-	Value<std::string>  sTextVigilAlarm;
 	Value<std::string>  sTextEmergency;
 	Value<std::string>  sTextStartup;
-	Value<std::string>  sTextDoors;
 	Value<int>			nGradientUK;
 
 	// Misc
@@ -460,19 +457,16 @@ int FillData(SimData* data)
 		else if (!strcmp("SafetyValve2:", param))				data->fSafetyValve2 = value;
 
 		// Warning values
-		else if (!strcmp("Sunflower:", param))					data->nSunflower = value;
+		else if (!strcmp("Doors:", param))						data->nDoors = value;
 		else if (!strcmp("Alarm:", param))						data->nAlarm = value;
-		else if (!strcmp("VigilAlarm:", param))					data->nVigilAlarm = value;
 		else if (!strcmp("EmergencyBrake:", param))				data->nEmergencyBrake = value;
 		else if (!strcmp("Startup:", param))					data->nStartup = value;
-		else if (!strcmp("Doors:", param))						data->nDoors = value;
 
 		// Config values
+		else if (!strcmp("TextDoors:", param))					data->sTextDoors = value;
 		else if (!strcmp("TextAlarm:", param))					data->sTextAlarm = value;
-		else if (!strcmp("TextVigilAlarm:", param))				data->sTextVigilAlarm = value;
 		else if (!strcmp("TextEmergency:", param))				data->sTextEmergency = value;
 		else if (!strcmp("TextStartup:", param))				data->sTextStartup = value;
-		else if (!strcmp("TextDoors:", param))					data->sTextDoors = value;
 		else if (!strcmp("GradientUK:", param))					data->nGradientUK = value;
 
 		// Misc
@@ -625,15 +619,15 @@ void RenderOverlay()
 		fNextSpeedLimitDistance = data.fNextSpeedLimitDistance() * fModifierDistance;
 	}
 
+	// Doors color
+	DWORD doorscolor = transparent;
+	if (data.nDoors() > 0)
+		doorscolor = green;
+
 	// Alarm color
 	DWORD alarmcolor = transparent;
 	if (data.nAlarm() > 0)
-		alarmcolor = red;
-
-	// VigilAlarm color
-	DWORD vigilalarmcolor = transparent;
-	if (data.nVigilAlarm() > 0)
-		vigilalarmcolor = red;
+		alarmcolor = yellow;
 
 	// Emergency color
 	DWORD emergencycolor = transparent;
@@ -644,11 +638,6 @@ void RenderOverlay()
 	DWORD startupcolor = transparent;
 	if (data.nStartup() == -1)
 		startupcolor = red;
-
-	// Doors color
-	DWORD doorscolor = transparent;
-	if (data.nDoors() > 0)
-		doorscolor = green;
 
 	// speed color (white - OK, yellow - back, red - overspeed)
 	DWORD speedcolor = white;
@@ -778,11 +767,10 @@ void RenderOverlay()
 
 	y = NextSection(y, &yP, yD);
 
-	y = DrawString(eMainWarnings,			data.sTextDoors,					x,		y, doorscolor, pBigFont, data.sTextDoors());
 	y = DrawString(eMainWarnings,			data.sTextStartup,					x,		y, startupcolor, pBigFont, data.sTextStartup());
 	y = DrawString(eMainWarnings,			data.sTextEmergency,				x,		y, emergencycolor, pBigFont, data.sTextEmergency());
-	y = DrawString(eMainWarnings,			data.sTextVigilAlarm,				x,		y, vigilalarmcolor, pBigFont, data.sTextVigilAlarm());
 	y = DrawString(eMainWarnings,			data.sTextAlarm,					x,		y, alarmcolor, pBigFont, data.sTextAlarm());
+	y = DrawString(eMainWarnings,			data.sTextDoors,					x,		y, doorscolor, pBigFont, data.sTextDoors());
 
 	if (data.fFireboxMass)
 	{

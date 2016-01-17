@@ -11,19 +11,13 @@ function ConfigureOverlay()
    -- Define strings for warning messages. You can override them per loco.
    -- Or comment out / redefine to nil if you don't want specific one.
    -- NO SPACES IN THE STRINGS ALLOWED (will fix that later, use '_')
-   TextAlarm =       "AWS"
-   TextVigilAlarm =  "DSD"
+   TextDoors =       "Doors"
+   TextAlarm =       "Alert"
    TextEmergency =   "Emergency"
    TextStartup =     "Engine"
-   TextDoors =       "Doors"
 
-   -- Set UK gradient format. Can be set per loco.
+   -- Set UK gradient format. Can be set always, only for UK locos or per loco.
    --GradientUK = 1
-
-   if DetectInterfaceGerman() then
-      TextAlarm = "PZB"
-      TextVigilAlarm = "Sifa"
-   end
 
    if DetectInterfaceUK() then
       --GradientUK = 1
@@ -143,18 +137,17 @@ function ConfigureOverlay()
    tshControlValues["SafetyValve1"]         = FindOverlaySafetyValve1()
    tshControlValues["SafetyValve2"]         = FindOverlaySafetyValve2()
 
-   -- Warning values
-
-   tshControlValues["Alarm"] = FindOverlayAlarm()
-   tshControlValues["VigilAlarm"] = FindOverlayVigilAlarm()
-   tshControlValues["EmergencyBrake"] = FindOverlayEmergencyBrake()
-   tshControlValues["Startup"] = FindOverlayStartup()
-
    -- Doors Values
 
    tshDoorsValues["Doors"] = FindOverlayDoors()
    tshDoorsValues["DoorsLeft"] = FindOverlayDoorsLeft()
    tshDoorsValues["DoorsRight"] = FindOverlayDoorsRight()
+
+   -- Warning values
+
+   tshControlValues["Alarm"] = FindOverlayAlarm()
+   tshControlValues["EmergencyBrake"] = FindOverlayEmergencyBrake()
+   tshControlValues["Startup"] = FindOverlayStartup()
 
    -----------------------------------------------------------
    -- Do some common automagic, this way we don't need to do that per loco
@@ -415,11 +408,10 @@ function GetOverlayData()
 
    -- Config values
 
+   if TextDoors then data = data.."TextDoors: "..TextDoors.."\n" end
    if TextAlarm then data = data.."TextAlarm: "..TextAlarm.."\n" end
-   if TextVigilAlarm then data = data.."TextVigilAlarm: "..TextVigilAlarm.."\n" end
    if TextEmergency then data = data.."TextEmergency: "..TextEmergency.."\n" end
    if TextStartup then data = data.."TextStartup: "..TextStartup.."\n" end
-   if TextDoors then data = data.."TextDoors: "..TextDoors.."\n" end
    if GradientUK then data = data.."GradientUK: "..GradientUK.."\n" end
 
    -- SimulationTime is used to show script is running as clock updates in real time
