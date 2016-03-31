@@ -136,6 +136,8 @@ function ConfigureJoystick()
          GenerateEqualNotches(3, "Reverser")
       elseif tshRange["Reverser"][1] == 0 and tshRange["Reverser"][2] >= 2 then
          GenerateEqualNotches(tshRange["Reverser"][2] + 1, "Reverser")  -- Virtual, might be inverted
+      elseif tshRange["Reverser"][1] == -1 and tshRange["Reverser"][2] >= 2 then
+         GenerateEqualNotches(tshRange["Reverser"][2] + 2, "Reverser")  -- Virtual, might be inverted
       end
    end
 
@@ -249,6 +251,10 @@ function ConfigureJoystick()
       tshControl["Reverser"] = "Reverser"                   -- This loco has VirtualReverser but it doesn't work, override
 
    -- UK
+
+   elseif DetectClass180() then
+      tshCenterDetent["CombinedThrottle"] = 0.05            -- Makes it easier to center, it's not notched
+      --SplitCombinedWithAt("TrainBrake", 0)
 
    elseif DetectClass365() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
@@ -416,6 +422,14 @@ function ConfigureJoystick()
       tshNotches["TrainBrake"] = {0, 0.1, 0.22, 0.34, 0.44, 0.54, 0.66, 0.75, 0.85, 0.9, 1}
       tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
       GenerateEqualNotches(20, "DynamicBrake")              -- (0,1)
+
+   elseif DetectOBB1116() then
+      ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
+      GenerateEqualNotches(49, "CruiseCtl")                 -- (0,240)
+      tshNotches["TrainBrake"] = {0, 0.1, 0.175, 0.225, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1}
+      tshNotches["DynamicBrake"] = {0, 0.15, 0.225, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1}
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
+      tshStep["TrainBrake"] = 0.03                          -- Step for TrainBrake required, otherwise DynamicBrake desynchronizes
 
    elseif DetectBR261() then
       tshNotches["CombinedThrottle"] = {-1, -0.66, -0.33, 0, 0.33, 0.66, 1}

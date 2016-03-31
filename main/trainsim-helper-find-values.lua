@@ -30,6 +30,8 @@ end
 function FindReverser()
    if Call("ControlExists", "MyReverser", 0) == 1 then  -- FEF-3
       return "MyReverser"
+   elseif Call("ControlExists", "ReverserControl", 0) == 1 then  -- Class 180
+      return "ReverserControl"
    elseif Call("ControlExists", "UserVirtualReverser", 0) == 1 then  -- BR155, UPGasTurbine
       return "UserVirtualReverser"
    elseif Call("ControlExists", "VirtualReverser", 0) == 1 then

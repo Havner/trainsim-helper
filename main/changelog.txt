@@ -1,5 +1,7 @@
 0.12:
-- Academy BR189
+- Academy BR189 after the patch
+- Class 180 Adelante
+- Semmeringbahn loco
 
 0.11:
  - WARNING: there are 5 scripts now in total now, make sure to

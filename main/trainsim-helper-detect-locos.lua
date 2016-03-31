@@ -506,6 +506,27 @@ end
 
 -- UK
 
+function DetectClass180(DisablePopup) -- London - Peterborough addon
+   if Call("ControlExists", "HeadlightControl", 0) == 1 and
+      Call("ControlExists", "Hazard", 0) == 1 and
+      Call("ControlExists", "WiperSwitch", 0) == 1 and
+      Call("ControlExists", "WiperMain", 0) == 1 and
+      Call("ControlExists", "EmergencyButton", 0) == 1 and
+      Call("ControlExists", "Signal", 0) == 1 and
+      Call("ControlExists", "ClipLightDimmer", 0) == 1 and
+      Call("ControlExists", "ATP_Speed", 0) == 1 and
+      Call("ControlExists", "Overspeed", 0) == 1 and
+      Call("ControlExists", "DoorsOpenCountLeft", 0) == 1 and
+      Call("ControlExists", "BlindLeft", 0) == 1 and
+      Call("ControlExists", "SecondSeat", 0) == 1 and
+      Call("ControlExists", "CabFanControl", 0) == 1 and
+      Call("ControlExists", "ScreenInfoDoors", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("Class 180 detected") end
+      return 1
+   end
+end
+
 function DetectClass365(DisablePopup) -- London - Peterborough
    if Call("ControlExists", "ThrottleAndBrake", 0) == 1 and
       Call("ControlExists", "Thingy", 0) == 1 and
@@ -1142,6 +1163,26 @@ function DetectBR155(DisablePopup) -- Cologne - Koblenz addon
       Call("ControlExists", "SunVisorRearLeft", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR155 detected") end
+      return 1
+   end
+end
+
+function DetectOBB1116(DisablePopup) -- Semmeringbahn
+   if Call("ControlExists", "VirtualEngineBrakeControl", 0) == 1 and
+      Call("ControlExists", "VirtualEmergencyBrake", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "VirtualPantographControl", 0) == 1 and
+      Call("ControlExists", "PantographSwitch", 0) == 1 and
+      Call("ControlExists", "PantographSelect", 0) == 1 and
+      Call("ControlExists", "PantographVoltage", 0) == 1 and
+      Call("ControlExists", "StartupSwitch", 0) == 1 and
+      Call("ControlExists", "CabLightSwitch", 0) == 1 and
+      Call("ControlExists", "PZB_1000Hz", 0) == 1 and
+      Call("ControlExists", "CoolingFans", 0) == 1 and
+      Call("ControlExists", "TrainLengthButton", 0) == 1 and
+      Call("ControlExists", "TrainLengthBuzzer", 0) == 1
+   then
+      if not DisablePopup then DisplayPopup("OBB1116 detected") end
       return 1
    end
 end
