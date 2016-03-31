@@ -494,8 +494,9 @@ function ConfigureJoystick()
 
    elseif DetectBR189() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config
-      GenerateEqualNotches(11, "TrainBrake")                -- (0,1)
-      GenerateEqualNotches(29, "CruiseCtl")                 -- (0,0.466666)
+      tshNotches["TrainBrake"] = {0, 0.1, 0.2, 0.25, 0.3, 0.38, 0.46, 0.54, 0.62, 0.7, 0.8, 1} -- (0,1)
+      GenerateEqualNotches(29, "CruiseCtl")                 -- (0,1)
+      tshNotches["LocoBrake"] = {-1, 0, 1}                  -- Self lapped here, add some notches to help
 
    elseif DetectBR101_New() then
       ReplaceLines("CruiseCtl", "DynamicBrake")             -- Havner's config

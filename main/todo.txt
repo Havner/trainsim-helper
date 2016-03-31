@@ -1,3 +1,4 @@
+- SetControlValue for Class 380 (Script)
 - Fix units on BR86
 - Add AWS/DSD sound alerter
 - Train Length

@@ -1496,27 +1496,23 @@ end
 
 function DetectBR189(DisablePopup) -- Academy
    if Call("ControlExists", "SpeedometerKPH", 0) == 1 and
-      Call("ControlExists", "VSoll", 0) == 1 and
-      Call("GetControlMaximum", "VSoll", 0) == 140 and
-      Call("ControlExists", "PZBEnable", 0) == 1 and
-      Call("ControlExists", "PZB_1000", 0) == 1 and
-      Call("ControlExists", "LZBEnable", 0) == 1 and
+      Call("ControlExists", "VSoll", 0) == 0 and
+      Call("ControlExists", "PZB", 0) == 1 and
+      Call("ControlExists", "PZB_1000Hz", 0) == 1 and
+      Call("ControlExists", "LZB", 0) == 1 and
       Call("ControlExists", "LZB_End", 0) == 1 and
-      Call("ControlExists", "VigilEnable", 0) == 1 and
+      Call("ControlExists", "VigilEnable", 0) == 0 and
       Call("ControlExists", "ThrottleAndBrake", 0) == 0 and
       Call("ControlExists", "GlarePanel_L", 0) == 1 and
-      Call("ControlExists", "CabAmmeter", 0) == 1 and
-      Call("ControlExists", "SpeedoGuide", 0) == 1 and
-      Call("ControlExists", "PantoMovement", 0) == 1 and
-      Call("ControlExists", "TrackLimit", 0) == 1 and
       Call("ControlExists", "DynamicBrakeFanSound", 0) == 1 and
-      Call("ControlExists", "TrainBrakeOnly", 0) == 1 and
-      Call("ControlExists", "CamInCab", 0) == 1 and
       Call("ControlExists", "PowerBar", 0) == 1 and
-      Call("ControlExists", "CabDirection", 0) == 1 and
       Call("ControlExists", "CircuitBreakerSwitch", 0) == 0 and
       Call("ControlExists", "ForceBug", 0) == 0 and
-      Call("ControlExists", "Dial Light", 0) == 1
+      Call("ControlExists", "Dial Light", 0) == 0 and
+      Call("ControlExists", "ClockHours", 0) == 1 and
+      Call("ControlExists", "CabLightSwitch", 0) == 1 and
+      Call("ControlExists", "Dummy", 0) == 1 and
+      Call("ControlExists", "PantographVoltage", 0) == 1
    then
       if not DisablePopup then DisplayPopup("BR189 detected") end
       return 1
