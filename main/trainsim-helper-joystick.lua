@@ -803,7 +803,7 @@ function GetControlRange(control)
    return {}
 end
 
-function SetControlValue(control, value, setTarget)
+function tshSetControlValue(control, value, setTarget)
    if OnControlValueChange then
       OnControlValueChange(control, 0, value)
    else
@@ -886,7 +886,7 @@ function TrySetControl(key, value)
             tshCurrentSim[key] = Call("GetControlValue", control, 0)
          end
       else
-         SetControlValue(control, value, setTarget)
+         tshSetControlValue(control, value, setTarget)
       end
 
       tshPreviousInput[key] = saved_value
@@ -909,6 +909,6 @@ function SetControlDelayed(key)
          tshCurrentSim[key] = tshCurrentSim[key] - step
       end
 
-      SetControlValue(control, tshCurrentSim[key], setTarget)
+      tshSetControlValue(control, tshCurrentSim[key], setTarget)
    end
 end

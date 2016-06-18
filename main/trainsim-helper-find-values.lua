@@ -162,6 +162,8 @@ function FindExhaustSteam()
       return "FiredoorDamper"
    elseif Call("ControlExists", "InjectorLeverL", 0) == 1 then  -- Connie
       return "InjectorLeverL"
+   elseif Call("ControlExists", "ExhaustInjectorSteam", 0) == 1 then  -- S160
+      return "ExhaustInjectorSteam"
    elseif Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
       return "Left Steam"
    elseif Call("ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
@@ -174,6 +176,8 @@ end
 function FindExhaustWater()
    if Call("ControlExists", "FWPump", 0) == 1 then  -- FEF-3
       return "FWPump"
+   elseif Call("ControlExists", "ExhaustInjectorWaterTap", 0) == 1 then  -- S160
+      return "ExhaustInjectorWaterTap"
    elseif Call("ControlExists", "Left Water", 0) == 1 then  -- 2F, 3F
       return "Left Water"
    elseif Call("ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
@@ -190,6 +194,8 @@ end
 function FindLiveSteam()
    if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3, Connie
       return "InjectorLeverR"
+   elseif Call("ControlExists", "LiveInjectorSteam", 0) == 1 then  -- S160
+      return "LiveInjectorSteam"
    elseif Call("ControlExists", "PneumaticBlowDown", 0) == 1 then  -- DR BR86
       return "PneumaticBlowDown"
    elseif Call("ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
@@ -202,7 +208,9 @@ function FindLiveSteam()
 end
 
 function FindLiveWater()
-   if Call("ControlExists", "FeedWaterPumpControl", 0) == 1 then  -- DR BR86
+   if Call("ControlExists", "LiveInjectorWaterTap", 0) == 1 then  -- S160
+      return "LiveInjectorWaterTap"
+   elseif Call("ControlExists", "FeedWaterPumpControl", 0) == 1 then  -- DR BR86
       return "FeedWaterPumpControl"
    elseif Call("ControlExists", "Right Water", 0) == 1 then  -- 2F, 3F
       return "Right Water"
@@ -510,6 +518,8 @@ end
 function FindOverlayAirPump()
    if Call("ControlExists", "CompressorThrottle", 0) == 1 then  -- FEF-3
       return "CompressorThrottle"
+   elseif Call("ControlExists", "AirPumpSteam", 0) == 1 then  -- S160
+      return "AirPumpSteam"
    elseif Call("ControlExists", "Airpump", 0) == 1 then  -- DR BR86
       return "Airpump"
    elseif Call("ControlExists", "SteamShutOffL", 0) == 1 then  -- Q1
@@ -552,6 +562,8 @@ end
 function FindOverlayLubricatorSteam()
    if Call("ControlExists", "LubricatorSteamThrottle", 0) == 1 then  -- Connie
       return "LubricatorSteamThrottle"
+   elseif Call("ControlExists", "MechLubSteamValve", 0) == 1 then  -- S160
+      return "MechLubSteamValve"
    elseif Call("ControlExists", "LubricatorSteamValve", 0) == 1 then  -- 2F
       return "LubricatorSteamValve"
    end
@@ -668,18 +680,24 @@ end
 function FindOverlayControlValve()
    if Call("ControlExists", "ControlValve", 0) == 1 then  -- FEF-3
       return "ControlValve"
+   elseif Call("ControlExists", "SteamShutOff", 0) == 1 then  -- S160
+      return "SteamShutOff"
    end
 end
 
 function FindOverlayBlowerSteam()
    if Call("ControlExists", "BlowerSteamThrottle", 0) == 1 then  -- Connie
       return "BlowerSteamThrottle"
+   elseif Call("ControlExists", "BlowerSteam", 0) == 1 then  -- S160
+      return "BlowerSteam"
    end
 end
 
 function FindOverlayExhaustInjectorShutOff()
    if Call("ControlExists", "InjectorSteamThrottleL", 0) == 1 then  -- Connie
       return "InjectorSteamThrottleL"
+   elseif Call("ControlExists", "ExhaustInjector", 0) == 1 then  -- S160
+      return "ExhaustInjector"
    elseif Call("ControlExists", "Injector Steam Supply", 0) == 1 then  -- DR BR86
       return "Injector Steam Supply"
    elseif Call("ControlExists", "Tender_WaterLeverR", 0) == 1 then  -- Q1
@@ -690,6 +708,8 @@ end
 function FindOverlayLiveInjectorShutOff()
    if Call("ControlExists", "InjectorSteamThrottleR", 0) == 1 then  -- Connie
       return "InjectorSteamThrottleR"
+   elseif Call("ControlExists", "LiveInjector", 0) == 1 then  -- S160
+      return "LiveInjector"
    elseif Call("ControlExists", "Tender_WaterLeverL", 0) == 1 then  -- Q1
       return "Tender_WaterLeverL"
    end
@@ -806,6 +826,8 @@ end
 function FindOverlayExhaustInjectorSteam()
    if Call("ControlExists", "InjectorLeverL", 0) == 1 then  -- Connie
       return "InjectorLeverL"
+   elseif Call("ControlExists", "ExhaustInjectorSteam", 0) == 1 then  -- S160
+      return "ExhaustInjectorSteam"
    elseif Call("ControlExists", "Left Steam", 0) == 1 then  -- 2F, 3F
       return "Left Steam"
    elseif Call("ControlExists", "ExhaustInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
@@ -816,7 +838,9 @@ function FindOverlayExhaustInjectorSteam()
 end
 
 function FindOverlayExhaustInjectorWater()
-   if Call("ControlExists", "Left Water", 0) == 1 then  -- 2F, 3F
+   if Call("ControlExists", "ExhaustInjectorWaterTap", 0) == 1 then  -- S160
+      return "ExhaustInjectorWaterTap"
+   elseif Call("ControlExists", "Left Water", 0) == 1 then  -- 2F, 3F
       return "Left Water"
    elseif Call("ControlExists", "ExhaustInjectorWaterLever", 0) == 1 then  -- 14xx
       return "ExhaustInjectorWaterLever"
@@ -832,6 +856,8 @@ end
 function FindOverlayLiveInjectorSteam()
    if Call("ControlExists", "InjectorLeverR", 0) == 1 then  -- FEF-3, Connie
       return "InjectorLeverR"
+   elseif Call("ControlExists", "LiveInjectorSteam", 0) == 1 then  -- S160
+      return "LiveInjectorSteam"
    elseif Call("ControlExists", "Right Steam", 0) == 1 then  -- 2F, 3F
       return "Right Steam"
    elseif Call("ControlExists", "LiveInjectorSteamLever", 0) == 1 then  -- 14xx, Q1
@@ -842,7 +868,9 @@ function FindOverlayLiveInjectorSteam()
 end
 
 function FindOverlayLiveInjectorWater()
-   if Call("ControlExists", "Right Water", 0) == 1 then  -- 2F
+   if Call("ControlExists", "LiveInjectorWaterTap", 0) == 1 then  -- S160
+      return "LiveInjectorWaterTap"
+   elseif Call("ControlExists", "Right Water", 0) == 1 then  -- 2F
       return "Right Water"
    elseif Call("ControlExists", "LiveInjectorWaterLever", 0) == 1 then  -- 14xx
       return "LiveInjectorWaterLever"

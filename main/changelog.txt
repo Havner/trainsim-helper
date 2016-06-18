@@ -2,6 +2,8 @@
 - Academy BR189 after the patch
 - Class 180 Adelante
 - Semmeringbahn loco
+- USATC S160
+- Small changes for function conflicts in Class 380
 
 0.11:
  - WARNING: there are 5 scripts now in total now, make sure to
