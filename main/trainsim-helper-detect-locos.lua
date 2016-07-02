@@ -1067,6 +1067,37 @@ function DetectClass456(DisablePopup) -- South Eastern Line
    end
 end
 
+function DetectClass465(DisablePopup) -- London Gilligham (aka Chatham Main Line)
+   if Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "Acceleration", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "PantographControl", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "Regulator", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "Sander", 0) == 1 and
+      Call("ControlExists", "Headlights", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -1000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 1000 and
+      Call("GetControlMinimum", "Acceleration", 0) == -100 and
+      Call("GetControlMaximum", "Acceleration", 0) == 100 and
+      Call("GetControlMinimum", "Ammeter", 0) == -5000 and
+      Call("GetControlMaximum", "Ammeter", 0) == 5000 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 90 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 10 and
+      Call("GetControlMaximum", "TrainBrakeCylinderPressureBAR", 0) == 7 and
+      Call("GetControlMaximum", "Wheelslip", 0) == 3 and
+      Call("GetControlMaximum", "Headlights", 0) == 4 and
+      Call("GetControlMaximum", "Destination", 0) == 54
+   then
+      if not DisablePopup then DisplayPopup("Class 465 detected") end
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR103TEE_vRailroads_Expert(DisablePopup) -- Expert Line
