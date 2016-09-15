@@ -1,3 +1,6 @@
+0.13:
+- Small update to be able to find the TS2017 window, no other changes
+
 0.12:
 - Academy BR189 after the patch
 - Class 180 Adelante
