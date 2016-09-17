@@ -1098,6 +1098,70 @@ function DetectClass465(DisablePopup) -- London Gilligham (aka Chatham Main Line
    end
 end
 
+function DetectClass175(DisablePopup) -- Bristol Cardiff (aka South Wales Coastal)
+   if Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "HornLever", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "Headlights", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "AirBrakePipePressureBAR", 0) == 1 and
+      Call("ControlExists", "TrainBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "WiperSwitch", 0) == 1 and
+      Call("ControlExists", "DSDAlarm", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -1000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 1000 and
+      Call("GetControlMinimum", "RPM", 0) == 0 and
+      Call("GetControlMaximum", "RPM", 0) == 2100 and
+      Call("GetControlMinimum", "HornLever", 0) == -1 and
+      Call("GetControlMaximum", "HornLever", 0) == 1 and
+      Call("GetControlMaximum", "Wheelslip", 0) == 5 and
+      Call("GetControlMaximum", "Headlights", 0) == 4 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 14 and
+      Call("GetControlMaximum", "AirBrakePipePressureBAR", 0) == 14 and
+      Call("GetControlMaximum", "TrainBrakeCylinderPressureBAR", 0) == 7 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 140 and
+      Call("GetControlMaximum", "WiperSwitch", 0) == 3 and
+      Call("GetControlMaximum", "DSDAlarm", 0) == 2 and
+      Call("GetControlMaximum", "Destination", 0) == 43
+   then
+      if not DisablePopup then DisplayPopup("Class 175 detected") end
+      return 1
+   end
+end
+
+function DetectClass70(DisablePopup) -- Bristol Cardiff (aka South Wales Coastal)
+   if Call("ControlExists", "Current", 0) == 1 and
+      Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "Wheelslip", 0) == 1 and
+      Call("ControlExists", "Headlights", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressureBAR", 0) == 1 and
+      Call("ControlExists", "BrakePipePressureBAR", 0) == 1 and
+      Call("ControlExists", "LocoBrakeCylinderPressureBAR", 0) == 1 and
+      Call("ControlExists", "SpeedometerMPH", 0) == 1 and
+      Call("ControlExists", "SpeedoTenths", 0) == 1 and
+      Call("ControlExists", "SpeedoUnits", 0) == 1 and
+      Call("ControlExists", "SpeedoTens", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -544 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 544 and
+      Call("GetControlMinimum", "RPM", 0) == 0 and
+      Call("GetControlMaximum", "RPM", 0) == 1500 and
+      Call("GetControlMaximum", "Current", 0) == 27000 and
+      Call("GetControlMaximum", "Wheelslip", 0) == 3 and
+      Call("GetControlMaximum", "Headlights", 0) == 2 and
+      Call("GetControlMaximum", "MainReservoirPressureBAR", 0) == 14 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 80 and
+      Call("GetControlMaximum", "SpeedoTenths", 0) == 9 and
+      Call("GetControlMaximum", "SpeedoUnits", 0) == 9 and
+      Call("GetControlMaximum", "SpeedoTens", 0) == 8
+   then
+      if not DisablePopup then DisplayPopup("Class 70 detected") end
+      return 1
+   end
+end
+
 -- German
 
 function DetectBR103TEE_vRailroads_Expert(DisablePopup) -- Expert Line

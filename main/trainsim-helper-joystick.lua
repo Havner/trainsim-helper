@@ -266,6 +266,7 @@ function ConfigureJoystick()
    elseif DetectHST() then
       GenerateEqualNotches(6, "Throttle")                   -- (0,1)
       GenerateEqualNotches(8, "TrainBrake")                 -- (0,1)
+      tshRange["TrainBrake"] = {0, 0.9}                     -- ignore emergency
 
    elseif DetectClass801() then
       tshNotches["CombinedThrottle"] = {-1.5, -1, -0.938, -0.875, -0.812, -0.75, -0.688, -0.625, -0.562, -0.5, -0.438, -0.375, -0.312, -0.25, 0, 0.25, 0.5, 0.75, 1}
@@ -395,6 +396,15 @@ function ConfigureJoystick()
    elseif DetectClass465() then
       tshNotches["CombinedThrottle"] = {-0.5, -0.33, -0.18, 0, 0.25, 0.5, 0.75, 1}
       tshRange["CombinedThrottle"] = {-0.5, 1}
+
+   elseif DetectClass175() then
+      tshNotches["CombinedThrottle"] = {0, 0.25, 0.5, 0.75, 1} -- only notch acceleration, braking is not notched
+      tshCenterDetent["CombinedThrottle"] = 0.05               -- for easier centering
+
+   elseif DetectClass70() then
+      GenerateEqualNotches(9, "Throttle")
+      tshRange["TrainBrake"] = {0, 0.9}                     -- ignore Emergency
+      tshNotches["TrainBrake"] = {0.75, 0.9}                -- leave a little deadzone for "Hold" position
 
    -- German locos here, detection might be flaky as they are very similar to eachother
 
@@ -619,7 +629,7 @@ function ConfigureJoystick()
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
       --SplitCombinedWithAt("DynamicBrake", 0.5)
-      
+
    elseif DetectSD70M() then
       tshNotches["CombinedThrottle"] = {0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1} -- (-1, 1), It's continous below 0 (DynamicBrake)
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
