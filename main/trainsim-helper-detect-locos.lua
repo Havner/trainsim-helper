@@ -2222,6 +2222,34 @@ function DetectC449W(DisablePopup) -- Donner Pass
    end
 end
 
+function DetectALP45DP(DisablePopup) -- NJCL
+   if Call("ControlExists", "TractiveEffort", 0) == 1 and
+      Call("ControlExists", "PowerProportion", 0) == 1 and
+      Call("ControlExists", "RPM", 0) == 1 and
+      Call("ControlExists", "RPMDelta", 0) == 1 and
+      Call("ControlExists", "CompressorState", 0) == 1 and
+      Call("ControlExists", "Ammeter", 0) == 1 and
+      Call("ControlExists", "MainReservoirPressurePSI", 0) == 1 and
+      Call("ControlExists", "Headlights", 0) == 1 and
+      Call("GetControlMinimum", "TractiveEffort", 0) == -10000 and
+      Call("GetControlMaximum", "TractiveEffort", 0) == 10000 and
+      Call("GetControlMinimum", "RPM", 0) == 0 and
+      Call("GetControlMaximum", "RPM", 0) == 1800 and
+      Call("GetControlMinimum", "Ammeter", 0) == -1500 and
+      Call("GetControlMaximum", "Ammeter", 0) == 1500 and
+      Call("GetControlMinimum", "MainReservoirPressurePSI", 0) == 0 and
+      Call("GetControlMaximum", "MainReservoirPressurePSI", 0) == 160 and
+      Call("GetControlMinimum", "Headlights", 0) == 0 and
+      Call("GetControlMaximum", "Headlights", 0) == 2 and
+      Call("GetControlMinimum", "SpeedometerMPH", 0) == 0 and
+      Call("GetControlMaximum", "SpeedometerMPH", 0) == 150
+   then
+      if not DisablePopup then DisplayPopup("ALP-45 detected") end
+      return 1
+   end
+end
+
+
 -----------------------------------------------------------
 ---------------  Some generic detections  -----------------
 -----------------------------------------------------------

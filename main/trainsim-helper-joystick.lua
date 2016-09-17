@@ -634,6 +634,14 @@ function ConfigureJoystick()
       tshControl["TrainBrake"] = FindTrainBrake()           -- CombinedThrottle is with DynamicBrake, use also TrainBrake lever
       tshControl["DynamicBrake"] = nil                      -- DynamicBrake should not be used directly
 
+   elseif DetectALP45DP() then
+      tshRange["CombinedThrottle"] = {0.0, 1.0}
+      tshControl["TrainBrake"] = FindTrainBrake()
+      GenerateEqualNotches(11, "CombinedThrottle")
+      tshNotches["TrainBrake"] = {0, 0.2, 0.4, 0.6, 0.8}
+      tshRange["TrainBrake"] = {0, 0.8}                     -- ignore emergency @ 1.0
+      tshControl["DynamicBrake"] = nil
+
    -- Generic detections, don't put any specific locos below, they might get caught by those
 
    elseif DetectGenericSteam() then
