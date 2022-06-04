@@ -3,9 +3,10 @@
 HWND FindTSWindow()
 {
 	HWND ret;
-
-	ret = FindWindow(NULL, "Train Simulator");
+	ret = FindWindow(NULL, "Train Simulator (x64)");
 	if (!ret)
+		ret = FindWindow(NULL, "Train Simulator");
+	else if (!ret)
 		ret = FindWindow(NULL, "Train Simulator 2016");
 	else if (!ret)
 		ret = FindWindow(NULL, "Train Simulator 2015");

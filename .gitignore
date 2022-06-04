@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/.vs/trainsim-helper
+/src/trainsim-helper/Debug
+/src/trainsim-helper/Release
+/src/Release
+/src/Debug
